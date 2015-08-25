@@ -1,5 +1,5 @@
-xivo-dird (1.2.11~20120618.202346.5e41943-1) squeeze-xivo-skaro-dev; urgency=low
+xivo-dird-phoned (0.0.1) UNRELEASED; urgency=low
 
-  * Initial Release.
+  * Initial release.
 
- -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Mon, 18 Jun 2012 13:22:27 -0400
+ -- Francois Blackburn <fblackburn@avencall.com>  Tue, 25 Aug 2015 14:56:57 -0400
