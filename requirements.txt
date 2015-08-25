@@ -1,0 +1,14 @@
+git+https://github.com/xivo-pbx/xivo-auth-client.git
+git+https://github.com/xivo-pbx/xivo-lib-python.git
+flask==0.10.1
+flask-cors==1.10.3
+flask-restful==0.2.12
+netaddr==0.7.15
+pyyaml==3.10
+cherrypy
+psycopg2==2.4.5  # from xivo-lib-python
+
+# From confd-client, auth-client, dird-client
+git+https://github.com/xivo-pbx/xivo-lib-rest-client.git
+requests==2.0.0
+stevedore
