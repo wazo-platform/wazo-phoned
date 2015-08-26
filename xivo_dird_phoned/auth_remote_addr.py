@@ -33,7 +33,7 @@ def verify_remote_addr(func):
         if not remote_addr:
             abort(401)
 
-        networks = current_app.config['hosts_authorized']
+        networks = current_app.config['subnets_authorized']
         for network in networks:
             if IPAddress(remote_addr) in IPNetwork(network):
                 return func(*args, **kwargs)

@@ -29,6 +29,7 @@ from xivo_dird_phoned import auth
 
 logger = logging.getLogger(__name__)
 
+AUTH_BACKEND = 'xivo_service'
 
 parser = reqparse.RequestParser()
 parser.add_argument('xivo_user_uuid', type=unicode, required=False, location='args')
@@ -36,7 +37,7 @@ parser.add_argument('vendor', type=unicode, required=False, location='args')
 parser.add_argument('term', type=unicode, required=False, location='args')
 
 # XXX Migration code
-XIVO_FAKE_USER = '506da8af-1427-42f9-a457-0339f7d2bfd0'
+FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
 
 
 def _error(code, msg):
@@ -83,14 +84,14 @@ class LookupMenu(AuthResource):
             vendor = find_vendor_by_user_agent(user_agent)
         # XXX Migration code
         if not xivo_user_uuid:
-            xivo_user_uuid = XIVO_FAKE_USER
+            xivo_user_uuid = FAKE_XIVO_USER_UUID
 
         if not vendor:
             return _error(404, 'No vendor found')
         if not xivo_user_uuid:
             return _error(404, 'No xivo_user_uuid found')
 
-        token_infos = auth.client().token.new('xivo_service', expiration=10, xivo_user_uuid=xivo_user_uuid)
+        token_infos = auth.client().token.new(AUTH_BACKEND, expiration=1000, xivo_user_uuid=xivo_user_uuid)
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url.replace('menu', 'lookup')}
@@ -101,7 +102,6 @@ class LookupMenu(AuthResource):
         r = requests.get(url, headers=headers, verify=self.dird_verify_cert)
         return Response(response=r.content,
                         content_type=r.headers['content-type'],
-                        mimetype=r.headers['content-type'],
                         status=r.status_code)
 
 
@@ -129,14 +129,14 @@ class Lookup(AuthResource):
             vendor = find_vendor_by_user_agent(user_agent)
         # XXX Migration code
         if not xivo_user_uuid:
-            xivo_user_uuid = XIVO_FAKE_USER
+            xivo_user_uuid = FAKE_XIVO_USER_UUID
 
         if not vendor:
             return _error(404, 'No vendor found')
         if not xivo_user_uuid:
             return _error(404, 'No xivo_user_uuid found')
 
-        token_infos = auth.client().token.new('service', expiration=10, xivo_user_uuid=xivo_user_uuid)
+        token_infos = auth.client().token.new(AUTH_BACKEND, expiration=10, xivo_user_uuid=xivo_user_uuid)
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url}
@@ -150,7 +150,6 @@ class Lookup(AuthResource):
         r = requests.get(url, headers=headers, verify=self.dird_verify_cert)
         return Response(response=r.content,
                         content_type=r.headers['content-type'],
-                        mimetype=r.headers['content-type'],
                         status=r.status_code)
 
 

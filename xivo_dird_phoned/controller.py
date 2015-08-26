@@ -27,8 +27,8 @@ class Controller(object):
     def __init__(self, config):
         self.config = config
         self.rest_api = RestApi(self.config['rest_api'])
-        self.rest_api.app.config['auth'] = config['auth']
-        self.rest_api.app.config['subnets_authorized'] = config['subnets_authorized']
+        self.rest_api.app.config['auth'] = self.config['auth']
+        self.rest_api.app.config['subnets_authorized'] = self.config['rest_api']['subnets_authorized']
         DirectoriesConfiguration(config['dird'])
 
     def run(self):
