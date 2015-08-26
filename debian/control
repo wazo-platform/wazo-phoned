@@ -12,7 +12,7 @@ Package: xivo-dird-phoned
 Architecture: all
 Depends: ${python:Depends},
          ${misc:Depends},
-         xivo-auth-client
+         xivo-auth-client,
          xivo-lib-python,
          python-cherrypy3,
          python-flask,
