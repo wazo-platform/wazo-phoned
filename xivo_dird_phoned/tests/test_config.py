@@ -34,6 +34,7 @@ class TestConfig(TestCase):
             'config': 'default',
             'config_file': '/etc/xivo-dird-phoned/config.yml',
             'extra_config_files': '/etc/xivo-dird-phoned/conf.d/',
+            'auth': {}
         }
 
         result = config.load(s.logger, [])

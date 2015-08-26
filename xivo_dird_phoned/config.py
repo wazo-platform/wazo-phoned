@@ -18,13 +18,14 @@
 import argparse
 
 from xivo.chain_map import ChainMap
-from xivo.config_helper import read_config_file_hierarchy
+from xivo.config_helper import read_config_file_hierarchy, parse_config_file
 from xivo.xivo_logging import get_log_level_by_name
 
 _DEFAULT_CONFIG = {
     'auth': {
         'host': 'localhost',
-        'port': 9497
+        'port': 9497,
+        'secret_file': '/etc/xivo-dird-phoned/authentication.yml'
     },
     'dird': {
         'host': 'localhost',
@@ -58,7 +59,8 @@ def load(logger, argv):
     cli_config = _parse_cli_args(argv)
     file_config = read_config_file_hierarchy(ChainMap(cli_config, _DEFAULT_CONFIG))
     reinterpreted_config = _get_reinterpreted_raw_values(ChainMap(cli_config, file_config, _DEFAULT_CONFIG))
-    return ChainMap(reinterpreted_config, cli_config, file_config, _DEFAULT_CONFIG)
+    secret = _load_secret_file(ChainMap(cli_config, file_config, _DEFAULT_CONFIG))
+    return ChainMap(reinterpreted_config, secret, cli_config, file_config, _DEFAULT_CONFIG)
 
 
 def _parse_cli_args(argv):
@@ -99,6 +101,15 @@ def _parse_cli_args(argv):
         result['user'] = parsed_args.user
 
     return result
+
+
+def _load_secret_file(config):
+    secret_file = config['auth'].get('secret_file')
+    if not secret_file:
+        return {}
+
+    secret = parse_config_file(secret_file).get('secret', '')
+    return {'auth': {'secret': secret}}
 
 
 def _get_reinterpreted_raw_values(config):

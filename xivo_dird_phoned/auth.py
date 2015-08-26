@@ -46,5 +46,5 @@ def verify_token(token):
 def client():
     auth_host = current_app.config['auth']['host']
     auth_port = current_app.config['auth']['port']
-    auth_token = current_app.config['auth']['token']
-    return Client(auth_host, auth_port, username='auth-phone', password=auth_token)
+    auth_secret = current_app.config['auth']['secret']
+    return Client(auth_host, auth_port, username='xivo-dird-phoned', password=auth_secret)
