@@ -1,0 +1,5 @@
+FROM xivo/xivo-dird-phoned
+
+ADD . /usr/src/xivo-dird-phoned
+WORKDIR /usr/src/xivo-dird-phoned
+RUN python setup.py develop

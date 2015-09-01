@@ -1,0 +1,46 @@
+# This file should not be modified as it may get changed by the maintainer.
+# Add extra configuration files in the extra_config_files directory to override
+# the content from this file
+
+# Extra configuration directory where the config files overriding this file
+# should be.
+extra_config_files: /etc/xivo-dird-phoned/conf.d/
+
+log_filename: /var/log/xivo-dird-phoned.log
+pid_filename: /var/run/xivo-dird-phoned/xivo-dird-phoned.pid
+foreground: False
+debug: False
+
+auth:
+    host: auth
+    port: 9497
+    secret: /etc/xivo-dird-phoned/authentication.yml
+
+dird:
+    host: dird
+    port: 9489
+    verify_cert: False
+    default_profile: default_phone
+
+# REST API server
+rest_api:
+
+    # Listening address
+    listen: 0.0.0.0
+
+    # Listening port
+    port_http: 9498
+    port_https: 9499
+
+    # Authorizing subnets
+    subnets_authorized:
+      - '0.0.0.0/0'
+
+    #CORS configuration. See Flask-CORS documentation for other values.
+    cors:
+        enabled: True
+
+    certificate: /usr/share/xivo-certs/server.crt
+    private_key: /usr/share/xivo-certs/failed.key
+
+
