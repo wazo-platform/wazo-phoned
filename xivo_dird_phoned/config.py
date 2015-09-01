@@ -105,11 +105,8 @@ def _parse_cli_args(argv):
 
 
 def _load_secret_file(config):
-    secret_file = config['auth'].get('secret_file')
-    if not secret_file:
-        return {}
-
-    secret = parse_config_file(secret_file).get('secret', '')
+    secret_file = config['auth'].get('secret_file', '')
+    secret = parse_config_file(secret_file)['secret']
     return {'auth': {'secret': secret}}
 
 
