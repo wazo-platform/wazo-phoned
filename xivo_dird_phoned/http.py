@@ -80,8 +80,8 @@ class LookupMenu(AuthResource):
     def get(self):
         args = parser.parse_args()
         profile = args['profile']
-        vendor = args.get('vendor', None)
-        xivo_user_uuid = args.get('xivo_user_uuid', None)
+        vendor = args['vendor']
+        xivo_user_uuid = args['xivo_user_uuid']
 
         # XXX Migration code
         if not vendor:
@@ -133,9 +133,9 @@ class Lookup(AuthResource):
     def get(self):
         args = parser.parse_args()
         profile = args['profile']
-        term = args.get('term', None)
-        vendor = args.get('vendor', None)
-        xivo_user_uuid = args.get('xivo_user_uuid', None)
+        term = args['term']
+        vendor = args['vendor']
+        xivo_user_uuid = args['xivo_user_uuid']
 
         # XXX Migration code
         if not vendor:
