@@ -60,30 +60,42 @@ class RestApi(object):
 
     def run(self):
         self.api.init_app(self.app)
+        enable_http = True
+        enable_https = True
 
         bind_addr_http = (self.config['listen'], self.config['port_http'])
         bind_addr_https = (self.config['listen'], self.config['port_https'])
 
-        _check_file_readable(self.config['certificate'])
-        _check_file_readable(self.config['private_key'])
-        ssl_adapter = BuiltinSSLAdapter(self.config['certificate'],
-                                        self.config['private_key'])
-        wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
-        server_http = CherryPyWSGIServer(bind_addr=bind_addr_http,
-                                         wsgi_app=wsgi_app)
-        server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
-                                          wsgi_app=wsgi_app)
-        server_https.ssl_adapter = ssl_adapter
+        try:
+            _check_file_readable(self.config['certificate'])
+            _check_file_readable(self.config['private_key'])
+        except IOError as e:
+            logger.warning("HTTPS server won't start: {error}".format(error=e))
+            enable_https = False
 
+        wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
         cherrypy.config.update({'environment': 'production'})
         bus = Bus()
-        ServerAdapter(bus, server_http).subscribe()
-        ServerAdapter(bus, server_https).subscribe()
 
-        logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
-                     os.getuid(), bind_addr_http[0], bind_addr_http[1])
-        logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
-                     os.getuid(), bind_addr_https[0], bind_addr_https[1])
+        if enable_https:
+            ssl_adapter = BuiltinSSLAdapter(self.config['certificate'],
+                                            self.config['private_key'])
+            server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
+                                              wsgi_app=wsgi_app)
+            server_https.ssl_adapter = ssl_adapter
+            ServerAdapter(bus, server_https).subscribe()
+            logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
+                         os.getuid(), bind_addr_https[0], bind_addr_https[1])
+
+        if enable_http:
+            server_http = CherryPyWSGIServer(bind_addr=bind_addr_http,
+                                             wsgi_app=wsgi_app)
+            ServerAdapter(bus, server_http).subscribe()
+            logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
+                         os.getuid(), bind_addr_http[0], bind_addr_http[1])
+
+        if not enable_http and not enable_https:
+            logger.critical('No server started')
 
         list_routes(self.app)
 
