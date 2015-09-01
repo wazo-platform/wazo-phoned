@@ -99,9 +99,14 @@ class LookupMenu(AuthResource):
         if not xivo_user_uuid:
             return _error(404, 'No xivo_user_uuid found')
 
-        token_infos = auth.client().token.new(AUTH_BACKEND,
-                                              expiration=10,
-                                              backend_args={'xivo_user_uuid': xivo_user_uuid})
+        try:
+            token_infos = auth.client().token.new(AUTH_BACKEND,
+                                                  expiration=10,
+                                                  backend_args={'xivo_user_uuid': xivo_user_uuid})
+        except requests.RequestException as e:
+            message = 'Could not connect to authentication server: {error}'.format(error=e)
+            logger.exception(message)
+            return _error(503, message)
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url.replace('menu', 'lookup')}
@@ -153,9 +158,14 @@ class Lookup(AuthResource):
         if not xivo_user_uuid:
             return _error(404, 'No xivo_user_uuid found')
 
-        token_infos = auth.client().token.new(AUTH_BACKEND,
-                                              expiration=10,
-                                              backend_args={'xivo_user_uuid': xivo_user_uuid})
+        try:
+            token_infos = auth.client().token.new(AUTH_BACKEND,
+                                                  expiration=10,
+                                                  backend_args={'xivo_user_uuid': xivo_user_uuid})
+        except requests.RequestException as e:
+            message = 'Could not connect to authentication server: {error}'.format(error=e)
+            logger.exception(message)
+            return _error(503, message)
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url}
