@@ -15,32 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import logging
-import requests
 
 from flask import current_app
-from time import time
 
 from xivo_auth_client import Client
 
 logger = logging.getLogger(__name__)
-
-
-def verify_token(token):
-    try:
-        token_is_valid = client().token.is_valid(token)
-    except requests.RequestException as e:
-        auth_host = current_app.config['auth']['host']
-        auth_port = current_app.config['auth']['port']
-        message = 'Could not connect to authentication server on {host}:{port}: {error}'.format(host=auth_host,
-                                                                                                port=auth_port,
-                                                                                                error=e)
-        logger.exception(message)
-        return {
-            'reason': [message],
-            'timestamp': [time()],
-            'status_code': 503,
-        }, 503
-    return token_is_valid
 
 
 def client():
