@@ -21,6 +21,9 @@ dird:
     port: 9489
     verify_cert: '/usr/share/xivo-certs/server.crt'
 
+    # Profile to send to dird if phone has no profile
+    default_profile: 'default_phone'
+
 # REST API server
 rest_api:
 

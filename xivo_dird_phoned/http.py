@@ -32,9 +32,10 @@ logger = logging.getLogger(__name__)
 AUTH_BACKEND = 'xivo_service'
 
 parser = reqparse.RequestParser()
-parser.add_argument('xivo_user_uuid', type=unicode, required=False, location='args')
-parser.add_argument('vendor', type=unicode, required=False, location='args')
+parser.add_argument('profile', type=unicode, required=False, location='args')
 parser.add_argument('term', type=unicode, required=False, location='args')
+parser.add_argument('vendor', type=unicode, required=False, location='args')
+parser.add_argument('xivo_user_uuid', type=unicode, required=False, location='args')
 
 # XXX Migration code
 FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
@@ -54,27 +55,31 @@ class DirectoriesConfiguration(object):
     def __init__(self, dird_config):
         dird_host = dird_config['host']
         dird_port = dird_config['port']
+        dird_default_profile = dird_config['default_profile']
         dird_verify_cert = dird_config.get('verify_cert', True)
-        LookupMenu.configure(dird_host, dird_port, dird_verify_cert)
-        Lookup.configure(dird_host, dird_port, dird_verify_cert)
+        LookupMenu.configure(dird_host, dird_port, dird_verify_cert, dird_default_profile)
+        Lookup.configure(dird_host, dird_port, dird_verify_cert, dird_default_profile)
         api.add_resource(LookupMenu, self.menu_url)
         api.add_resource(Lookup, self.lookup_url)
 
 
 class LookupMenu(AuthResource):
 
+    dird_default_profile = None
     dird_host = None
     dird_port = None
     dird_verify_cert = None
 
     @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_cert):
+    def configure(cls, dird_host, dird_port, dird_verify_cert, dird_default_profile):
+        cls.dird_default_profile = dird_default_profile
         cls.dird_host = dird_host
         cls.dird_port = dird_port
         cls.dird_verify_cert = dird_verify_cert
 
     def get(self):
         args = parser.parse_args()
+        profile = args['profile']
         vendor = args.get('vendor', None)
         xivo_user_uuid = args.get('xivo_user_uuid', None)
 
@@ -85,6 +90,9 @@ class LookupMenu(AuthResource):
         # XXX Migration code
         if not xivo_user_uuid:
             xivo_user_uuid = FAKE_XIVO_USER_UUID
+        # XXX Migration code
+        if not profile:
+            profile = self.dird_default_profile
 
         if not vendor:
             return _error(404, 'No vendor found')
@@ -97,10 +105,11 @@ class LookupMenu(AuthResource):
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url.replace('menu', 'lookup')}
-        url = 'https://{host}:{port}{path}/{vendor}'.format(host=self.dird_host,
-                                                            port=self.dird_port,
-                                                            path=request.path,
-                                                            vendor=vendor)
+        url = 'https://{host}:{port}{path}/{profile}/{vendor}'.format(host=self.dird_host,
+                                                                      port=self.dird_port,
+                                                                      path=request.path,
+                                                                      profile=profile,
+                                                                      vendor=vendor)
         r = requests.get(url, headers=headers, verify=self.dird_verify_cert)
         return Response(response=r.content,
                         content_type=r.headers['content-type'],
@@ -109,18 +118,21 @@ class LookupMenu(AuthResource):
 
 class Lookup(AuthResource):
 
+    dird_default_profile = None
     dird_host = None
     dird_port = None
     dird_verify_cert = None
 
     @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_cert):
+    def configure(cls, dird_host, dird_port, dird_verify_cert, dird_default_profile):
+        cls.dird_default_profile = dird_default_profile
         cls.dird_host = dird_host
         cls.dird_port = dird_port
         cls.dird_verify_cert = dird_verify_cert
 
     def get(self):
         args = parser.parse_args()
+        profile = args['profile']
         term = args.get('term', None)
         vendor = args.get('vendor', None)
         xivo_user_uuid = args.get('xivo_user_uuid', None)
@@ -132,6 +144,9 @@ class Lookup(AuthResource):
         # XXX Migration code
         if not xivo_user_uuid:
             xivo_user_uuid = FAKE_XIVO_USER_UUID
+        # XXX Migration code
+        if not profile:
+            profile = self.dird_default_profile
 
         if not vendor:
             return _error(404, 'No vendor found')
@@ -148,7 +163,7 @@ class Lookup(AuthResource):
         url = 'https://{host}:{port}{path}/{profile}/{vendor}{query}'.format(host=self.dird_host,
                                                                              port=self.dird_port,
                                                                              path=request.path,
-                                                                             profile='default',
+                                                                             profile=profile,
                                                                              vendor=vendor,
                                                                              query=query)
         r = requests.get(url, headers=headers, verify=self.dird_verify_cert)
