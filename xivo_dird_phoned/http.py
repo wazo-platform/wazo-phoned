@@ -43,7 +43,7 @@ FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
 
 def _error(code, msg):
     return {'reason': [msg],
-            'timestamp': [time.time()],
+            'timestamp': [time()],
             'status_code': code}, code
 
 
