@@ -26,6 +26,7 @@ from xivo_dird_phoned import config
 
 @patch('__builtin__.print', Mock())
 @patch('xivo_dird_phoned.config.open', create=True)
+@patch('xivo_dird_phoned.config._load_secret_file', lambda x: {})
 class TestConfig(TestCase):
 
     def test_load_when_no_args_and_no_default_config_file_then_return_default_values(self, mock_open):
