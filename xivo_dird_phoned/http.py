@@ -91,7 +91,9 @@ class LookupMenu(AuthResource):
         if not xivo_user_uuid:
             return _error(404, 'No xivo_user_uuid found')
 
-        token_infos = auth.client().token.new(AUTH_BACKEND, expiration=1000, xivo_user_uuid=xivo_user_uuid)
+        token_infos = auth.client().token.new(AUTH_BACKEND,
+                                              expiration=10,
+                                              backend_args={'xivo_user_uuid': xivo_user_uuid})
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url.replace('menu', 'lookup')}
@@ -136,7 +138,9 @@ class Lookup(AuthResource):
         if not xivo_user_uuid:
             return _error(404, 'No xivo_user_uuid found')
 
-        token_infos = auth.client().token.new(AUTH_BACKEND, expiration=10, xivo_user_uuid=xivo_user_uuid)
+        token_infos = auth.client().token.new(AUTH_BACKEND,
+                                              expiration=10,
+                                              backend_args={'xivo_user_uuid': xivo_user_uuid})
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url}
