@@ -70,7 +70,7 @@ class RestApi(object):
             _check_file_readable(self.config['certificate'])
             _check_file_readable(self.config['private_key'])
         except IOError as e:
-            logger.warning("HTTPS server won't start: {error}".format(error=e))
+            logger.warning("HTTPS server won't start: %s", e)
             enable_https = False
 
         wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
