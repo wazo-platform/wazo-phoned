@@ -14,7 +14,7 @@ debug: False
 auth:
     host: localhost
     port: 9497
-    secret: /etc/xivo-dird-phoned/authentication.yml
+    secret_file: /etc/xivo-dird-phoned/authentication.yml
 
 dird:
     host: localhost
