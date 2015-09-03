@@ -31,7 +31,7 @@ _DEFAULT_CONFIG = {
         'host': 'localhost',
         'port': 9489,
         'default_profile': 'default',
-        'verify_cert': '/usr/share/xivo-certs/server.crt'
+        'verify_certificate': '/usr/share/xivo-certs/server.crt'
     },
     'config_file': '/etc/xivo-dird-phoned/config.yml',
     'extra_config_files': '/etc/xivo-dird-phoned/conf.d/',

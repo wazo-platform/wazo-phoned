@@ -19,7 +19,7 @@ auth:
 dird:
     host: localhost
     port: 9489
-    verify_cert: '/usr/share/xivo-certs/server.crt'
+    verify_certificate: '/usr/share/xivo-certs/server.crt'  # True, False or CA Bundle
 
     # Profile to send to dird if phone has no profile
     default_profile: 'default_phone'

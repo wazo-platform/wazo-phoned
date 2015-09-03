@@ -56,9 +56,9 @@ class DirectoriesConfiguration(object):
         dird_host = dird_config['host']
         dird_port = dird_config['port']
         dird_default_profile = dird_config['default_profile']
-        dird_verify_cert = dird_config.get('verify_cert', True)
-        LookupMenu.configure(dird_host, dird_port, dird_verify_cert, dird_default_profile)
-        Lookup.configure(dird_host, dird_port, dird_verify_cert, dird_default_profile)
+        dird_verify_certificate = dird_config.get('verify_certificate', True)
+        LookupMenu.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
+        Lookup.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
         api.add_resource(LookupMenu, self.menu_url)
         api.add_resource(Lookup, self.lookup_url)
 
@@ -68,14 +68,14 @@ class LookupMenu(AuthResource):
     dird_default_profile = None
     dird_host = None
     dird_port = None
-    dird_verify_cert = None
+    dird_verify_certificate = None
 
     @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_cert, dird_default_profile):
+    def configure(cls, dird_host, dird_port, dird_verify_certificate, dird_default_profile):
         cls.dird_default_profile = dird_default_profile
         cls.dird_host = dird_host
         cls.dird_port = dird_port
-        cls.dird_verify_cert = dird_verify_cert
+        cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self):
         args = parser.parse_args()
@@ -115,7 +115,7 @@ class LookupMenu(AuthResource):
                                                                       path=request.path,
                                                                       profile=profile,
                                                                       vendor=vendor)
-        r = requests.get(url, headers=headers, verify=self.dird_verify_cert)
+        r = requests.get(url, headers=headers, verify=self.dird_verify_certificate)
         return Response(response=r.content,
                         content_type=r.headers['content-type'],
                         status=r.status_code)
@@ -126,14 +126,14 @@ class Lookup(AuthResource):
     dird_default_profile = None
     dird_host = None
     dird_port = None
-    dird_verify_cert = None
+    dird_verify_certificate = None
 
     @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_cert, dird_default_profile):
+    def configure(cls, dird_host, dird_port, dird_verify_certificate, dird_default_profile):
         cls.dird_default_profile = dird_default_profile
         cls.dird_host = dird_host
         cls.dird_port = dird_port
-        cls.dird_verify_cert = dird_verify_cert
+        cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self):
         args = parser.parse_args()
@@ -176,7 +176,7 @@ class Lookup(AuthResource):
                                                                              profile=profile,
                                                                              vendor=vendor,
                                                                              query=query)
-        r = requests.get(url, headers=headers, verify=self.dird_verify_cert)
+        r = requests.get(url, headers=headers, verify=self.dird_verify_certificate)
         return Response(response=r.content,
                         content_type=r.headers['content-type'],
                         status=r.status_code)

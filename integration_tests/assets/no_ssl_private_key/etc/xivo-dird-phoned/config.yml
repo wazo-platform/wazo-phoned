@@ -19,7 +19,7 @@ auth:
 dird:
     host: dird
     port: 9489
-    verify_cert: False
+    verify_certificate: False
     default_profile: default_phone
 
 # REST API server
