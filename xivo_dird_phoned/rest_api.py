@@ -63,8 +63,8 @@ class RestApi(object):
         http_enable = self.config['http_enable']
         https_enable = self.config['https_enable']
 
-        bind_addr_http = (self.config['listen'], self.config['port_http'])
-        bind_addr_https = (self.config['listen'], self.config['port_https'])
+        bind_addr_http = (self.config['listen'], self.config['http_port'])
+        bind_addr_https = (self.config['listen'], self.config['https_port'])
 
         try:
             _check_file_readable(self.config['certificate'])

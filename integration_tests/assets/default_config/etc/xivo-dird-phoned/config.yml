@@ -29,9 +29,9 @@ rest_api:
     listen: 0.0.0.0
 
     # Listening port
-    port_http: 9498
+    http_port: 9498
     http_enable: true
-    port_https: 9499
+    https_port: 9499
     https_enable: true
 
     # Authorizing subnets
@@ -44,5 +44,3 @@ rest_api:
 
     certificate: /usr/share/xivo-certs/server.crt
     private_key: /usr/share/xivo-certs/server.key
-
-
