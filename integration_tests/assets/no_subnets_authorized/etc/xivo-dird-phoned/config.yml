@@ -30,7 +30,9 @@ rest_api:
 
     # Listening port
     port_http: 9498
+    http_enable: true
     port_https: 9499
+    https_enable: true
 
     # Authorizing subnets
     # subnets_authorized:

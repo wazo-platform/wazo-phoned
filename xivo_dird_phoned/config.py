@@ -43,7 +43,9 @@ _DEFAULT_CONFIG = {
     'rest_api': {
         'listen': '0.0.0.0',
         'port_http': 9498,
+        'http_enable': True,
         'port_https': 9499,
+        'https_enable': True,
         'certificate': '/usr/share/xivo-certs/server.crt',
         'private_key': '/usr/share/xivo-certs/server.key',
         'subnets_authorized': ['127.0.0.1/24'],

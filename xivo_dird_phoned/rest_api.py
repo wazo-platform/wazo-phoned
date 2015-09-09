@@ -60,8 +60,8 @@ class RestApi(object):
 
     def run(self):
         self.api.init_app(self.app)
-        enable_http = True
-        enable_https = True
+        http_enable = self.config['http_enable']
+        https_enable = self.config['https_enable']
 
         bind_addr_http = (self.config['listen'], self.config['port_http'])
         bind_addr_https = (self.config['listen'], self.config['port_https'])
@@ -71,13 +71,13 @@ class RestApi(object):
             _check_file_readable(self.config['private_key'])
         except IOError as e:
             logger.warning("HTTPS server won't start: %s", e)
-            enable_https = False
+            https_enable = False
 
         wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
         cherrypy.config.update({'environment': 'production'})
         bus = Bus()
 
-        if enable_https:
+        if https_enable:
             ssl_adapter = BuiltinSSLAdapter(self.config['certificate'],
                                             self.config['private_key'])
             server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
@@ -86,16 +86,21 @@ class RestApi(object):
             ServerAdapter(bus, server_https).subscribe()
             logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
                          os.getuid(), bind_addr_https[0], bind_addr_https[1])
+        else:
+            logger.debug('HTTPS server is disabled')
 
-        if enable_http:
+        if http_enable:
             server_http = CherryPyWSGIServer(bind_addr=bind_addr_http,
                                              wsgi_app=wsgi_app)
             ServerAdapter(bus, server_http).subscribe()
             logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
                          os.getuid(), bind_addr_http[0], bind_addr_http[1])
+        else:
+            logger.debug('HTTP server is disabled')
 
-        if not enable_http and not enable_https:
+        if not http_enable and not https_enable:
             logger.critical('No server started')
+            exit()
 
         list_routes(self.app)
 
