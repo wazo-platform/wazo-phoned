@@ -25,9 +25,9 @@ from hamcrest import equal_to
 
 
 class TestSubnetsAuthorized(BaseDirdPhonedIntegrationTest):
-    asset = 'no_subnets_authorized'
+    asset = 'no_authorized_subnets'
 
-    def test_that_subnets_authorized_do_not_allowed_other_subnets_on_lookup(self):
+    def test_that_authorized_subnets_do_not_allowed_other_subnets_on_lookup(self):
         response = self.get_lookup_result(vendor=VALID_VENDOR,
                                           xivo_user_uuid=VALID_XIVO_USER_UUID,
                                           profile=DEFAULT_PROFILE,
@@ -35,21 +35,21 @@ class TestSubnetsAuthorized(BaseDirdPhonedIntegrationTest):
 
         assert_that(response.status_code, equal_to(401))
 
-    def test_that_subnets_authorized_do_not_allowed_other_subnets_on_menu(self):
+    def test_that_authorized_subnets_do_not_allowed_other_subnets_on_menu(self):
         result = self.get_menu_result(vendor=VALID_VENDOR,
                                       xivo_user_uuid=VALID_XIVO_USER_UUID,
                                       profile=DEFAULT_PROFILE)
 
         assert_that(result.status_code, equal_to(401))
 
-    def test_that_subnets_authorized_do_not_allowed_other_subnets_on_ssl_menu(self):
+    def test_that_authorized_subnets_do_not_allowed_other_subnets_on_ssl_menu(self):
         result = self.get_ssl_menu_result(vendor=VALID_VENDOR,
                                           xivo_user_uuid=VALID_XIVO_USER_UUID,
                                           profile=DEFAULT_PROFILE)
 
         assert_that(result.status_code, equal_to(401))
 
-    def test_that_subnets_authorized_do_not_allowed_other_subnets_on_ssl_lookup(self):
+    def test_that_authorized_subnets_do_not_allowed_other_subnets_on_ssl_lookup(self):
         response = self.get_ssl_lookup_result(vendor=VALID_VENDOR,
                                               xivo_user_uuid=VALID_XIVO_USER_UUID,
                                               profile=DEFAULT_PROFILE,

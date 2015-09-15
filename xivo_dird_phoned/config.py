@@ -48,7 +48,7 @@ _DEFAULT_CONFIG = {
         'https_enable': True,
         'certificate': '/usr/share/xivo-certs/server.crt',
         'private_key': '/usr/share/xivo-certs/server.key',
-        'subnets_authorized': ['127.0.0.1/24'],
+        'authorized_subnets': ['127.0.0.1/24'],
         'cors': {
             'enabled': True,
             'allow_headers': 'Content-Type'

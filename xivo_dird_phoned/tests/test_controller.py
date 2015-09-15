@@ -55,5 +55,5 @@ class TestController(TestCase):
         config['dird'].setdefault('port', '')
         config['dird'].setdefault('default_profile', '')
         config.setdefault('rest_api', {})
-        config['rest_api'].setdefault('subnets_authorized', [])
+        config['rest_api'].setdefault('authorized_subnets', [])
         return config
