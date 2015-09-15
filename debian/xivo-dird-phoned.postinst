@@ -2,10 +2,13 @@
 
 set -e
 
-LOG_FILENAME='/var/log/xivo-dird-phoned'
+LOG_FILENAME='/var/log/xivo-dird-phoned.log'
 
 case "$1" in
 	configure)
+		# remove the /var/log/xivo-dird-phoned file created before 15.16
+		rm -f '/var/log/xivo-dird-phoned'
+
 		# add user www-data
 		if ! getent passwd www-data > /dev/null ; then
 			echo 'Adding system user for www-data' 1>&2
