@@ -152,8 +152,7 @@ class MenuAutodetect(AuthResource):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
 
-        user_agent = request.headers.get('User-agent', '').lower()
-        vendor = _find_vendor_by_user_agent(user_agent)
+        vendor = _find_vendor_by_user_agent(request.headers.get('User-agent', ''))
         if not vendor:
             return _error(404, 'No vendor found')
 
@@ -235,8 +234,7 @@ class InputAutodetect(AuthResource):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
 
-        user_agent = request.headers.get('User-agent', '').lower()
-        vendor = _find_vendor_by_user_agent(user_agent)
+        vendor = _find_vendor_by_user_agent(request.headers.get('User-agent', ''))
         if not vendor:
             return _error(404, 'No vendor found')
 
@@ -329,8 +327,7 @@ class LookupAutodetect(AuthResource):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
 
-        user_agent = request.headers.get('User-agent', '').lower()
-        vendor = _find_vendor_by_user_agent(user_agent)
+        vendor = _find_vendor_by_user_agent(request.headers.get('User-agent', ''))
         if not vendor:
             return _error(404, 'No vendor found')
 
@@ -360,8 +357,9 @@ class LookupAutodetect(AuthResource):
         return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
 
 
-def _find_vendor_by_user_agent(user_agent):
+def _find_vendor_by_user_agent(raw_user_agent):
 
+    user_agent = raw_user_agent.lower()
     if 'aastra' in user_agent:
         # '/^Aastra((?:(?:67)?5[1357]|673[01])i(?: CT)?) /'
         return 'aastra'
