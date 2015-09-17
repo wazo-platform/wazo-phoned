@@ -17,6 +17,7 @@
 from .base_dird_phoned_integration_test import BaseDirdPhonedIntegrationTest
 from .base_dird_phoned_integration_test import DEFAULT_PROFILE
 from .base_dird_phoned_integration_test import VALID_TERM
+from .base_dird_phoned_integration_test import VALID_USER_AGENT
 from .base_dird_phoned_integration_test import VALID_VENDOR
 from .base_dird_phoned_integration_test import VALID_XIVO_USER_UUID
 
@@ -28,20 +29,50 @@ class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
 
     asset = 'default_config'
 
-    def test_that_menu_return_no_error_when_activate_ssl(self):
+    # Menu
+    def test_that_menu_return_no_error_when_query_ssl(self):
         response = self.get_ssl_menu_result(vendor=VALID_VENDOR,
                                             xivo_user_uuid=VALID_XIVO_USER_UUID,
                                             profile=DEFAULT_PROFILE)
 
         assert_that(response.status_code, equal_to(200))
 
-    def test_that_menu_return_error_when_no_vendor_or_user_agent(self):
-        response = self.get_menu_result(xivo_user_uuid=VALID_XIVO_USER_UUID,
+    def test_that_menu_return_no_error_when_query(self):
+        response = self.get_menu_result(vendor=VALID_VENDOR,
+                                        xivo_user_uuid=VALID_XIVO_USER_UUID,
                                         profile=DEFAULT_PROFILE)
 
-        assert_that(response.status_code, equal_to(404))
+        assert_that(response.status_code, equal_to(200))
 
-    def test_that_lookup_return_no_error_when_activate_ssl(self):
+    def test_that_menu_return_error_when_no_xivo_user_uuid(self):
+        response = self.get_menu_result(vendor=VALID_VENDOR,
+                                        profile=DEFAULT_PROFILE)
+
+        assert_that(response.status_code, equal_to(400))
+
+    # Input
+    def test_that_input_return_no_error_when_query_ssl(self):
+        response = self.get_ssl_input_result(vendor=VALID_VENDOR,
+                                             xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                             profile=DEFAULT_PROFILE)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_input_return_no_error_when_query(self):
+        response = self.get_input_result(vendor=VALID_VENDOR,
+                                         xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                         profile=DEFAULT_PROFILE)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_input_return_error_when_no_xivo_user_uuid(self):
+        response = self.get_input_result(vendor=VALID_VENDOR,
+                                         profile=DEFAULT_PROFILE)
+
+        assert_that(response.status_code, equal_to(400))
+
+    # Lookup
+    def test_that_lookup_return_no_error_when_query_ssl(self):
         response = self.get_ssl_lookup_result(vendor=VALID_VENDOR,
                                               xivo_user_uuid=VALID_XIVO_USER_UUID,
                                               profile=DEFAULT_PROFILE,
@@ -49,14 +80,7 @@ class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
 
         assert_that(response.status_code, equal_to(200))
 
-    def test_that_lookup_return_error_when_no_vendor_or_user_agent(self):
-        response = self.get_lookup_result(xivo_user_uuid=VALID_XIVO_USER_UUID,
-                                          profile=DEFAULT_PROFILE,
-                                          term=VALID_TERM)
-
-        assert_that(response.status_code, equal_to(404))
-
-    def test_that_lookup_return_no_error_when_no_term(self):
+    def test_that_lookup_return_no_error_when_query(self):
         response = self.get_lookup_result(vendor=VALID_VENDOR,
                                           xivo_user_uuid=VALID_XIVO_USER_UUID,
                                           profile=DEFAULT_PROFILE,
@@ -64,35 +88,74 @@ class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
 
         assert_that(response.status_code, equal_to(200))
 
-    # XXX Migration test
-    def test_that_menu_return_no_error_when_no_xivo_user_uuid(self):
-        response = self.get_menu_result(vendor=VALID_VENDOR, profile=DEFAULT_PROFILE)
-
-        assert_that(response.status_code, equal_to(200))
-
-    # XXX Migration test
-    def test_that_menu_return_no_error_when_no_vendor_but_user_agent(self):
-        response = self.get_menu_result(user_agent='Allegro',
-                                        xivo_user_uuid=VALID_XIVO_USER_UUID,
-                                        profile=DEFAULT_PROFILE)
-
-        assert_that(response.status_code, equal_to(200))
-
-    # XXX Migration test
-    def test_that_lookup_return_no_error_when_no_xivo_user_uuid(self):
+    def test_that_lookup_return_error_when_no_xivo_user_uuid(self):
         response = self.get_lookup_result(vendor=VALID_VENDOR,
                                           profile=DEFAULT_PROFILE,
                                           term=VALID_TERM)
 
+        assert_that(response.status_code, equal_to(400))
+
+    def test_that_lookup_return_error_when_no_term(self):
+        response = self.get_lookup_result(vendor=VALID_VENDOR,
+                                          xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                          profile=DEFAULT_PROFILE)
+
+        assert_that(response.status_code, equal_to(400))
+
+    # Menu autodetect
+    def test_that_menu_autodetect_return_no_error_when_query_ssl(self):
+        response = self.get_ssl_menu_autodetect_result(user_agent=VALID_USER_AGENT)
+
         assert_that(response.status_code, equal_to(200))
 
-    # XXX Migration test
-    def test_that_lookup_return_no_error_when_no_vendor_but_user_agent(self):
-        response = self.get_lookup_result(user_agent='Allegro',
-                                          profile=DEFAULT_PROFILE,
-                                          term=VALID_TERM)
+    def test_that_menu_autodetect_return_no_error_when_query(self):
+        response = self.get_menu_autodetect_result(user_agent=VALID_USER_AGENT)
 
         assert_that(response.status_code, equal_to(200))
+
+    def test_that_menu_autodetect_return_error_when_no_user_agent(self):
+        response = self.get_menu_autodetect_result()
+
+        assert_that(response.status_code, equal_to(404))
+
+    # Input autodetect
+    def test_that_input_autodetect_return_no_error_when_query_ssl(self):
+        response = self.get_ssl_input_autodetect_result(user_agent=VALID_USER_AGENT)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_input_autodetect_return_no_error_when_query(self):
+        response = self.get_input_autodetect_result(user_agent=VALID_USER_AGENT)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_input_autodetect_return_error_when_no_user_agent(self):
+        response = self.get_input_autodetect_result()
+
+        assert_that(response.status_code, equal_to(404))
+
+    # Lookup autodetect
+    def test_that_lookup_autodetect_return_no_error_when_query_ssl(self):
+        response = self.get_ssl_lookup_autodetect_result(user_agent=VALID_USER_AGENT,
+                                                         term=VALID_TERM)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_lookup_autodetect_return_no_error_when_query(self):
+        response = self.get_lookup_autodetect_result(user_agent=VALID_USER_AGENT,
+                                                     term=VALID_TERM)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_lookup_autodetect_return_error_when_no_user_agent(self):
+        response = self.get_lookup_autodetect_result(term=VALID_TERM)
+
+        assert_that(response.status_code, equal_to(404))
+
+    def test_that_lookup_autodetect_return_error_when_no_term(self):
+        response = self.get_lookup_autodetect_result(user_agent=VALID_USER_AGENT)
+
+        assert_that(response.status_code, equal_to(400))
 
 
 class TestAuthError(BaseDirdPhonedIntegrationTest):

@@ -27,8 +27,8 @@ class TestHTTP(TestCase):
         expected_result = 'cisco'
         user_agent_1 = 'xxx-allegro-alice-12356'
         user_agent_2 = 'xxx-cisco-alice-12356'
-        result_1 = http.find_vendor_by_user_agent(user_agent_1)
-        result_2 = http.find_vendor_by_user_agent(user_agent_2)
+        result_1 = http._find_vendor_by_user_agent(user_agent_1)
+        result_2 = http._find_vendor_by_user_agent(user_agent_2)
 
         assert_that(result_1, equal_to(expected_result))
         assert_that(result_2, equal_to(expected_result))
@@ -36,34 +36,34 @@ class TestHTTP(TestCase):
     def test_that_find_vendor_by_user_agent_return_vendor_aastra(self):
         expected_result = 'aastra'
         user_agent = 'xxx-aastra-alice-12356'
-        result = http.find_vendor_by_user_agent(user_agent)
+        result = http._find_vendor_by_user_agent(user_agent)
 
         assert_that(result, equal_to(expected_result))
 
     def test_that_find_vendor_by_user_agent_return_vendor_snom(self):
         expected_result = 'snom'
         user_agent = 'xxx-snom-alice-12356'
-        result = http.find_vendor_by_user_agent(user_agent)
+        result = http._find_vendor_by_user_agent(user_agent)
 
         assert_that(result, equal_to(expected_result))
 
     def test_that_find_vendor_by_user_agent_return_vendor_thomson(self):
         expected_result = 'thomson'
         user_agent = 'xxx-thomson-alice-12356'
-        result = http.find_vendor_by_user_agent(user_agent)
+        result = http._find_vendor_by_user_agent(user_agent)
 
         assert_that(result, equal_to(expected_result))
 
     def test_that_find_vendor_by_user_agent_return_vendor_yealink(self):
         expected_result = 'yealink'
         user_agent = 'xxx-yealink-alice-12356'
-        result = http.find_vendor_by_user_agent(user_agent)
+        result = http._find_vendor_by_user_agent(user_agent)
 
         assert_that(result, equal_to(expected_result))
 
     def test_that_find_vendor_by_user_agent_return_none_when_no_supported_user_agent(self):
         expected_result = None
         user_agent = 'xxx-not_supported-alice-12356'
-        result = http.find_vendor_by_user_agent(user_agent)
+        result = http._find_vendor_by_user_agent(user_agent)
 
         assert_that(result, equal_to(expected_result))

@@ -29,17 +29,33 @@ from xivo_dird_phoned import auth
 
 logger = logging.getLogger(__name__)
 
-AUTH_BACKEND = 'xivo_service'
 
 parser = reqparse.RequestParser()
-parser.add_argument('limit', type=int, required=False, help='limit cannot be converted', location='args')
-parser.add_argument('offset', type=int, required=False, help='offset cannot be converted', location='args')
-parser.add_argument('profile', type=unicode, required=False, location='args')
-parser.add_argument('term', type=unicode, required=False, location='args')
-parser.add_argument('vendor', type=unicode, required=False, location='args')
-parser.add_argument('xivo_user_uuid', type=unicode, required=False, location='args')
+parser.add_argument('xivo_user_uuid', type=unicode, required=True, location='args')
 
-# XXX Migration code
+# TODO Use this when the flask_restful will be in version >= 3.2
+# parser_lookup = parser.copy()
+parser_lookup = reqparse.RequestParser()
+parser_lookup.add_argument('xivo_user_uuid', type=unicode, required=True, location='args')
+
+parser_lookup.add_argument('limit', type=int, required=False, help='limit cannot be converted', location='args')
+parser_lookup.add_argument('offset', type=int, required=False, help='offset cannot be converted', location='args')
+parser_lookup.add_argument('term', type=unicode, required=True, help='term is missing', location='args')
+
+# TODO Use this when the flask_restful will be in version >= 3.2
+# parser_lookup_autodetect = parser_lookup.copy()
+# parser_lookup_autodetect.remove_argument('xivo_user_uuid')
+parser_lookup_autodetect = reqparse.RequestParser()
+parser_lookup_autodetect.add_argument('limit', type=int, required=False,
+                                      help='limit cannot be converted', location='args')
+parser_lookup_autodetect.add_argument('offset', type=int, required=False,
+                                      help='offset cannot be converted', location='args')
+parser_lookup_autodetect.add_argument('term', type=unicode, required=True,
+                                      help='term is missing', location='args')
+
+AUTH_BACKEND = 'xivo_service'
+AUTH_EXPIRATION = 10
+DIRD_API_VERSION = '0.1'
 FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
 
 
@@ -51,79 +67,74 @@ def _error(code, msg):
 
 class DirectoriesConfiguration(object):
 
-    menu_url = '/directories/menu'
-    lookup_url = '/directories/lookup'
+    menu_url = '/directories/menu/<profile>/<vendor>'
+    input_url = '/directories/input/<profile>/<vendor>'
+    lookup_url = '/directories/lookup/<profile>/<vendor>'
+    menu_autodetect_url = '/directories/menu/autodetect'
+    input_autodetect_url = '/directories/input/autodetect'
+    lookup_autodetect_url = '/directories/lookup/autodetect'
 
     def __init__(self, dird_config):
         dird_host = dird_config['host']
         dird_port = dird_config['port']
         dird_default_profile = dird_config['default_profile']
         dird_verify_certificate = dird_config.get('verify_certificate', True)
-        LookupMenu.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
-        Lookup.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
-        api.add_resource(LookupMenu, self.menu_url)
+
+        Menu.configure(dird_host, dird_port, dird_verify_certificate)
+        Input.configure(dird_host, dird_port, dird_verify_certificate)
+        Lookup.configure(dird_host, dird_port, dird_verify_certificate)
+        api.add_resource(Menu, self.menu_url)
+        api.add_resource(Input, self.input_url)
         api.add_resource(Lookup, self.lookup_url)
 
+        MenuAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
+        InputAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
+        LookupAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
+        api.add_resource(MenuAutodetect, self.menu_autodetect_url)
+        api.add_resource(InputAutodetect, self.input_autodetect_url)
+        api.add_resource(LookupAutodetect, self.lookup_autodetect_url)
 
-class LookupMenu(AuthResource):
 
-    dird_default_profile = None
+class Menu(AuthResource):
+
     dird_host = None
     dird_port = None
     dird_verify_certificate = None
 
     @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_certificate, dird_default_profile):
-        cls.dird_default_profile = dird_default_profile
+    def configure(cls, dird_host, dird_port, dird_verify_certificate):
         cls.dird_host = dird_host
         cls.dird_port = dird_port
         cls.dird_verify_certificate = dird_verify_certificate
 
-    def get(self):
+    def get(self, profile, vendor):
         args = parser.parse_args()
-        profile = args['profile']
-        vendor = args['vendor']
         xivo_user_uuid = args['xivo_user_uuid']
 
-        # XXX Migration code
-        if not vendor:
-            user_agent = request.headers.get('User-agent', '').lower()
-            vendor = find_vendor_by_user_agent(user_agent)
-        # XXX Migration code
-        if not xivo_user_uuid:
-            xivo_user_uuid = FAKE_XIVO_USER_UUID
-        # XXX Migration code
-        if not profile:
-            profile = self.dird_default_profile
-
-        if not vendor:
-            return _error(404, 'No vendor found')
-        if not xivo_user_uuid:
-            return _error(404, 'No xivo_user_uuid found')
-
         try:
-            token_infos = auth.client().token.new(AUTH_BACKEND,
-                                                  expiration=10,
-                                                  backend_args={'xivo_user_uuid': xivo_user_uuid})
+            backend_args = {'xivo_user_uuid': xivo_user_uuid}
+            token_infos = auth.client().token.new(AUTH_BACKEND, expiration=AUTH_EXPIRATION, backend_args=backend_args)
         except requests.RequestException as e:
             message = 'Could not connect to authentication server: {error}'.format(error=e)
             logger.exception(message)
             return _error(503, message)
 
         headers = {'X-Auth-Token': token_infos['token'],
-                   'Proxy-URL': request.base_url.replace('menu', 'lookup')}
-        url = 'https://{host}:{port}{path}/{profile}/{vendor}'.format(host=self.dird_host,
-                                                                      port=self.dird_port,
-                                                                      path=request.path,
-                                                                      profile=profile,
-                                                                      vendor=vendor)
-        r = requests.get(url, headers=headers, verify=self.dird_verify_certificate)
-        return Response(response=r.content,
-                        content_type=r.headers['content-type'],
-                        status=r.status_code)
+                   'Proxy-URL': request.base_url.replace('menu', 'input', 1)}
+        url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{vendor}'
+        r = requests.get(url.format(host=self.dird_host,
+                                    port=self.dird_port,
+                                    version=DIRD_API_VERSION,
+                                    profile=profile,
+                                    vendor=vendor),
+                         headers=headers,
+                         verify=self.dird_verify_certificate)
+
+        return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
 
 
-class Lookup(AuthResource):
+# XXX Migration code
+class MenuAutodetect(AuthResource):
 
     dird_default_profile = None
     dird_host = None
@@ -138,34 +149,141 @@ class Lookup(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self):
-        args = parser.parse_args()
-        limit = args['limit']
-        offset = args['offset']
-        profile = args['profile']
-        term = args['term']
-        vendor = args['vendor']
-        xivo_user_uuid = args['xivo_user_uuid']
+        xivo_user_uuid = FAKE_XIVO_USER_UUID
+        profile = self.dird_default_profile
 
-        # XXX Migration code
-        if not vendor:
-            user_agent = request.headers.get('User-agent', '').lower()
-            vendor = find_vendor_by_user_agent(user_agent)
-        # XXX Migration code
-        if not xivo_user_uuid:
-            xivo_user_uuid = FAKE_XIVO_USER_UUID
-        # XXX Migration code
-        if not profile:
-            profile = self.dird_default_profile
-
+        user_agent = request.headers.get('User-agent', '').lower()
+        vendor = _find_vendor_by_user_agent(user_agent)
         if not vendor:
             return _error(404, 'No vendor found')
-        if not xivo_user_uuid:
-            return _error(404, 'No xivo_user_uuid found')
 
         try:
-            token_infos = auth.client().token.new(AUTH_BACKEND,
-                                                  expiration=10,
-                                                  backend_args={'xivo_user_uuid': xivo_user_uuid})
+            backend_args = {'xivo_user_uuid': xivo_user_uuid}
+            token_infos = auth.client().token.new(AUTH_BACKEND, expiration=AUTH_EXPIRATION, backend_args=backend_args)
+        except requests.RequestException as e:
+            message = 'Could not connect to authentication server: {error}'.format(error=e)
+            logger.exception(message)
+            return _error(503, message)
+
+        headers = {'X-Auth-Token': token_infos['token'],
+                   'Proxy-URL': request.base_url.replace('menu', 'input', 1)}
+        url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{vendor}'
+        r = requests.get(url.format(host=self.dird_host,
+                                    port=self.dird_port,
+                                    version=DIRD_API_VERSION,
+                                    profile=profile,
+                                    vendor=vendor),
+                         headers=headers,
+                         verify=self.dird_verify_certificate)
+
+        return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
+
+
+class Input(AuthResource):
+
+    dird_host = None
+    dird_port = None
+    dird_verify_certificate = None
+
+    @classmethod
+    def configure(cls, dird_host, dird_port, dird_verify_certificate):
+        cls.dird_host = dird_host
+        cls.dird_port = dird_port
+        cls.dird_verify_certificate = dird_verify_certificate
+
+    def get(self, profile, vendor):
+        args = parser.parse_args()
+        xivo_user_uuid = args['xivo_user_uuid']
+
+        try:
+            backend_args = {'xivo_user_uuid': xivo_user_uuid}
+            token_infos = auth.client().token.new(AUTH_BACKEND, expiration=AUTH_EXPIRATION, backend_args=backend_args)
+        except requests.RequestException as e:
+            message = 'Could not connect to authentication server: {error}'.format(error=e)
+            logger.exception(message)
+            return _error(503, message)
+
+        headers = {'X-Auth-Token': token_infos['token'],
+                   'Proxy-URL': request.base_url.replace('input', 'lookup', 1)}
+        url = 'https://{host}:{port}/{version}/directories/input/{profile}/{vendor}'
+        r = requests.get(url.format(host=self.dird_host,
+                                    port=self.dird_port,
+                                    version=DIRD_API_VERSION,
+                                    profile=profile,
+                                    vendor=vendor),
+                         headers=headers,
+                         verify=self.dird_verify_certificate)
+
+        return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
+
+
+class InputAutodetect(AuthResource):
+
+    dird_default_profile = None
+    dird_host = None
+    dird_port = None
+    dird_verify_certificate = None
+
+    @classmethod
+    def configure(cls, dird_host, dird_port, dird_verify_certificate, dird_default_profile):
+        cls.dird_default_profile = dird_default_profile
+        cls.dird_host = dird_host
+        cls.dird_port = dird_port
+        cls.dird_verify_certificate = dird_verify_certificate
+
+    def get(self):
+        xivo_user_uuid = FAKE_XIVO_USER_UUID
+        profile = self.dird_default_profile
+
+        user_agent = request.headers.get('User-agent', '').lower()
+        vendor = _find_vendor_by_user_agent(user_agent)
+        if not vendor:
+            return _error(404, 'No vendor found')
+
+        try:
+            backend_args = {'xivo_user_uuid': xivo_user_uuid}
+            token_infos = auth.client().token.new(AUTH_BACKEND, expiration=AUTH_EXPIRATION, backend_args=backend_args)
+        except requests.RequestException as e:
+            message = 'Could not connect to authentication server: {error}'.format(error=e)
+            logger.exception(message)
+            return _error(503, message)
+
+        headers = {'X-Auth-Token': token_infos['token'],
+                   'Proxy-URL': request.base_url.replace('input', 'lookup', 1)}
+        url = 'https://{host}:{port}/{version}/directories/input/{profile}/{vendor}'
+        r = requests.get(url.format(host=self.dird_host,
+                                    port=self.dird_port,
+                                    version=DIRD_API_VERSION,
+                                    profile=profile,
+                                    vendor=vendor),
+                         headers=headers,
+                         verify=self.dird_verify_certificate)
+
+        return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
+
+
+class Lookup(AuthResource):
+
+    dird_host = None
+    dird_port = None
+    dird_verify_certificate = None
+
+    @classmethod
+    def configure(cls, dird_host, dird_port, dird_verify_certificate):
+        cls.dird_host = dird_host
+        cls.dird_port = dird_port
+        cls.dird_verify_certificate = dird_verify_certificate
+
+    def get(self, profile, vendor):
+        args = parser_lookup.parse_args()
+        limit = args['limit']
+        offset = args['offset']
+        term = args['term']
+        xivo_user_uuid = args['xivo_user_uuid']
+
+        try:
+            backend_args = {'xivo_user_uuid': xivo_user_uuid}
+            token_infos = auth.client().token.new(AUTH_BACKEND, expiration=AUTH_EXPIRATION, backend_args=backend_args)
         except requests.RequestException as e:
             message = 'Could not connect to authentication server: {error}'.format(error=e)
             logger.exception(message)
@@ -173,24 +291,76 @@ class Lookup(AuthResource):
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url}
-        query = []
-        query.append('term={term}'.format(term=term)) if term else None
+        query = ['term={term}'.format(term=term)]
         query.append('limit={limit}'.format(limit=limit)) if limit else None
         query.append('offset={offset}'.format(offset=offset)) if offset else None
-        url = 'https://{host}:{port}{path}/{profile}/{vendor}?{query}'.format(host=self.dird_host,
-                                                                              port=self.dird_port,
-                                                                              path=request.path,
-                                                                              profile=profile,
-                                                                              vendor=vendor,
-                                                                              query='&'.join(query))
-        r = requests.get(url, headers=headers, verify=self.dird_verify_certificate)
-        return Response(response=r.content,
-                        content_type=r.headers['content-type'],
-                        status=r.status_code)
+        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{vendor}?{query}'
+        r = requests.get(url.format(host=self.dird_host,
+                                    port=self.dird_port,
+                                    version=DIRD_API_VERSION,
+                                    profile=profile,
+                                    vendor=vendor,
+                                    query='&'.join(query)),
+                         headers=headers,
+                         verify=self.dird_verify_certificate)
+
+        return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
 
 
-# XXX Migration code
-def find_vendor_by_user_agent(user_agent):
+class LookupAutodetect(AuthResource):
+
+    dird_default_profile = None
+    dird_host = None
+    dird_port = None
+    dird_verify_certificate = None
+
+    @classmethod
+    def configure(cls, dird_host, dird_port, dird_verify_certificate, dird_default_profile):
+        cls.dird_default_profile = dird_default_profile
+        cls.dird_host = dird_host
+        cls.dird_port = dird_port
+        cls.dird_verify_certificate = dird_verify_certificate
+
+    def get(self):
+        args = parser_lookup_autodetect.parse_args()
+        limit = args['limit']
+        offset = args['offset']
+        term = args['term']
+        xivo_user_uuid = FAKE_XIVO_USER_UUID
+        profile = self.dird_default_profile
+
+        user_agent = request.headers.get('User-agent', '').lower()
+        vendor = _find_vendor_by_user_agent(user_agent)
+        if not vendor:
+            return _error(404, 'No vendor found')
+
+        try:
+            backend_args = {'xivo_user_uuid': xivo_user_uuid}
+            token_infos = auth.client().token.new(AUTH_BACKEND, expiration=AUTH_EXPIRATION, backend_args=backend_args)
+        except requests.RequestException as e:
+            message = 'Could not connect to authentication server: {error}'.format(error=e)
+            logger.exception(message)
+            return _error(503, message)
+
+        headers = {'X-Auth-Token': token_infos['token'],
+                   'Proxy-URL': request.base_url}
+        query = ['term={term}'.format(term=term)]
+        query.append('limit={limit}'.format(limit=limit)) if limit else None
+        query.append('offset={offset}'.format(offset=offset)) if offset else None
+        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{vendor}?{query}'
+        r = requests.get(url.format(host=self.dird_host,
+                                    port=self.dird_port,
+                                    version=DIRD_API_VERSION,
+                                    profile=profile,
+                                    vendor=vendor,
+                                    query='&'.join(query)),
+                         headers=headers,
+                         verify=self.dird_verify_certificate)
+
+        return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
+
+
+def _find_vendor_by_user_agent(user_agent):
 
     if 'aastra' in user_agent:
         # '/^Aastra((?:(?:67)?5[1357]|673[01])i(?: CT)?) /'

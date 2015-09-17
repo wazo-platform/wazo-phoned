@@ -36,6 +36,7 @@ CA_CERT = os.path.join(ASSETS_ROOT, '_common', 'ssl', 'server.crt')
 
 DEFAULT_PROFILE = 'default_phone'
 VALID_TERM = 'toto'
+VALID_USER_AGENT = 'Allegro-Software-WebClient/4.34'
 VALID_VENDOR = 'cisco'
 VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
 
@@ -85,59 +86,98 @@ class BaseDirdPhonedIntegrationTest(unittest.TestCase):
         cls.stop_dird_phoned_with_asset()
 
     @classmethod
-    def get_menu_result(self, vendor=None, xivo_user_uuid=None, profile=None, user_agent=None):
+    def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
         query = []
-        query.append('profile={}'.format(profile)) if profile else None
-        query.append('vendor={}'.format(vendor)) if vendor else None
         query.append('xivo_user_uuid={}'.format(xivo_user_uuid)) if xivo_user_uuid else None
-        headers = {}
-        headers.update({'User-Agent': user_agent}) if user_agent else None
-        url = u'http://localhost:9498/0.1/directories/menu?{query}'
-        result = requests.get(url.format(query='&'.join(query)),
-                              headers=headers)
+        url = u'http://localhost:9498/0.1/directories/menu/{profile}/{vendor}?{query}'
+        result = requests.get(url.format(profile=profile, vendor=vendor, query='&'.join(query)))
         return result
 
     @classmethod
-    def get_ssl_menu_result(self, vendor=None, xivo_user_uuid=None, profile=None, user_agent=None):
+    def get_ssl_menu_result(self, profile, vendor, xivo_user_uuid=None):
         query = []
-        query.append('profile={}'.format(profile)) if profile else None
-        query.append('vendor={}'.format(vendor)) if vendor else None
         query.append('xivo_user_uuid={}'.format(xivo_user_uuid)) if xivo_user_uuid else None
-        headers = {}
-        headers.update({'User-Agent': user_agent}) if user_agent else None
-        url = u'https://localhost:9499/0.1/directories/menu?{query}'
-        result = requests.get(url.format(query='&'.join(query)),
-                              headers=headers,
+        url = u'https://localhost:9499/0.1/directories/menu/{profile}/{vendor}?{query}'
+        result = requests.get(url.format(profile=profile, vendor=vendor, query='&'.join(query)),
                               verify=False)
         return result
 
     @classmethod
-    def get_lookup_result(self, vendor=None, xivo_user_uuid=None, profile=None, term=None, user_agent=None):
-        query = []
-        query.append('vendor={}'.format(vendor)) if vendor else None
-        query.append('xivo_user_uuid={}'.format(xivo_user_uuid)) if xivo_user_uuid else None
-        query.append('profile={}'.format(profile)) if profile else None
-        query.append('term={}'.format(term)) if term else None
-        headers = {}
-        headers.update({'User-Agent': user_agent}) if user_agent else None
-        url = u'http://localhost:9498/0.1/directories/lookup?{query}'
-        result = requests.get(url.format(profile=profile,
-                                         query='&'.join(query)),
-                              headers=headers)
+    def get_menu_autodetect_result(self, user_agent=None):
+        headers = {'User-Agent': user_agent} if user_agent else ''
+        url = u'http://localhost:9498/0.1/directories/menu/autodetect'
+        result = requests.get(url, headers=headers)
         return result
 
     @classmethod
-    def get_ssl_lookup_result(self, vendor=None, xivo_user_uuid=None, profile=None, term=None, user_agent=None):
+    def get_ssl_menu_autodetect_result(self, user_agent=None):
+        headers = {'User-Agent': user_agent} if user_agent else ''
+        url = u'https://localhost:9499/0.1/directories/menu/autodetect'
+        result = requests.get(url, headers=headers, verify=False)
+        return result
+
+    @classmethod
+    def get_input_result(self, profile, vendor, xivo_user_uuid=None):
         query = []
-        query.append('vendor={}'.format(vendor)) if vendor else None
         query.append('xivo_user_uuid={}'.format(xivo_user_uuid)) if xivo_user_uuid else None
-        query.append('profile={}'.format(profile)) if profile else None
-        query.append('term={}'.format(term)) if term else None
-        headers = {}
-        headers.update({'User-Agent': user_agent}) if user_agent else None
-        url = u'https://localhost:9499/0.1/directories/lookup?{query}'
-        result = requests.get(url.format(profile=profile,
-                                         query='&'.join(query)),
-                              headers=headers,
+        url = u'http://localhost:9498/0.1/directories/input/{profile}/{vendor}?{query}'
+        result = requests.get(url.format(profile=profile, vendor=vendor, query='&'.join(query)))
+        return result
+
+    @classmethod
+    def get_ssl_input_result(self, profile, vendor, xivo_user_uuid=None):
+        query = []
+        query.append('xivo_user_uuid={}'.format(xivo_user_uuid)) if xivo_user_uuid else None
+        url = u'https://localhost:9499/0.1/directories/input/{profile}/{vendor}?{query}'
+        result = requests.get(url.format(profile=profile, vendor=vendor, query='&'.join(query)),
                               verify=False)
+        return result
+
+    @classmethod
+    def get_input_autodetect_result(self, user_agent=None):
+        headers = {'User-Agent': user_agent} if user_agent else ''
+        url = u'http://localhost:9498/0.1/directories/input/autodetect'
+        result = requests.get(url, headers=headers)
+        return result
+
+    @classmethod
+    def get_ssl_input_autodetect_result(self, user_agent=None):
+        headers = {'User-Agent': user_agent} if user_agent else ''
+        url = u'https://localhost:9499/0.1/directories/input/autodetect'
+        result = requests.get(url, headers=headers, verify=False)
+        return result
+
+    @classmethod
+    def get_lookup_result(self, profile, vendor, xivo_user_uuid=None, term=None):
+        query = []
+        query.append('xivo_user_uuid={}'.format(xivo_user_uuid)) if xivo_user_uuid else None
+        query.append('term={}'.format(term)) if term else None
+        url = u'http://localhost:9498/0.1/directories/lookup/{profile}/{vendor}?{query}'
+        result = requests.get(url.format(profile=profile, vendor=vendor, query='&'.join(query)))
+        return result
+
+    @classmethod
+    def get_lookup_autodetect_result(self, term=None, user_agent=None):
+        query = 'term={term}'.format(term=term) if term else ''
+        headers = {'User-Agent': user_agent} if user_agent else ''
+        url = u'http://localhost:9498/0.1/directories/lookup/autodetect?{query}'
+        result = requests.get(url.format(query=query), headers=headers)
+        return result
+
+    @classmethod
+    def get_ssl_lookup_result(self, profile, vendor, xivo_user_uuid=None, term=None):
+        query = []
+        query.append('xivo_user_uuid={}'.format(xivo_user_uuid)) if xivo_user_uuid else None
+        query.append('term={}'.format(term)) if term else None
+        url = u'https://localhost:9499/0.1/directories/lookup/{profile}/{vendor}?{query}'
+        result = requests.get(url.format(profile=profile, vendor=vendor, query='&'.join(query)),
+                              verify=False)
+        return result
+
+    @classmethod
+    def get_ssl_lookup_autodetect_result(self, term=None, user_agent=None):
+        query = 'term={term}'.format(term=term) if term else ''
+        headers = {'User-Agent': user_agent} if user_agent else ''
+        url = u'https://localhost:9499/0.1/directories/lookup/autodetect?{query}'
+        result = requests.get(url.format(query=query), headers=headers, verify=False)
         return result
