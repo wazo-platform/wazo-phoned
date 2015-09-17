@@ -32,6 +32,8 @@ logger = logging.getLogger(__name__)
 AUTH_BACKEND = 'xivo_service'
 
 parser = reqparse.RequestParser()
+parser.add_argument('limit', type=int, required=False, help='limit cannot be converted', location='args')
+parser.add_argument('offset', type=int, required=False, help='offset cannot be converted', location='args')
 parser.add_argument('profile', type=unicode, required=False, location='args')
 parser.add_argument('term', type=unicode, required=False, location='args')
 parser.add_argument('vendor', type=unicode, required=False, location='args')
@@ -137,6 +139,8 @@ class Lookup(AuthResource):
 
     def get(self):
         args = parser.parse_args()
+        limit = args['limit']
+        offset = args['offset']
         profile = args['profile']
         term = args['term']
         vendor = args['vendor']
@@ -169,13 +173,16 @@ class Lookup(AuthResource):
 
         headers = {'X-Auth-Token': token_infos['token'],
                    'Proxy-URL': request.base_url}
-        query = '?term={term}'.format(term=term) if term else ''
-        url = 'https://{host}:{port}{path}/{profile}/{vendor}{query}'.format(host=self.dird_host,
-                                                                             port=self.dird_port,
-                                                                             path=request.path,
-                                                                             profile=profile,
-                                                                             vendor=vendor,
-                                                                             query=query)
+        query = []
+        query.append('term={term}'.format(term=term)) if term else None
+        query.append('limit={limit}'.format(limit=limit)) if limit else None
+        query.append('offset={offset}'.format(offset=offset)) if offset else None
+        url = 'https://{host}:{port}{path}/{profile}/{vendor}?{query}'.format(host=self.dird_host,
+                                                                              port=self.dird_port,
+                                                                              path=request.path,
+                                                                              profile=profile,
+                                                                              vendor=vendor,
+                                                                              query='&'.join(query))
         r = requests.get(url, headers=headers, verify=self.dird_verify_certificate)
         return Response(response=r.content,
                         content_type=r.headers['content-type'],
