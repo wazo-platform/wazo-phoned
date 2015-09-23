@@ -366,6 +366,8 @@ def _find_vendor_by_user_agent(raw_user_agent):
     elif 'cisco' in user_agent or 'allegro' in user_agent:
         # '/Allegro-/i'
         return 'cisco'
+    elif 'polycom' in user_agent:
+        return 'polycom'
     elif 'snom' in user_agent:
         # '/(snom3[026]0)-/'
         return 'snom'

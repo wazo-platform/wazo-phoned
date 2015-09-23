@@ -40,6 +40,13 @@ class TestHTTP(TestCase):
 
         assert_that(result, equal_to(expected_result))
 
+    def test_that_find_vendor_by_user_agent_return_vendor_polycom(self):
+        expected_result = 'polycom'
+        user_agent = 'xxx-Polycom-webBrowser-12356'
+        result = http._find_vendor_by_user_agent(user_agent)
+
+        assert_that(result, equal_to(expected_result))
+
     def test_that_find_vendor_by_user_agent_return_vendor_snom(self):
         expected_result = 'snom'
         user_agent = 'xxx-Snom-alice-12356'
