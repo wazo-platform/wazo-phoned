@@ -152,7 +152,7 @@ class MenuAutodetect(AuthResource):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
 
-        vendor = _find_vendor_by_user_agent(request.headers.get('User-agent', ''))
+        vendor = _find_vendor_by_user_agent(request.headers.get('User-Agent', ''))
         if not vendor:
             return _error(404, 'No vendor found')
 
@@ -234,7 +234,7 @@ class InputAutodetect(AuthResource):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
 
-        vendor = _find_vendor_by_user_agent(request.headers.get('User-agent', ''))
+        vendor = _find_vendor_by_user_agent(request.headers.get('User-Agent', ''))
         if not vendor:
             return _error(404, 'No vendor found')
 
@@ -327,7 +327,7 @@ class LookupAutodetect(AuthResource):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
 
-        vendor = _find_vendor_by_user_agent(request.headers.get('User-agent', ''))
+        vendor = _find_vendor_by_user_agent(request.headers.get('User-Agent', ''))
         if not vendor:
             return _error(404, 'No vendor found')
 
