@@ -49,7 +49,6 @@ class BaseDirdPhonedIntegrationTest(unittest.TestCase):
         asset_path = os.path.join(ASSETS_ROOT, cls.asset)
         cls.cur_dir = os.getcwd()
         os.chdir(asset_path)
-        print asset_path
         cls._run_cmd('docker-compose rm --force')
         cls._run_cmd('docker-compose run --rm sync')
 
