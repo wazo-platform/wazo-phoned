@@ -19,6 +19,11 @@ def menu_get(profile):
     return '', 200
 
 
+@app.route('/0.1/directories/input/<profile>/{vendor}'.format(vendor=VALID_VENDOR), methods=['GET'])
+def input_get(profile):
+    return '', 200
+
+
 @app.route('/0.1/directories/lookup/<profile>/{vendor}'.format(vendor=VALID_VENDOR), methods=['GET'])
 def lookup_get(profile):
     return '', 200
