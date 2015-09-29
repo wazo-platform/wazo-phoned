@@ -21,7 +21,7 @@ import requests
 from flask import request
 from flask import Response
 from flask_restful import reqparse
-from requests.exceptions import ConnectionError
+from requests.exceptions import RequestException
 from time import time
 from xivo_dird_phoned.rest_api import api
 from xivo_dird_phoned.auth_remote_addr import AuthResource
@@ -60,7 +60,7 @@ DIRD_API_VERSION = '0.1'
 FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
 
 
-class XivoAuthConnectionError(ConnectionError):
+class XivoAuthConnectionError(RequestException):
 
     code = 503
 
@@ -68,7 +68,7 @@ class XivoAuthConnectionError(ConnectionError):
         return 'Connection to XiVO Auth failed'
 
 
-class XivoDirdConnectionError(ConnectionError):
+class XivoDirdConnectionError(RequestException):
 
     code = 503
 
@@ -139,7 +139,7 @@ class Menu(AuthResource):
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
-        except ConnectionError as e:
+        except RequestException as e:
             return _error(e.code, str(e))
 
 
@@ -177,7 +177,7 @@ class MenuAutodetect(AuthResource):
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
-        except ConnectionError as e:
+        except RequestException as e:
             return _error(e.code, str(e))
 
 
@@ -208,7 +208,7 @@ class Input(AuthResource):
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
-        except ConnectionError as e:
+        except RequestException as e:
             return _error(e.code, str(e))
 
 
@@ -245,7 +245,7 @@ class InputAutodetect(AuthResource):
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
-        except ConnectionError as e:
+        except RequestException as e:
             return _error(e.code, str(e))
 
 
@@ -281,7 +281,7 @@ class Lookup(AuthResource):
                                   headers=headers,
                                   params=params,
                                   verify=self.dird_verify_certificate)
-        except ConnectionError as e:
+        except RequestException as e:
             return _error(e.code, str(e))
 
 
@@ -324,7 +324,7 @@ class LookupAutodetect(AuthResource):
                                   headers=headers,
                                   params=params,
                                   verify=self.dird_verify_certificate)
-        except ConnectionError as e:
+        except RequestException as e:
             return _error(e.code, str(e))
 
 
@@ -367,7 +367,7 @@ def _create_token(xivo_user_uuid):
         token_infos = auth.client().token.new(AUTH_BACKEND,
                                               expiration=AUTH_EXPIRATION,
                                               backend_args={'xivo_user_uuid': xivo_user_uuid})
-    except ConnectionError as e:
+    except RequestException as e:
         logger.exception(e)
         raise XivoAuthConnectionError()
 
@@ -377,7 +377,7 @@ def _create_token(xivo_user_uuid):
 def _response_dird(url, headers, verify, params=None):
     try:
         r = requests.get(url, headers=headers, verify=verify, params=params)
-    except ConnectionError as e:
+    except RequestException as e:
         logger.exception(e)
         raise XivoDirdConnectionError()
 
