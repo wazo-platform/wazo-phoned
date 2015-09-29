@@ -356,7 +356,6 @@ def _build_next_url(current):
     if current == 'input':
         return request.base_url.replace('input', 'lookup', 1)
     if current == 'lookup':
-        print request.base_url
         return request.base_url
     return None
 
