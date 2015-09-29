@@ -22,7 +22,7 @@ from hamcrest import contains_string
 from .base_dird_phoned_integration_test import BaseDirdPhonedIntegrationTest
 
 
-class TestHTTPSMissingCertificate(BaseDirdPhonedIntegrationTest):
+class TestMissingAuthenticationFile(BaseDirdPhonedIntegrationTest):
     asset = 'no_authentication'
 
     def test_given_inexisting_authentication_when_dird_phoned_starts_then_dird_phoned_stops(self):

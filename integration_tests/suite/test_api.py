@@ -168,3 +168,15 @@ class TestAuthError(BaseDirdPhonedIntegrationTest):
                                         profile=DEFAULT_PROFILE)
 
         assert_that(response.status_code, equal_to(503))
+
+
+class TestDirdError(BaseDirdPhonedIntegrationTest):
+
+    asset = 'no_dird_server'
+
+    def test_no_dird_server_gives_503(self):
+        response = self.get_menu_result(vendor=VALID_VENDOR,
+                                        xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                        profile=DEFAULT_PROFILE)
+
+        assert_that(response.status_code, equal_to(503))
