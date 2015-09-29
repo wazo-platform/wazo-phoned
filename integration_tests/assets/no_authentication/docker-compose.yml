@@ -5,7 +5,7 @@ sync:
     - dird
     - phoned
   environment:
-    PORTS: "9498 9499 9489 9497"
+    PORTS: "9489 9497"
 phoned:
   image: xivo-dird-phoned-test
   links:
