@@ -34,25 +34,13 @@ logger = logging.getLogger(__name__)
 parser = reqparse.RequestParser()
 parser.add_argument('xivo_user_uuid', type=unicode, required=True, location='args')
 
-# TODO Use this when the flask_restful will be in version >= 3.2
-# parser_lookup = parser.copy()
-parser_lookup = reqparse.RequestParser()
-parser_lookup.add_argument('xivo_user_uuid', type=unicode, required=True, location='args')
-
+parser_lookup = parser.copy()
 parser_lookup.add_argument('limit', type=int, required=False, help='limit cannot be converted', location='args')
 parser_lookup.add_argument('offset', type=int, required=False, help='offset cannot be converted', location='args')
 parser_lookup.add_argument('term', type=unicode, required=True, help='term is missing', location='args')
 
-# TODO Use this when the flask_restful will be in version >= 3.2
-# parser_lookup_autodetect = parser_lookup.copy()
-# parser_lookup_autodetect.remove_argument('xivo_user_uuid')
-parser_lookup_autodetect = reqparse.RequestParser()
-parser_lookup_autodetect.add_argument('limit', type=int, required=False,
-                                      help='limit cannot be converted', location='args')
-parser_lookup_autodetect.add_argument('offset', type=int, required=False,
-                                      help='offset cannot be converted', location='args')
-parser_lookup_autodetect.add_argument('term', type=unicode, required=True,
-                                      help='term is missing', location='args')
+parser_lookup_autodetect = parser_lookup.copy()
+parser_lookup_autodetect.remove_argument('xivo_user_uuid')
 
 AUTH_BACKEND = 'xivo_service'
 AUTH_EXPIRATION = 10
