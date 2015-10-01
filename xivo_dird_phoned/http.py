@@ -119,7 +119,9 @@ class Menu(AuthResource):
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
-                       'Proxy-URL': _build_next_url('menu')}
+                       'Proxy-URL': _build_next_url('menu'),
+                       'Accept-Language': request.headers.get('Accept-Language')}
+            headers.update(request.headers)
             return _response_dird(url.format(host=self.dird_host,
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
@@ -157,7 +159,8 @@ class MenuAutodetect(AuthResource):
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
-                       'Proxy-URL': _build_next_url('menu')}
+                       'Proxy-URL': _build_next_url('menu'),
+                       'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
@@ -188,7 +191,8 @@ class Input(AuthResource):
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
-                       'Proxy-URL': _build_next_url('input')}
+                       'Proxy-URL': _build_next_url('input'),
+                       'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
@@ -225,7 +229,8 @@ class InputAutodetect(AuthResource):
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
-                       'Proxy-URL': _build_next_url('input')}
+                       'Proxy-URL': _build_next_url('input'),
+                       'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
@@ -260,7 +265,8 @@ class Lookup(AuthResource):
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
-                       'Proxy-URL': _build_next_url('lookup')}
+                       'Proxy-URL': _build_next_url('lookup'),
+                       'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
@@ -303,7 +309,8 @@ class LookupAutodetect(AuthResource):
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
-                       'Proxy-URL': _build_next_url('lookup')}
+                       'Proxy-URL': _build_next_url('lookup'),
+                       'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
