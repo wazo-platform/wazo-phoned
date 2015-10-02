@@ -17,7 +17,7 @@ Depends: ${python:Depends},
          python-cherrypy3,
          python-flask,
          python-flask-cors,
-         python-flask-restful,
+         python-flask-restful (>= 0.3.2),
          python-netaddr,
          python-requests,
          python-stevedore
