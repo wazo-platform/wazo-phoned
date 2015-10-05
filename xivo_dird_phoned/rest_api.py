@@ -66,26 +66,25 @@ class RestApi(object):
         bind_addr_http = (self.config['listen'], self.config['http_port'])
         bind_addr_https = (self.config['listen'], self.config['https_port'])
 
-        try:
-            _check_file_readable(self.config['certificate'])
-            _check_file_readable(self.config['private_key'])
-        except IOError as e:
-            logger.warning("HTTPS server won't start: %s", e)
-            https_enable = False
-
         wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
         cherrypy.config.update({'environment': 'production'})
         bus = Bus()
 
         if https_enable:
-            ssl_adapter = BuiltinSSLAdapter(self.config['certificate'],
-                                            self.config['private_key'])
-            server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
-                                              wsgi_app=wsgi_app)
-            server_https.ssl_adapter = ssl_adapter
-            ServerAdapter(bus, server_https).subscribe()
-            logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
-                         os.getuid(), bind_addr_https[0], bind_addr_https[1])
+            try:
+                _check_file_readable(self.config['certificate'])
+                _check_file_readable(self.config['private_key'])
+
+                ssl_adapter = BuiltinSSLAdapter(self.config['certificate'],
+                                                self.config['private_key'])
+                server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
+                                                  wsgi_app=wsgi_app)
+                server_https.ssl_adapter = ssl_adapter
+                ServerAdapter(bus, server_https).subscribe()
+                logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
+                             os.getuid(), bind_addr_https[0], bind_addr_https[1])
+            except IOError as e:
+                logger.warning("HTTPS server won't start: %s", e)
         else:
             logger.debug('HTTPS server is disabled')
 
