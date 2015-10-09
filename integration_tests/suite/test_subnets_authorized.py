@@ -33,21 +33,21 @@ class TestSubnetsAuthorized(BaseDirdPhonedIntegrationTest):
                                           profile=DEFAULT_PROFILE,
                                           term=VALID_TERM)
 
-        assert_that(response.status_code, equal_to(401))
+        assert_that(response.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_menu(self):
         result = self.get_menu_result(vendor=VALID_VENDOR,
                                       xivo_user_uuid=VALID_XIVO_USER_UUID,
                                       profile=DEFAULT_PROFILE)
 
-        assert_that(result.status_code, equal_to(401))
+        assert_that(result.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_ssl_menu(self):
         result = self.get_ssl_menu_result(vendor=VALID_VENDOR,
                                           xivo_user_uuid=VALID_XIVO_USER_UUID,
                                           profile=DEFAULT_PROFILE)
 
-        assert_that(result.status_code, equal_to(401))
+        assert_that(result.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_ssl_lookup(self):
         response = self.get_ssl_lookup_result(vendor=VALID_VENDOR,
@@ -55,4 +55,4 @@ class TestSubnetsAuthorized(BaseDirdPhonedIntegrationTest):
                                               profile=DEFAULT_PROFILE,
                                               term=VALID_TERM)
 
-        assert_that(response.status_code, equal_to(401))
+        assert_that(response.status_code, equal_to(403))

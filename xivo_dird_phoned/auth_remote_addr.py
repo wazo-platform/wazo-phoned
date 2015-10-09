@@ -31,14 +31,14 @@ def verify_remote_addr(func):
     def wrapper(*args, **kwargs):
         remote_addr = request.remote_addr
         if not remote_addr:
-            abort(401)
+            abort(403)
 
         networks = current_app.config['authorized_subnets']
         for network in networks:
             if IPAddress(remote_addr) in IPNetwork(network):
                 return func(*args, **kwargs)
 
-        abort(401)
+        abort(403)
     return wrapper
 
 
