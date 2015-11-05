@@ -9,7 +9,7 @@ xivo-dird with a phone using a simple REST API.
 
 The xivo/xivo-dird-phoned image can be built using the following command:
 
-   % docker build -t xivo/xivo-dird-phoned .
+    % docker build -t xivo/xivo-dird-phoned
 
 The `xivo/xivo-dird-phoned` image contains a configuration file to listen to
 HTTP requests on "0.0.0.0". To change this behavior, create or edit the file
