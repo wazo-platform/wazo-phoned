@@ -17,7 +17,7 @@ phoned:
     - "../../..:/usr/src/xivo-dird-phoned"
     - "./ssl:/etc/ssl"
 dird:
-  image: xivo-dird-mock
+  image: p0bailey/docker-flask
   expose:
     - "9489"
   volumes:
