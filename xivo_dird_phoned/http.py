@@ -115,7 +115,7 @@ class Menu(AuthResource):
     def get(self, profile, vendor):
         args = parser.parse_args()
         xivo_user_uuid = args['xivo_user_uuid']
-        url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{vendor}'
+        url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
@@ -126,6 +126,7 @@ class Menu(AuthResource):
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
                                              profile=profile,
+                                             xivo_user_uuid=xivo_user_uuid,
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
@@ -151,7 +152,7 @@ class MenuAutodetect(AuthResource):
     def get(self):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
-        url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{vendor}'
+        url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
 
         vendor = _find_vendor_by_user_agent(request.headers.get('User-Agent', ''))
         if not vendor:
@@ -165,6 +166,7 @@ class MenuAutodetect(AuthResource):
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
                                              profile=profile,
+                                             xivo_user_uuid=xivo_user_uuid,
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
@@ -187,7 +189,7 @@ class Input(AuthResource):
     def get(self, profile, vendor):
         args = parser.parse_args()
         xivo_user_uuid = args['xivo_user_uuid']
-        url = 'https://{host}:{port}/{version}/directories/input/{profile}/{vendor}'
+        url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
             headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
@@ -197,6 +199,7 @@ class Input(AuthResource):
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
                                              profile=profile,
+                                             xivo_user_uuid=xivo_user_uuid,
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
@@ -221,7 +224,7 @@ class InputAutodetect(AuthResource):
     def get(self):
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
-        url = 'https://{host}:{port}/{version}/directories/input/{profile}/{vendor}'
+        url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
         vendor = _find_vendor_by_user_agent(request.headers.get('User-Agent', ''))
         if not vendor:
@@ -235,6 +238,7 @@ class InputAutodetect(AuthResource):
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
                                              profile=profile,
+                                             xivo_user_uuid=xivo_user_uuid,
                                              vendor=vendor),
                                   headers=headers,
                                   verify=self.dird_verify_certificate)
@@ -260,7 +264,7 @@ class Lookup(AuthResource):
         offset = args['offset']
         term = args['term']
         xivo_user_uuid = args['xivo_user_uuid']
-        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{vendor}'
+        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{xivo_user_uuid}/{vendor}'
         params = {'term': term, 'limit': limit, 'offset': offset}
 
         try:
@@ -271,6 +275,7 @@ class Lookup(AuthResource):
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
                                              profile=profile,
+                                             xivo_user_uuid=xivo_user_uuid,
                                              vendor=vendor),
                                   headers=headers,
                                   params=params,
@@ -300,7 +305,7 @@ class LookupAutodetect(AuthResource):
         term = args['term']
         xivo_user_uuid = FAKE_XIVO_USER_UUID
         profile = self.dird_default_profile
-        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{vendor}'
+        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{xivo_user_uuid}/{vendor}'
         params = {'term': term, 'limit': limit, 'offset': offset}
 
         vendor = _find_vendor_by_user_agent(request.headers.get('User-Agent', ''))
@@ -315,6 +320,7 @@ class LookupAutodetect(AuthResource):
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
                                              profile=profile,
+                                             xivo_user_uuid=xivo_user_uuid,
                                              vendor=vendor),
                                   headers=headers,
                                   params=params,
