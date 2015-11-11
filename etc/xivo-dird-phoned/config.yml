@@ -12,37 +12,38 @@ foreground: False
 debug: False
 
 auth:
-    host: localhost
-    port: 9497
-    secret_file: /etc/xivo-dird-phoned/authentication.yml
+  host: localhost
+  port: 9497
+  secret_file: /etc/xivo-dird-phoned/authentication.yml
 
 dird:
-    host: localhost
-    port: 9489
-    verify_certificate: '/usr/share/xivo-certs/server.crt'  # True, False or CA Bundle
+  host: localhost
+  port: 9489
+  verify_certificate: '/usr/share/xivo-certs/server.crt'  # True, False or CA Bundle
 
-    # Profile to send to dird if phone has no profile
-    default_profile: 'default_phone'
+  # Profile to send to dird if phone has no profile
+  default_profile: 'default_phone'
 
 # REST API server
 rest_api:
 
-    # Listening address
-    listen: 0.0.0.0
+  http:
+    enabled: True
+    host: 0.0.0.0
+    port: 9498
 
-    # Listening port
-    http_port: 9498
-    http_enable: true
-    https_port: 9499
-    https_enable: true
-
-    # Authorizing subnets
-    # authorized_subnets:
-    #   - '192.168.0.0/16'
-
-    # CORS configuration. See Flask-CORS documentation for other values.
-    cors:
-        enabled: True
+  https:
+    enabled: True
+    host: 0.0.0.0
+    port: 9499
 
     certificate: /usr/share/xivo-certs/server.crt
     private_key: /usr/share/xivo-certs/server.key
+
+  # Authorizing subnets
+  # authorized_subnets:
+  #   - '192.168.0.0/16'
+
+  # CORS configuration. See Flask-CORS documentation for other values.
+  cors:
+    enabled: True

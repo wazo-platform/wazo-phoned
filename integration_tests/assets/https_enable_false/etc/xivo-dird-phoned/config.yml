@@ -12,35 +12,34 @@ foreground: False
 debug: False
 
 auth:
-    host: auth
-    port: 9497
-    secret_file: /etc/xivo-dird-phoned/authentication.yml
+  host: auth
+  port: 9497
+  secret_file: /etc/xivo-dird-phoned/authentication.yml
 
 dird:
-    host: dird
-    port: 9489
-    verify_certificate: False
-    default_profile: default_phone
+  host: dird
+  port: 9489
+  verify_certificate: False
+  default_profile: default_phone
 
 # REST API server
 rest_api:
+  http:
+    enabled: True
+    host: 0.0.0.0
+    port: 9498
 
-    # Listening address
-    listen: 0.0.0.0
-
-    # Listening port
-    http_port: 9498
-    http_enable: true
-    https_port: 9499
-    https_enable: false
-
-    # Authorizing subnets
-    authorized_subnets:
-      - '0.0.0.0/0'
-
-    #CORS configuration. See Flask-CORS documentation for other values.
-    cors:
-        enabled: True
+  https:
+    enabled: False
+    host: 0.0.0.0
+    port: 9499
 
     certificate: /usr/share/xivo-certs/server.crt
     private_key: /usr/share/xivo-certs/server.key
+
+  # Authorizing subnets
+  authorized_subnets:
+      - '0.0.0.0/0'
+  # CORS configuration. See Flask-CORS documentation for other values.
+  cors:
+    enabled: True

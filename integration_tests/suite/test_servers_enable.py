@@ -72,4 +72,4 @@ class TestHTTPandHTTPSAreDisabled(BaseDirdPhonedIntegrationTest):
             self.fail('xivo-dird-phoned did not stop while http and https server are disabled')
 
         log = self.dird_phoned_logs()
-        assert_that(log, contains_string('No server started'))
+        assert_that(log, contains_string('No HTTP/HTTPS server enabled'))

@@ -59,21 +59,21 @@ class RestApi(object):
 
     def run(self):
         self.api.init_app(self.app)
-        http_enable = self.config['http_enable']
-        https_enable = self.config['https_enable']
+        http_config = self.config['http']
+        https_config = self.config['https']
 
         wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
         cherrypy.server.unsubscribe()
         cherrypy.config.update({'environment': 'production'})
 
-        if https_enable:
+        if https_config['enabled']:
             try:
-                _check_file_readable(self.config['certificate'])
-                _check_file_readable(self.config['private_key'])
+                _check_file_readable(https_config['certificate'])
+                _check_file_readable(https_config['private_key'])
 
-                bind_addr_https = (self.config['listen'], self.config['https_port'])
-                ssl_adapter = BuiltinSSLAdapter(self.config['certificate'],
-                                                self.config['private_key'])
+                bind_addr_https = (https_config['host'], https_config['port'])
+                ssl_adapter = BuiltinSSLAdapter(https_config['certificate'],
+                                                https_config['private_key'])
                 server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
                                                   wsgi_app=wsgi_app)
                 server_https.ssl_adapter = ssl_adapter
@@ -85,8 +85,8 @@ class RestApi(object):
         else:
             logger.debug('HTTPS server is disabled')
 
-        if http_enable:
-            bind_addr_http = (self.config['listen'], self.config['http_port'])
+        if http_config['enabled']:
+            bind_addr_http = (http_config['host'], http_config['port'])
             server_http = CherryPyWSGIServer(bind_addr=bind_addr_http,
                                              wsgi_app=wsgi_app)
             ServerAdapter(cherrypy.engine, server_http).subscribe()
@@ -95,8 +95,8 @@ class RestApi(object):
         else:
             logger.debug('HTTP server is disabled')
 
-        if not http_enable and not https_enable:
-            logger.critical('No server started')
+        if not http_config['enabled'] and not https_config['enabled']:
+            logger.critical('No HTTP/HTTPS server enabled')
             exit()
 
         list_routes(self.app)
