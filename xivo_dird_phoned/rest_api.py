@@ -22,7 +22,6 @@ import os
 
 import cherrypy
 from cherrypy.process.servers import ServerAdapter
-from cherrypy.process.wspbus import Bus
 from cherrypy.wsgiserver import CherryPyWSGIServer
 from cherrypy.wsgiserver import WSGIPathInfoDispatcher
 from cherrypy.wsgiserver.ssl_builtin import BuiltinSSLAdapter
@@ -63,24 +62,22 @@ class RestApi(object):
         http_enable = self.config['http_enable']
         https_enable = self.config['https_enable']
 
-        bind_addr_http = (self.config['listen'], self.config['http_port'])
-        bind_addr_https = (self.config['listen'], self.config['https_port'])
-
         wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
+        cherrypy.server.unsubscribe()
         cherrypy.config.update({'environment': 'production'})
-        bus = Bus()
 
         if https_enable:
             try:
                 _check_file_readable(self.config['certificate'])
                 _check_file_readable(self.config['private_key'])
 
+                bind_addr_https = (self.config['listen'], self.config['https_port'])
                 ssl_adapter = BuiltinSSLAdapter(self.config['certificate'],
                                                 self.config['private_key'])
                 server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
                                                   wsgi_app=wsgi_app)
                 server_https.ssl_adapter = ssl_adapter
-                ServerAdapter(bus, server_https).subscribe()
+                ServerAdapter(cherrypy.engine, server_https).subscribe()
                 logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
                              os.getuid(), bind_addr_https[0], bind_addr_https[1])
             except IOError as e:
@@ -89,9 +86,10 @@ class RestApi(object):
             logger.debug('HTTPS server is disabled')
 
         if http_enable:
+            bind_addr_http = (self.config['listen'], self.config['http_port'])
             server_http = CherryPyWSGIServer(bind_addr=bind_addr_http,
                                              wsgi_app=wsgi_app)
-            ServerAdapter(bus, server_http).subscribe()
+            ServerAdapter(cherrypy.engine, server_http).subscribe()
             logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
                          os.getuid(), bind_addr_http[0], bind_addr_http[1])
         else:
@@ -104,10 +102,10 @@ class RestApi(object):
         list_routes(self.app)
 
         try:
-            bus.start()
-            bus.block()
+            cherrypy.engine.start()
+            cherrypy.engine.block()
         except KeyboardInterrupt:
-            bus.stop()
+            cherrypy.engine.stop()
 
 
 def _check_file_readable(file_path):
