@@ -26,12 +26,12 @@ dird:
 rest_api:
   http:
     enabled: True
-    host: 0.0.0.0
+    listen: 0.0.0.0
     port: 9498
 
   https:
     enabled: True
-    host: 0.0.0.0
+    listen: 0.0.0.0
     port: 9499
 
     certificate: /usr/share/xivo-certs/failed.crt
