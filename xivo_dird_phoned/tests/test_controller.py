@@ -33,7 +33,7 @@ class TestController(TestCase):
 
     def test_run_starts_rest_api(self):
         config = self._create_config(**{
-            'rest_api': {'listen': '0.0.0.0', 'port_http': '9498', 'port_https': '9499'},
+            'rest_api': {},
             'debug': s.debug,
         })
         controller = Controller(config)
@@ -49,7 +49,12 @@ class TestController(TestCase):
 
     def _create_config(self, **kwargs):
         config = dict(kwargs)
-        config.setdefault('auth', {})
+        config.setdefault('auth', {
+            'host': 'localhost',
+            'port': 9497,
+            'service_id': 'dird-phoned',
+            'service_key': '123'}
+        )
         config.setdefault('dird', {})
         config['dird'].setdefault('host', '')
         config['dird'].setdefault('port', '')

@@ -16,15 +16,43 @@
 
 import logging
 
-from flask import current_app
+from requests import RequestException
+from threading import Timer
 
 from xivo_auth_client import Client
 
 logger = logging.getLogger(__name__)
 
 
-def client():
-    auth_host = current_app.config['auth']['host']
-    auth_port = current_app.config['auth']['port']
-    auth_secret = current_app.config['auth']['secret']
-    return Client(auth_host, auth_port, username='xivo-dird-phoned', password=auth_secret)
+class AuthClient(object):
+
+    token_expiration = 6*60*60
+    renew_time = int(0.8*token_expiration)
+    renew_time_failed = 20
+
+    def __init__(self, config, app_config):
+        self.app_config = app_config
+        self.app_config['token'] = None
+        host = config['host']
+        port = config['port']
+        service_id = config['service_id']
+        service_key = config['service_key']
+        self.auth_client = Client(host, port, username=service_id, password=service_key)
+
+    def renew_token(self):
+        logger.info('Renew service token')
+        try:
+            self.app_config['token'] = self.auth_client.token.new('xivo_service',
+                                                                  expiration=self.token_expiration)['token']
+        except RequestException as e:
+            logger.exception(e)
+            logger.warning('Create token with XiVO Auth failed. Reattempt in %d seconds', self.renew_time_failed)
+            next_renew_time = self.renew_time_failed
+        else:
+            next_renew_time = self.renew_time
+        finally:
+            self._timer = Timer(next_renew_time, self.renew_token)
+            self._timer.start()
+
+    def stop(self):
+        self._timer.cancel()

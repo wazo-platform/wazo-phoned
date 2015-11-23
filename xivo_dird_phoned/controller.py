@@ -17,6 +17,7 @@
 
 import logging
 
+from xivo_dird_phoned.auth import AuthClient
 from xivo_dird_phoned.rest_api import RestApi
 from xivo_dird_phoned.http import DirectoriesConfiguration
 
@@ -27,10 +28,15 @@ class Controller(object):
     def __init__(self, config):
         self.config = config
         self.rest_api = RestApi(self.config['rest_api'])
-        self.rest_api.app.config['auth'] = self.config['auth']
         self.rest_api.app.config['authorized_subnets'] = self.config['rest_api']['authorized_subnets']
         DirectoriesConfiguration(config['dird'])
+        self.auth_client = AuthClient(config['auth'], self.rest_api.app.config)
 
     def run(self):
         logger.debug('xivo-dird-phoned running...')
-        self.rest_api.run()
+        self.auth_client.renew_token()
+        try:
+            self.rest_api.run()
+        finally:
+            logger.info('xivo-dird-phoned stopping...')
+            self.auth_client.stop()

@@ -20,12 +20,12 @@ import requests
 
 from flask import request
 from flask import Response
+from flask import current_app
 from flask_restful import reqparse
 from requests.exceptions import RequestException
 from time import time
 from xivo_dird_phoned.rest_api import api
 from xivo_dird_phoned.auth_remote_addr import AuthResource
-from xivo_dird_phoned import auth
 
 
 logger = logging.getLogger(__name__)
@@ -43,7 +43,6 @@ parser_lookup_autodetect = parser_lookup.copy()
 parser_lookup_autodetect.remove_argument('xivo_user_uuid')
 
 AUTH_BACKEND = 'xivo_service'
-AUTH_EXPIRATION = 10
 DIRD_API_VERSION = '0.1'
 FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
 
@@ -118,7 +117,7 @@ class Menu(AuthResource):
         url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
-            headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
+            headers = {'X-Auth-Token': current_app.config['token'],
                        'Proxy-URL': _build_next_url('menu'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             headers.update(request.headers)
@@ -159,7 +158,7 @@ class MenuAutodetect(AuthResource):
             return _error(404, 'No vendor found')
 
         try:
-            headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
+            headers = {'X-Auth-Token': current_app.config['token'],
                        'Proxy-URL': _build_next_url('menu'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -192,7 +191,7 @@ class Input(AuthResource):
         url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
-            headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
+            headers = {'X-Auth-Token': current_app.config['token'],
                        'Proxy-URL': _build_next_url('input'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -231,7 +230,7 @@ class InputAutodetect(AuthResource):
             return _error(404, 'No vendor found')
 
         try:
-            headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
+            headers = {'X-Auth-Token': current_app.config['token'],
                        'Proxy-URL': _build_next_url('input'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -268,7 +267,7 @@ class Lookup(AuthResource):
         params = {'term': term, 'limit': limit, 'offset': offset}
 
         try:
-            headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
+            headers = {'X-Auth-Token': current_app.config['token'],
                        'Proxy-URL': _build_next_url('lookup'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -313,7 +312,7 @@ class LookupAutodetect(AuthResource):
             return _error(404, 'No vendor found')
 
         try:
-            headers = {'X-Auth-Token': _create_token(xivo_user_uuid),
+            headers = {'X-Auth-Token': current_app.config['token'],
                        'Proxy-URL': _build_next_url('lookup'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -330,8 +329,8 @@ class LookupAutodetect(AuthResource):
 
 
 def _find_vendor_by_user_agent(raw_user_agent):
-
     user_agent = raw_user_agent.lower()
+
     if 'aastra' in user_agent:
         # '/^Aastra((?:(?:67)?5[1357]|673[01])i(?: CT)?) /'
         return 'aastra'
@@ -361,24 +360,13 @@ def _build_next_url(current):
     return None
 
 
-def _create_token(xivo_user_uuid):
-
-    try:
-        token_infos = auth.client().token.new(AUTH_BACKEND,
-                                              expiration=AUTH_EXPIRATION,
-                                              backend_args={'xivo_user_uuid': xivo_user_uuid})
-    except RequestException as e:
-        logger.exception(e)
-        raise XivoAuthConnectionError()
-
-    return token_infos['token']
-
-
 def _response_dird(url, headers, verify, params=None):
     try:
         r = requests.get(url, headers=headers, verify=verify, params=params)
     except RequestException as e:
         logger.exception(e)
         raise XivoDirdConnectionError()
+    if r.status_code == 401:
+        raise XivoAuthConnectionError()
 
     return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)

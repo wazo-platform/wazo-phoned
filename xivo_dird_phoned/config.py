@@ -62,8 +62,8 @@ def load(logger, argv):
     cli_config = _parse_cli_args(argv)
     file_config = read_config_file_hierarchy(ChainMap(cli_config, _DEFAULT_CONFIG))
     reinterpreted_config = _get_reinterpreted_raw_values(ChainMap(cli_config, file_config, _DEFAULT_CONFIG))
-    secret = _load_secret_file(ChainMap(cli_config, file_config, _DEFAULT_CONFIG))
-    return ChainMap(reinterpreted_config, secret, cli_config, file_config, _DEFAULT_CONFIG)
+    service_key = _load_key_file(ChainMap(cli_config, file_config, _DEFAULT_CONFIG))
+    return ChainMap(reinterpreted_config, cli_config, service_key, file_config, _DEFAULT_CONFIG)
 
 
 def _parse_cli_args(argv):
@@ -106,10 +106,10 @@ def _parse_cli_args(argv):
     return result
 
 
-def _load_secret_file(config):
-    secret_file = config['auth'].get('secret_file', '')
-    secret = parse_config_file(secret_file)['secret']
-    return {'auth': {'secret': secret}}
+def _load_key_file(config):
+    key_file = parse_config_file(config['auth'].get('key_file', ''))
+    return {'auth': {'service_id': key_file['service_id'],
+                     'service_key': key_file['service_key']}}
 
 
 def _get_reinterpreted_raw_values(config):
