@@ -14,7 +14,7 @@ debug: False
 auth:
   host: auth
   port: 9497
-  secret_file: /etc/xivo-dird-phoned/authentication.yml
+  key_file: '/tmp/auth_keys/xivo-dird-phoned-key.yml'
 
 dird:
   host: dird

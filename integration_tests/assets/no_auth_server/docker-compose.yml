@@ -16,6 +16,7 @@ phoned:
     - "./etc/xivo-dird-phoned:/etc/xivo-dird-phoned"
     - "../../..:/usr/src/xivo-dird-phoned"
     - "./ssl:/etc/ssl"
+    - "./auth_keys:/tmp/auth_keys"
 dird:
   image: p0bailey/docker-flask
   expose:

@@ -22,17 +22,17 @@ from hamcrest import contains_string
 from .base_dird_phoned_integration_test import BaseDirdPhonedIntegrationTest
 
 
-class TestMissingAuthenticationFile(BaseDirdPhonedIntegrationTest):
-    asset = 'no_authentication'
+class TestMissingServiceKeyFile(BaseDirdPhonedIntegrationTest):
+    asset = 'no_service_key'
 
-    def test_given_inexisting_authentication_when_dird_phoned_starts_then_dird_phoned_stops(self):
+    def test_given_inexisting_service_key_when_dird_phoned_starts_then_dird_phoned_stops(self):
         for _ in range(5):
             status = self.dird_phoned_status()[0]
             if not status['State']['Running']:
                 break
             time.sleep(1)
         else:
-            self.fail('xivo-dird-phoned did not stop while missing authentication')
+            self.fail('xivo-dird-phoned did not stop while missing service key file')
 
         log = self.dird_phoned_logs()
-        assert_that(log, contains_string("No such file or directory: '/etc/xivo-dird-phoned/authentication.yml'"))
+        assert_that(log, contains_string("No such file or directory: '/tmp/auth_keys/xivo-dird-phoned-key.yml'"))

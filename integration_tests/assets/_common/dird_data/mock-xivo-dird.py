@@ -1,6 +1,7 @@
 import sys
 
 from flask import Flask
+from flask import request
 
 app = Flask(__name__)
 
@@ -13,16 +14,22 @@ VALID_VENDOR = 'cisco'
 
 @app.route('/0.1/directories/menu/<profile>/<xivo_user_uuid>/{vendor}'.format(vendor=VALID_VENDOR), methods=['GET'])
 def menu_get(profile, xivo_user_uuid):
+    if not request.headers.get('X-Auth-Token', ''):
+        return '', 401
     return '', 200
 
 
 @app.route('/0.1/directories/input/<profile>/<xivo_user_uuid>/{vendor}'.format(vendor=VALID_VENDOR), methods=['GET'])
 def input_get(profile, xivo_user_uuid):
+    if not request.headers.get('X-Auth-Token', ''):
+        return '', 401
     return '', 200
 
 
 @app.route('/0.1/directories/lookup/<profile>/<xivo_user_uuid>/{vendor}'.format(vendor=VALID_VENDOR), methods=['GET'])
 def lookup_get(profile, xivo_user_uuid):
+    if not request.headers.get('X-Auth-Token', ''):
+        return '', 401
     return '', 200
 
 
