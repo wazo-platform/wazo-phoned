@@ -25,7 +25,7 @@ _DEFAULT_CONFIG = {
     'auth': {
         'host': 'localhost',
         'port': 9497,
-        'secret_file': '/etc/xivo-dird-phoned/authentication.yml'
+        'key_file': '/var/lib/xivo-auth-keys/xivo-dird-phoned-key.yml'
     },
     'dird': {
         'host': 'localhost',
