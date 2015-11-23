@@ -42,10 +42,14 @@ _DEFAULT_CONFIG = {
     'pid_filename': '/var/run/xivo-dird-phoned/xivo-dird-phoned.pid',
     'rest_api': {
         'listen': '0.0.0.0',
-        'http_port': 9498,
-        'http_enable': True,
-        'https_port': 9499,
-        'https_enable': True,
+        'http': {
+            'port': 9498,
+            'enable': True
+        },
+        'https': {
+            'port': 9499,
+            'enable': True
+        },
         'certificate': '/usr/share/xivo-certs/server.crt',
         'private_key': '/usr/share/xivo-certs/server.key',
         'authorized_subnets': ['127.0.0.1/24'],
