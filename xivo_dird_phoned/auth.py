@@ -33,11 +33,11 @@ class AuthClient(object):
     def __init__(self, config, app_config):
         self.app_config = app_config
         self.app_config['token'] = None
-        host = config['host']
-        port = config['port']
-        service_id = config['service_id']
-        service_key = config['service_key']
-        self.auth_client = Client(host, port, username=service_id, password=service_key)
+        self.auth_client = Client(config['host'],
+                                  port=config['port'],
+                                  username=config['service_id'],
+                                  password=config['service_key'],
+                                  verify_certificate=config['verify_certificate'])
 
     def renew_token(self):
         logger.info('Renew service token')
