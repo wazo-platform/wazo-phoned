@@ -112,7 +112,7 @@ def _parse_cli_args(argv):
 
 
 def _load_key_file(config):
-    key_file = parse_config_file(config['auth'].get('key_file', ''))
+    key_file = parse_config_file(config['auth']['key_file'])
     return {'auth': {'service_id': key_file['service_id'],
                      'service_key': key_file['service_key']}}
 
