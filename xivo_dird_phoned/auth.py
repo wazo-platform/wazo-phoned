@@ -52,6 +52,7 @@ class AuthClient(object):
             next_renew_time = self.renew_time
         finally:
             self._timer = Timer(next_renew_time, self.renew_token)
+            self._timer.deamon = True
             self._timer.start()
 
     def stop(self):
