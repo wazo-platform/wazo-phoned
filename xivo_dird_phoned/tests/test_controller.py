@@ -52,6 +52,7 @@ class TestController(TestCase):
         config.setdefault('auth', {
             'host': 'localhost',
             'port': 9497,
+            'verify_certificate': False,
             'service_id': 'dird-phoned',
             'service_key': '123'}
         )
