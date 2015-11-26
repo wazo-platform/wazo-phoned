@@ -14,12 +14,13 @@ debug: False
 auth:
   host: localhost
   port: 9497
-  secret_file: /etc/xivo-dird-phoned/authentication.yml
+  key_file: /var/lib/xivo-auth-keys/xivo-dird-phoned-key.yml
+  verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
 
 dird:
   host: localhost
   port: 9489
-  verify_certificate: '/usr/share/xivo-certs/server.crt'  # True, False or CA Bundle
+  verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
 
   # Profile to send to dird if phone has no profile
   default_profile: 'default_phone'
