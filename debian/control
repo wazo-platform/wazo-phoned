@@ -12,15 +12,15 @@ Package: xivo-dird-phoned
 Architecture: all
 Depends: ${python:Depends},
          ${misc:Depends},
-         xivo-auth-client,
-         xivo-lib-python,
          python-cherrypy3,
          python-flask,
          python-flask-cors,
          python-flask-restful (>= 0.3.2),
          python-netaddr,
          python-requests,
-         python-stevedore
+         python-stevedore,
+         xivo-auth-client,
+         xivo-lib-python (>= 15.19~20151201.154405.cc5a169-1)
 Description: XIVO PBX's directory server
  XIVO is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.
