@@ -17,7 +17,8 @@
 
 import logging
 
-from xivo_dird_phoned.auth import AuthClient
+from xivo.auth_helpers import TokenRenewer
+from xivo_auth_client import Client as AuthClient
 from xivo_dird_phoned.rest_api import RestApi
 from xivo_dird_phoned.http import DirectoriesConfiguration
 
@@ -30,13 +31,24 @@ class Controller(object):
         self.rest_api = RestApi(self.config['rest_api'])
         self.rest_api.app.config['authorized_subnets'] = self.config['rest_api']['authorized_subnets']
         DirectoriesConfiguration(config['dird'])
-        self.auth_client = AuthClient(config['auth'], self.rest_api.app.config)
+        self.token_renewer = TokenRenewer(self._new_auth_client(config))
+        self.token_renewer.subscribe_to_token_change(self._on_token_change)
 
     def run(self):
         logger.debug('xivo-dird-phoned running...')
-        self.auth_client.renew_token()
         try:
-            self.rest_api.run()
+            with self.token_renewer:
+                self.rest_api.run()
         finally:
             logger.info('xivo-dird-phoned stopping...')
-            self.auth_client.stop()
+
+    def _new_auth_client(self, config):
+        auth_config = config['auth']
+        return AuthClient(auth_config['host'],
+                          port=auth_config['port'],
+                          username=auth_config['service_id'],
+                          password=auth_config['service_key'],
+                          verify_certificate=auth_config['verify_certificate'])
+
+    def _on_token_change(self, token_id):
+        self.rest_api.app.config['token'] = token_id
