@@ -141,10 +141,10 @@ class BaseDirdPhonedIntegrationTest(unittest.TestCase):
         return result
 
     @classmethod
-    def get_lookup_result(self, profile, vendor, xivo_user_uuid=None, term=None):
+    def get_lookup_result(self, profile, vendor, xivo_user_uuid=None, term=None, headers=None):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
         url = u'http://localhost:9498/0.1/directories/lookup/{profile}/{vendor}'
-        result = requests.get(url.format(profile=profile, vendor=vendor), params=params)
+        result = requests.get(url.format(profile=profile, vendor=vendor), params=params, headers=headers)
         return result
 
     @classmethod

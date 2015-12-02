@@ -28,7 +28,6 @@ from cherrypy.wsgiserver.ssl_builtin import BuiltinSSLAdapter
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
-from werkzeug.contrib.fixers import ProxyFix
 from xivo import http_helpers
 
 
@@ -45,7 +44,6 @@ class RestApi(object):
         self.app = Flask('xivo_dird_phoned')
         http_helpers.add_logger(self.app, logger)
         self.app.after_request(http_helpers.log_request)
-        self.app.wsgi_app = ProxyFix(self.app.wsgi_app)
         self.app.secret_key = os.urandom(24)
         self.app.permanent_session_lifetime = timedelta(minutes=5)
         self.load_cors()

@@ -25,13 +25,23 @@ from hamcrest import equal_to
 
 
 class TestSubnetsAuthorized(BaseDirdPhonedIntegrationTest):
-    asset = 'no_authorized_subnets'
+    asset = 'authorized_subnets'
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_lookup(self):
         response = self.get_lookup_result(vendor=VALID_VENDOR,
                                           xivo_user_uuid=VALID_XIVO_USER_UUID,
                                           profile=DEFAULT_PROFILE,
                                           term=VALID_TERM)
+
+        assert_that(response.status_code, equal_to(403))
+
+    def test_that_authorized_subnets_do_not_allowed_other_subnets_on_lookup_with_extra_header(self):
+        headers = {'X-Forwarded-For': '127.0.0.1'}
+        response = self.get_lookup_result(vendor=VALID_VENDOR,
+                                          xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                          profile=DEFAULT_PROFILE,
+                                          term=VALID_TERM,
+                                          headers=headers)
 
         assert_that(response.status_code, equal_to(403))
 
