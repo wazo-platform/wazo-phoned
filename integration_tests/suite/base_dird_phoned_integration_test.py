@@ -24,12 +24,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-try:
-    from requests.packages.urllib3 import disable_warnings
-    disable_warnings()
-except ImportError:
-    # when disable_warnings did not exist, warnings also did not exist
-    pass
+requests.packages.urllib3.disable_warnings()
 
 ASSETS_ROOT = os.path.join(os.path.dirname(__file__), '..', 'assets')
 CA_CERT = os.path.join(ASSETS_ROOT, '_common', 'ssl', 'server.crt')
