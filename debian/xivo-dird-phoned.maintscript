@@ -1,0 +1,2 @@
+rm_conffile /etc/default/xivo-dird-phoned 15.20
+rm_conffile /etc/init.d/xivo-dird-phoned 15.20
