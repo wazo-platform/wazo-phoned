@@ -1,6 +1,6 @@
 [Unit]
 Description=xivo-dird-phoned server
-ConditionPathExists=!/tmp/xivo-disabled
+ConditionPathExists=!/var/lib/xivo/disabled
 After=network.target xivo-confgend.service
 
 [Service]
