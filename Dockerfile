@@ -25,4 +25,4 @@ ONBUILD ADD ./contribs/docker/certs /usr/share/xivo-certs
 
 EXPOSE 9498 9499
 
-CMD xivo-dird-phoned -d -f
+CMD ["xivo-dird-phoned", "-fd"]
