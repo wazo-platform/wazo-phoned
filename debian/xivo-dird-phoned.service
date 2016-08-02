@@ -3,7 +3,6 @@ Description=xivo-dird-phoned server
 ConditionPathExists=!/var/lib/xivo/disabled
 After=network.target xivo-confgend.service
 Before=monit.service
-Wants=xivo-confgend.service
 
 [Service]
 Type=forking
