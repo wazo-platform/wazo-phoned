@@ -1,7 +1,7 @@
 xivo-dird-phoned
 ================
 
-[![Build Status](https://travis-ci.org/xivo-pbx/xivo-dird-phoned.png?branch=master)](https://travis-ci.org/xivo-pbx/xivo-dird-phoned)
+[![Build Status](https://travis-ci.org/wazo-pbx/xivo-dird-phoned.png?branch=master)](https://travis-ci.org/wazo-pbx/xivo-dird-phoned)
 
 xivo-dird-phoned is a service to authenticate phone to allow lookup on
 xivo-dird with a phone using a simple REST API.
