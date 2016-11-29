@@ -1,4 +1,4 @@
-FROM xivo/xivo-dird-phoned
+FROM wazopbx/xivo-dird-phoned
 
 ADD . /usr/src/xivo-dird-phoned
 WORKDIR /usr/src/xivo-dird-phoned
