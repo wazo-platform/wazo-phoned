@@ -4,7 +4,7 @@ test-setup: egg-info
 	docker pull python:2.7
 	docker pull p0bailey/docker-flask
 	docker pull n3llyb0y/wait
-	docker build -t xivo/xivo-dird-phoned ..
+	docker build -t wazopbx/xivo-dird-phoned ..
 	docker build --no-cache -t xivo-dird-phoned-test -f Dockerfile-dird-phoned-test ..
 
 egg-info:
