@@ -10,4 +10,4 @@ cherrypy==3.7.0
 # From confd-client, auth-client, dird-client
 git+https://github.com/wazo-pbx/xivo-lib-rest-client.git
 requests==2.4.3
-stevedore==0.14.1
+stevedore==1.17.1
