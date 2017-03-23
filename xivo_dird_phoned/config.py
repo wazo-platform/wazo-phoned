@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ _DEFAULT_CONFIG = {
         'authorized_subnets': ['127.0.0.1/24'],
         'cors': {
             'enabled': True,
-            'allow_headers': 'Content-Type'
+            'allow_headers': ['Content-Type']
         },
     },
     'user': 'www-data',
