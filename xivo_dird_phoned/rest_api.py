@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,9 +22,7 @@ import os
 
 import cherrypy
 from cherrypy.process.servers import ServerAdapter
-from cherrypy.wsgiserver import CherryPyWSGIServer
-from cherrypy.wsgiserver import WSGIPathInfoDispatcher
-from cherrypy.wsgiserver.ssl_builtin import BuiltinSSLAdapter
+from cheroot import wsgi
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
@@ -60,7 +58,7 @@ class RestApi(object):
         http_config = self.config['http']
         https_config = self.config['https']
 
-        wsgi_app = WSGIPathInfoDispatcher({'/': self.app})
+        wsgi_app = wsgi.WSGIPathInfoDispatcher({'/': self.app})
         cherrypy.server.unsubscribe()
         cherrypy.config.update({'environment': 'production'})
 
@@ -70,11 +68,12 @@ class RestApi(object):
                 _check_file_readable(https_config['private_key'])
 
                 bind_addr_https = (https_config['listen'], https_config['port'])
-                ssl_adapter = BuiltinSSLAdapter(https_config['certificate'],
-                                                https_config['private_key'])
-                server_https = CherryPyWSGIServer(bind_addr=bind_addr_https,
-                                                  wsgi_app=wsgi_app)
-                server_https.ssl_adapter = ssl_adapter
+                server_https = wsgi.WSGIServer(bind_addr=bind_addr_https,
+                                               wsgi_app=wsgi_app)
+                server_https.ssl_adapter = http_helpers.ssl_adapter(https_config['certificate'],
+                                                                    https_config['private_key'],
+                                                                    https_config['ciphers'])
+
                 ServerAdapter(cherrypy.engine, server_https).subscribe()
                 logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
                              os.getuid(), bind_addr_https[0], bind_addr_https[1])
@@ -85,8 +84,8 @@ class RestApi(object):
 
         if http_config['enabled']:
             bind_addr_http = (http_config['listen'], http_config['port'])
-            server_http = CherryPyWSGIServer(bind_addr=bind_addr_http,
-                                             wsgi_app=wsgi_app)
+            server_http = wsgi.WSGIServer(bind_addr=bind_addr_http,
+                                          wsgi_app=wsgi_app)
             ServerAdapter(cherrypy.engine, server_http).subscribe()
             logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
                          os.getuid(), bind_addr_http[0], bind_addr_http[1])
