@@ -49,10 +49,10 @@ _DEFAULT_CONFIG = {
         },
         'https': {
             'port': 9499,
-            'enable': True
+            'enable': True,
+            'certificate': '/usr/share/xivo-certs/server.crt',
+            'private_key': '/usr/share/xivo-certs/server.key',
         },
-        'certificate': '/usr/share/xivo-certs/server.crt',
-        'private_key': '/usr/share/xivo-certs/server.key',
         'authorized_subnets': ['127.0.0.1/24'],
         'cors': {
             'enabled': True,
