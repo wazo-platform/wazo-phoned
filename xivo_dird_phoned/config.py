@@ -20,7 +20,6 @@ import argparse
 from xivo.chain_map import ChainMap
 from xivo.config_helper import read_config_file_hierarchy, parse_config_file
 from xivo.xivo_logging import get_log_level_by_name
-from xivo.http_helpers import DEFAULT_CIPHERS
 
 _DEFAULT_CONFIG = {
     'auth': {
@@ -53,7 +52,6 @@ _DEFAULT_CONFIG = {
             'enable': True,
             'certificate': '/usr/share/xivo-certs/server.crt',
             'private_key': '/usr/share/xivo-certs/server.key',
-            'ciphers': DEFAULT_CIPHERS,
         },
         'authorized_subnets': ['127.0.0.1/24'],
         'cors': {
