@@ -97,11 +97,8 @@ class RestApi(object):
 
         list_routes(self.app)
 
-        try:
-            cherrypy.engine.start()
-            cherrypy.engine.block()
-        except KeyboardInterrupt:
-            cherrypy.engine.stop()
+        cherrypy.engine.start()
+        cherrypy.engine.block()
 
 
 def _check_file_readable(file_path):
