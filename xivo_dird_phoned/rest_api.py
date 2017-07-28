@@ -33,6 +33,7 @@ VERSION = 0.1
 
 logger = logging.getLogger(__name__)
 api = Api(prefix='/{}'.format(VERSION))
+cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
 
 
 class RestApi(object):
