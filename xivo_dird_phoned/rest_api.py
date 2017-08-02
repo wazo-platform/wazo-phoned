@@ -65,9 +65,6 @@ class RestApi(object):
 
         if https_config['enabled']:
             try:
-                _check_file_readable(https_config['certificate'])
-                _check_file_readable(https_config['private_key'])
-
                 bind_addr_https = (https_config['listen'], https_config['port'])
                 server_https = wsgi.WSGIServer(bind_addr=bind_addr_https,
                                                wsgi_app=wsgi_app)
@@ -100,11 +97,6 @@ class RestApi(object):
 
         cherrypy.engine.start()
         cherrypy.engine.block()
-
-
-def _check_file_readable(file_path):
-    with open(file_path, 'r'):
-        pass
 
 
 def list_routes(app):
