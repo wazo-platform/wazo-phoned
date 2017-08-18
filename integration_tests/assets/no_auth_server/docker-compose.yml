@@ -10,8 +10,8 @@ phoned:
   links:
     - dird
   ports:
-    - "9498:9498"
-    - "9499:9499"
+    - "9498"
+    - "9499"
   volumes:
     - "./etc/xivo-dird-phoned:/etc/xivo-dird-phoned"
     - "../../..:/usr/src/xivo-dird-phoned"

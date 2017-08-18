@@ -60,6 +60,11 @@ class BaseDirdPhonedIntegrationTest(unittest.TestCase):
         return status
 
     @classmethod
+    def service_port(cls, port, service):
+        container_id = cls._run_cmd('docker-compose ps -q {service}'.format(service=service)).strip()
+        return cls._run_cmd('docker port {container} {port}'.format(container=container_id, port=port)).strip().rsplit(':')[-1]
+
+    @classmethod
     def stop_dird_phoned_with_asset(cls):
         cls._run_cmd('docker-compose kill')
         os.chdir(cls.cur_dir)
@@ -81,86 +86,98 @@ class BaseDirdPhonedIntegrationTest(unittest.TestCase):
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
-        url = u'http://localhost:9498/0.1/directories/menu/{profile}/{vendor}'
+        url = u'http://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
         params = {'xivo_user_uuid': xivo_user_uuid}
-        result = requests.get(url.format(profile=profile, vendor=vendor), params=params)
+        port = self.service_port(9498, 'phoned')
+        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params)
         return result
 
     @classmethod
     def get_ssl_menu_result(self, profile, vendor, xivo_user_uuid=None):
         params = {'xivo_user_uuid': xivo_user_uuid}
-        url = u'https://localhost:9499/0.1/directories/menu/{profile}/{vendor}'
-        result = requests.get(url.format(profile=profile, vendor=vendor), params=params, verify=False)
+        port = self.service_port(9499, 'phoned')
+        url = u'https://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
+        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, verify=False)
         return result
 
     @classmethod
     def get_menu_autodetect_result(self, user_agent=None):
         headers = {'User-Agent': user_agent}
-        url = u'http://localhost:9498/0.1/directories/menu/autodetect'
+        port = self.service_port(9498, 'phoned')
+        url = u'http://localhost:{port}/0.1/directories/menu/autodetect'.format(port=port)
         result = requests.get(url, headers=headers)
         return result
 
     @classmethod
     def get_ssl_menu_autodetect_result(self, user_agent=None):
         headers = {'User-Agent': user_agent}
-        url = u'https://localhost:9499/0.1/directories/menu/autodetect'
+        port = self.service_port(9499, 'phoned')
+        url = u'https://localhost:{port}/0.1/directories/menu/autodetect'.format(port=port)
         result = requests.get(url, headers=headers, verify=False)
         return result
 
     @classmethod
     def get_input_result(self, profile, vendor, xivo_user_uuid=None):
         params = {'xivo_user_uuid': xivo_user_uuid}
-        url = u'http://localhost:9498/0.1/directories/input/{profile}/{vendor}'
-        result = requests.get(url.format(profile=profile, vendor=vendor), params=params)
+        port = self.service_port(9498, 'phoned')
+        url = u'http://localhost:{port}/0.1/directories/input/{profile}/{vendor}'
+        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params)
         return result
 
     @classmethod
     def get_ssl_input_result(self, profile, vendor, xivo_user_uuid=None):
         params = {'xivo_user_uuid': xivo_user_uuid}
-        url = u'https://localhost:9499/0.1/directories/input/{profile}/{vendor}'
-        result = requests.get(url.format(profile=profile, vendor=vendor), params=params, verify=False)
+        port = self.service_port(9499, 'phoned')
+        url = u'https://localhost:{port}/0.1/directories/input/{profile}/{vendor}'
+        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, verify=False)
         return result
 
     @classmethod
     def get_input_autodetect_result(self, user_agent=None):
         headers = {'User-Agent': user_agent}
-        url = u'http://localhost:9498/0.1/directories/input/autodetect'
+        port = self.service_port(9498, 'phoned')
+        url = u'http://localhost:{port}/0.1/directories/input/autodetect'.format(port=port)
         result = requests.get(url, headers=headers)
         return result
 
     @classmethod
     def get_ssl_input_autodetect_result(self, user_agent=None):
         headers = {'User-Agent': user_agent}
-        url = u'https://localhost:9499/0.1/directories/input/autodetect'
+        port = self.service_port(9499, 'phoned')
+        url = u'https://localhost:{port}/0.1/directories/input/autodetect'.format(port=port)
         result = requests.get(url, headers=headers, verify=False)
         return result
 
     @classmethod
     def get_lookup_result(self, profile, vendor, xivo_user_uuid=None, term=None, headers=None):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
-        url = u'http://localhost:9498/0.1/directories/lookup/{profile}/{vendor}'
-        result = requests.get(url.format(profile=profile, vendor=vendor), params=params, headers=headers)
+        port = self.service_port(9498, 'phoned')
+        url = u'http://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
+        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, headers=headers)
         return result
 
     @classmethod
     def get_lookup_autodetect_result(self, term=None, user_agent=None):
         params = {'term': term}
         headers = {'User-Agent': user_agent}
-        url = u'http://localhost:9498/0.1/directories/lookup/autodetect'
+        port = self.service_port(9498, 'phoned')
+        url = u'http://localhost:{port}/0.1/directories/lookup/autodetect'.format(port=port)
         result = requests.get(url, params=params, headers=headers)
         return result
 
     @classmethod
     def get_ssl_lookup_result(self, profile, vendor, xivo_user_uuid=None, term=None):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
-        url = u'https://localhost:9499/0.1/directories/lookup/{profile}/{vendor}'
-        result = requests.get(url.format(profile=profile, vendor=vendor), params=params, verify=False)
+        port = self.service_port(9499, 'phoned')
+        url = u'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
+        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, verify=False)
         return result
 
     @classmethod
     def get_ssl_lookup_autodetect_result(self, term=None, user_agent=None):
         params = {'term': term}
         headers = {'User-Agent': user_agent}
-        url = u'https://localhost:9499/0.1/directories/lookup/autodetect'
+        port = self.service_port(9499, 'phoned')
+        url = u'https://localhost:{port}/0.1/directories/lookup/autodetect'.format(port=port)
         result = requests.get(url, params=params, headers=headers, verify=False)
         return result
