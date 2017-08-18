@@ -1,3 +1,4 @@
 docker-compose
 pyhamcrest
 nose
+https://github.com/wazo-pbx/xivo-test-helpers/archive/master.zip
