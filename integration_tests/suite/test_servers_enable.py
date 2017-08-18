@@ -31,7 +31,7 @@ class TestHTTPSIsDisabled(BaseDirdPhonedIntegrationTest):
     asset = 'https_enable_false'
 
     def test_configuration_https_enable_false_when_dird_phoned_starts_then_dird_phoned_https_stop(self):
-        log = self.dird_phoned_logs()
+        log = self.service_logs('phoned')
         assert_that(log, contains_string('HTTPS server is disabled'))
 
     def test_configuration_https_enable_false_when_dird_phoned_starts_then_dird_phoned_http_start(self):
@@ -47,7 +47,7 @@ class TestHTTPIsDisabled(BaseDirdPhonedIntegrationTest):
     asset = 'http_enable_false'
 
     def test_configuration_http_enable_false_when_dird_phoned_starts_then_dird_phoned_http_stop(self):
-        log = self.dird_phoned_logs()
+        log = self.service_logs('phoned')
         assert_that(log, contains_string('HTTP server is disabled'))
 
     def test_configuration_http_enable_false_when_dird_phoned_starts_then_dird_phoned_https_start(self):
@@ -71,5 +71,5 @@ class TestHTTPandHTTPSAreDisabled(BaseDirdPhonedIntegrationTest):
         else:
             self.fail('xivo-dird-phoned did not stop while http and https server are disabled')
 
-        log = self.dird_phoned_logs()
+        log = self.service_logs('phoned')
         assert_that(log, contains_string('No HTTP/HTTPS server enabled'))

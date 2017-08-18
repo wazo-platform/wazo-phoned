@@ -34,5 +34,5 @@ class TestMissingServiceKeyFile(BaseDirdPhonedIntegrationTest):
         else:
             self.fail('xivo-dird-phoned did not stop while missing service key file')
 
-        log = self.dird_phoned_logs()
+        log = self.service_logs('phoned')
         assert_that(log, contains_string("No such file or directory: '/tmp/auth_keys/xivo-dird-phoned-key.yml'"))

@@ -29,7 +29,7 @@ class TestHTTPSMissingCertificate(BaseDirdPhonedIntegrationTest):
     asset = 'no_ssl_certificate'
 
     def test_given_inexisting_SSL_certificate_when_dird_phoned_starts_then_dird_phoned_https_stop(self):
-        log = self.dird_phoned_logs()
+        log = self.service_logs('phoned')
         assert_that(log, contains_string("HTTPS server won't start"))
 
     def test_given_inexisting_SSL_certificate_when_dird_phoned_starts_then_dird_phoned_http_start(self):
@@ -53,5 +53,5 @@ class TestHTTPSMissingPrivateKey(BaseDirdPhonedIntegrationTest):
         assert_that(response.status_code, equal_to(200))
 
     def test_given_inexisting_SSL_private_key_when_dird_phoned_starts_then_dird_phoned_https_stop(self):
-        log = self.dird_phoned_logs()
+        log = self.service_logs('phoned')
         assert_that(log, contains_string("HTTPS server won't start"))

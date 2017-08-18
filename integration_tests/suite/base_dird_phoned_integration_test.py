@@ -15,10 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-import subprocess
 import requests
 import os
-import json
 import logging
 
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
@@ -40,10 +38,6 @@ VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
 class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
 
     assets_root = ASSETS_ROOT
-
-    @classmethod
-    def dird_phoned_logs(cls):
-        return cls.service_logs('phoned')
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
