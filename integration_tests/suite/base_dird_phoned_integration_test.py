@@ -42,19 +42,8 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
     assets_root = ASSETS_ROOT
 
     @classmethod
-    def dird_phoned_status(cls):
-        return [cls.service_status('phoned')]
-
-    @classmethod
     def dird_phoned_logs(cls):
         return cls.service_logs('phoned')
-
-    @staticmethod
-    def _run_cmd(cmd):
-        process = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        out, _ = process.communicate()
-        logger.info(out)
-        return out
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):

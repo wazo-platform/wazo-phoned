@@ -64,7 +64,7 @@ class TestHTTPandHTTPSAreDisabled(BaseDirdPhonedIntegrationTest):
 
     def test_configuration_http_and_https_enable_false_when_dird_phoned_starts_then_dird_phoned_stop(self):
         for _ in range(2):
-            status = self.dird_phoned_status()[0]
+            status = self.service_status('phoned')
             if not status['State']['Running']:
                 break
             time.sleep(1)

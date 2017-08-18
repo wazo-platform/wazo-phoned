@@ -27,7 +27,7 @@ class TestMissingServiceKeyFile(BaseDirdPhonedIntegrationTest):
 
     def test_given_inexisting_service_key_when_dird_phoned_starts_then_dird_phoned_stops(self):
         for _ in range(5):
-            status = self.dird_phoned_status()[0]
+            status = self.service_status('phoned')
             if not status['State']['Running']:
                 break
             time.sleep(1)
