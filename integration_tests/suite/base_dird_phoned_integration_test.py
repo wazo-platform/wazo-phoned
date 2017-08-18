@@ -53,11 +53,6 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         status = cls._run_cmd('docker logs {container}'.format(container=dird_phoned_id))
         return status
 
-    @classmethod
-    def service_port(cls, port, service):
-        container_id = cls._run_cmd('docker-compose ps -q {service}'.format(service=service)).strip()
-        return cls._run_cmd('docker port {container} {port}'.format(container=container_id, port=port)).strip().rsplit(':')[-1]
-
     @staticmethod
     def _run_cmd(cmd):
         process = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
