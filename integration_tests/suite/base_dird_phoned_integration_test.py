@@ -16,11 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import subprocess
-import unittest
 import requests
 import os
 import json
 import logging
+
+from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
 
 logger = logging.getLogger(__name__)
 
@@ -36,16 +37,9 @@ VALID_VENDOR = 'cisco'
 VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
 
 
-class BaseDirdPhonedIntegrationTest(unittest.TestCase):
+class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
 
-    @classmethod
-    def launch_dird_phoned_with_asset(cls):
-        cls.container_name = cls.asset
-        asset_path = os.path.join(ASSETS_ROOT, cls.asset)
-        cls.cur_dir = os.getcwd()
-        os.chdir(asset_path)
-        cls._run_cmd('docker-compose rm --force')
-        cls._run_cmd('docker-compose run --rm sync')
+    assets_root = ASSETS_ROOT
 
     @classmethod
     def dird_phoned_status(cls):
@@ -64,25 +58,12 @@ class BaseDirdPhonedIntegrationTest(unittest.TestCase):
         container_id = cls._run_cmd('docker-compose ps -q {service}'.format(service=service)).strip()
         return cls._run_cmd('docker port {container} {port}'.format(container=container_id, port=port)).strip().rsplit(':')[-1]
 
-    @classmethod
-    def stop_dird_phoned_with_asset(cls):
-        cls._run_cmd('docker-compose kill')
-        os.chdir(cls.cur_dir)
-
     @staticmethod
     def _run_cmd(cmd):
         process = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, _ = process.communicate()
         logger.info(out)
         return out
-
-    @classmethod
-    def setUpClass(cls):
-        cls.launch_dird_phoned_with_asset()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.stop_dird_phoned_with_asset()
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
