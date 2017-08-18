@@ -43,9 +43,7 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def dird_phoned_status(cls):
-        dird_phoned_id = cls._run_cmd('docker-compose ps -q phoned').strip()
-        status = cls._run_cmd('docker inspect {container}'.format(container=dird_phoned_id))
-        return json.loads(status)
+        return [cls.service_status('phoned')]
 
     @classmethod
     def dird_phoned_logs(cls):
