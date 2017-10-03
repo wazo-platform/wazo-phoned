@@ -38,6 +38,7 @@ VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
 class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
 
     assets_root = ASSETS_ROOT
+    service = 'phoned'
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
