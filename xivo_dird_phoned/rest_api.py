@@ -19,11 +19,15 @@ from datetime import timedelta
 
 import logging
 import os
+import urllib
 
 import cherrypy
 from cherrypy.process.servers import ServerAdapter
 from cheroot import wsgi
-from flask import Flask
+from flask import (
+    Flask,
+    request
+)
 from flask_restful import Api
 from flask_cors import CORS
 from xivo import http_helpers
@@ -42,6 +46,7 @@ class RestApi(object):
         self.config = config
         self.app = Flask('xivo_dird_phoned')
         http_helpers.add_logger(self.app, logger)
+        self.app.before_request(log_request)
         self.app.after_request(http_helpers.log_request)
         self.app.secret_key = os.urandom(24)
         self.app.permanent_session_lifetime = timedelta(minutes=5)
@@ -108,3 +113,17 @@ def list_routes(app):
 
     for line in sorted(output):
         logger.debug(line)
+
+
+def log_request():
+    url = request.url.encode('utf8')
+    url = urllib.unquote(url)
+    params = {
+        'method': request.method,
+        'url': url,
+    }
+    if request.data:
+        params.update({'data': request.data})
+        logger.debug("%(method)s %(url)s with data %(data)s", params)
+    else:
+        logger.debug("%(method)s %(url)s", params)
