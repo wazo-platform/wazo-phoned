@@ -1,4 +1,4 @@
-FROM python:2.7.9
+FROM python:2.7.13
 
 RUN apt-get -yq update \
    && apt-get -yqq dist-upgrade \
