@@ -1,4 +1,4 @@
-FROM python:2.7.13
+FROM python:2.7.13-stretch
 
 RUN apt-get -yq update \
    && apt-get -yqq dist-upgrade \

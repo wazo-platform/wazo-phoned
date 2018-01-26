@@ -1,7 +1,7 @@
 .PHONY: test-setup test
 
 test-setup: egg-info
-	docker pull python:2.7
+	docker pull python:2.7.13-stretch
 	docker pull p0bailey/docker-flask
 	docker pull n3llyb0y/wait
 	docker build -t wazopbx/xivo-dird-phoned ..
