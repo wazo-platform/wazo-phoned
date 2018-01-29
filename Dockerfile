@@ -1,10 +1,5 @@
 FROM python:2.7.13-stretch
 
-RUN apt-get -yq update \
-   && apt-get -yqq dist-upgrade \
-   && apt-get -yqq install libldap2-dev libsasl2-dev \
-   && apt-get -yq autoremove
-
 RUN mkdir -p /etc/xivo-dird-phoned/conf.d
 
 RUN mkdir -p /var/run/xivo-dird-phoned
