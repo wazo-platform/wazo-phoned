@@ -22,6 +22,7 @@ import os
 import urllib
 
 import cherrypy
+from cherrypy.process.wspbus import states
 from cherrypy.process.servers import ServerAdapter
 from cheroot import wsgi
 from flask import (
@@ -100,8 +101,19 @@ class RestApi(object):
 
         list_routes(self.app)
 
-        cherrypy.engine.start()
-        cherrypy.engine.block()
+        try:
+            cherrypy.engine.start()
+            cherrypy.engine.wait(states.EXITING)
+        except KeyboardInterrupt:
+            logger.warning('Stopping xivo-dird-phoned: KeyboardInterrupt')
+            cherrypy.engine.exit()
+
+    def stop(self):
+        cherrypy.engine.exit()
+
+    def join(self):
+        if cherrypy.engine.state == states.EXITING:
+            cherrypy.engine.block()
 
 
 def list_routes(app):

@@ -41,6 +41,13 @@ class Controller(object):
                 self.rest_api.run()
         finally:
             logger.info('xivo-dird-phoned stopping...')
+            logger.debug('joining rest api thread...')
+            self.rest_api.join()
+            logger.debug('done joining.')
+
+    def stop(self, reason):
+        logger.warning('Stopping xivo-dird-phoned: %s', reason)
+        self.rest_api.stop()
 
     def _new_auth_client(self, config):
         auth_config = config['auth']

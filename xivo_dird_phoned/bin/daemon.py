@@ -16,8 +16,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import logging
+import signal
 import sys
 
+from functools import partial
 from xivo.daemonize import pidfile_context
 from xivo.user_rights import change_user
 from xivo.xivo_logging import setup_logging
@@ -70,9 +72,14 @@ def main(argv):
         change_user(config['user'])
 
     controller = Controller(config)
+    signal.signal(signal.SIGTERM, partial(sigterm, controller))
 
     with pidfile_context(config['pid_filename'], config['foreground']):
         controller.run()
+
+
+def sigterm(controller, signum, frame):
+    controller.stop(reason='SIGTERM')
 
 
 if __name__ == '__main__':
