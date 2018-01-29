@@ -21,7 +21,7 @@ RUN cp -r etc/* /etc
 
 RUN python setup.py install
 
-ONBUILD ADD ./contribs/docker/certs /usr/share/xivo-certs
+ADD ./contribs/docker/certs /usr/share/xivo-certs
 
 EXPOSE 9498 9499
 
