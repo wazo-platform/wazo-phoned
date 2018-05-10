@@ -11,7 +11,7 @@ services:
       - "9498"
       - "9499"
     volumes:
-      - "../../..:/usr/src/xivo-dird-phoned"
+      - "../..:/usr/src/xivo-dird-phoned"
       - "./ssl:/etc/ssl"
       - "./auth_keys:/tmp/auth_keys"
   dird:
