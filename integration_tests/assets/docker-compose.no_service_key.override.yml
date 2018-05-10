@@ -1,0 +1,13 @@
+version: '3'
+services:
+  sync:
+    depends_on:
+      - auth
+      - dird
+      - phoned
+    environment:
+      TARGETS: "dird:9489 auth:9497"
+
+  phoned:
+    volumes:
+      - "./etc/xivo-dird-phoned/conf.d/config.no_service_key.yml:/etc/xivo-dird-phoned/conf.d/config.no_service_key.yml"

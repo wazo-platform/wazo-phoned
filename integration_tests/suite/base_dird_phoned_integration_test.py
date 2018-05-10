@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-import requests
-import os
 import logging
+import os
+
+import requests
 
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
 
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 requests.packages.urllib3.disable_warnings()
 
 ASSETS_ROOT = os.path.join(os.path.dirname(__file__), '..', 'assets')
-CA_CERT = os.path.join(ASSETS_ROOT, '_common', 'ssl', 'server.crt')
+CA_CERT = os.path.join(ASSETS_ROOT, 'ssl', 'server.crt')
 
 DEFAULT_PROFILE = 'default_phone'
 VALID_TERM = 'toto'
@@ -26,6 +27,14 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
 
     assets_root = ASSETS_ROOT
     service = 'phoned'
+
+    @classmethod
+    def _docker_compose_options(cls):
+        return [
+            '--file', os.path.join(cls.assets_root, 'docker-compose.yml'),
+            '--file', os.path.join(cls.assets_root, 'docker-compose.{}.override.yml'.format(cls.asset)),
+            '--project-name', cls.service,
+        ]
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
