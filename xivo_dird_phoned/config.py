@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2015-2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import argparse
@@ -29,12 +29,13 @@ _DEFAULT_CONFIG = {
     'foreground': False,
     'pid_filename': '/var/run/xivo-dird-phoned/xivo-dird-phoned.pid',
     'rest_api': {
-        'listen': '0.0.0.0',
         'http': {
+            'listen': '0.0.0.0',
             'port': 9498,
             'enable': True
         },
         'https': {
+            'listen': '0.0.0.0',
             'port': 9499,
             'enable': True,
             'certificate': '/usr/share/xivo-certs/server.crt',
