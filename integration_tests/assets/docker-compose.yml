@@ -14,6 +14,10 @@ services:
       - "../..:/usr/src/xivo-dird-phoned"
       - "./ssl:/etc/ssl"
       - "./auth_keys:/tmp/auth_keys"
+      - "./etc/xivo-dird-phoned/conf.d/50-auth.yml:/etc/xivo-dird-phoned/conf.d/50-auth.yml"
+      - "./etc/xivo-dird-phoned/conf.d/50-dird.yml:/etc/xivo-dird-phoned/conf.d/50-dird.yml"
+      - "./etc/xivo-dird-phoned/conf.d/50-rest-api.yml:/etc/xivo-dird-phoned/conf.d/50-rest-api.yml"
+
   dird:
     image: p0bailey/docker-flask
     expose:
@@ -22,6 +26,7 @@ services:
       - "./dird_data:/tmp"
       - "./ssl:/etc/ssl"
     command: "python /tmp/mock-xivo-dird.py 9489"
+
   auth:
     image: p0bailey/docker-flask
     expose:

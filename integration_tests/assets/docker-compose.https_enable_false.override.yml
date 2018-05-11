@@ -10,4 +10,4 @@ services:
 
   phoned:
     volumes:
-      - "./etc/xivo-dird-phoned/conf.d/config.https_enable_false.yml:/etc/xivo-dird-phoned/conf.d/config.https_enable_false.yml"
+      - "./etc/xivo-dird-phoned/conf.d/20-https-disabled.yml:/etc/xivo-dird-phoned/conf.d/20-https-disabled.yml"
