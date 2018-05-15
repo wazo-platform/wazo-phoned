@@ -1,23 +1,11 @@
 # -*- coding: utf-8 -*-
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0+
 
-# Copyright (C) 2015 Avencall
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>
+import logging
+import os
 
 import requests
-import os
-import logging
 
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
 
@@ -26,7 +14,7 @@ logger = logging.getLogger(__name__)
 requests.packages.urllib3.disable_warnings()
 
 ASSETS_ROOT = os.path.join(os.path.dirname(__file__), '..', 'assets')
-CA_CERT = os.path.join(ASSETS_ROOT, '_common', 'ssl', 'server.crt')
+CA_CERT = os.path.join(ASSETS_ROOT, 'ssl', 'server.crt')
 
 DEFAULT_PROFILE = 'default_phone'
 VALID_TERM = 'toto'
@@ -39,6 +27,14 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
 
     assets_root = ASSETS_ROOT
     service = 'phoned'
+
+    @classmethod
+    def _docker_compose_options(cls):
+        return [
+            '--file', os.path.join(cls.assets_root, 'docker-compose.yml'),
+            '--file', os.path.join(cls.assets_root, 'docker-compose.{}.override.yml'.format(cls.asset)),
+            '--project-name', cls.service,
+        ]
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):

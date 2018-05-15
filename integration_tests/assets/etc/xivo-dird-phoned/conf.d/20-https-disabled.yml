@@ -1,0 +1,3 @@
+rest_api:
+  https:
+    enabled: False

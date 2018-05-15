@@ -1,0 +1,3 @@
+rest_api:
+  authorized_subnets:
+      - 127.0.0.1/8

@@ -1,19 +1,6 @@
 # -*- coding: utf-8 -*-
-
-# Copyright 2015-2017 The Wazo Authors  (see the AUTHORS file)
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0+
 
 import argparse
 
@@ -42,12 +29,13 @@ _DEFAULT_CONFIG = {
     'foreground': False,
     'pid_filename': '/var/run/xivo-dird-phoned/xivo-dird-phoned.pid',
     'rest_api': {
-        'listen': '0.0.0.0',
         'http': {
+            'listen': '0.0.0.0',
             'port': 9498,
             'enable': True
         },
         'https': {
+            'listen': '0.0.0.0',
             'port': 9499,
             'enable': True,
             'certificate': '/usr/share/xivo-certs/server.crt',

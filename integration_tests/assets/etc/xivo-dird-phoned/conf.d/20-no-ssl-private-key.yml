@@ -1,0 +1,3 @@
+rest_api:
+  https:
+    private_key: /etc/ssl/no_server.key
