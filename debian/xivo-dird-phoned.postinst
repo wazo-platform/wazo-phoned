@@ -6,14 +6,10 @@ LOG_FILENAME='/var/log/xivo-dird-phoned.log'
 
 case "$1" in
 	configure)
-		# remove the /var/log/xivo-dird-phoned file created before 15.16
-		rm -f '/var/log/xivo-dird-phoned'
-
 		if [ ! -e "$LOG_FILENAME" ]; then
 			touch "$LOG_FILENAME"
 		fi
 		chown www-data: "$LOG_FILENAME"
-
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)
