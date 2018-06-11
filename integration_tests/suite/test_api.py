@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from .base_dird_phoned_integration_test import BaseDirdPhonedIntegrationTest
-from .base_dird_phoned_integration_test import DEFAULT_PROFILE
-from .base_dird_phoned_integration_test import VALID_TERM
-from .base_dird_phoned_integration_test import VALID_USER_AGENT
-from .base_dird_phoned_integration_test import VALID_VENDOR
-from .base_dird_phoned_integration_test import VALID_XIVO_USER_UUID
+from hamcrest import (
+    assert_that,
+    equal_to,
+)
 
-from hamcrest import assert_that
-from hamcrest import equal_to
+from .base_dird_phoned_integration_test import (
+    BaseDirdPhonedIntegrationTest,
+    DEFAULT_PROFILE,
+    VALID_TERM,
+    VALID_USER_AGENT,
+    VALID_VENDOR,
+    VALID_XIVO_USER_UUID,
+)
 
 
 class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
