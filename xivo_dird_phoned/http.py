@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -14,9 +14,7 @@ from time import time
 from xivo_dird_phoned.rest_api import api
 from xivo_dird_phoned.auth_remote_addr import AuthResource
 
-
 logger = logging.getLogger(__name__)
-
 
 parser = reqparse.RequestParser()
 parser.add_argument('xivo_user_uuid', type=unicode, required=True, location='args')
@@ -104,7 +102,7 @@ class Menu(AuthResource):
         url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
-            headers = {'X-Auth-Token': current_app.config['token'],
+            headers = {'X-Auth-Token': current_app.config.get('token'),
                        'Proxy-URL': _build_next_url('menu'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             headers.update(request.headers)
@@ -145,7 +143,7 @@ class MenuAutodetect(AuthResource):
             return _error(404, 'No vendor found')
 
         try:
-            headers = {'X-Auth-Token': current_app.config['token'],
+            headers = {'X-Auth-Token': current_app.config.get('token'),
                        'Proxy-URL': _build_next_url('menu'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -178,7 +176,7 @@ class Input(AuthResource):
         url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
-            headers = {'X-Auth-Token': current_app.config['token'],
+            headers = {'X-Auth-Token': current_app.config.get('token'),
                        'Proxy-URL': _build_next_url('input'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -217,7 +215,7 @@ class InputAutodetect(AuthResource):
             return _error(404, 'No vendor found')
 
         try:
-            headers = {'X-Auth-Token': current_app.config['token'],
+            headers = {'X-Auth-Token': current_app.config.get('token'),
                        'Proxy-URL': _build_next_url('input'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -254,7 +252,7 @@ class Lookup(AuthResource):
         params = {'term': term, 'limit': limit, 'offset': offset}
 
         try:
-            headers = {'X-Auth-Token': current_app.config['token'],
+            headers = {'X-Auth-Token': current_app.config.get('token'),
                        'Proxy-URL': _build_next_url('lookup'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
@@ -299,7 +297,7 @@ class LookupAutodetect(AuthResource):
             return _error(404, 'No vendor found')
 
         try:
-            headers = {'X-Auth-Token': current_app.config['token'],
+            headers = {'X-Auth-Token': current_app.config.get('token'),
                        'Proxy-URL': _build_next_url('lookup'),
                        'Accept-Language': request.headers.get('Accept-Language')}
             return _response_dird(url.format(host=self.dird_host,
