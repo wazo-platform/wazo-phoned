@@ -28,6 +28,13 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
     service = 'phoned'
 
     @classmethod
+    def get_status_result(self):
+        url = u'http://localhost:{port}/0.1/status'
+        port = self.service_port(9498, 'phoned')
+        result = requests.get(url.format(port=port))
+        return result
+
+    @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
         url = 'http://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
         params = {'xivo_user_uuid': xivo_user_uuid}
