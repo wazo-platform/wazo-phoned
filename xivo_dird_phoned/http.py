@@ -4,6 +4,7 @@
 
 import logging
 import requests
+import re
 
 from flask import request
 from flask import Response
@@ -59,6 +60,7 @@ class DirectoriesConfiguration(object):
     menu_url = '/directories/menu/<profile>/<vendor>'
     input_url = '/directories/input/<profile>/<vendor>'
     lookup_url = '/directories/lookup/<profile>/<vendor>'
+    lookup_url_uuid = '/directories/lookup/<profile>/<vendor>/<xivo_user_uuid>'
     menu_autodetect_url = '/directories/menu/autodetect'
     input_autodetect_url = '/directories/input/autodetect'
     lookup_autodetect_url = '/directories/lookup/autodetect'
@@ -74,7 +76,7 @@ class DirectoriesConfiguration(object):
         Lookup.configure(dird_host, dird_port, dird_verify_certificate)
         api.add_resource(Menu, self.menu_url)
         api.add_resource(Input, self.input_url)
-        api.add_resource(Lookup, self.lookup_url)
+        api.add_resource(Lookup, self.lookup_url, self.lookup_url_uuid)
 
         MenuAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
         InputAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
@@ -242,12 +244,48 @@ class Lookup(AuthResource):
         cls.dird_port = dird_port
         cls.dird_verify_certificate = dird_verify_certificate
 
-    def get(self, profile, vendor):
-        args = parser_lookup.parse_args()
-        limit = args['limit']
-        offset = args['offset']
-        term = args['term']
-        xivo_user_uuid = args['xivo_user_uuid']
+    def get(self, profile, vendor, xivo_user_uuid=None):
+        parser_cp = parser_lookup
+        if xivo_user_uuid:
+            parser_cp = parser.copy()
+            parser_cp.remove_argument('xivo_user_uuid') # not a query string anymore
+            parser_cp.add_argument('fn', required=True, location='args')
+            parser_cp.add_argument('ln', required=True, location='args')
+            parser_cp.add_argument('first', required=False, location='args')
+            parser_cp.add_argument('count', required=False, location='args')
+            parser_cp.add_argument('set_first', required=False, location='args')
+            
+        
+        args = parser_cp.parse_args()
+        offset = 0
+        limit = 0
+        term = ''
+        if xivo_user_uuid:
+            if args['first']:
+                try:
+                    offset = int(args['first']) - 1
+                except ValueError:
+                    offset = 0
+            
+            if args['count']:
+                try:
+                    limit = int(args['count'])
+                except ValueError:
+                    limit = 0
+            
+            args = { key:val.replace('*', '') for key,val in args.iteritems() if val and val != '*'}
+            
+            prio_terms = ['set_first', 'fn', 'ln']
+            for t in prio_terms:
+                if t in args:
+                    term = args[t]
+                    break
+        else:
+            xivo_user_uuid = args['xivo_user_uuid']
+            limit = args['limit']
+            offset = args['offset']
+            term = args['term']
+        
         url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{xivo_user_uuid}/{vendor}'
         params = {'term': term, 'limit': limit, 'offset': offset}
 
@@ -315,6 +353,7 @@ class LookupAutodetect(AuthResource):
 
 def _find_vendor_by_user_agent(raw_user_agent):
     user_agent = raw_user_agent.lower()
+    re_gigaset = re.compile(r'^(Gigaset )?(?P<model>N\d{3} .+)\/(?P<version>\d{2,3}\.\d{2,3})\.(\d{2,3})\.(\d{2,3})\.(\d{2,3});?(?P<mac>[A-F0-9]{12})?$')
 
     if 'aastra' in user_agent:
         # '/^Aastra((?:(?:67)?5[1357]|673[01])i(?: CT)?) /'
@@ -332,6 +371,8 @@ def _find_vendor_by_user_agent(raw_user_agent):
         return 'thomson'
     elif 'yealink' in user_agent:
         return 'yealink'
+    elif re_gigaset.match(raw_user_agent):
+        return 'gigaset'
     return None
 
 
