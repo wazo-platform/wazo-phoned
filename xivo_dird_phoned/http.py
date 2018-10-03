@@ -25,9 +25,9 @@ parser_lookup.add_argument('offset', type=int, required=False, help='offset cann
 parser_lookup.add_argument('term', type=unicode, required=True, help='term is missing', location='args')
 
 parser_lookup_gigaset = reqparse.RequestParser()
-parser_lookup_gigaset.add_argument('first', type=int, store_missing=1, help='first cannot be converted', location='args')
+parser_lookup_gigaset.add_argument('first', type=int, default=1, help='first cannot be converted', location='args')
 parser_lookup_gigaset.add_argument('count', type=int, dest='limit', required=False, help='count cannot be converted', location='args')
-parser_lookup_gigaset.add_argument('set_first', dest='term', store_missing='', required=False, location='args')
+parser_lookup_gigaset.add_argument('set_first', dest='term', default='', required=False, location='args')
 
 parser_lookup_autodetect = parser_lookup.copy()
 parser_lookup_autodetect.remove_argument('xivo_user_uuid')
@@ -81,8 +81,8 @@ class DirectoriesConfiguration(object):
         LookupGigaset.configure(dird_host, dird_port, dird_verify_certificate)
         api.add_resource(Menu, self.menu_url)
         api.add_resource(Input, self.input_url)
-        api.add_resource(Lookup, self.lookup_url, self.lookup_gigaset_url)
-        api.add_resource(LookupGigaset, self._lookup_gigaset_url)
+        api.add_resource(Lookup, self.lookup_url)
+        api.add_resource(LookupGigaset, self.lookup_gigaset_url)
 
         MenuAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
         InputAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
@@ -289,13 +289,13 @@ class LookupGigaset(AuthResource):
         cls.dird_port = dird_port
         cls.dird_verify_certificate = dird_verify_certificate
 
-    def get(self, profile, vendor, xivo_user_uuid):
+    def get(self, profile, xivo_user_uuid):
         args = parser_lookup_gigaset.parse_args()
         offset = args['first'] - 1
         limit = args['limit']
-        term = args['term'].replace('*', '')
+        term = args['term'].replace('*', '') if args['term'] else ''
 
-        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{xivo_user_uuid}/{vendor}'
+        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{xivo_user_uuid}/gigaset'
         params = {'term': term, 'limit': limit, 'offset': offset}
 
         try:
@@ -306,8 +306,7 @@ class LookupGigaset(AuthResource):
                                              port=self.dird_port,
                                              version=DIRD_API_VERSION,
                                              profile=profile,
-                                             xivo_user_uuid=xivo_user_uuid,
-                                             vendor=vendor),
+                                             xivo_user_uuid=xivo_user_uuid),
                                   headers=headers,
                                   params=params,
                                   verify=self.dird_verify_certificate)
