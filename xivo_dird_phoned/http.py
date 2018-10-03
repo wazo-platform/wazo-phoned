@@ -24,11 +24,10 @@ parser_lookup.add_argument('limit', type=int, required=False, help='limit cannot
 parser_lookup.add_argument('offset', type=int, required=False, help='offset cannot be converted', location='args')
 parser_lookup.add_argument('term', type=unicode, required=True, help='term is missing', location='args')
 
-# TODO: rename to lookup_gigaset
-parser_lookup_uuid = reqparse.RequestParser()
-parser_lookup_uuid.add_argument('first', type=int, store_missing=1, help='first cannot be converted', location='args')
-parser_lookup_uuid.add_argument('count', type=int, dest='limit', required=False, help='count cannot be converted', location='args')
-parser_lookup_uuid.add_argument('set_first', dest='term', store_missing='', required=False, location='args')
+parser_lookup_gigaset = reqparse.RequestParser()
+parser_lookup_gigaset.add_argument('first', type=int, store_missing=1, help='first cannot be converted', location='args')
+parser_lookup_gigaset.add_argument('count', type=int, dest='limit', required=False, help='count cannot be converted', location='args')
+parser_lookup_gigaset.add_argument('set_first', dest='term', store_missing='', required=False, location='args')
 
 parser_lookup_autodetect = parser_lookup.copy()
 parser_lookup_autodetect.remove_argument('xivo_user_uuid')
@@ -65,7 +64,7 @@ class DirectoriesConfiguration(object):
     menu_url = '/directories/menu/<profile>/<vendor>'
     input_url = '/directories/input/<profile>/<vendor>'
     lookup_url = '/directories/lookup/<profile>/<vendor>'
-    lookup_url_uuid = '/directories/lookup/<profile>/<vendor>/<xivo_user_uuid>'  # Rename to gigaset
+    lookup_gigaset_url = '/directories/lookup/<profile>/gigaset/<xivo_user_uuid>'
     menu_autodetect_url = '/directories/menu/autodetect'
     input_autodetect_url = '/directories/input/autodetect'
     lookup_autodetect_url = '/directories/lookup/autodetect'
@@ -79,11 +78,11 @@ class DirectoriesConfiguration(object):
         Menu.configure(dird_host, dird_port, dird_verify_certificate)
         Input.configure(dird_host, dird_port, dird_verify_certificate)
         Lookup.configure(dird_host, dird_port, dird_verify_certificate)
-        LookupUUID.configure(dird_host, dird_port, dird_verify_certificate)
+        LookupGigaset.configure(dird_host, dird_port, dird_verify_certificate)
         api.add_resource(Menu, self.menu_url)
         api.add_resource(Input, self.input_url)
-        api.add_resource(Lookup, self.lookup_url, self.lookup_url_uuid)
-        api.add_resource(LookupUUID, self._lookup_url_uuid)
+        api.add_resource(Lookup, self.lookup_url, self.lookup_gigaset_url)
+        api.add_resource(LookupGigaset, self._lookup_gigaset_url)
 
         MenuAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
         InputAutodetect.configure(dird_host, dird_port, dird_verify_certificate, dird_default_profile)
@@ -278,7 +277,7 @@ class Lookup(AuthResource):
             return _error(e.code, str(e))
 
 
-class LookupUUID(AuthResource):
+class LookupGigaset(AuthResource):
 
     dird_host = None
     dird_port = None
@@ -291,7 +290,7 @@ class LookupUUID(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, vendor, xivo_user_uuid):
-        args = parser_lookup_uuid.parse_args()
+        args = parser_lookup_gigaset.parse_args()
         offset = args['first'] - 1
         limit = args['limit']
         term = args['term'].replace('*', '')
