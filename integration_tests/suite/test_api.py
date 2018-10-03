@@ -94,6 +94,27 @@ class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
 
         assert_that(response.status_code, equal_to(400))
 
+    # Lookup Gigaset
+    def test_that_lookup_gigaset_return_no_error_when_query_ssl(self):
+        response = self.get_ssl_lookup_gigaset_result(xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                                      profile=DEFAULT_PROFILE,
+                                                      term=VALID_TERM)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_lookup_gigaset_return_no_error_when_query(self):
+        response = self.get_lookup_gigaset_result(xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                                  profile=DEFAULT_PROFILE,
+                                                  term=VALID_TERM)
+
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_lookup_gigaset_return_no_error_when_no_term(self):
+        response = self.get_lookup_gigaset_result(xivo_user_uuid=VALID_XIVO_USER_UUID,
+                                                  profile=DEFAULT_PROFILE)
+
+        assert_that(response.status_code, equal_to(200))
+
     # Menu autodetect
     def test_that_menu_autodetect_return_no_error_when_query_ssl(self):
         response = self.get_ssl_menu_autodetect_result(user_agent=VALID_USER_AGENT)

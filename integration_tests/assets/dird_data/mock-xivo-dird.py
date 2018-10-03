@@ -26,6 +26,7 @@ def input_get(profile, xivo_user_uuid):
     return '', 200
 
 
+@app.route('/0.1/directories/lookup/<profile>/<xivo_user_uuid>/gigaset', methods=['GET'])
 @app.route('/0.1/directories/lookup/<profile>/<xivo_user_uuid>/{vendor}'.format(vendor=VALID_VENDOR), methods=['GET'])
 def lookup_get(profile, xivo_user_uuid):
     if not request.headers.get('X-Auth-Token', ''):
