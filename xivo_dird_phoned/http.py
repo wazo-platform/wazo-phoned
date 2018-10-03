@@ -247,14 +247,13 @@ class Lookup(AuthResource):
         parser_cp = parser_lookup
         if xivo_user_uuid:
             parser_cp = parser.copy()
-            parser_cp.remove_argument('xivo_user_uuid') # not a query string anymore
+            parser_cp.remove_argument('xivo_user_uuid')  # not a query string anymore
             parser_cp.add_argument('fn', required=True, location='args')
             parser_cp.add_argument('ln', required=True, location='args')
             parser_cp.add_argument('first', required=False, location='args')
             parser_cp.add_argument('count', required=False, location='args')
             parser_cp.add_argument('set_first', required=False, location='args')
-            
-        
+
         args = parser_cp.parse_args()
         offset = 0
         limit = 0
@@ -265,15 +264,15 @@ class Lookup(AuthResource):
                     offset = int(args['first']) - 1
                 except ValueError:
                     offset = 0
-            
+
             if args['count']:
                 try:
                     limit = int(args['count'])
                 except ValueError:
                     limit = 0
-            
-            args = { key:val.replace('*', '') for key,val in args.iteritems() if val and val != '*'}
-            
+
+            args = {key: val.replace('*', '') for key, val in args.iteritems() if val and val != '*'}
+
             prio_terms = ['set_first', 'fn', 'ln']
             for t in prio_terms:
                 if t in args:
@@ -284,7 +283,7 @@ class Lookup(AuthResource):
             limit = args['limit']
             offset = args['offset']
             term = args['term']
-        
+
         url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{xivo_user_uuid}/{vendor}'
         params = {'term': term, 'limit': limit, 'offset': offset}
 
