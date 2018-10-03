@@ -4,7 +4,6 @@
 
 import logging
 import requests
-import re
 
 from flask import request
 from flask import Response
@@ -353,7 +352,6 @@ class LookupAutodetect(AuthResource):
 
 def _find_vendor_by_user_agent(raw_user_agent):
     user_agent = raw_user_agent.lower()
-    re_gigaset = re.compile(r'^(Gigaset )?(?P<model>N\d{3} .+)\/(?P<version>\d{2,3}\.\d{2,3})\.(\d{2,3})\.(\d{2,3})\.(\d{2,3});?(?P<mac>[A-F0-9]{12})?$')
 
     if 'aastra' in user_agent:
         # '/^Aastra((?:(?:67)?5[1357]|673[01])i(?: CT)?) /'
@@ -371,8 +369,6 @@ def _find_vendor_by_user_agent(raw_user_agent):
         return 'thomson'
     elif 'yealink' in user_agent:
         return 'yealink'
-    elif re_gigaset.match(raw_user_agent):
-        return 'gigaset'
     return None
 
 
