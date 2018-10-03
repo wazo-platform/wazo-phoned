@@ -109,6 +109,14 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
+    def get_lookup_gigaset_result(self, profile, xivo_user_uuid=None, term=None, headers=None):
+        params = {'term': term}
+        port = self.service_port(9498, 'phoned')
+        url = u'http://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
+        result = requests.get(url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid), params=params, headers=headers)
+        return result
+
+    @classmethod
     def get_lookup_autodetect_result(self, term=None, user_agent=None):
         params = {'term': term}
         headers = {'User-Agent': user_agent}
@@ -123,6 +131,14 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         port = self.service_port(9499, 'phoned')
         url = u'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
         result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, verify=False)
+        return result
+
+    @classmethod
+    def get_ssl_lookup_gigaset_result(self, profile, xivo_user_uuid=None, term=None):
+        params = {'term': term}
+        port = self.service_port(9499, 'phoned')
+        url = u'https://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
+        result = requests.get(url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid), params=params, verify=False)
         return result
 
     @classmethod
