@@ -58,7 +58,7 @@ def _error(code, msg):
             'status_code': code}, code
 
 
-class DirectoriesConfiguration(object):
+class DirectoriesConfiguration:
 
     menu_url = '/directories/menu/<profile>/<vendor>'
     input_url = '/directories/input/<profile>/<vendor>'
