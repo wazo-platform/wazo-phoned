@@ -17,6 +17,9 @@ setup(
     url='http://wazo.community',
 
     packages=find_packages(),
-
-    scripts=['bin/xivo-dird-phoned']
+    entry_points={
+        'console_scripts': [
+            'xivo-dird-phoned=xivo_dird_phoned.bin.daemon:main',
+        ],
+    }
 )

@@ -46,7 +46,8 @@ class _PreConfigLogger:
         self._logger.flush()
 
 
-def main(argv):
+def main(argv=None):
+    argv = argv or sys.argv[1:]
     with _PreConfigLogger() as logger:
         logger.debug('Starting xivo-dird-phoned')
 
