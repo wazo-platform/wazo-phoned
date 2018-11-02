@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -11,7 +11,7 @@ from unittest import TestCase
 from xivo_dird_phoned import config
 
 
-@patch('__builtin__.print', Mock())
+@patch('builtins.print', Mock())
 @patch('xivo_dird_phoned.config.open', create=True)
 @patch('xivo_dird_phoned.config._load_key_file', lambda x: {})
 class TestConfig(TestCase):
