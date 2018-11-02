@@ -1,4 +1,4 @@
-FROM python:2.7.13-stretch
+FROM python:3.5-stretch
 
 RUN mkdir -p /etc/xivo-dird-phoned/conf.d
 
