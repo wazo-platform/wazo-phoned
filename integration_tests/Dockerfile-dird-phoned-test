@@ -1,5 +1,8 @@
 FROM wazopbx/xivo-dird-phoned
 
-ADD . /usr/src/xivo-dird-phoned
+ENV PYTHONDONTWRITEBYTECODE='true'
+
+COPY . /usr/src/xivo-dird-phoned
+
 WORKDIR /usr/src/xivo-dird-phoned
 RUN python setup.py develop
