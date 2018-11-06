@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
@@ -17,12 +16,12 @@ from xivo_dird_phoned.auth_remote_addr import AuthResource
 logger = logging.getLogger(__name__)
 
 parser = reqparse.RequestParser()
-parser.add_argument('xivo_user_uuid', type=unicode, required=True, location='args')
+parser.add_argument('xivo_user_uuid', type=str, required=True, location='args')
 
 parser_lookup = parser.copy()
 parser_lookup.add_argument('limit', type=int, required=False, help='limit cannot be converted', location='args')
 parser_lookup.add_argument('offset', type=int, required=False, help='offset cannot be converted', location='args')
-parser_lookup.add_argument('term', type=unicode, required=True, help='term is missing', location='args')
+parser_lookup.add_argument('term', type=str, required=True, help='term is missing', location='args')
 
 parser_lookup_gigaset = reqparse.RequestParser()
 parser_lookup_gigaset.add_argument('first', type=int, default=1, help='first cannot be converted', location='args')
@@ -59,7 +58,7 @@ def _error(code, msg):
             'status_code': code}, code
 
 
-class DirectoriesConfiguration(object):
+class DirectoriesConfiguration:
 
     menu_url = '/directories/menu/<profile>/<vendor>'
     input_url = '/directories/input/<profile>/<vendor>'

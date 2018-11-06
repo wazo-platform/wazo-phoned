@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -16,9 +15,9 @@ from xivo_dird_phoned.config import load as load_config
 logger = logging.getLogger(__name__)
 
 
-class _PreConfigLogger(object):
+class _PreConfigLogger:
 
-    class FlushableBuffer(object):
+    class FlushableBuffer:
 
         def __init__(self):
             self._msg = []
@@ -47,7 +46,8 @@ class _PreConfigLogger(object):
         self._logger.flush()
 
 
-def main(argv):
+def main(argv=None):
+    argv = argv or sys.argv[1:]
     with _PreConfigLogger() as logger:
         logger.debug('Starting xivo-dird-phoned')
 
