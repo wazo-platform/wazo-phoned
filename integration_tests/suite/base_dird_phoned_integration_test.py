@@ -28,14 +28,6 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
     service = 'phoned'
 
     @classmethod
-    def _docker_compose_options(cls):
-        return [
-            '--file', os.path.join(cls.assets_root, 'docker-compose.yml'),
-            '--file', os.path.join(cls.assets_root, 'docker-compose.{}.override.yml'.format(cls.asset)),
-            '--project-name', cls.service,
-        ]
-
-    @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
         url = 'http://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
         params = {'xivo_user_uuid': xivo_user_uuid}
