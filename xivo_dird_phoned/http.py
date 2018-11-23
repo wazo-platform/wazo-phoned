@@ -31,7 +31,6 @@ parser_lookup_gigaset.add_argument('set_first', dest='term', default='', require
 parser_lookup_autodetect = parser_lookup.copy()
 parser_lookup_autodetect.remove_argument('xivo_user_uuid')
 
-AUTH_BACKEND = 'xivo_service'
 DIRD_API_VERSION = '0.1'
 FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
 
