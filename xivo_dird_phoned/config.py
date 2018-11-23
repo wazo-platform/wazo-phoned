@@ -11,7 +11,7 @@ _DEFAULT_CONFIG = {
     'auth': {
         'host': 'localhost',
         'port': 9497,
-        'key_file': '/var/lib/xivo-auth-keys/xivo-dird-phoned-key.yml',
+        'key_file': '/var/lib/wazo-auth-keys/xivo-dird-phoned-key.yml',
         'verify_certificate': '/usr/share/xivo-certs/server.crt'
     },
     'dird': {
