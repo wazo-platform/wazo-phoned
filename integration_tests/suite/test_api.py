@@ -6,7 +6,7 @@ from hamcrest import (
     equal_to,
 )
 
-from .base_dird_phoned_integration_test import (
+from .helpers.base import (
     BaseDirdPhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,
@@ -14,7 +14,7 @@ from .base_dird_phoned_integration_test import (
     VALID_VENDOR,
     VALID_XIVO_USER_UUID,
 )
-from .wait_strategy import DirdPhonedEverythingUpWaitStrategy
+from .helpers.wait_strategy import DirdPhonedEverythingUpWaitStrategy
 
 
 class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):

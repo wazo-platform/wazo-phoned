@@ -7,7 +7,7 @@ from hamcrest import (
     equal_to,
 )
 
-from .base_dird_phoned_integration_test import (
+from .helpers.base import (
     BaseDirdPhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,

@@ -8,7 +8,7 @@ from hamcrest import (
     contains_string,
 )
 
-from .base_dird_phoned_integration_test import BaseDirdPhonedIntegrationTest
+from .helpers.base import BaseDirdPhonedIntegrationTest
 
 
 class TestMissingServiceKeyFile(BaseDirdPhonedIntegrationTest):

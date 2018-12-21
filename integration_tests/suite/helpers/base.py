@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 requests.packages.urllib3.disable_warnings()
 
-ASSETS_ROOT = os.path.join(os.path.dirname(__file__), '..', 'assets')
+ASSETS_ROOT = os.path.join(os.path.dirname(__file__), '..', '..', 'assets')
 CA_CERT = os.path.join(ASSETS_ROOT, 'ssl', 'server.crt')
 
 DEFAULT_PROFILE = 'default_phone'
