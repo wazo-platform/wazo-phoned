@@ -59,6 +59,7 @@ def _error(code, msg):
 
 class DirectoriesConfiguration:
 
+    status_url = '/status'
     menu_url = '/directories/menu/<profile>/<vendor>'
     input_url = '/directories/input/<profile>/<vendor>'
     lookup_url = '/directories/lookup/<profile>/<vendor>'
@@ -72,6 +73,8 @@ class DirectoriesConfiguration:
         dird_port = dird_config['port']
         dird_default_profile = dird_config['default_profile']
         dird_verify_certificate = dird_config.get('verify_certificate', True)
+
+        api.add_resource(Status, self.status_url)
 
         Menu.configure(dird_host, dird_port, dird_verify_certificate)
         Input.configure(dird_host, dird_port, dird_verify_certificate)
@@ -88,6 +91,16 @@ class DirectoriesConfiguration:
         api.add_resource(MenuAutodetect, self.menu_autodetect_url)
         api.add_resource(InputAutodetect, self.input_autodetect_url)
         api.add_resource(LookupAutodetect, self.lookup_autodetect_url)
+
+
+class Status(AuthResource):
+
+    def get(self):
+        return {
+            'service_token': {
+                'status': 'ok' if current_app.config.get('token') else 'fail'
+            }
+        }
 
 
 class Menu(AuthResource):

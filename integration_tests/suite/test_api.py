@@ -14,11 +14,13 @@ from .base_dird_phoned_integration_test import (
     VALID_VENDOR,
     VALID_XIVO_USER_UUID,
 )
+from .wait_strategy import DirdPhonedEverythingUpWaitStrategy
 
 
 class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
 
     asset = 'default_config'
+    wait_strategy = DirdPhonedEverythingUpWaitStrategy()
 
     # Menu
     def test_that_menu_return_no_error_when_query_ssl(self):
