@@ -96,7 +96,11 @@ class DirectoriesConfiguration:
 class Status(AuthResource):
 
     def get(self):
-        return {'service_token': 'ok' if current_app.config.get('token') else 'fail'}
+        return {
+            'service_token': {
+                'status': 'ok' if current_app.config.get('token') else 'fail'
+            }
+        }
 
 
 class Menu(AuthResource):
