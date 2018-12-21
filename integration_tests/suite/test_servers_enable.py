@@ -16,6 +16,7 @@ from .base_dird_phoned_integration_test import (
     VALID_VENDOR,
     VALID_XIVO_USER_UUID,
 )
+from .wait_strategy import DirdPhonedEverythingUpWaitStrategy
 
 
 class TestHTTPSIsDisabled(BaseDirdPhonedIntegrationTest):
@@ -36,6 +37,7 @@ class TestHTTPSIsDisabled(BaseDirdPhonedIntegrationTest):
 
 class TestHTTPIsDisabled(BaseDirdPhonedIntegrationTest):
     asset = 'http_enable_false'
+    wait_strategy = DirdPhonedEverythingUpWaitStrategy()
 
     def test_configuration_http_enable_false_when_dird_phoned_starts_then_dird_phoned_http_stop(self):
         log = self.service_logs('phoned')

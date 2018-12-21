@@ -8,6 +8,8 @@ import requests
 
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
 
+from xivo_test_helpers.wait_strategy import NoWaitStrategy
+
 logger = logging.getLogger(__name__)
 
 requests.packages.urllib3.disable_warnings()
@@ -26,12 +28,25 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
 
     assets_root = ASSETS_ROOT
     service = 'phoned'
+    wait_strategy = NoWaitStrategy()
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.wait_strategy.wait(cls)
 
     @classmethod
     def get_status_result(self):
         url = u'http://localhost:{port}/0.1/status'
         port = self.service_port(9498, 'phoned')
         result = requests.get(url.format(port=port))
+        return result
+
+    @classmethod
+    def get_status_result_by_https(self):
+        url = u'https://localhost:{port}/0.1/status'
+        port = self.service_port(9499, 'phoned')
+        result = requests.get(url.format(port=port), verify=False)
         return result
 
     @classmethod

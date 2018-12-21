@@ -4,10 +4,8 @@
 from hamcrest import (
     assert_that,
     equal_to,
-    has_entries,
 )
 
-from xivo_test_helpers import until
 from .base_dird_phoned_integration_test import (
     BaseDirdPhonedIntegrationTest,
     DEFAULT_PROFILE,
@@ -16,21 +14,13 @@ from .base_dird_phoned_integration_test import (
     VALID_VENDOR,
     VALID_XIVO_USER_UUID,
 )
+from .wait_strategy import DirdPhonedEverythingUpWaitStrategy
 
 
 class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
 
     asset = 'default_config'
-
-    @classmethod
-    def setUpClass(self):
-        super(TestStatusCodeDirdPhoned, self).setUpClass()
-
-        def phoned_is_ready():
-            status = self.get_status_result().json()
-            assert_that(status, has_entries(service_token='ok'))
-
-        until.assert_(phoned_is_ready, tries=60)
+    wait_strategy = DirdPhonedEverythingUpWaitStrategy()
 
     # Menu
     def test_that_menu_return_no_error_when_query_ssl(self):
