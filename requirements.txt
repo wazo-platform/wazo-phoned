@@ -10,5 +10,5 @@ cheroot==6.5.2
 
 # From confd-client, auth-client, dird-client
 git+https://github.com/wazo-pbx/xivo-lib-rest-client.git
-requests==2.20.0
+requests==2.21.0
 stevedore==1.17.1
