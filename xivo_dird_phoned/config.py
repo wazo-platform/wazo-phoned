@@ -1,4 +1,4 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import argparse
@@ -17,7 +17,6 @@ _DEFAULT_CONFIG = {
     'dird': {
         'host': 'localhost',
         'port': 9489,
-        'default_profile': 'default',
         'verify_certificate': '/usr/share/xivo-certs/server.crt'
     },
     'config_file': '/etc/xivo-dird-phoned/config.yml',

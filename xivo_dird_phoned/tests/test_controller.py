@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 
@@ -45,7 +45,6 @@ class TestController(TestCase):
         config.setdefault('dird', {})
         config['dird'].setdefault('host', '')
         config['dird'].setdefault('port', '')
-        config['dird'].setdefault('default_profile', '')
         config.setdefault('rest_api', {})
         config['rest_api'].setdefault('authorized_subnets', [])
         return config
