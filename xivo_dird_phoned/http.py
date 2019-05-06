@@ -9,8 +9,8 @@ from flask import Response
 from flask import current_app
 from requests.exceptions import RequestException
 from time import time
-from xivo_dird_phoned.rest_api import api
 from xivo_dird_phoned.auth_remote_addr import AuthResource
+from xivo_dird_phoned.http_server import api
 
 from xivo.mallow import fields
 from xivo.mallow_helpers import Schema

@@ -11,20 +11,20 @@ from xivo_dird_phoned.controller import Controller
 class TestController(TestCase):
 
     def setUp(self):
-        self.rest_api = patch('xivo_dird_phoned.controller.RestApi').start().return_value
+        self.http_server = patch('xivo_dird_phoned.controller.HTTPServer').start().return_value
         self.http = patch('xivo_dird_phoned.controller.DirectoriesConfiguration').start()
 
     def tearDown(self):
         patch.stopall()
 
-    def test_run_starts_rest_api(self):
+    def test_run_starts_http_server(self):
         config = self._create_config(**{
             'rest_api': {},
             'debug': s.debug,
         })
         controller = Controller(config)
         controller.run()
-        self.rest_api.run.assert_called_once_with()
+        self.http_server.run.assert_called_once_with()
 
     def test_init_loads_sources(self):
         config = self._create_config()

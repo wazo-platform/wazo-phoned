@@ -1,4 +1,4 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import timedelta
@@ -23,7 +23,7 @@ api = Api(prefix='/{}'.format(VERSION))
 cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
 
 
-class RestApi:
+class HTTPServer:
 
     def __init__(self, config):
         self.config = config
