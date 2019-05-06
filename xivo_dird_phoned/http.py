@@ -39,7 +39,7 @@ class LookupGigasetSchema(Schema):
     first = fields.Integer(attribute='first', missing=1)
 
 
-class XivoAuthConnectionError(RequestException):
+class WazoAuthConnectionError(RequestException):
 
     code = 503
 
@@ -47,7 +47,7 @@ class XivoAuthConnectionError(RequestException):
         return 'Connection to XiVO Auth failed'
 
 
-class XivoDirdConnectionError(RequestException):
+class WazoDirdConnectionError(RequestException):
 
     code = 503
 
@@ -276,8 +276,8 @@ def _response_dird(url, headers, verify, params=None):
         r = requests.get(url, headers=headers, verify=verify, params=params)
     except RequestException as e:
         logger.exception(e)
-        raise XivoDirdConnectionError()
+        raise WazoDirdConnectionError()
     if r.status_code == 401:
-        raise XivoAuthConnectionError()
+        raise WazoAuthConnectionError()
 
     return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
