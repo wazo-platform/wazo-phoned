@@ -1,13 +1,14 @@
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
+
+from functools import wraps
 
 from flask import current_app
 from flask import request
 from flask_restful import Resource
 from flask_restful import abort
-from functools import wraps
 from netaddr import IPNetwork, IPAddress
 
 logger = logging.getLogger(__name__)

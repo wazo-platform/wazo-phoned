@@ -4,9 +4,11 @@
 import logging
 import requests
 
-from flask import request
-from flask import Response
-from flask import current_app
+from flask import (
+    request,
+    Response,
+    current_app,
+)
 from requests.exceptions import RequestException
 from time import time
 

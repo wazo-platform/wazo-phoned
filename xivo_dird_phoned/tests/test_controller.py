@@ -1,11 +1,11 @@
 # Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-
-from mock import patch, sentinel as s
 from unittest import TestCase
 
-from xivo_dird_phoned.controller import Controller
+from mock import patch, sentinel as s
+
+from ..controller import Controller
 
 
 class TestController(TestCase):
@@ -40,8 +40,8 @@ class TestController(TestCase):
             'port': 9497,
             'verify_certificate': False,
             'service_id': 'dird-phoned',
-            'service_key': '123'}
-        )
+            'service_key': '123'
+        })
         config.setdefault('dird', {})
         config['dird'].setdefault('host', '')
         config['dird'].setdefault('port', '')

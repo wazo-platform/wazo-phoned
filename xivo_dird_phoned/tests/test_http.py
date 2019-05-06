@@ -5,7 +5,7 @@ from hamcrest import assert_that, equal_to
 from unittest import TestCase
 from mock import patch
 
-from xivo_dird_phoned import http
+from .. import http
 
 
 class TestHTTP(TestCase):

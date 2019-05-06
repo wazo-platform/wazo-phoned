@@ -3,3 +3,5 @@
 cover/
 .tox
 *.egg-info
+pylint.txt
+pycodestyle.txt

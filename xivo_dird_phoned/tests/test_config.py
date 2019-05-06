@@ -1,13 +1,14 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
 
-from hamcrest import assert_that, has_entries, equal_to
-from mock import Mock, patch, sentinel as s
 from unittest import TestCase
 
-from xivo_dird_phoned import config
+from hamcrest import assert_that, has_entries, equal_to
+from mock import Mock, patch, sentinel as s
+
+from .. import config
 
 
 @patch('builtins.print', Mock())
