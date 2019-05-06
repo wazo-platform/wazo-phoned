@@ -7,29 +7,33 @@ import requests
 from flask import request
 from flask import Response
 from flask import current_app
-from flask_restful import reqparse
 from requests.exceptions import RequestException
 from time import time
 from xivo_dird_phoned.rest_api import api
 from xivo_dird_phoned.auth_remote_addr import AuthResource
 
+from xivo.mallow import fields
+from xivo.mallow_helpers import Schema
+
 logger = logging.getLogger(__name__)
 
-parser = reqparse.RequestParser()
-parser.add_argument('xivo_user_uuid', type=str, required=True, location='args')
-
-parser_lookup = parser.copy()
-parser_lookup.add_argument('limit', type=int, required=False, help='limit cannot be converted', location='args')
-parser_lookup.add_argument('offset', type=int, required=False, help='offset cannot be converted', location='args')
-parser_lookup.add_argument('term', type=str, required=True, help='term is missing', location='args')
-
-parser_lookup_gigaset = reqparse.RequestParser()
-parser_lookup_gigaset.add_argument('first', type=int, default=1, help='first cannot be converted', location='args')
-parser_lookup_gigaset.add_argument('count', type=int, dest='limit', required=False, help='count cannot be converted', location='args')
-parser_lookup_gigaset.add_argument('set_first', dest='term', default='', required=False, location='args')
-
 DIRD_API_VERSION = '0.1'
-FAKE_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000000'
+
+
+class UserUUIDSchema(Schema):
+    xivo_user_uuid = fields.String(required=True)
+
+
+class LookupSchema(UserUUIDSchema):
+    term = fields.String(required=True)
+    limit = fields.Integer(missing=None)
+    offset = fields.Integer(missing=None)
+
+
+class LookupGigasetSchema(Schema):
+    set_first = fields.String(attribute='term', missing='')
+    count = fields.Integer(attribute='limit', missing=None)
+    first = fields.Integer(attribute='first', missing=1)
 
 
 class XivoAuthConnectionError(RequestException):
@@ -102,7 +106,7 @@ class Menu(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, vendor):
-        args = parser.parse_args()
+        args = UserUUIDSchema().load(request.args).data
         xivo_user_uuid = args['xivo_user_uuid']
         url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
 
@@ -136,7 +140,7 @@ class Input(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, vendor):
-        args = parser.parse_args()
+        args = UserUUIDSchema().load(request.args).data
         xivo_user_uuid = args['xivo_user_uuid']
         url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
@@ -169,7 +173,7 @@ class Lookup(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, vendor):
-        args = parser_lookup.parse_args()
+        args = LookupSchema().load(request.args).data
         limit = args['limit']
         offset = args['offset']
         term = args['term']
@@ -208,7 +212,7 @@ class LookupGigaset(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, xivo_user_uuid):
-        args = parser_lookup_gigaset.parse_args()
+        args = LookupGigasetSchema().load(request.args).data
         offset = args['first'] - 1
         limit = args['limit']
         term = args['term'].replace('*', '') if args['term'] else ''
