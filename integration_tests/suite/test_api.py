@@ -1,4 +1,4 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import (
@@ -10,7 +10,6 @@ from .helpers.base import (
     BaseDirdPhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,
-    VALID_USER_AGENT,
     VALID_VENDOR,
     VALID_XIVO_USER_UUID,
 )
@@ -115,61 +114,6 @@ class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
                                                   profile=DEFAULT_PROFILE)
 
         assert_that(response.status_code, equal_to(200))
-
-    # Menu autodetect
-    def test_that_menu_autodetect_return_no_error_when_query_ssl(self):
-        response = self.get_ssl_menu_autodetect_result(user_agent=VALID_USER_AGENT)
-
-        assert_that(response.status_code, equal_to(200))
-
-    def test_that_menu_autodetect_return_no_error_when_query(self):
-        response = self.get_menu_autodetect_result(user_agent=VALID_USER_AGENT)
-
-        assert_that(response.status_code, equal_to(200))
-
-    def test_that_menu_autodetect_return_error_when_no_user_agent(self):
-        response = self.get_menu_autodetect_result()
-
-        assert_that(response.status_code, equal_to(404))
-
-    # Input autodetect
-    def test_that_input_autodetect_return_no_error_when_query_ssl(self):
-        response = self.get_ssl_input_autodetect_result(user_agent=VALID_USER_AGENT)
-
-        assert_that(response.status_code, equal_to(200))
-
-    def test_that_input_autodetect_return_no_error_when_query(self):
-        response = self.get_input_autodetect_result(user_agent=VALID_USER_AGENT)
-
-        assert_that(response.status_code, equal_to(200))
-
-    def test_that_input_autodetect_return_error_when_no_user_agent(self):
-        response = self.get_input_autodetect_result()
-
-        assert_that(response.status_code, equal_to(404))
-
-    # Lookup autodetect
-    def test_that_lookup_autodetect_return_no_error_when_query_ssl(self):
-        response = self.get_ssl_lookup_autodetect_result(user_agent=VALID_USER_AGENT,
-                                                         term=VALID_TERM)
-
-        assert_that(response.status_code, equal_to(200))
-
-    def test_that_lookup_autodetect_return_no_error_when_query(self):
-        response = self.get_lookup_autodetect_result(user_agent=VALID_USER_AGENT,
-                                                     term=VALID_TERM)
-
-        assert_that(response.status_code, equal_to(200))
-
-    def test_that_lookup_autodetect_return_error_when_no_user_agent(self):
-        response = self.get_lookup_autodetect_result(term=VALID_TERM)
-
-        assert_that(response.status_code, equal_to(404))
-
-    def test_that_lookup_autodetect_return_error_when_no_term(self):
-        response = self.get_lookup_autodetect_result(user_agent=VALID_USER_AGENT)
-
-        assert_that(response.status_code, equal_to(400))
 
 
 class TestAuthError(BaseDirdPhonedIntegrationTest):

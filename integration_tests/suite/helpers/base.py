@@ -1,4 +1,4 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -19,7 +19,6 @@ CA_CERT = os.path.join(ASSETS_ROOT, 'ssl', 'server.crt')
 
 DEFAULT_PROFILE = 'default_phone'
 VALID_TERM = 'toto'
-VALID_USER_AGENT = 'Allegro-Software-WebClient/4.34'
 VALID_VENDOR = 'cisco'
 VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
 
