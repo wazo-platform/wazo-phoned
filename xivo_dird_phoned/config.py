@@ -12,12 +12,12 @@ _DEFAULT_CONFIG = {
         'host': 'localhost',
         'port': 9497,
         'key_file': '/var/lib/wazo-auth-keys/xivo-dird-phoned-key.yml',
-        'verify_certificate': '/usr/share/xivo-certs/server.crt'
+        'verify_certificate': '/usr/share/xivo-certs/server.crt',
     },
     'dird': {
         'host': 'localhost',
         'port': 9489,
-        'verify_certificate': '/usr/share/xivo-certs/server.crt'
+        'verify_certificate': '/usr/share/xivo-certs/server.crt',
     },
     'config_file': '/etc/xivo-dird-phoned/config.yml',
     'extra_config_files': '/etc/xivo-dird-phoned/conf.d/',
@@ -30,7 +30,7 @@ _DEFAULT_CONFIG = {
         'http': {
             'listen': '0.0.0.0',
             'port': 9498,
-            'enable': True
+            'enable': True,
         },
         'https': {
             'listen': '0.0.0.0',
@@ -42,7 +42,7 @@ _DEFAULT_CONFIG = {
         'authorized_subnets': ['127.0.0.1/24'],
         'cors': {
             'enabled': True,
-            'allow_headers': ['Content-Type']
+            'allow_headers': ['Content-Type'],
         },
     },
     'user': 'www-data',
@@ -59,27 +59,37 @@ def load(logger, argv):
 
 def _parse_cli_args(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c',
-                        '--config-file',
-                        action='store',
-                        help="The path where is the config file. Default: %(default)s")
-    parser.add_argument('-d',
-                        '--debug',
-                        action='store_true',
-                        help="Log debug messages. Overrides log_level. Default: %(default)s")
-    parser.add_argument('-f',
-                        '--foreground',
-                        action='store_true',
-                        help="Foreground, don't daemonize. Default: %(default)s")
-    parser.add_argument('-l',
-                        '--log-level',
-                        action='store',
-                        help="Logs messages with LOG_LEVEL details. Must be one of:\n"
-                             "critical, error, warning, info, debug. Default: %(default)s")
-    parser.add_argument('-u',
-                        '--user',
-                        action='store',
-                        help="The owner of the process.")
+    parser.add_argument(
+        '-c',
+        '--config-file',
+        action='store',
+        help="The path where is the config file. Default: %(default)s",
+    )
+    parser.add_argument(
+        '-d',
+        '--debug',
+        action='store_true',
+        help="Log debug messages. Overrides log_level. Default: %(default)s",
+    )
+    parser.add_argument(
+        '-f',
+        '--foreground',
+        action='store_true',
+        help="Foreground, don't daemonize. Default: %(default)s",
+    )
+    parser.add_argument(
+        '-l',
+        '--log-level',
+        action='store',
+        help="Logs messages with LOG_LEVEL details. Must be one of:\n"
+        "critical, error, warning, info, debug. Default: %(default)s",
+    )
+    parser.add_argument(
+        '-u',
+        '--user',
+        action='store',
+        help="The owner of the process.",
+    )
     parsed_args = parser.parse_args(argv)
 
     result = {}
@@ -99,8 +109,7 @@ def _parse_cli_args(argv):
 
 def _load_key_file(config):
     key_file = parse_config_file(config['auth']['key_file'])
-    return {'auth': {'service_id': key_file['service_id'],
-                     'service_key': key_file['service_key']}}
+    return {'auth': {'service_id': key_file['service_id'], 'service_key': key_file['service_key']}}
 
 
 def _get_reinterpreted_raw_values(config):

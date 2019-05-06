@@ -9,11 +9,12 @@ from flask import Response
 from flask import current_app
 from requests.exceptions import RequestException
 from time import time
-from xivo_dird_phoned.auth_remote_addr import AuthResource
-from xivo_dird_phoned.http_server import api
 
 from xivo.mallow import fields
 from xivo.mallow_helpers import Schema
+
+from .auth_remote_addr import AuthResource
+from .http_server import api
 
 logger = logging.getLogger(__name__)
 
@@ -53,9 +54,7 @@ class XivoDirdConnectionError(RequestException):
 
 
 def _error(code, msg):
-    return {'reason': [msg],
-            'timestamp': [time()],
-            'status_code': code}, code
+    return {'reason': [msg], 'timestamp': [time()], 'status_code': code}, code
 
 
 class DirectoriesConfiguration:
@@ -111,18 +110,24 @@ class Menu(AuthResource):
         url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
-            headers = {'X-Auth-Token': current_app.config.get('token'),
-                       'Proxy-URL': _build_next_url('menu'),
-                       'Accept-Language': request.headers.get('Accept-Language')}
+            headers = {
+                'X-Auth-Token': current_app.config.get('token'),
+                'Proxy-URL': _build_next_url('menu'),
+                'Accept-Language': request.headers.get('Accept-Language'),
+            }
             headers.update(request.headers)
-            return _response_dird(url.format(host=self.dird_host,
-                                             port=self.dird_port,
-                                             version=DIRD_API_VERSION,
-                                             profile=profile,
-                                             xivo_user_uuid=xivo_user_uuid,
-                                             vendor=vendor),
-                                  headers=headers,
-                                  verify=self.dird_verify_certificate)
+            return _response_dird(
+                url.format(
+                    host=self.dird_host,
+                    port=self.dird_port,
+                    version=DIRD_API_VERSION,
+                    profile=profile,
+                    xivo_user_uuid=xivo_user_uuid,
+                    vendor=vendor,
+                ),
+                headers=headers,
+                verify=self.dird_verify_certificate,
+            )
         except RequestException as e:
             return _error(e.code, str(e))
 
@@ -145,17 +150,23 @@ class Input(AuthResource):
         url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
         try:
-            headers = {'X-Auth-Token': current_app.config.get('token'),
-                       'Proxy-URL': _build_next_url('input'),
-                       'Accept-Language': request.headers.get('Accept-Language')}
-            return _response_dird(url.format(host=self.dird_host,
-                                             port=self.dird_port,
-                                             version=DIRD_API_VERSION,
-                                             profile=profile,
-                                             xivo_user_uuid=xivo_user_uuid,
-                                             vendor=vendor),
-                                  headers=headers,
-                                  verify=self.dird_verify_certificate)
+            headers = {
+                'X-Auth-Token': current_app.config.get('token'),
+                'Proxy-URL': _build_next_url('input'),
+                'Accept-Language': request.headers.get('Accept-Language'),
+            }
+            return _response_dird(
+                url.format(
+                    host=self.dird_host,
+                    port=self.dird_port,
+                    version=DIRD_API_VERSION,
+                    profile=profile,
+                    xivo_user_uuid=xivo_user_uuid,
+                    vendor=vendor,
+                ),
+                headers=headers,
+                verify=self.dird_verify_certificate,
+            )
         except RequestException as e:
             return _error(e.code, str(e))
 
@@ -183,18 +194,24 @@ class Lookup(AuthResource):
         params = {'term': term, 'limit': limit, 'offset': offset}
 
         try:
-            headers = {'X-Auth-Token': current_app.config.get('token'),
-                       'Proxy-URL': _build_next_url('lookup'),
-                       'Accept-Language': request.headers.get('Accept-Language')}
-            return _response_dird(url.format(host=self.dird_host,
-                                             port=self.dird_port,
-                                             version=DIRD_API_VERSION,
-                                             profile=profile,
-                                             xivo_user_uuid=xivo_user_uuid,
-                                             vendor=vendor),
-                                  headers=headers,
-                                  params=params,
-                                  verify=self.dird_verify_certificate)
+            headers = {
+                'X-Auth-Token': current_app.config.get('token'),
+                'Proxy-URL': _build_next_url('lookup'),
+                'Accept-Language': request.headers.get('Accept-Language'),
+            }
+            return _response_dird(
+                url.format(
+                    host=self.dird_host,
+                    port=self.dird_port,
+                    version=DIRD_API_VERSION,
+                    profile=profile,
+                    xivo_user_uuid=xivo_user_uuid,
+                    vendor=vendor,
+                ),
+                headers=headers,
+                params=params,
+                verify=self.dird_verify_certificate,
+            )
         except RequestException as e:
             return _error(e.code, str(e))
 
@@ -221,17 +238,23 @@ class LookupGigaset(AuthResource):
         params = {'term': term, 'limit': limit, 'offset': offset}
 
         try:
-            headers = {'X-Auth-Token': current_app.config.get('token'),
-                       'Proxy-URL': _build_next_url('lookup'),
-                       'Accept-Language': request.headers.get('Accept-Language')}
-            return _response_dird(url.format(host=self.dird_host,
-                                             port=self.dird_port,
-                                             version=DIRD_API_VERSION,
-                                             profile=profile,
-                                             xivo_user_uuid=xivo_user_uuid),
-                                  headers=headers,
-                                  params=params,
-                                  verify=self.dird_verify_certificate)
+            headers = {
+                'X-Auth-Token': current_app.config.get('token'),
+                'Proxy-URL': _build_next_url('lookup'),
+                'Accept-Language': request.headers.get('Accept-Language'),
+            }
+            return _response_dird(
+                url.format(
+                    host=self.dird_host,
+                    port=self.dird_port,
+                    version=DIRD_API_VERSION,
+                    profile=profile,
+                    xivo_user_uuid=xivo_user_uuid,
+                ),
+                headers=headers,
+                params=params,
+                verify=self.dird_verify_certificate,
+            )
         except RequestException as e:
             return _error(e.code, str(e))
 

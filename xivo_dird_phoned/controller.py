@@ -5,8 +5,9 @@ import logging
 
 from xivo.token_renewer import TokenRenewer
 from xivo_auth_client import Client as AuthClient
-from xivo_dird_phoned.http_server import HTTPServer
-from xivo_dird_phoned.http import DirectoriesConfiguration
+
+from .http_server import HTTPServer
+from .http import DirectoriesConfiguration
 
 logger = logging.getLogger(__name__)
 
@@ -37,11 +38,13 @@ class Controller:
 
     def _new_auth_client(self, config):
         auth_config = config['auth']
-        return AuthClient(auth_config['host'],
-                          port=auth_config['port'],
-                          username=auth_config['service_id'],
-                          password=auth_config['service_key'],
-                          verify_certificate=auth_config['verify_certificate'])
+        return AuthClient(
+            auth_config['host'],
+            port=auth_config['port'],
+            username=auth_config['service_id'],
+            password=auth_config['service_key'],
+            verify_certificate=auth_config['verify_certificate'],
+        )
 
     def _on_token_change(self, token_id):
         self.http_server.app.config['token'] = token_id
