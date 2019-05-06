@@ -1,4 +1,4 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ 
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: xivo-dird-phoned
 Source: https://github.com/wazo-pbx/xivo-dird-phoned
 
