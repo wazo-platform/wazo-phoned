@@ -10,11 +10,12 @@ Package: xivo-dird-phoned
 Architecture: all
 Depends: ${python:Depends},
          ${misc:Depends},
-         python3-cherrypy3,
          python3-cheroot,
+         python3-cherrypy3,
          python3-flask,
          python3-flask-cors (>= 3.0.2),
          python3-flask-restful (>= 0.3.2),
+         python3-marshmallow,
          python3-netaddr,
          python3-requests,
          python3-stevedore,

@@ -1,30 +1,30 @@
-# Copyright (C) 2015 Avencall
-# SPDX-License-Identifier: GPL-3.0+
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0-or-later
 
-
-from mock import patch, sentinel as s
 from unittest import TestCase
 
-from xivo_dird_phoned.controller import Controller
+from mock import patch, sentinel as s
+
+from ..controller import Controller
 
 
 class TestController(TestCase):
 
     def setUp(self):
-        self.rest_api = patch('xivo_dird_phoned.controller.RestApi').start().return_value
+        self.http_server = patch('xivo_dird_phoned.controller.HTTPServer').start().return_value
         self.http = patch('xivo_dird_phoned.controller.DirectoriesConfiguration').start()
 
     def tearDown(self):
         patch.stopall()
 
-    def test_run_starts_rest_api(self):
+    def test_run_starts_http_server(self):
         config = self._create_config(**{
             'rest_api': {},
             'debug': s.debug,
         })
         controller = Controller(config)
         controller.run()
-        self.rest_api.run.assert_called_once_with()
+        self.http_server.run.assert_called_once_with()
 
     def test_init_loads_sources(self):
         config = self._create_config()
@@ -40,12 +40,11 @@ class TestController(TestCase):
             'port': 9497,
             'verify_certificate': False,
             'service_id': 'dird-phoned',
-            'service_key': '123'}
-        )
+            'service_key': '123'
+        })
         config.setdefault('dird', {})
         config['dird'].setdefault('host', '')
         config['dird'].setdefault('port', '')
-        config['dird'].setdefault('default_profile', '')
         config.setdefault('rest_api', {})
         config['rest_api'].setdefault('authorized_subnets', [])
         return config

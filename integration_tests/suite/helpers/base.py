@@ -1,5 +1,5 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
-# SPDX-License-Identifier: GPL-3.0+
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
 import os
@@ -7,7 +7,6 @@ import os
 import requests
 
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
-
 from xivo_test_helpers.wait_strategy import NoWaitStrategy
 
 logger = logging.getLogger(__name__)
@@ -19,7 +18,6 @@ CA_CERT = os.path.join(ASSETS_ROOT, 'ssl', 'server.crt')
 
 DEFAULT_PROFILE = 'default_phone'
 VALID_TERM = 'toto'
-VALID_USER_AGENT = 'Allegro-Software-WebClient/4.34'
 VALID_VENDOR = 'cisco'
 VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
 
@@ -54,7 +52,10 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         url = 'http://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9498, 'phoned')
-        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params)
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=params,
+        )
         return result
 
     @classmethod
@@ -62,7 +63,11 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
-        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, verify=False)
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=params,
+            verify=False,
+        )
         return result
 
     @classmethod
@@ -94,7 +99,11 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/input/{profile}/{vendor}'
-        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, verify=False)
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=params,
+            verify=False,
+        )
         return result
 
     @classmethod
@@ -118,7 +127,11 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
         port = self.service_port(9498, 'phoned')
         url = 'http://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
-        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, headers=headers)
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=params,
+            headers=headers,
+        )
         return result
 
     @classmethod
@@ -126,7 +139,11 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         params = {'term': term}
         port = self.service_port(9498, 'phoned')
         url = 'http://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
-        result = requests.get(url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid), params=params, headers=headers)
+        result = requests.get(
+            url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid),
+            params=params,
+            headers=headers,
+        )
         return result
 
     @classmethod
@@ -143,7 +160,11 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
-        result = requests.get(url.format(port=port, profile=profile, vendor=vendor), params=params, verify=False)
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=params,
+            verify=False,
+        )
         return result
 
     @classmethod
@@ -151,7 +172,11 @@ class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
         params = {'term': term}
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
-        result = requests.get(url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid), params=params, verify=False)
+        result = requests.get(
+            url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid),
+            params=params,
+            verify=False,
+        )
         return result
 
     @classmethod

@@ -1,5 +1,5 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
-# SPDX-License-Identifier: GPL-3.0+
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import timedelta
 
@@ -15,7 +15,6 @@ from flask_restful import Api
 from flask_cors import CORS
 from xivo import http_helpers
 
-
 VERSION = 0.1
 
 logger = logging.getLogger(__name__)
@@ -23,7 +22,7 @@ api = Api(prefix='/{}'.format(VERSION))
 cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
 
 
-class RestApi:
+class HTTPServer:
 
     def __init__(self, config):
         self.config = config
@@ -54,14 +53,17 @@ class RestApi:
         if https_config['enabled']:
             try:
                 bind_addr_https = (https_config['listen'], https_config['port'])
-                server_https = wsgi.WSGIServer(bind_addr=bind_addr_https,
-                                               wsgi_app=wsgi_app)
-                server_https.ssl_adapter = http_helpers.ssl_adapter(https_config['certificate'],
-                                                                    https_config['private_key'])
+                server_https = wsgi.WSGIServer(bind_addr=bind_addr_https, wsgi_app=wsgi_app)
+                server_https.ssl_adapter = http_helpers.ssl_adapter(
+                    https_config['certificate'],
+                    https_config['private_key'],
+                )
 
                 ServerAdapter(cherrypy.engine, server_https).subscribe()
-                logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
-                             os.getuid(), bind_addr_https[0], bind_addr_https[1])
+                logger.debug(
+                    'WSGIServer starting... uid: %s, listen: %s:%s',
+                    os.getuid(), bind_addr_https[0], bind_addr_https[1],
+                )
             except IOError as e:
                 logger.warning("HTTPS server won't start: %s", e)
         else:
@@ -69,11 +71,12 @@ class RestApi:
 
         if http_config['enabled']:
             bind_addr_http = (http_config['listen'], http_config['port'])
-            server_http = wsgi.WSGIServer(bind_addr=bind_addr_http,
-                                          wsgi_app=wsgi_app)
+            server_http = wsgi.WSGIServer(bind_addr=bind_addr_http, wsgi_app=wsgi_app)
             ServerAdapter(cherrypy.engine, server_http).subscribe()
-            logger.debug('WSGIServer starting... uid: %s, listen: %s:%s',
-                         os.getuid(), bind_addr_http[0], bind_addr_http[1])
+            logger.debug(
+                'WSGIServer starting... uid: %s, listen: %s:%s',
+                os.getuid(), bind_addr_http[0], bind_addr_http[1],
+            )
         else:
             logger.debug('HTTP server is disabled')
 
