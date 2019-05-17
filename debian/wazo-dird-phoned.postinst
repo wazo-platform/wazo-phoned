@@ -2,7 +2,7 @@
 
 set -e
 
-LOG_FILENAME='/var/log/xivo-dird-phoned.log'
+LOG_FILENAME='/var/log/wazo-dird-phoned.log'
 
 case "$1" in
 	configure)
@@ -10,6 +10,11 @@ case "$1" in
 			touch "$LOG_FILENAME"
 		fi
 		chown www-data: "$LOG_FILENAME"
+
+		# move files from xivo-dird-phoned
+		if [ -f /var/log/xivo-dird-phoned.log ] ; then
+			rename 's/xivo-dird-phoned/wazo-dird-phoned/g' /var/log/xivo-dird-phoned.log*
+		fi
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)

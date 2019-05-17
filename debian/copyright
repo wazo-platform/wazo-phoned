@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: xivo-dird-phoned
-Source: https://github.com/wazo-pbx/xivo-dird-phoned
+Upstream-Name: wazo-dird-phoned
+Source: https://github.com/wazo-pbx/wazo-dird-phoned
 
 Files: *
-Copyright: 2015 Avencall
+Copyright: 2015-2019 The Wazo Authors
 License: GPL-3.0+
