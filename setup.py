@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-# Copyright 2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2018-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='xivo-dird-phoned',
+    name='wazo-dird-phoned',
     version='1.0',
 
-    description='XiVO Directory Daemon',
+    description='Wazo Directory Daemon',
 
     author='Wazo Authors',
     author_email='dev.wazo@gmail.com',
@@ -19,7 +19,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'xivo-dird-phoned=xivo_dird_phoned.bin.daemon:main',
+            'wazo-dird-phoned=wazo_dird_phoned.bin.daemon:main',
         ],
     }
 )

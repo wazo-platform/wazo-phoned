@@ -1,4 +1,4 @@
-# Copyright 2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2018-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import (
@@ -18,7 +18,7 @@ class DirdPhonedEverythingUpWaitStrategy(WaitStrategy):
             try:
                 status = integration_test.get_status_result_by_https().json()
             except RequestException as e:
-                raise AssertionError('xivo-dird-phoned is not up yet: {}'.format(e))
+                raise AssertionError('wazo-dird-phoned is not up yet: {}'.format(e))
             component_statuses = [component['status'] for component in status.values() if 'status' in component]
             assert_that(component_statuses, only_contains('ok'))
 

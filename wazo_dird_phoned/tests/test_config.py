@@ -12,16 +12,16 @@ from .. import config
 
 
 @patch('builtins.print', Mock())
-@patch('xivo_dird_phoned.config.open', create=True)
-@patch('xivo_dird_phoned.config._load_key_file', lambda x: {})
+@patch('wazo_dird_phoned.config.open', create=True)
+@patch('wazo_dird_phoned.config._load_key_file', lambda x: {})
 class TestConfig(TestCase):
 
     def test_load_when_no_args_and_no_default_config_file_then_return_default_values(self, mock_open):
         mock_open.side_effect = IOError('no such file')
         config._DEFAULT_CONFIG = {
             'config': 'default',
-            'config_file': '/etc/xivo-dird-phoned/config.yml',
-            'extra_config_files': '/etc/xivo-dird-phoned/conf.d/',
+            'config_file': '/etc/wazo-dird-phoned/config.yml',
+            'extra_config_files': '/etc/wazo-dird-phoned/conf.d/',
             'auth': {}
         }
 

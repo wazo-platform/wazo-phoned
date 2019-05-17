@@ -1,3 +1,9 @@
+wazo-dird-phoned (19.08) wazo-dev-stretch; urgency=low
+
+  * Initial release.
+
+ -- Wazo Maintainers <dev@wazo.community>  Mon, 17 May 2019 15:41:14 -0400
+
 xivo-dird-phoned (0.0.1) UNRELEASED; urgency=low
 
   * Initial release.

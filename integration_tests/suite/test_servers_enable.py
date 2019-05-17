@@ -64,7 +64,7 @@ class TestHTTPandHTTPSAreDisabled(BaseDirdPhonedIntegrationTest):
                 break
             time.sleep(1)
         else:
-            self.fail('xivo-dird-phoned did not stop while http and https server are disabled')
+            self.fail('wazo-dird-phoned did not stop while http and https server are disabled')
 
         log = self.service_logs('phoned')
         assert_that(log, contains_string('No HTTP/HTTPS server enabled'))

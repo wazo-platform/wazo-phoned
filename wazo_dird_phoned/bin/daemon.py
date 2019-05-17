@@ -1,4 +1,4 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -9,8 +9,8 @@ from functools import partial
 from xivo.daemonize import pidfile_context
 from xivo.user_rights import change_user
 from xivo.xivo_logging import setup_logging
-from xivo_dird_phoned.controller import Controller
-from xivo_dird_phoned.config import load as load_config
+from wazo_dird_phoned.controller import Controller
+from wazo_dird_phoned.config import load as load_config
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ class _PreConfigLogger:
 def main(argv=None):
     argv = argv or sys.argv[1:]
     with _PreConfigLogger() as logger:
-        logger.debug('Starting xivo-dird-phoned')
+        logger.debug('Starting wazo-dird-phoned')
 
         config = load_config(logger, argv)
 

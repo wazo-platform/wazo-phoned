@@ -26,7 +26,7 @@ class HTTPServer:
 
     def __init__(self, config):
         self.config = config
-        self.app = Flask('xivo_dird_phoned')
+        self.app = Flask('wazo_dird_phoned')
         http_helpers.add_logger(self.app, logger)
         self.app.before_request(http_helpers.log_before_request)
         self.app.after_request(http_helpers.log_request)
@@ -90,7 +90,7 @@ class HTTPServer:
             cherrypy.engine.start()
             cherrypy.engine.wait(states.EXITING)
         except KeyboardInterrupt:
-            logger.warning('Stopping xivo-dird-phoned: KeyboardInterrupt')
+            logger.warning('Stopping wazo-dird-phoned: KeyboardInterrupt')
             cherrypy.engine.exit()
 
     def stop(self):

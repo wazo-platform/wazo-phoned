@@ -22,18 +22,18 @@ class Controller:
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
 
     def run(self):
-        logger.debug('xivo-dird-phoned running...')
+        logger.debug('wazo-dird-phoned running...')
         try:
             with self.token_renewer:
                 self.http_server.run()
         finally:
-            logger.info('xivo-dird-phoned stopping...')
+            logger.info('wazo-dird-phoned stopping...')
             logger.debug('joining rest api thread...')
             self.http_server.join()
             logger.debug('done joining.')
 
     def stop(self, reason):
-        logger.warning('Stopping xivo-dird-phoned: %s', reason)
+        logger.warning('Stopping wazo-dird-phoned: %s', reason)
         self.http_server.stop()
 
     def _new_auth_client(self, config):

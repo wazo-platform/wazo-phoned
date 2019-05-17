@@ -1,22 +1,22 @@
-xivo-dird-phoned
+wazo-dird-phoned
 ================
 
-[![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=xivo-dird-phoned)](https://jenkins.wazo.community/job/xivo-dird-phoned)
+[![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=wazo-dird-phoned)](https://jenkins.wazo.community/job/wazo-dird-phoned)
 
-xivo-dird-phoned is a service to authenticate phone to allow lookup on
-xivo-dird with a phone using a simple REST API.
+wazo-dird-phoned is a service to authenticate phone to allow lookup on
+wazo-dird with a phone using a simple REST API.
 
 
 Docker
 ------
 
-The wazopbx/xivo-dird-phoned image can be built using the following command:
+The wazopbx/wazo-dird-phoned image can be built using the following command:
 
-    % docker build -t wazopbx/xivo-dird-phoned
+    % docker build -t wazopbx/wazo-dird-phoned
 
-The `wazopbx/xivo-dird-phoned` image contains a configuration file to listen to
+The `wazopbx/wazo-dird-phoned` image contains a configuration file to listen to
 HTTP requests on "0.0.0.0". To change this behavior, create or edit the file
-`/etc/xivo-dird-phoned/conf.d/listen.yml`
+`/etc/wazo-dird-phoned/conf.d/listen.yml`
 
 
 Running unit tests
