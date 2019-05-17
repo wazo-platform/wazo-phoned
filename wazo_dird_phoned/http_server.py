@@ -26,7 +26,7 @@ class HTTPServer:
 
     def __init__(self, config):
         self.config = config
-        self.app = Flask('xivo_dird_phoned')
+        self.app = Flask('wazo_dird_phoned')
         http_helpers.add_logger(self.app, logger)
         self.app.before_request(http_helpers.log_before_request)
         self.app.after_request(http_helpers.log_request)

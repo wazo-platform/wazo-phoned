@@ -1,18 +1,18 @@
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
 from mock import ANY, patch, sentinel as s
 from unittest import TestCase
 
-from xivo_dird_phoned.bin import daemon
+from wazo_dird_phoned.bin import daemon
 
 
-@patch('xivo_dird_phoned.bin.daemon.pidfile_context')
-@patch('xivo_dird_phoned.bin.daemon.change_user')
-@patch('xivo_dird_phoned.bin.daemon.setup_logging')
-@patch('xivo_dird_phoned.bin.daemon.Controller')
-@patch('xivo_dird_phoned.bin.daemon.load_config')
+@patch('wazo_dird_phoned.bin.daemon.pidfile_context')
+@patch('wazo_dird_phoned.bin.daemon.change_user')
+@patch('wazo_dird_phoned.bin.daemon.setup_logging')
+@patch('wazo_dird_phoned.bin.daemon.Controller')
+@patch('wazo_dird_phoned.bin.daemon.load_config')
 class TestXivoDird(TestCase):
 
     def test_main_injects_argv_into_config_loading(self, load_config, controller_init, setup_logging,
