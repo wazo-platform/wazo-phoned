@@ -4,7 +4,7 @@
 import logging
 
 from xivo.token_renewer import TokenRenewer
-from xivo_auth_client import Client as AuthClient
+from wazo_auth_client import Client as AuthClient
 
 from .http_server import HTTPServer
 from .http import DirectoriesConfiguration
