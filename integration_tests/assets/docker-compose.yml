@@ -35,4 +35,4 @@ services:
     volumes:
       - "./auth_data:/tmp"
       - "./ssl:/etc/ssl"
-    command: "python /tmp/mock-xivo-auth.py 9497"
+    command: "python /tmp/mock-wazo-auth.py 9497"
