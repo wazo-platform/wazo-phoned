@@ -10,4 +10,4 @@ services:
 
   phoned:
     volumes:
-      - "./etc/xivo-dird-phoned/conf.d/20-authorized-subnets.yml:/etc/xivo-dird-phoned/conf.d/20-authorized-subnets.yml"
+      - "./etc/wazo-dird-phoned/conf.d/20-authorized-subnets.yml:/etc/wazo-dird-phoned/conf.d/20-authorized-subnets.yml"

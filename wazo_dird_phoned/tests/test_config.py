@@ -20,8 +20,8 @@ class TestConfig(TestCase):
         mock_open.side_effect = IOError('no such file')
         config._DEFAULT_CONFIG = {
             'config': 'default',
-            'config_file': '/etc/xivo-dird-phoned/config.yml',
-            'extra_config_files': '/etc/xivo-dird-phoned/conf.d/',
+            'config_file': '/etc/wazo-dird-phoned/config.yml',
+            'extra_config_files': '/etc/wazo-dird-phoned/conf.d/',
             'auth': {}
         }
 

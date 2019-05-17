@@ -1,4 +1,4 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -49,7 +49,7 @@ class _PreConfigLogger:
 def main(argv=None):
     argv = argv or sys.argv[1:]
     with _PreConfigLogger() as logger:
-        logger.debug('Starting xivo-dird-phoned')
+        logger.debug('Starting wazo-dird-phoned')
 
         config = load_config(logger, argv)
 

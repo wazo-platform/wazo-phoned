@@ -4,17 +4,17 @@
 
 # Extra configuration directory where the config files overriding this file
 # should be.
-extra_config_files: /etc/xivo-dird-phoned/conf.d/
+extra_config_files: /etc/wazo-dird-phoned/conf.d/
 
-log_filename: /var/log/xivo-dird-phoned.log
-pid_filename: /var/run/xivo-dird-phoned/xivo-dird-phoned.pid
+log_filename: /var/log/wazo-dird-phoned.log
+pid_filename: /var/run/wazo-dird-phoned/wazo-dird-phoned.pid
 foreground: False
 debug: False
 
 auth:
   host: localhost
   port: 9497
-  key_file: /var/lib/wazo-auth-keys/xivo-dird-phoned-key.yml
+  key_file: /var/lib/wazo-auth-keys/wazo-dird-phoned-key.yml
   verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
 
 dird:

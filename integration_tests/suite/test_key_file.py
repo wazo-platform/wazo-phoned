@@ -1,4 +1,4 @@
-# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import time
@@ -21,7 +21,7 @@ class TestMissingServiceKeyFile(BaseDirdPhonedIntegrationTest):
                 break
             time.sleep(1)
         else:
-            self.fail('xivo-dird-phoned did not stop while missing service key file')
+            self.fail('wazo-dird-phoned did not stop while missing service key file')
 
         log = self.service_logs('phoned')
-        assert_that(log, contains_string("No such file or directory: '/tmp/not_exists/xivo-dird-phoned-key.yml'"))
+        assert_that(log, contains_string("No such file or directory: '/tmp/not_exists/wazo-dird-phoned-key.yml'"))

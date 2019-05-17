@@ -90,7 +90,7 @@ class HTTPServer:
             cherrypy.engine.start()
             cherrypy.engine.wait(states.EXITING)
         except KeyboardInterrupt:
-            logger.warning('Stopping xivo-dird-phoned: KeyboardInterrupt')
+            logger.warning('Stopping wazo-dird-phoned: KeyboardInterrupt')
             cherrypy.engine.exit()
 
     def stop(self):

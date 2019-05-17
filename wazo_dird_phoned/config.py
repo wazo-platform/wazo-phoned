@@ -11,7 +11,7 @@ _DEFAULT_CONFIG = {
     'auth': {
         'host': 'localhost',
         'port': 9497,
-        'key_file': '/var/lib/wazo-auth-keys/xivo-dird-phoned-key.yml',
+        'key_file': '/var/lib/wazo-auth-keys/wazo-dird-phoned-key.yml',
         'verify_certificate': '/usr/share/xivo-certs/server.crt',
     },
     'dird': {
@@ -19,13 +19,13 @@ _DEFAULT_CONFIG = {
         'port': 9489,
         'verify_certificate': '/usr/share/xivo-certs/server.crt',
     },
-    'config_file': '/etc/xivo-dird-phoned/config.yml',
-    'extra_config_files': '/etc/xivo-dird-phoned/conf.d/',
+    'config_file': '/etc/wazo-dird-phoned/config.yml',
+    'extra_config_files': '/etc/wazo-dird-phoned/conf.d/',
     'debug': False,
     'log_level': 'info',
-    'log_filename': '/var/log/xivo-dird-phoned.log',
+    'log_filename': '/var/log/wazo-dird-phoned.log',
     'foreground': False,
-    'pid_filename': '/var/run/xivo-dird-phoned/xivo-dird-phoned.pid',
+    'pid_filename': '/var/run/wazo-dird-phoned/wazo-dird-phoned.pid',
     'rest_api': {
         'http': {
             'listen': '0.0.0.0',
