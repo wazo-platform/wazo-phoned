@@ -9,6 +9,8 @@ case "$1" in
 		# move files from xivo-dird-phoned
 		if [ -f /var/log/xivo-dird-phoned.log ] ; then
 			rename 's/xivo-dird-phoned/wazo-dird-phoned/g' /var/log/xivo-dird-phoned.log*
+			# Fix a previous version where the wazo-dird-phoned.log was created before renaming
+			rm -f /var/log/xivo-dird-phoned.log
 		fi
 		# End of move files from xivo-dird-phoned
 
