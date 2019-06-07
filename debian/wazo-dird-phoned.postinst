@@ -6,15 +6,16 @@ LOG_FILENAME='/var/log/wazo-dird-phoned.log'
 
 case "$1" in
 	configure)
-		if [ ! -e "$LOG_FILENAME" ]; then
-			touch "$LOG_FILENAME"
-		fi
-		chown www-data: "$LOG_FILENAME"
-
 		# move files from xivo-dird-phoned
 		if [ -f /var/log/xivo-dird-phoned.log ] ; then
 			rename 's/xivo-dird-phoned/wazo-dird-phoned/g' /var/log/xivo-dird-phoned.log*
 		fi
+		# End of move files from xivo-dird-phoned
+
+		if [ ! -e "$LOG_FILENAME" ]; then
+			touch "$LOG_FILENAME"
+		fi
+		chown www-data: "$LOG_FILENAME"
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)
