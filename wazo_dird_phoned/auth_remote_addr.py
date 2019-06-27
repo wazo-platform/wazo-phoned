@@ -22,6 +22,7 @@ def verify_remote_addr(func):
     def wrapper(*args, **kwargs):
         remote_addr = request.remote_addr
         if not remote_addr:
+            logging.debug('Could not identify remote address. Aborting...')
             abort(403)
 
         networks = current_app.config['authorized_subnets']
@@ -29,6 +30,7 @@ def verify_remote_addr(func):
             if IPAddress(remote_addr) in IPNetwork(network):
                 return func(*args, **kwargs)
 
+        logging.info('Remote address %s is not in authorized subnets. Aborting...', remote_addr)
         abort(403)
     return wrapper
 
