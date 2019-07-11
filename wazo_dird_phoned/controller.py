@@ -46,5 +46,5 @@ class Controller:
             verify_certificate=auth_config['verify_certificate'],
         )
 
-    def _on_token_change(self, token_id):
-        self.http_server.app.config['token'] = token_id
+    def _on_token_change(self, token):
+        self.http_server.app.config['token'] = token['token']
