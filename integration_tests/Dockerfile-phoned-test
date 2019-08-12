@@ -1,0 +1,8 @@
+FROM wazopbx/wazo-phoned
+
+ENV PYTHONDONTWRITEBYTECODE='true'
+
+COPY . /usr/src/wazo-phoned
+
+WORKDIR /usr/src/wazo-phoned
+RUN python setup.py develop

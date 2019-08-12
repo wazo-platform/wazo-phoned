@@ -10,4 +10,4 @@ services:
 
   phoned:
     volumes:
-      - "./etc/wazo-dird-phoned/conf.d/20-no-ssl-certificate.yml:/etc/wazo-dird-phoned/conf.d/20-no-ssl-certificate.yml"
+      - "./etc/wazo-phoned/conf.d/20-no-ssl-certificate.yml:/etc/wazo-phoned/conf.d/20-no-ssl-certificate.yml"

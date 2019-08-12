@@ -19,11 +19,11 @@ from .helpers.base import (
 class TestHTTPSMissingCertificate(BaseDirdPhonedIntegrationTest):
     asset = 'no_ssl_certificate'
 
-    def test_given_inexisting_SSL_certificate_when_dird_phoned_starts_then_dird_phoned_https_stop(self):
+    def test_given_inexisting_SSL_certificate_when_phoned_starts_then_phoned_https_stop(self):
         log = self.service_logs('phoned')
         assert_that(log, contains_string("HTTPS server won't start"))
 
-    def test_given_inexisting_SSL_certificate_when_dird_phoned_starts_then_dird_phoned_http_start(self):
+    def test_given_inexisting_SSL_certificate_when_phoned_starts_then_phoned_http_start(self):
         response = self.get_lookup_result(
             vendor=VALID_VENDOR,
             xivo_user_uuid=VALID_XIVO_USER_UUID,
@@ -36,7 +36,7 @@ class TestHTTPSMissingCertificate(BaseDirdPhonedIntegrationTest):
 class TestHTTPSMissingPrivateKey(BaseDirdPhonedIntegrationTest):
     asset = 'no_ssl_private_key'
 
-    def test_given_inexisting_SSL_private_key_when_dird_phoned_starts_then_dird_phoned_http_start(self):
+    def test_given_inexisting_SSL_private_key_when_phoned_starts_then_phoned_http_start(self):
         response = self.get_lookup_result(
             vendor=VALID_VENDOR,
             xivo_user_uuid=VALID_XIVO_USER_UUID,
@@ -45,6 +45,6 @@ class TestHTTPSMissingPrivateKey(BaseDirdPhonedIntegrationTest):
         )
         assert_that(response.status_code, equal_to(200))
 
-    def test_given_inexisting_SSL_private_key_when_dird_phoned_starts_then_dird_phoned_https_stop(self):
+    def test_given_inexisting_SSL_private_key_when_phoned_starts_then_phoned_https_stop(self):
         log = self.service_logs('phoned')
         assert_that(log, contains_string("HTTPS server won't start"))

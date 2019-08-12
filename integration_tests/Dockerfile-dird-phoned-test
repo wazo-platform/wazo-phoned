@@ -1,8 +1,0 @@
-FROM wazopbx/wazo-dird-phoned
-
-ENV PYTHONDONTWRITEBYTECODE='true'
-
-COPY . /usr/src/wazo-dird-phoned
-
-WORKDIR /usr/src/wazo-dird-phoned
-RUN python setup.py develop

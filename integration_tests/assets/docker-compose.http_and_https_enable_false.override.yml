@@ -10,5 +10,5 @@ services:
 
   phoned:
     volumes:
-      - "./etc/wazo-dird-phoned/conf.d/20-http-disabled.yml:/etc/wazo-dird-phoned/conf.d/20-http-disabled.yml"
-      - "./etc/wazo-dird-phoned/conf.d/20-https-disabled.yml:/etc/wazo-dird-phoned/conf.d/20-https-disabled.yml"
+      - "./etc/wazo-phoned/conf.d/20-http-disabled.yml:/etc/wazo-phoned/conf.d/20-http-disabled.yml"
+      - "./etc/wazo-phoned/conf.d/20-https-disabled.yml:/etc/wazo-phoned/conf.d/20-https-disabled.yml"

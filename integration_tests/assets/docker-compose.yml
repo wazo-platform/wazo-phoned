@@ -6,17 +6,17 @@ services:
       TIMEOUT: ${INTEGRATION_TEST_TIMEOUT}
 
   phoned:
-    image: wazo-dird-phoned-test
+    image: wazo-phoned-test
     ports:
       - "9498"
       - "9499"
     volumes:
-      - "../..:/usr/src/wazo-dird-phoned"
+      - "../..:/usr/src/wazo-phoned"
       - "./ssl:/etc/ssl"
       - "./auth_keys:/tmp/auth_keys"
-      - "./etc/wazo-dird-phoned/conf.d/50-auth.yml:/etc/wazo-dird-phoned/conf.d/50-auth.yml"
-      - "./etc/wazo-dird-phoned/conf.d/50-dird.yml:/etc/wazo-dird-phoned/conf.d/50-dird.yml"
-      - "./etc/wazo-dird-phoned/conf.d/50-rest-api.yml:/etc/wazo-dird-phoned/conf.d/50-rest-api.yml"
+      - "./etc/wazo-phoned/conf.d/50-auth.yml:/etc/wazo-phoned/conf.d/50-auth.yml"
+      - "./etc/wazo-phoned/conf.d/50-dird.yml:/etc/wazo-phoned/conf.d/50-dird.yml"
+      - "./etc/wazo-phoned/conf.d/50-rest-api.yml:/etc/wazo-phoned/conf.d/50-rest-api.yml"
       # - "${LOCAL_GIT_REPOS}/xivo-lib-python/xivo:/usr/local/lib/python3.5/site-packages/xivo"
 
   dird:
