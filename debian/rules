@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-export PYBUILD_NAME=wazo-dird-phoned
+export PYBUILD_NAME=wazo-phoned
 export PYBUILD_DISABLE=test
 
 %:

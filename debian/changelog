@@ -1,3 +1,9 @@
+wazo-phoned (19.08~20190812) wazo-dev-stretch; urgency=medium
+
+  * Rename to wazo-phoned
+
+ -- Wazo Maintainers <dev+pkg@wazo.community>  Mon, 12 Aug 2019 15:06:06 -0400
+
 wazo-dird-phoned (19.08) wazo-dev-stretch; urgency=low
 
   * Initial release.

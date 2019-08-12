@@ -2,17 +2,28 @@
 
 set -e
 
-LOG_FILENAME='/var/log/wazo-dird-phoned.log'
+LOG_FILENAME='/var/log/wazo-phoned.log'
 
 case "$1" in
 	configure)
 		# move files from xivo-dird-phoned
 		if [ -f /var/log/xivo-dird-phoned.log ] ; then
-			rename 's/xivo-dird-phoned/wazo-dird-phoned/g' /var/log/xivo-dird-phoned.log*
+			rename 's/xivo-dird-phoned/wazo-phoned/g' /var/log/xivo-dird-phoned.log*
 			# Fix a previous version where the wazo-dird-phoned.log was created before renaming
 			rm -f /var/log/xivo-dird-phoned.log
 		fi
 		# End of move files from xivo-dird-phoned
+
+        # move files from wazo-dird-phoned
+		rm -rf /var/run/wazo-dird-phoned
+        if [ -f /var/log/wazo-dird-phoned.log ] ; then
+            rename 's/wazo-dird-phoned/wazo-phoned/g' /var/log/wazo-dird-phoned.log*
+        fi
+        if [ -d /etc/wazo-dird-phoned/conf.d ] ; then
+            find /etc/wazo-dird-phoned/conf.d/ -mindepth 1 -exec mv {} /etc/wazo-phoned/conf.d/ \;
+            rmdir --ignore-fail-on-non-empty -p /etc/wazo-dird-phoned/conf.d
+        fi
+        # End of move files from wazo-dird-phoned
 
 		if [ ! -e "$LOG_FILENAME" ]; then
 			touch "$LOG_FILENAME"
