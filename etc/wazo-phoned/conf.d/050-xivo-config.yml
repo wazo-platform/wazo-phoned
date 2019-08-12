@@ -1,0 +1,2 @@
+!exec
+command: xivo-confgen phoned/config.yml
