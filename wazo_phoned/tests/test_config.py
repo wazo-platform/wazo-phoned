@@ -12,8 +12,8 @@ from .. import config
 
 
 @patch('builtins.print', Mock())
-@patch('wazo_dird_phoned.config.open', create=True)
-@patch('wazo_dird_phoned.config._load_key_file', lambda x: {})
+@patch('wazo_phoned.config.open', create=True)
+@patch('wazo_phoned.config._load_key_file', lambda x: {})
 class TestConfig(TestCase):
 
     def test_load_when_no_args_and_no_default_config_file_then_return_default_values(self, mock_open):

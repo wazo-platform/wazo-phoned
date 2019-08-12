@@ -10,7 +10,7 @@ from .. import http
 
 class TestHTTP(TestCase):
 
-    @patch('wazo_dird_phoned.http.request')
+    @patch('wazo_phoned.http.request')
     def test_that_build_next_url_return_input_url_when_is_menu(self, MockedRequest):
         current_url = 'http://127.0.0.1:9498/0.1/directories/{}/profile/vendor'
         expected_result = current_url.format('input')
@@ -19,7 +19,7 @@ class TestHTTP(TestCase):
 
         assert_that(result, equal_to(expected_result))
 
-    @patch('wazo_dird_phoned.http.request')
+    @patch('wazo_phoned.http.request')
     def test_that_build_next_url_return_input_url_when_is_menu_with_profile_menu(self, MockedRequest):
         current_url = 'http://127.0.0.1:9498/0.1/directories/{}/menu/vendor'
         expected_result = current_url.format('input')
@@ -28,7 +28,7 @@ class TestHTTP(TestCase):
 
         assert_that(result, equal_to(expected_result))
 
-    @patch('wazo_dird_phoned.http.request')
+    @patch('wazo_phoned.http.request')
     def test_that_build_next_url_return_lookup_url_when_is_input(self, MockedRequest):
         current_url = 'http://127.0.0.1:9498/0.1/directories/{}/profile/vendor'
         expected_result = current_url.format('lookup')
@@ -37,7 +37,7 @@ class TestHTTP(TestCase):
 
         assert_that(result, equal_to(expected_result))
 
-    @patch('wazo_dird_phoned.http.request')
+    @patch('wazo_phoned.http.request')
     def test_that_build_next_url_return_lookup_url_when_is_input_with_profile_input(self, MockedRequest):
         current_url = 'http://127.0.0.1:9498/0.1/directories/{}/input/vendor'
         expected_result = current_url.format('lookup')
@@ -46,7 +46,7 @@ class TestHTTP(TestCase):
 
         assert_that(result, equal_to(expected_result))
 
-    @patch('wazo_dird_phoned.http.request')
+    @patch('wazo_phoned.http.request')
     def test_that_build_next_url_return_same_url_when_is_lookup(self, MockedRequest):
         current_url = 'http://127.0.0.1:9498/0.1/directories/lookup/profile/vendor'
         expected_result = current_url

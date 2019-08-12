@@ -9,8 +9,8 @@ from functools import partial
 from xivo.daemonize import pidfile_context
 from xivo.user_rights import change_user
 from xivo.xivo_logging import setup_logging
-from wazo_dird_phoned.controller import Controller
-from wazo_dird_phoned.config import load as load_config
+from wazo_phoned.controller import Controller
+from wazo_phoned.config import load as load_config
 
 logger = logging.getLogger(__name__)
 

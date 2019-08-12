@@ -5,14 +5,14 @@ from hamcrest import assert_that, equal_to
 from mock import ANY, patch, sentinel as s
 from unittest import TestCase
 
-from wazo_dird_phoned.bin import daemon
+from wazo_phoned.bin import daemon
 
 
-@patch('wazo_dird_phoned.bin.daemon.pidfile_context')
-@patch('wazo_dird_phoned.bin.daemon.change_user')
-@patch('wazo_dird_phoned.bin.daemon.setup_logging')
-@patch('wazo_dird_phoned.bin.daemon.Controller')
-@patch('wazo_dird_phoned.bin.daemon.load_config')
+@patch('wazo_phoned.bin.daemon.pidfile_context')
+@patch('wazo_phoned.bin.daemon.change_user')
+@patch('wazo_phoned.bin.daemon.setup_logging')
+@patch('wazo_phoned.bin.daemon.Controller')
+@patch('wazo_phoned.bin.daemon.load_config')
 class TestXivoDird(TestCase):
 
     def test_main_injects_argv_into_config_loading(self, load_config, controller_init, setup_logging,

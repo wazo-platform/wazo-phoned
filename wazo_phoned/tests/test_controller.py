@@ -11,8 +11,8 @@ from ..controller import Controller
 class TestController(TestCase):
 
     def setUp(self):
-        self.http_server = patch('wazo_dird_phoned.controller.HTTPServer').start().return_value
-        self.http = patch('wazo_dird_phoned.controller.DirectoriesConfiguration').start()
+        self.http_server = patch('wazo_phoned.controller.HTTPServer').start().return_value
+        self.http = patch('wazo_phoned.controller.DirectoriesConfiguration').start()
 
     def tearDown(self):
         patch.stopall()

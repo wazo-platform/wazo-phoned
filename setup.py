@@ -6,7 +6,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='wazo-dird-phoned',
+    name='wazo-phoned',
     version='1.0',
 
     description='Wazo Directory Daemon',
@@ -19,7 +19,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'wazo-dird-phoned=wazo_dird_phoned.bin.daemon:main',
+            'wazo-phoned=wazo_phoned.bin.daemon:main',
         ],
     }
 )
