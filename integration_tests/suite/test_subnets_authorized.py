@@ -7,7 +7,7 @@ from hamcrest import (
 )
 
 from .helpers.base import (
-    BaseDirdPhonedIntegrationTest,
+    BasePhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,
     VALID_VENDOR,
@@ -15,7 +15,7 @@ from .helpers.base import (
 )
 
 
-class TestSubnetsAuthorized(BaseDirdPhonedIntegrationTest):
+class TestSubnetsAuthorized(BasePhonedIntegrationTest):
     asset = 'authorized_subnets'
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_lookup(self):

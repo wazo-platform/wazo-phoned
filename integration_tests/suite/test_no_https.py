@@ -8,7 +8,7 @@ from hamcrest import (
 )
 
 from .helpers.base import (
-    BaseDirdPhonedIntegrationTest,
+    BasePhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,
     VALID_VENDOR,
@@ -16,7 +16,7 @@ from .helpers.base import (
 )
 
 
-class TestHTTPSMissingCertificate(BaseDirdPhonedIntegrationTest):
+class TestHTTPSMissingCertificate(BasePhonedIntegrationTest):
     asset = 'no_ssl_certificate'
 
     def test_given_inexisting_SSL_certificate_when_phoned_starts_then_phoned_https_stop(self):
@@ -33,7 +33,7 @@ class TestHTTPSMissingCertificate(BaseDirdPhonedIntegrationTest):
         assert_that(response.status_code, equal_to(200))
 
 
-class TestHTTPSMissingPrivateKey(BaseDirdPhonedIntegrationTest):
+class TestHTTPSMissingPrivateKey(BasePhonedIntegrationTest):
     asset = 'no_ssl_private_key'
 
     def test_given_inexisting_SSL_private_key_when_phoned_starts_then_phoned_http_start(self):

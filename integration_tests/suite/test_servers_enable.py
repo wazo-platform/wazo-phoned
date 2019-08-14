@@ -10,16 +10,16 @@ from hamcrest import (
 )
 
 from .helpers.base import (
-    BaseDirdPhonedIntegrationTest,
+    BasePhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,
     VALID_VENDOR,
     VALID_XIVO_USER_UUID,
 )
-from .helpers.wait_strategy import DirdPhonedEverythingUpWaitStrategy
+from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
 
 
-class TestHTTPSIsDisabled(BaseDirdPhonedIntegrationTest):
+class TestHTTPSIsDisabled(BasePhonedIntegrationTest):
     asset = 'https_enable_false'
 
     def test_configuration_https_enable_false_when_phoned_starts_then_phoned_https_stop(self):
@@ -36,9 +36,9 @@ class TestHTTPSIsDisabled(BaseDirdPhonedIntegrationTest):
         assert_that(response.status_code, equal_to(200))
 
 
-class TestHTTPIsDisabled(BaseDirdPhonedIntegrationTest):
+class TestHTTPIsDisabled(BasePhonedIntegrationTest):
     asset = 'http_enable_false'
-    wait_strategy = DirdPhonedEverythingUpWaitStrategy()
+    wait_strategy = PhonedEverythingUpWaitStrategy()
 
     def test_configuration_http_enable_false_when_phoned_starts_then_phoned_http_stop(self):
         log = self.service_logs('phoned')
@@ -54,7 +54,7 @@ class TestHTTPIsDisabled(BaseDirdPhonedIntegrationTest):
         assert_that(response.status_code, equal_to(200))
 
 
-class TestHTTPandHTTPSAreDisabled(BaseDirdPhonedIntegrationTest):
+class TestHTTPandHTTPSAreDisabled(BasePhonedIntegrationTest):
     asset = 'http_and_https_enable_false'
 
     def test_configuration_http_and_https_enable_false_when_phoned_starts_then_phoned_stop(self):

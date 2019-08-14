@@ -8,10 +8,10 @@ from hamcrest import (
     contains_string,
 )
 
-from .helpers.base import BaseDirdPhonedIntegrationTest
+from .helpers.base import BasePhonedIntegrationTest
 
 
-class TestMissingServiceKeyFile(BaseDirdPhonedIntegrationTest):
+class TestMissingServiceKeyFile(BasePhonedIntegrationTest):
     asset = 'no_service_key'
 
     def test_given_inexisting_service_key_when_phoned_starts_then_phoned_stops(self):

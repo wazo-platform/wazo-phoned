@@ -7,19 +7,19 @@ from hamcrest import (
 )
 
 from .helpers.base import (
-    BaseDirdPhonedIntegrationTest,
+    BasePhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,
     VALID_VENDOR,
     VALID_XIVO_USER_UUID,
 )
-from .helpers.wait_strategy import DirdPhonedEverythingUpWaitStrategy
+from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
 
 
-class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
+class TestStatusCodePhoned(BasePhonedIntegrationTest):
 
     asset = 'default_config'
-    wait_strategy = DirdPhonedEverythingUpWaitStrategy()
+    wait_strategy = PhonedEverythingUpWaitStrategy()
 
     # Menu
     def test_that_menu_return_no_error_when_query_ssl(self):
@@ -129,7 +129,7 @@ class TestStatusCodeDirdPhoned(BaseDirdPhonedIntegrationTest):
         assert_that(response.status_code, equal_to(200))
 
 
-class TestAuthError(BaseDirdPhonedIntegrationTest):
+class TestAuthError(BasePhonedIntegrationTest):
 
     asset = 'no_auth_server'
 
@@ -142,7 +142,7 @@ class TestAuthError(BaseDirdPhonedIntegrationTest):
         assert_that(response.status_code, equal_to(503))
 
 
-class TestDirdError(BaseDirdPhonedIntegrationTest):
+class TestDirdError(BasePhonedIntegrationTest):
 
     asset = 'no_dird_server'
 

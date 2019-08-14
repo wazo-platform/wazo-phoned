@@ -22,7 +22,7 @@ VALID_VENDOR = 'cisco'
 VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
 
 
-class BaseDirdPhonedIntegrationTest(AssetLaunchingTestCase):
+class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     assets_root = ASSETS_ROOT
     service = 'phoned'

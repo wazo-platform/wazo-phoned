@@ -10,7 +10,7 @@ from xivo_test_helpers import until
 from xivo_test_helpers.wait_strategy import WaitStrategy
 
 
-class DirdPhonedEverythingUpWaitStrategy(WaitStrategy):
+class PhonedEverythingUpWaitStrategy(WaitStrategy):
 
     def wait(self, integration_test):
 
