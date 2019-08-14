@@ -22,6 +22,7 @@ setup(
             'wazo-phoned=wazo_phoned.bin.daemon:main',
         ],
         'wazo_phoned.plugins': [
+            'api = wazo_phoned.plugins.api.plugin:Plugin',
             'status = wazo_phoned.plugins.status.plugin:Plugin',
         ]
     }

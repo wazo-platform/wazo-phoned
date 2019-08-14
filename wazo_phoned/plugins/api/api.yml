@@ -1,0 +1,65 @@
+swagger: '2.0'
+info:
+  title: wazo-phoned
+  description: "Wazo Directory Daemon"
+  version: 1.0
+schemes:
+- http
+- https
+basePath: /0.1
+consumes:
+- application/json
+produces:
+- application/json
+x-xivo-port: [9498, 9499]
+x-xivo-name: phoned
+securityDefinitions:
+  wazo_auth_token:
+    type: apiKey
+    name: X-Auth-Token
+    in: header
+security:
+- wazo_auth_token: []
+
+responses:
+  AnotherServiceUnavailable:
+    description: Another service is unavailable (e.g. wazo-auth, wazo-dird, ...)
+    schema:
+      $ref: '#/definitions/Error'
+  NotFoundError:
+    description: The resource requested was not found on the server
+    schema:
+      $ref: '#/definitions/APIError'
+  InvalidRequest:
+    description: Invalid request
+    schema:
+      $ref: '#/definitions/APIError'
+
+definitions:
+  APIError:
+    type: object
+    allOf:
+    - $ref: '#/definitions/Error'
+    - properties:
+       resource:
+         description: Resource name of the error
+         type: string
+  Error:
+    title: Error
+    description: Error message for the client
+    properties:
+      message:
+        description: Human readable explanation of the error
+        type: string
+      error_id:
+        description: Identifier of the type of error. It is more precise than the
+          HTTP status code.
+        type: string
+      details:
+        description: Additional information about the error. The keys are specific
+          to each error.
+        type: object
+      timestamp:
+        description: Time when the error occured
+        type: number
+        format: timestamp

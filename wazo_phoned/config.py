@@ -48,6 +48,7 @@ _DEFAULT_CONFIG = {
     'user': 'www-data',
     'enabled_plugins': {
         'status': True,
+        'api': True,
     },
 }
 

@@ -47,4 +47,5 @@ rest_api:
     enabled: True
 
 enabled_plugins:
+  api: True
   status: True
