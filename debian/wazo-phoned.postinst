@@ -19,6 +19,9 @@ case "$1" in
         if [ -f /var/log/wazo-dird-phoned.log ] ; then
             rename 's/wazo-dird-phoned/wazo-phoned/g' /var/log/wazo-dird-phoned.log*
         fi
+        if [ -f /etc/wazo-dird-phoned/conf.d/050-xivo-config.yml ] ; then
+            sed -e 's/dird-phoned/phoned/g' -i /etc/wazo-dird-phoned/conf.d/050-xivo-config.yml
+        fi
         if [ -d /etc/wazo-dird-phoned/conf.d ] ; then
             find /etc/wazo-dird-phoned/conf.d/ -mindepth 1 -exec mv {} /etc/wazo-phoned/conf.d/ \;
             rmdir --ignore-fail-on-non-empty -p /etc/wazo-dird-phoned/conf.d
