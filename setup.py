@@ -21,5 +21,8 @@ setup(
         'console_scripts': [
             'wazo-phoned=wazo_phoned.bin.daemon:main',
         ],
+        'wazo_phoned.plugins': [
+            'status = wazo_phoned.plugins.status.plugin:Plugin',
+        ]
     }
 )

@@ -3,10 +3,11 @@
 
 import logging
 
+from xivo import plugin_helpers
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
-from .http_server import HTTPServer
+from .http_server import api, HTTPServer
 from .http import DirectoriesConfiguration
 
 logger = logging.getLogger(__name__)
@@ -20,6 +21,14 @@ class Controller:
         DirectoriesConfiguration(config['dird'])
         self.token_renewer = TokenRenewer(self._new_auth_client(config))
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
+        plugin_helpers.load(
+            namespace='wazo_phoned.plugins',
+            names=config['enabled_plugins'],
+            dependencies={
+                'config': config,
+                'api': api,
+            }
+        )
 
     def run(self):
         logger.debug('wazo-phoned running...')

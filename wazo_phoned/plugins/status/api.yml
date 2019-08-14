@@ -1,0 +1,21 @@
+paths:
+  /status:
+    get:
+      summary: Print infos about internal status of wazo-phoned
+      description: ''
+      tags:
+        - status
+      responses:
+        '200':
+          description: The internal infos of wazo-phoned
+          schema:
+            $ref: '#/definitions/StatusSummary'
+definitions:
+  StatusSummary:
+    type: object
+    properties:
+      status_token:
+        type: string
+        enum:
+          - ok
+          - fail
