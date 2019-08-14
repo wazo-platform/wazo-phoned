@@ -7,17 +7,18 @@ from xivo.chain_map import ChainMap
 from xivo.config_helper import read_config_file_hierarchy, parse_config_file
 from xivo.xivo_logging import get_log_level_by_name
 
+_CERT_FILE = '/usr/share/xivo-certs/server.crt'
 _DEFAULT_CONFIG = {
     'auth': {
         'host': 'localhost',
         'port': 9497,
         'key_file': '/var/lib/wazo-auth-keys/wazo-phoned-key.yml',
-        'verify_certificate': '/usr/share/xivo-certs/server.crt',
+        'verify_certificate': _CERT_FILE,
     },
     'dird': {
         'host': 'localhost',
         'port': 9489,
-        'verify_certificate': '/usr/share/xivo-certs/server.crt',
+        'verify_certificate': _CERT_FILE,
     },
     'config_file': '/etc/wazo-phoned/config.yml',
     'extra_config_files': '/etc/wazo-phoned/conf.d/',
@@ -36,7 +37,7 @@ _DEFAULT_CONFIG = {
             'listen': '0.0.0.0',
             'port': 9499,
             'enable': True,
-            'certificate': '/usr/share/xivo-certs/server.crt',
+            'certificate': _CERT_FILE,
             'private_key': '/usr/share/xivo-certs/server.key',
         },
         'authorized_subnets': ['127.0.0.1/24'],
