@@ -5,17 +5,17 @@ set -e
 LOG_FILENAME='/var/log/wazo-phoned.log'
 
 case "$1" in
-	configure)
-		# move files from xivo-dird-phoned
-		if [ -f /var/log/xivo-dird-phoned.log ] ; then
-			rename 's/xivo-dird-phoned/wazo-phoned/g' /var/log/xivo-dird-phoned.log*
-			# Fix a previous version where the wazo-dird-phoned.log was created before renaming
-			rm -f /var/log/xivo-dird-phoned.log
-		fi
-		# End of move files from xivo-dird-phoned
+    configure)
+        # move files from xivo-dird-phoned
+        if [ -f /var/log/xivo-dird-phoned.log ] ; then
+            rename 's/xivo-dird-phoned/wazo-phoned/g' /var/log/xivo-dird-phoned.log*
+            # Fix a previous version where the wazo-dird-phoned.log was created before renaming
+            rm -f /var/log/xivo-dird-phoned.log
+        fi
+        # End of move files from xivo-dird-phoned
 
         # move files from wazo-dird-phoned
-		rm -rf /var/run/wazo-dird-phoned
+        rm -rf /var/run/wazo-dird-phoned
         if [ -f /var/log/wazo-dird-phoned.log ] ; then
             rename 's/wazo-dird-phoned/wazo-phoned/g' /var/log/wazo-dird-phoned.log*
         fi
@@ -25,19 +25,19 @@ case "$1" in
         fi
         # End of move files from wazo-dird-phoned
 
-		if [ ! -e "$LOG_FILENAME" ]; then
-			touch "$LOG_FILENAME"
-		fi
-		chown www-data: "$LOG_FILENAME"
-	;;
+        if [ ! -e "$LOG_FILENAME" ]; then
+            touch "$LOG_FILENAME"
+        fi
+        chown www-data: "$LOG_FILENAME"
+    ;;
 
-	abort-upgrade|abort-remove|abort-deconfigure)
-	;;
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
 
-	*)
-		echo "postinst called with unknown argument \`$1'" >&2
-		exit 1
-	;;
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
 esac
 
 # dh_installdeb will replace this with shell code automatically
