@@ -107,7 +107,7 @@ class Menu(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, vendor):
-        args = UserUUIDSchema().load(request.args).data
+        args = UserUUIDSchema().load(request.args)
         xivo_user_uuid = args['xivo_user_uuid']
         url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
 
@@ -147,7 +147,7 @@ class Input(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, vendor):
-        args = UserUUIDSchema().load(request.args).data
+        args = UserUUIDSchema().load(request.args)
         xivo_user_uuid = args['xivo_user_uuid']
         url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
@@ -186,7 +186,7 @@ class Lookup(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, vendor):
-        args = LookupSchema().load(request.args).data
+        args = LookupSchema().load(request.args)
         limit = args['limit']
         offset = args['offset']
         term = args['term']
@@ -231,7 +231,7 @@ class LookupGigaset(AuthResource):
         cls.dird_verify_certificate = dird_verify_certificate
 
     def get(self, profile, xivo_user_uuid):
-        args = LookupGigasetSchema().load(request.args).data
+        args = LookupGigasetSchema().load(request.args)
         offset = args['first'] - 1
         limit = args['limit']
         term = args['term'].replace('*', '') if args['term'] else ''
