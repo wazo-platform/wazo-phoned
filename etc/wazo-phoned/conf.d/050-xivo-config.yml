@@ -1,2 +1,2 @@
 !exec
-command: xivo-confgen phoned/config.yml
+command: wazo-confgen phoned/config.yml
