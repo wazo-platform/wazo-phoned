@@ -1,7 +1,7 @@
 # Copyright 2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from wazo_phoned.plugins.proxy_helpers.plugin import ProxyPlugin
+from wazo_phoned.plugin_helpers.proxy.plugin import ProxyPlugin
 from .resource import Input, Lookup
 
 

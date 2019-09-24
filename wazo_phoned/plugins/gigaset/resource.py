@@ -6,7 +6,7 @@ from flask import (
 )
 from requests.exceptions import RequestException
 
-from wazo_phoned.plugins.proxy_helpers.resource import (
+from wazo_phoned.plugin_helpers.proxy.resource import (
     _build_next_url,
     _error,
     _response_dird,
