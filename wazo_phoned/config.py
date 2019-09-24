@@ -48,10 +48,10 @@ _DEFAULT_CONFIG = {
     },
     'user': 'www-data',
     'enabled_plugins': {
-        'status': True,
-        'api': True,
         'aastra': True,
+        'api': True,
         'cisco': True,
+        'status': True,
         'yealink': True,
     },
 }
