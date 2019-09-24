@@ -53,5 +53,6 @@ enabled_plugins:
   gigaset: True
   htek: True
   polycom: True
+  snom: True
   status: True
   yealink: True

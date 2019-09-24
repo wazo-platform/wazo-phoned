@@ -54,6 +54,7 @@ _DEFAULT_CONFIG = {
         'gigaset': True,
         'htek': True,
         'polycom': True,
+        'snom': True,
         'status': True,
         'yealink': True,
     },
