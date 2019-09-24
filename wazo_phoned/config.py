@@ -53,6 +53,7 @@ _DEFAULT_CONFIG = {
         'cisco': True,
         'gigaset': True,
         'htek': True,
+        'polycom': True,
         'status': True,
         'yealink': True,
     },

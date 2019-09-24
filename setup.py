@@ -27,6 +27,7 @@ setup(
             'cisco = wazo_phoned.plugins.cisco.plugin:Plugin',
             'gigaset = wazo_phoned.plugins.gigaset.plugin:Plugin',
             'htek = wazo_phoned.plugins.htek.plugin:Plugin',
+            'polycom = wazo_phoned.plugins.polycom.plugin:Plugin',
             'status = wazo_phoned.plugins.status.plugin:Plugin',
             'yealink = wazo_phoned.plugins.yealink.plugin:Plugin',
         ]
