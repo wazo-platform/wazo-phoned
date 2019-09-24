@@ -27,19 +27,16 @@ def _error(code, msg):
     return {'reason': [msg], 'timestamp': [time()], 'status_code': code}, code
 
 
-class Menu(AuthResource):
+class ProxyMenu(AuthResource):
 
-    dird_host = None
-    dird_port = None
-    dird_verify_certificate = None
+    def __init__(self, *args, **kwargs):
+        self.vendor = kwargs.pop('vendor')
+        self.dird_host = kwargs.pop('dird_host')
+        self.dird_port = kwargs.pop('dird_port')
+        self.dird_verify_certificate = kwargs.pop('dird_verify_certificate')
+        super().__init__(*args, **kwargs)
 
-    @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_certificate):
-        cls.dird_host = dird_host
-        cls.dird_port = dird_port
-        cls.dird_verify_certificate = dird_verify_certificate
-
-    def get(self, profile, vendor):
+    def get(self, profile):
         args = UserUUIDSchema().load(request.args)
         xivo_user_uuid = args['xivo_user_uuid']
         url = 'https://{host}:{port}/{version}/directories/menu/{profile}/{xivo_user_uuid}/{vendor}'
@@ -58,7 +55,7 @@ class Menu(AuthResource):
                     version=DIRD_API_VERSION,
                     profile=profile,
                     xivo_user_uuid=xivo_user_uuid,
-                    vendor=vendor,
+                    vendor=self.vendor,
                 ),
                 headers=headers,
                 verify=self.dird_verify_certificate,
@@ -67,19 +64,16 @@ class Menu(AuthResource):
             return _error(e.code, str(e))
 
 
-class Input(AuthResource):
+class ProxyInput(AuthResource):
 
-    dird_host = None
-    dird_port = None
-    dird_verify_certificate = None
+    def __init__(self, *args, **kwargs):
+        self.vendor = kwargs.pop('vendor')
+        self.dird_host = kwargs.pop('dird_host')
+        self.dird_port = kwargs.pop('dird_port')
+        self.dird_verify_certificate = kwargs.pop('dird_verify_certificate')
+        super().__init__(*args, **kwargs)
 
-    @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_certificate):
-        cls.dird_host = dird_host
-        cls.dird_port = dird_port
-        cls.dird_verify_certificate = dird_verify_certificate
-
-    def get(self, profile, vendor):
+    def get(self, profile):
         args = UserUUIDSchema().load(request.args)
         xivo_user_uuid = args['xivo_user_uuid']
         url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
@@ -97,7 +91,7 @@ class Input(AuthResource):
                     version=DIRD_API_VERSION,
                     profile=profile,
                     xivo_user_uuid=xivo_user_uuid,
-                    vendor=vendor,
+                    vendor=self.vendor,
                 ),
                 headers=headers,
                 verify=self.dird_verify_certificate,
@@ -106,19 +100,16 @@ class Input(AuthResource):
             return _error(e.code, str(e))
 
 
-class Lookup(AuthResource):
+class ProxyLookup(AuthResource):
 
-    dird_host = None
-    dird_port = None
-    dird_verify_certificate = None
+    def __init__(self, *args, **kwargs):
+        self.vendor = kwargs.pop('vendor')
+        self.dird_host = kwargs.pop('dird_host')
+        self.dird_port = kwargs.pop('dird_port')
+        self.dird_verify_certificate = kwargs.pop('dird_verify_certificate')
+        super().__init__(*args, **kwargs)
 
-    @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_certificate):
-        cls.dird_host = dird_host
-        cls.dird_port = dird_port
-        cls.dird_verify_certificate = dird_verify_certificate
-
-    def get(self, profile, vendor):
+    def get(self, profile):
         args = LookupSchema().load(request.args)
         limit = args['limit']
         offset = args['offset']
@@ -141,7 +132,7 @@ class Lookup(AuthResource):
                     version=DIRD_API_VERSION,
                     profile=profile,
                     xivo_user_uuid=xivo_user_uuid,
-                    vendor=vendor,
+                    vendor=self.vendor,
                 ),
                 headers=headers,
                 params=params,
@@ -151,6 +142,7 @@ class Lookup(AuthResource):
             return _error(e.code, str(e))
 
 
+# TODO(afournier): convert this in the Gigaset plugin
 class LookupGigaset(AuthResource):
 
     dird_host = None
