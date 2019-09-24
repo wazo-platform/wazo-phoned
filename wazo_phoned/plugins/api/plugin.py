@@ -1,7 +1,7 @@
 # Copyright 2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from .http import SwaggerResource
+from .resource import SwaggerResource
 
 
 class Plugin:

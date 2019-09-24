@@ -24,6 +24,7 @@ setup(
         'wazo_phoned.plugins': [
             'api = wazo_phoned.plugins.api.plugin:Plugin',
             'status = wazo_phoned.plugins.status.plugin:Plugin',
+            'proxy = wazo_phoned.plugins.proxy.plugin:Plugin',
         ]
     }
 )

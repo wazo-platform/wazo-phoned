@@ -50,6 +50,7 @@ _DEFAULT_CONFIG = {
     'enabled_plugins': {
         'status': True,
         'api': True,
+        'proxy': True,
     },
 }
 
