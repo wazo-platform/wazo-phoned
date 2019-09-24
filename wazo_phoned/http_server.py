@@ -23,7 +23,6 @@ cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
 
 
 class HTTPServer:
-
     def __init__(self, config):
         self.config = config
         self.app = Flask('wazo_phoned')
@@ -53,16 +52,19 @@ class HTTPServer:
         if https_config['enabled']:
             try:
                 bind_addr_https = (https_config['listen'], https_config['port'])
-                server_https = wsgi.WSGIServer(bind_addr=bind_addr_https, wsgi_app=wsgi_app)
+                server_https = wsgi.WSGIServer(
+                    bind_addr=bind_addr_https, wsgi_app=wsgi_app
+                )
                 server_https.ssl_adapter = http_helpers.ssl_adapter(
-                    https_config['certificate'],
-                    https_config['private_key'],
+                    https_config['certificate'], https_config['private_key']
                 )
 
                 ServerAdapter(cherrypy.engine, server_https).subscribe()
                 logger.debug(
                     'WSGIServer starting... uid: %s, listen: %s:%s',
-                    os.getuid(), bind_addr_https[0], bind_addr_https[1],
+                    os.getuid(),
+                    bind_addr_https[0],
+                    bind_addr_https[1],
                 )
             except IOError as e:
                 logger.warning("HTTPS server won't start: %s", e)
@@ -75,7 +77,9 @@ class HTTPServer:
             ServerAdapter(cherrypy.engine, server_http).subscribe()
             logger.debug(
                 'WSGIServer starting... uid: %s, listen: %s:%s',
-                os.getuid(), bind_addr_http[0], bind_addr_http[1],
+                os.getuid(),
+                bind_addr_http[0],
+                bind_addr_http[1],
             )
         else:
             logger.debug('HTTP server is disabled')

@@ -9,9 +9,10 @@ from ..controller import Controller
 
 
 class TestController(TestCase):
-
     def setUp(self):
-        self.http_server = patch('wazo_phoned.controller.HTTPServer').start().return_value
+        self.http_server = (
+            patch('wazo_phoned.controller.HTTPServer').start().return_value
+        )
         self.plugin_manager = patch('wazo_phoned.controller.plugin_helpers').start()
         self.api = patch('wazo_phoned.controller.api').start()
 
@@ -19,21 +20,15 @@ class TestController(TestCase):
         patch.stopall()
 
     def test_run_starts_http_server(self):
-        config = self._create_config(**{
-            'rest_api': {},
-            'debug': s.debug,
-        })
+        config = self._create_config(**{'rest_api': {}, 'debug': s.debug})
         controller = Controller(config)
         controller.run()
         self.http_server.run.assert_called_once_with()
 
     def test_run_loads_plugins(self):
-        config = self._create_config(**{
-            'enabled_plugins': {
-                'cisco': True,
-                'aastra': False,
-            }
-        })
+        config = self._create_config(
+            **{'enabled_plugins': {'cisco': True, 'aastra': False}}
+        )
 
         controller = Controller(config)
         controller.run()
@@ -46,13 +41,16 @@ class TestController(TestCase):
 
     def _create_config(self, **kwargs):
         config = dict(kwargs)
-        config.setdefault('auth', {
-            'host': 'localhost',
-            'port': 9497,
-            'verify_certificate': False,
-            'service_id': 'phoned',
-            'service_key': '123'
-        })
+        config.setdefault(
+            'auth',
+            {
+                'host': 'localhost',
+                'port': 9497,
+                'verify_certificate': False,
+                'service_id': 'phoned',
+                'service_key': '123',
+            },
+        )
         config.setdefault('dird', {})
         config['dird'].setdefault('host', '')
         config['dird'].setdefault('port', '')

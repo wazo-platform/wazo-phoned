@@ -1,10 +1,7 @@
 # Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from hamcrest import (
-    assert_that,
-    equal_to,
-)
+from hamcrest import assert_that, equal_to
 
 from .helpers.base import (
     BasePhonedIntegrationTest,
@@ -39,10 +36,7 @@ class TestStatusCodePhoned(BasePhonedIntegrationTest):
         assert_that(response.status_code, equal_to(200))
 
     def test_that_menu_return_error_when_no_xivo_user_uuid(self):
-        response = self.get_menu_result(
-            vendor=VALID_VENDOR,
-            profile=DEFAULT_PROFILE,
-        )
+        response = self.get_menu_result(vendor=VALID_VENDOR, profile=DEFAULT_PROFILE)
         assert_that(response.status_code, equal_to(400))
 
     # Input
@@ -63,10 +57,7 @@ class TestStatusCodePhoned(BasePhonedIntegrationTest):
         assert_that(response.status_code, equal_to(200))
 
     def test_that_input_return_error_when_no_xivo_user_uuid(self):
-        response = self.get_input_result(
-            vendor=VALID_VENDOR,
-            profile=DEFAULT_PROFILE,
-        )
+        response = self.get_input_result(vendor=VALID_VENDOR, profile=DEFAULT_PROFILE)
         assert_that(response.status_code, equal_to(400))
 
     # Lookup
@@ -90,9 +81,7 @@ class TestStatusCodePhoned(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_error_when_no_xivo_user_uuid(self):
         response = self.get_lookup_result(
-            vendor=VALID_VENDOR,
-            profile=DEFAULT_PROFILE,
-            term=VALID_TERM,
+            vendor=VALID_VENDOR, profile=DEFAULT_PROFILE, term=VALID_TERM
         )
         assert_that(response.status_code, equal_to(400))
 
@@ -123,8 +112,7 @@ class TestStatusCodePhoned(BasePhonedIntegrationTest):
 
     def test_that_lookup_gigaset_return_no_error_when_no_term(self):
         response = self.get_lookup_gigaset_result(
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            xivo_user_uuid=VALID_XIVO_USER_UUID, profile=DEFAULT_PROFILE
         )
         assert_that(response.status_code, equal_to(200))
 

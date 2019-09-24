@@ -16,9 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class _PreConfigLogger:
-
     class FlushableBuffer:
-
         def __init__(self):
             self._msg = []
 
@@ -53,7 +51,12 @@ def main(argv=None):
 
         config = load_config(logger, argv)
 
-        setup_logging(config['log_filename'], config['foreground'], config['debug'], config['log_level'])
+        setup_logging(
+            config['log_filename'],
+            config['foreground'],
+            config['debug'],
+            config['log_level'],
+        )
 
     if config['user']:
         change_user(config['user'])

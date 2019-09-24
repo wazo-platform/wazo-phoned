@@ -5,7 +5,6 @@ from .resource import Status
 
 
 class Plugin:
-
     def load(self, dependencies):
         api = dependencies['api']
 

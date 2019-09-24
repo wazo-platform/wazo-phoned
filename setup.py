@@ -8,19 +8,13 @@ from setuptools import find_packages
 setup(
     name='wazo-phoned',
     version='1.0',
-
     description='Wazo Directory Daemon',
-
     author='Wazo Authors',
     author_email='dev.wazo@gmail.com',
-
     url='http://wazo.community',
-
     packages=find_packages(),
     entry_points={
-        'console_scripts': [
-            'wazo-phoned=wazo_phoned.bin.daemon:main',
-        ],
+        'console_scripts': ['wazo-phoned=wazo_phoned.bin.daemon:main'],
         'wazo_phoned.plugins': [
             'api = wazo_phoned.plugins.api.plugin:Plugin',
             'aastra = wazo_phoned.plugins.aastra.plugin:Plugin',
@@ -32,6 +26,6 @@ setup(
             'status = wazo_phoned.plugins.status.plugin:Plugin',
             'thomson = wazo_phoned.plugins.thomson.plugin:Plugin',
             'yealink = wazo_phoned.plugins.yealink.plugin:Plugin',
-        ]
-    }
+        ],
+    },
 )

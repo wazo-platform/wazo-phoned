@@ -4,11 +4,7 @@
 import logging
 import requests
 
-from flask import (
-    request,
-    Response,
-    current_app,
-)
+from flask import request, Response, current_app
 from requests.exceptions import RequestException
 from time import time
 
@@ -27,7 +23,6 @@ def _error(code, msg):
 
 
 class ProxyMenu(AuthResource):
-
     def __init__(self, *args, **kwargs):
         self.vendor = kwargs.pop('vendor')
         self.dird_host = kwargs.pop('dird_host')
@@ -64,7 +59,6 @@ class ProxyMenu(AuthResource):
 
 
 class ProxyInput(AuthResource):
-
     def __init__(self, *args, **kwargs):
         self.vendor = kwargs.pop('vendor')
         self.dird_host = kwargs.pop('dird_host')
@@ -100,7 +94,6 @@ class ProxyInput(AuthResource):
 
 
 class ProxyLookup(AuthResource):
-
     def __init__(self, *args, **kwargs):
         self.vendor = kwargs.pop('vendor')
         self.dird_host = kwargs.pop('dird_host')
@@ -160,4 +153,6 @@ def _response_dird(url, headers, verify, params=None):
     if r.status_code == 401:
         raise WazoAuthConnectionError()
 
-    return Response(response=r.content, content_type=r.headers['content-type'], status=r.status_code)
+    return Response(
+        response=r.content, content_type=r.headers['content-type'], status=r.status_code
+    )

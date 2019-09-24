@@ -7,7 +7,6 @@ from wazo_phoned.auth_remote_addr import AuthResource
 
 
 class Status(AuthResource):
-
     def get(self):
         return {
             'service_token': {

@@ -1,9 +1,6 @@
 # Copyright 2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
-from flask import (
-    request,
-    current_app,
-)
+from flask import request, current_app
 from requests.exceptions import RequestException
 
 from wazo_phoned.plugin_helpers.proxy.resource import (
@@ -18,7 +15,6 @@ from .schema import LookupGigasetSchema
 
 
 class Lookup(ProxyLookup):
-
     def get(self, profile, xivo_user_uuid):
         args = LookupGigasetSchema().load(request.args)
         offset = args['first'] - 1
