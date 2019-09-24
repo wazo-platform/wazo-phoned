@@ -51,5 +51,6 @@ enabled_plugins:
   api: True
   cisco: True
   gigaset: True
+  htek: True
   status: True
   yealink: True

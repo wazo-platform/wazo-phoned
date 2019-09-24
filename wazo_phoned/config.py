@@ -52,6 +52,7 @@ _DEFAULT_CONFIG = {
         'api': True,
         'cisco': True,
         'gigaset': True,
+        'htek': True,
         'status': True,
         'yealink': True,
     },
