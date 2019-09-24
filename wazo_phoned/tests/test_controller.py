@@ -12,7 +12,8 @@ class TestController(TestCase):
 
     def setUp(self):
         self.http_server = patch('wazo_phoned.controller.HTTPServer').start().return_value
-        self.http = patch('wazo_phoned.controller.DirectoriesConfiguration').start()
+        self.plugin_manager = patch('wazo_phoned.controller.plugin_helpers').start()
+        self.api = patch('wazo_phoned.controller.api').start()
 
     def tearDown(self):
         patch.stopall()
@@ -26,12 +27,22 @@ class TestController(TestCase):
         controller.run()
         self.http_server.run.assert_called_once_with()
 
-    def test_init_loads_sources(self):
-        config = self._create_config()
+    def test_run_loads_plugins(self):
+        config = self._create_config(**{
+            'enabled_plugins': {
+                'cisco': True,
+                'aastra': False,
+            }
+        })
 
-        Controller(config)
+        controller = Controller(config)
+        controller.run()
 
-        self.http.assert_called_once_with(config['dird'])
+        self.plugin_manager.load.assert_called_once_with(
+            namespace='wazo_phoned.plugins',
+            names=config['enabled_plugins'],
+            dependencies={'config': config, 'api': self.api},
+        )
 
     def _create_config(self, **kwargs):
         config = dict(kwargs)
@@ -47,4 +58,5 @@ class TestController(TestCase):
         config['dird'].setdefault('port', '')
         config.setdefault('rest_api', {})
         config['rest_api'].setdefault('authorized_subnets', [])
+        config.setdefault('enabled_plugins', {})
         return config

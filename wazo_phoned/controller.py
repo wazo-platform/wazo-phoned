@@ -19,7 +19,7 @@ class Controller:
         self.http_server.app.config['authorized_subnets'] = self.config['rest_api']['authorized_subnets']
         self.token_renewer = TokenRenewer(self._new_auth_client(config))
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
-        plugin_helpers.load(
+        self.plugin_manager = plugin_helpers.load(
             namespace='wazo_phoned.plugins',
             names=config['enabled_plugins'],
             dependencies={
