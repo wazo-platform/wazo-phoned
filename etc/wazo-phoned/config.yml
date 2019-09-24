@@ -49,5 +49,6 @@ rest_api:
 enabled_plugins:
   aastra: True
   api: True
+  cisco: True
   status: True
   yealink: True
