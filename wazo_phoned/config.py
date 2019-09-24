@@ -56,6 +56,7 @@ _DEFAULT_CONFIG = {
         'polycom': True,
         'snom': True,
         'status': True,
+        'thomson': True,
         'yealink': True,
     },
 }

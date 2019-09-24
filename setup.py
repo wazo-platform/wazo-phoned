@@ -30,6 +30,7 @@ setup(
             'polycom = wazo_phoned.plugins.polycom.plugin:Plugin',
             'snom = wazo_phoned.plugins.snom.plugin:Plugin',
             'status = wazo_phoned.plugins.status.plugin:Plugin',
+            'thomson = wazo_phoned.plugins.thomson.plugin:Plugin',
             'yealink = wazo_phoned.plugins.yealink.plugin:Plugin',
         ]
     }

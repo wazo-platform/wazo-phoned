@@ -55,4 +55,5 @@ enabled_plugins:
   polycom: True
   snom: True
   status: True
+  thomson: True
   yealink: True
