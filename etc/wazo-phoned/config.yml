@@ -50,5 +50,6 @@ enabled_plugins:
   aastra: True
   api: True
   cisco: True
+  gigaset: True
   status: True
   yealink: True

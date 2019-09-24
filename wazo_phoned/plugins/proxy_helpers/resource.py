@@ -15,8 +15,7 @@ from time import time
 from wazo_phoned.auth_remote_addr import AuthResource
 
 from .exceptions import WazoAuthConnectionError, WazoDirdConnectionError
-from .schema import UserUUIDSchema, LookupSchema, LookupGigasetSchema
-
+from .schema import UserUUIDSchema, LookupSchema
 
 DIRD_API_VERSION = '0.1'
 
@@ -133,50 +132,6 @@ class ProxyLookup(AuthResource):
                     profile=profile,
                     xivo_user_uuid=xivo_user_uuid,
                     vendor=self.vendor,
-                ),
-                headers=headers,
-                params=params,
-                verify=self.dird_verify_certificate,
-            )
-        except RequestException as e:
-            return _error(e.code, str(e))
-
-
-# TODO(afournier): convert this in the Gigaset plugin
-class LookupGigaset(AuthResource):
-
-    dird_host = None
-    dird_port = None
-    dird_verify_certificate = None
-
-    @classmethod
-    def configure(cls, dird_host, dird_port, dird_verify_certificate):
-        cls.dird_host = dird_host
-        cls.dird_port = dird_port
-        cls.dird_verify_certificate = dird_verify_certificate
-
-    def get(self, profile, xivo_user_uuid):
-        args = LookupGigasetSchema().load(request.args)
-        offset = args['first'] - 1
-        limit = args['limit']
-        term = args['term'].replace('*', '') if args['term'] else ''
-
-        url = 'https://{host}:{port}/{version}/directories/lookup/{profile}/{xivo_user_uuid}/gigaset'
-        params = {'term': term, 'limit': limit, 'offset': offset}
-
-        try:
-            headers = {
-                'X-Auth-Token': current_app.config.get('token'),
-                'Proxy-URL': _build_next_url('lookup'),
-                'Accept-Language': request.headers.get('Accept-Language'),
-            }
-            return _response_dird(
-                url.format(
-                    host=self.dird_host,
-                    port=self.dird_port,
-                    version=DIRD_API_VERSION,
-                    profile=profile,
-                    xivo_user_uuid=xivo_user_uuid,
                 ),
                 headers=headers,
                 params=params,

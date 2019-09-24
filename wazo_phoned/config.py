@@ -51,6 +51,7 @@ _DEFAULT_CONFIG = {
         'aastra': True,
         'api': True,
         'cisco': True,
+        'gigaset': True,
         'status': True,
         'yealink': True,
     },

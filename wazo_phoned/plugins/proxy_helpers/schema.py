@@ -13,9 +13,3 @@ class LookupSchema(UserUUIDSchema):
     term = fields.String(required=True)
     limit = fields.Integer(missing=None)
     offset = fields.Integer(missing=None)
-
-
-class LookupGigasetSchema(Schema):
-    set_first = fields.String(attribute='term', missing='')
-    count = fields.Integer(attribute='limit', missing=None)
-    first = fields.Integer(attribute='first', missing=1)
