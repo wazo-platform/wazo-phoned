@@ -25,6 +25,7 @@ setup(
             'api = wazo_phoned.plugins.api.plugin:Plugin',
             'status = wazo_phoned.plugins.status.plugin:Plugin',
             'aastra = wazo_phoned.plugins.aastra.plugin:Plugin',
+            'yealink = wazo_phoned.plugins.yealink.plugin:Plugin',
         ]
     }
 )

@@ -51,6 +51,7 @@ _DEFAULT_CONFIG = {
         'status': True,
         'api': True,
         'aastra': True,
+        'yealink': True,
     },
 }
 
