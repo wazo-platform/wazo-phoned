@@ -2,18 +2,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
-
 import yaml
 
 from flask import make_response
-from flask_restful import Resource
 from xivo.chain_map import ChainMap
 from xivo.rest_api_helpers import load_all_api_specs
+
+from wazo_phoned.auth_remote_addr import AuthResource
 
 logger = logging.getLogger(__name__)
 
 
-class SwaggerResource(Resource):
+class SwaggerResource(AuthResource):
 
     api_filename = "api.yml"
 

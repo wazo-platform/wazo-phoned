@@ -1,4 +1,5 @@
 docker-compose
 pyhamcrest
 nose
+openapi-spec-validator
 https://github.com/wazo-pbx/xivo-test-helpers/archive/master.zip

@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: wazo-phoned
   description: "Wazo Directory Daemon"
-  version: 1.0
+  version: '1.0'
 schemes:
 - http
 - https
@@ -13,13 +13,6 @@ produces:
 - application/json
 x-xivo-port: [9498, 9499]
 x-xivo-name: phoned
-securityDefinitions:
-  wazo_auth_token:
-    type: apiKey
-    name: X-Auth-Token
-    in: header
-security:
-- wazo_auth_token: []
 
 responses:
   AnotherServiceUnavailable:
