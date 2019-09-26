@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_phoned.plugin_helpers.proxy.plugin import ProxyPlugin
-from .resource import Lookup
+from .http import Lookup
 
 
 class Plugin(ProxyPlugin):

@@ -3,7 +3,7 @@
 from flask import request, current_app
 from requests.exceptions import RequestException
 
-from wazo_phoned.plugin_helpers.proxy.resource import (
+from wazo_phoned.plugin_helpers.proxy.http import (
     _build_next_url,
     _error,
     _response_dird,
