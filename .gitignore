@@ -5,3 +5,5 @@ cover/
 *.egg-info
 pylint.txt
 pycodestyle.txt
+coverage.xml
+nosetests.xml

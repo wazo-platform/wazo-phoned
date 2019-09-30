@@ -3,10 +3,7 @@
 
 import time
 
-from hamcrest import (
-    assert_that,
-    contains_string,
-)
+from hamcrest import assert_that, contains_string
 
 from .helpers.base import BasePhonedIntegrationTest
 
@@ -24,4 +21,9 @@ class TestMissingServiceKeyFile(BasePhonedIntegrationTest):
             self.fail('wazo-phoned did not stop while missing service key file')
 
         log = self.service_logs('phoned')
-        assert_that(log, contains_string("No such file or directory: '/tmp/not_exists/wazo-phoned-key.yml'"))
+        assert_that(
+            log,
+            contains_string(
+                "No such file or directory: '/tmp/not_exists/wazo-phoned-key.yml'"
+            ),
+        )

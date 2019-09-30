@@ -30,16 +30,19 @@ def verify_remote_addr(func):
             if IPAddress(remote_addr) in IPNetwork(network):
                 return func(*args, **kwargs)
 
-        logging.info('Remote address %s is not in authorized subnets. Aborting...', remote_addr)
+        logging.info(
+            'Remote address %s is not in authorized subnets. Aborting...', remote_addr
+        )
         abort(403)
+
     return wrapper
 
 
 class ErrorCatchingResource(Resource):
-    method_decorators = (
-        [mallow_helpers.handle_validation_exception, rest_api_helpers.handle_api_exception]
-        + Resource.method_decorators
-    )
+    method_decorators = [
+        mallow_helpers.handle_validation_exception,
+        rest_api_helpers.handle_api_exception,
+    ] + Resource.method_decorators
 
 
 class AuthResource(ErrorCatchingResource):

@@ -7,18 +7,15 @@ from xivo.chain_map import ChainMap
 from xivo.config_helper import read_config_file_hierarchy, parse_config_file
 from xivo.xivo_logging import get_log_level_by_name
 
+_CERT_FILE = '/usr/share/xivo-certs/server.crt'
 _DEFAULT_CONFIG = {
     'auth': {
         'host': 'localhost',
         'port': 9497,
         'key_file': '/var/lib/wazo-auth-keys/wazo-phoned-key.yml',
-        'verify_certificate': '/usr/share/xivo-certs/server.crt',
+        'verify_certificate': _CERT_FILE,
     },
-    'dird': {
-        'host': 'localhost',
-        'port': 9489,
-        'verify_certificate': '/usr/share/xivo-certs/server.crt',
-    },
+    'dird': {'host': 'localhost', 'port': 9489, 'verify_certificate': _CERT_FILE},
     'config_file': '/etc/wazo-phoned/config.yml',
     'extra_config_files': '/etc/wazo-phoned/conf.d/',
     'debug': False,
@@ -27,34 +24,43 @@ _DEFAULT_CONFIG = {
     'foreground': False,
     'pid_filename': '/var/run/wazo-phoned/wazo-phoned.pid',
     'rest_api': {
-        'http': {
-            'listen': '0.0.0.0',
-            'port': 9498,
-            'enable': True,
-        },
+        'http': {'listen': '0.0.0.0', 'port': 9498, 'enable': True},
         'https': {
             'listen': '0.0.0.0',
             'port': 9499,
             'enable': True,
-            'certificate': '/usr/share/xivo-certs/server.crt',
+            'certificate': _CERT_FILE,
             'private_key': '/usr/share/xivo-certs/server.key',
         },
         'authorized_subnets': ['127.0.0.1/24'],
-        'cors': {
-            'enabled': True,
-            'allow_headers': ['Content-Type'],
-        },
+        'cors': {'enabled': True, 'allow_headers': ['Content-Type']},
     },
     'user': 'www-data',
+    'enabled_plugins': {
+        'aastra': True,
+        'api': True,
+        'cisco': True,
+        'gigaset': True,
+        'htek': True,
+        'polycom': True,
+        'snom': True,
+        'status': True,
+        'thomson': True,
+        'yealink': True,
+    },
 }
 
 
 def load(logger, argv):
     cli_config = _parse_cli_args(argv)
     file_config = read_config_file_hierarchy(ChainMap(cli_config, _DEFAULT_CONFIG))
-    reinterpreted_config = _get_reinterpreted_raw_values(ChainMap(cli_config, file_config, _DEFAULT_CONFIG))
+    reinterpreted_config = _get_reinterpreted_raw_values(
+        ChainMap(cli_config, file_config, _DEFAULT_CONFIG)
+    )
     service_key = _load_key_file(ChainMap(cli_config, file_config, _DEFAULT_CONFIG))
-    return ChainMap(reinterpreted_config, cli_config, service_key, file_config, _DEFAULT_CONFIG)
+    return ChainMap(
+        reinterpreted_config, cli_config, service_key, file_config, _DEFAULT_CONFIG
+    )
 
 
 def _parse_cli_args(argv):
@@ -85,10 +91,7 @@ def _parse_cli_args(argv):
         "critical, error, warning, info, debug. Default: %(default)s",
     )
     parser.add_argument(
-        '-u',
-        '--user',
-        action='store',
-        help="The owner of the process.",
+        '-u', '--user', action='store', help="The owner of the process."
     )
     parsed_args = parser.parse_args(argv)
 
@@ -109,7 +112,12 @@ def _parse_cli_args(argv):
 
 def _load_key_file(config):
     key_file = parse_config_file(config['auth']['key_file'])
-    return {'auth': {'service_id': key_file['service_id'], 'service_key': key_file['service_key']}}
+    return {
+        'auth': {
+            'service_id': key_file['service_id'],
+            'service_key': key_file['service_key'],
+        }
+    }
 
 
 def _get_reinterpreted_raw_values(config):
