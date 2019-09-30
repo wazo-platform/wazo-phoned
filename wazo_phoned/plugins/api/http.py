@@ -13,7 +13,7 @@ from wazo_phoned.auth_remote_addr import AuthResource
 logger = logging.getLogger(__name__)
 
 
-class SwaggerResource(AuthResource):
+class OpenAPIResource(AuthResource):
 
     api_filename = "api.yml"
 
