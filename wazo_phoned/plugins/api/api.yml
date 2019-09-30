@@ -4,14 +4,13 @@ info:
   description: "Wazo Directory Daemon"
   version: '1.0'
 schemes:
-- http
 - https
 basePath: /0.1
 consumes:
 - application/json
 produces:
 - application/json
-x-xivo-port: [9498, 9499]
+x-xivo-port: [9499]
 x-xivo-name: phoned
 
 responses:
