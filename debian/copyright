@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: wazo-phoned
-Source: https://github.com/wazo-pbx/wazo-phoned
+Source: https://github.com/wazo-platform/wazo-phoned
 
 Files: *
 Copyright: 2015-2019 The Wazo Authors
