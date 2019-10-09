@@ -17,7 +17,7 @@ services:
       - "./etc/wazo-phoned/conf.d/50-auth.yml:/etc/wazo-phoned/conf.d/50-auth.yml"
       - "./etc/wazo-phoned/conf.d/50-dird.yml:/etc/wazo-phoned/conf.d/50-dird.yml"
       - "./etc/wazo-phoned/conf.d/50-rest-api.yml:/etc/wazo-phoned/conf.d/50-rest-api.yml"
-      # - "${LOCAL_GIT_REPOS}/xivo-lib-python/xivo:/usr/local/lib/python3.5/site-packages/xivo"
+      # - "${LOCAL_GIT_REPOS}/xivo-lib-python/xivo:/usr/local/lib/python3.7/site-packages/xivo"
 
   dird:
     image: p0bailey/docker-flask
