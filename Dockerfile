@@ -2,8 +2,8 @@ FROM python:3.7-buster
 
 RUN mkdir -p /etc/wazo-phoned/conf.d
 
-RUN mkdir -p /var/run/wazo-phoned
-RUN chmod a+w /var/run/wazo-phoned
+RUN mkdir -p /run/wazo-phoned
+RUN chmod a+w /run/wazo-phoned
 
 RUN touch /var/log/wazo-phoned.log
 RUN chown www-data: /var/log/wazo-phoned.log

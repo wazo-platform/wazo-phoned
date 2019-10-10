@@ -7,7 +7,7 @@
 extra_config_files: /etc/wazo-phoned/conf.d/
 
 log_filename: /var/log/wazo-phoned.log
-pid_filename: /var/run/wazo-phoned/wazo-phoned.pid
+pid_filename: /run/wazo-phoned/wazo-phoned.pid
 foreground: False
 debug: False
 

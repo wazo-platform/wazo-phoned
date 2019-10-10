@@ -22,7 +22,7 @@ _DEFAULT_CONFIG = {
     'log_level': 'info',
     'log_filename': '/var/log/wazo-phoned.log',
     'foreground': False,
-    'pid_filename': '/var/run/wazo-phoned/wazo-phoned.pid',
+    'pid_filename': '/run/wazo-phoned/wazo-phoned.pid',
     'rest_api': {
         'http': {'listen': '0.0.0.0', 'port': 9498, 'enable': True},
         'https': {
