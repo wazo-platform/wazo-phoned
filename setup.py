@@ -88,6 +88,7 @@ setup(
     url='http://wazo-platform.org',
     packages=find_packages(),
     include_package_data=True,
+    package_data={'wazo_phoned.plugins': ['*/api.yml']},
     setup_requires=['babel'],
     install_requires=['babel'],
     cmdclass={
