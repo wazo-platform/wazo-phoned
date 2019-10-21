@@ -11,6 +11,8 @@ from cherrypy.process.wspbus import states
 from cherrypy.process.servers import ServerAdapter
 from cheroot import wsgi
 from flask import Flask
+from flask import request
+from flask_babel import Babel
 from flask_restful import Api
 from flask_cors import CORS
 from xivo import http_helpers
@@ -26,6 +28,16 @@ class HTTPServer:
     def __init__(self, config):
         self.config = config
         self.app = Flask('wazo_phoned')
+        self.babel = Babel(self.app)
+        self.app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+
+        @self.babel.localeselector
+        def get_locale():
+            translations = [
+                str(translation) for translation in self.babel.list_translations()
+            ]
+            return request.accept_languages.best_match(translations)
+
         http_helpers.add_logger(self.app, logger)
         self.app.before_request(http_helpers.log_before_request)
         self.app.after_request(http_helpers.log_request)
