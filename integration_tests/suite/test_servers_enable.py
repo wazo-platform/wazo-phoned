@@ -19,13 +19,13 @@ class TestHTTPSIsDisabled(BasePhonedIntegrationTest):
     asset = 'https_enable_false'
 
     def test_configuration_https_enable_false_when_phoned_starts_then_phoned_https_stop(
-        self
+        self,
     ):
         log = self.service_logs('phoned')
         assert_that(log, contains_string('HTTPS server is disabled'))
 
     def test_configuration_https_enable_false_when_phoned_starts_then_phoned_http_start(
-        self
+        self,
     ):
         response = self.get_lookup_result(
             vendor=VALID_VENDOR,
@@ -41,13 +41,13 @@ class TestHTTPIsDisabled(BasePhonedIntegrationTest):
     wait_strategy = PhonedEverythingUpWaitStrategy()
 
     def test_configuration_http_enable_false_when_phoned_starts_then_phoned_http_stop(
-        self
+        self,
     ):
         log = self.service_logs('phoned')
         assert_that(log, contains_string('HTTP server is disabled'))
 
     def test_configuration_http_enable_false_when_phoned_starts_then_phoned_https_start(
-        self
+        self,
     ):
         response = self.get_ssl_lookup_result(
             vendor=VALID_VENDOR,
@@ -62,7 +62,7 @@ class TestHTTPandHTTPSAreDisabled(BasePhonedIntegrationTest):
     asset = 'http_and_https_enable_false'
 
     def test_configuration_http_and_https_enable_false_when_phoned_starts_then_phoned_stop(
-        self
+        self,
     ):
         for _ in range(2):
             status = self.service_status('phoned')

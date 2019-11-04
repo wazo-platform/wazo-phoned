@@ -25,7 +25,7 @@ class TestSubnetsAuthorized(BasePhonedIntegrationTest):
         assert_that(response.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_lookup_with_extra_header(
-        self
+        self,
     ):
         headers = {'X-Forwarded-For': '127.0.0.1'}
         response = self.get_lookup_result(

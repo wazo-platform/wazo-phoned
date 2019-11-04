@@ -27,7 +27,9 @@ class BabelWrapper:
 # This file is distributed under the same license as the
 # {PROJECT} project.
 # Wazo Dev Team (dev@wazo.community), {YEAR}.
-#""".format(PROJECT=PROJECT, YEAR=date.today().year)
+#""".format(
+        PROJECT=PROJECT, YEAR=date.today().year
+    )
 
     class Command(_Command):
         user_options = []

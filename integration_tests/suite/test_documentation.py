@@ -25,6 +25,8 @@ class TestDocumentation(BasePhonedIntegrationTest):
 
     def test_documentation_errors(self):
         port = self.service_port(9499, 'phoned')
-        api_url = 'https://localhost:{port}/{version}/api/api.yml'.format(port=port, version=VERSION)
+        api_url = 'https://localhost:{port}/{version}/api/api.yml'.format(
+            port=port, version=VERSION
+        )
         api = requests.get(api_url, verify=False)
         validate_v2_spec(yaml.safe_load(api.text))
