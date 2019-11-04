@@ -1,2 +1,2 @@
 recursive-include wazo_phoned/plugins/*/templates *.jinja
-recursive-include wazo_phoned/plugins/*/translations *
+recursive-include wazo_phoned/translations *

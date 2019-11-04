@@ -14,9 +14,12 @@ from flask import Flask
 from flask import request
 from flask_babel import Babel
 from flask_cors import CORS
+from pkg_resources import iter_entry_points, resource_filename, resource_isdir
 from xivo import http_helpers
 
 VERSION = 0.1
+BABEL_DEFAULT_LOCALE = 'en'
+TRANSLATION_DIRECTORY = 'translations'
 
 logger = logging.getLogger(__name__)
 cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
@@ -24,18 +27,9 @@ cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
 
 class HTTPServer:
     def __init__(self, config):
-        self.config = config
+        self.config = config['rest_api']
         self.app = Flask('wazo_phoned')
-        self.babel = Babel(self.app)
-        self.app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-
-        @self.babel.localeselector
-        def get_locale():
-            translations = [
-                str(translation) for translation in self.babel.list_translations()
-            ]
-            return request.accept_languages.best_match(translations)
-
+        self._configure_babel(config['enabled_plugins'])
         http_helpers.add_logger(self.app, logger)
         self.app.before_request(http_helpers.log_before_request)
         self.app.after_request(http_helpers.log_request)
@@ -48,6 +42,33 @@ class HTTPServer:
         enabled = cors_config.pop('enabled', False)
         if enabled:
             CORS(self.app, **cors_config)
+
+    def _configure_babel(self, enabled_plugins):
+        self.babel = Babel(self.app)
+        self.app.config['BABEL_DEFAULT_LOCALE'] = BABEL_DEFAULT_LOCALE
+        self.app.config['BABEL_TRANSLATION_DIRECTORIES'] = ';'.join(
+            self._get_translation_directories(enabled_plugins)
+        )
+
+        @self.babel.localeselector
+        def get_locale():
+            translations = [
+                str(translation) for translation in self.babel.list_translations()
+            ]
+            return request.accept_languages.best_match(translations)
+
+    def _get_translation_directories(self, enabled_plugins):
+        main_translation_directory = 'translations'
+        result = [main_translation_directory]
+        entry_points = (
+            e
+            for e in iter_entry_points(group='wazo_phoned.plugins')
+            if e.name in enabled_plugins
+        )
+        for ep in entry_points:
+            if resource_isdir(ep.module_name, TRANSLATION_DIRECTORY):
+                result.append(resource_filename(ep.module_name, TRANSLATION_DIRECTORY))
+        return result
 
     def run(self):
         http_config = self.config['http']
