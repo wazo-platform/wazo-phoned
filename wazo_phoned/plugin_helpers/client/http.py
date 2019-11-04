@@ -51,36 +51,27 @@ class ClientMenu(AuthResource):
 
 
 class ClientInput(AuthResource):
+
+    content_type = None
+    template = None
+
     def __init__(self, *args, **kwargs):
         self.vendor = kwargs.pop('vendor')
         self.dird_client = kwargs.pop('dird_client')
+        self.auth_client = kwargs.pop('auth_client')
         super().__init__(*args, **kwargs)
 
     def get(self, profile):
         args = UserUUIDSchema().load(request.args)
         xivo_user_uuid = args['xivo_user_uuid']
-        # url = 'https://{host}:{port}/{version}/directories/input/{profile}/{xivo_user_uuid}/{vendor}'
 
-        # try:
-        #     headers = {
-        #         'X-Auth-Token': current_app.config.get('token'),
-        #         'Proxy-URL': _build_next_url('input'),
-        #         'Accept-Language': request.headers.get('Accept-Language'),
-        #     }
-        #     return _response_dird(
-        #         url.format(
-        #             host=self.dird_host,
-        #             port=self.dird_port,
-        #             version=DIRD_API_VERSION,
-        #             profile=profile,
-        #             xivo_user_uuid=xivo_user_uuid,
-        #             vendor=self.vendor,
-        #         ),
-        #         headers=headers,
-        #         verify=self.dird_verify_certificate,
-        #     )
-        # except RequestException as e:
-        #     return _error(e.code, str(e))
+        response_rendered = render_template(
+            self.template,
+            xivo_user_uuid=xivo_user_uuid,
+            xivo_proxy_url=_build_next_url('input'),
+        )
+
+        return Response(response_rendered, content_type=self.content_type, status=200)
 
 
 class ClientLookup(AuthResource):

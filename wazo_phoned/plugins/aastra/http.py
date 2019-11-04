@@ -5,7 +5,8 @@ from wazo_phoned.plugin_helpers.client.http import ClientInput, ClientLookup
 
 
 class Input(ClientInput):
-    pass
+    content_type = 'text/xml'
+    template = 'aastra_input.jinja'
 
 
 class Lookup(ClientLookup):
