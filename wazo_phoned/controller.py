@@ -7,7 +7,7 @@ from xivo import plugin_helpers
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
-from .http_server import api, HTTPServer
+from .http_server import HTTPServer
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ class Controller:
             names=config['enabled_plugins'],
             dependencies={
                 'config': config,
-                'api': api,
+                'app': self.http_server.app,
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
             },
         )

@@ -3,6 +3,8 @@
 
 from abc import ABCMeta, abstractmethod
 
+from ..common import create_blueprint_api
+
 
 class ProxyPlugin(metaclass=ABCMeta):
 
@@ -10,9 +12,10 @@ class ProxyPlugin(metaclass=ABCMeta):
     input_url = '/directories/input/<profile>/{vendor}'
     lookup_url = '/directories/lookup/<profile>/{vendor}'
     vendor = None
+    import_name = None
 
     def load(self, dependencies):
-        api = dependencies['api']
+        app = dependencies['app']
         dird_config = dependencies['config']['dird']
         class_kwargs = {
             'vendor': self.vendor,
@@ -20,6 +23,10 @@ class ProxyPlugin(metaclass=ABCMeta):
             'dird_port': dird_config['port'],
             'dird_verify_certificate': dird_config.get('verify_certificate', True),
         }
+
+        api = create_blueprint_api(
+            app, '{}_plugin'.format(self.vendor), self.import_name
+        )
 
         self.menu_url = self.menu_url.format(vendor=self.vendor)
         self.input_url = self.input_url.format(vendor=self.vendor)

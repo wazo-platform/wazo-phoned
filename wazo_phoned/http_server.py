@@ -13,14 +13,12 @@ from cheroot import wsgi
 from flask import Flask
 from flask import request
 from flask_babel import Babel
-from flask_restful import Api
 from flask_cors import CORS
 from xivo import http_helpers
 
 VERSION = 0.1
 
 logger = logging.getLogger(__name__)
-api = Api(prefix='/{}'.format(VERSION))
 cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
 
 
@@ -44,7 +42,6 @@ class HTTPServer:
         self.app.secret_key = os.urandom(24)
         self.app.permanent_session_lifetime = timedelta(minutes=5)
         self.load_cors()
-        self.api = api
 
     def load_cors(self):
         cors_config = dict(self.config.get('cors', {}))
@@ -53,7 +50,6 @@ class HTTPServer:
             CORS(self.app, **cors_config)
 
     def run(self):
-        self.api.init_app(self.app)
         http_config = self.config['http']
         https_config = self.config['https']
 

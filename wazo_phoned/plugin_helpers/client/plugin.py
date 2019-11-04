@@ -4,6 +4,9 @@
 from abc import ABCMeta, abstractmethod
 from wazo_auth_client import Client as AuthClient
 from wazo_dird_client import Client as DirdClient
+
+from ..common import create_blueprint_api
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -15,9 +18,10 @@ class ClientPlugin(metaclass=ABCMeta):
     input_url = '/directories/input/<profile>/{vendor}'
     lookup_url = '/directories/lookup/<profile>/{vendor}'
     vendor = None
+    import_name = None
 
     def load(self, dependencies):
-        api = dependencies['api']
+        app = dependencies['app']
         dird_client = DirdClient(**dependencies['config']['dird'])
         auth_client = AuthClient(**dependencies['config']['auth'])
         token_changed_subscribe = dependencies['token_changed_subscribe']
@@ -28,6 +32,9 @@ class ClientPlugin(metaclass=ABCMeta):
             'dird_client': dird_client,
             'auth_client': auth_client,
         }
+        api = create_blueprint_api(
+            app, '{}_plugin'.format(self.vendor), self.import_name
+        )
 
         self.menu_url = self.menu_url.format(vendor=self.vendor)
         self.input_url = self.input_url.format(vendor=self.vendor)

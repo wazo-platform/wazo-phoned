@@ -7,6 +7,7 @@ from .http import Input, Lookup
 
 class Plugin(ClientPlugin):
     vendor = 'aastra'
+    import_name = __name__
 
     def _add_resources(self, api, class_kwargs):
         api.add_resource(
