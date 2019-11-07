@@ -1,6 +1,8 @@
+# -*-coding: utf-8-*-
 import sys
 
 from flask import Flask
+from flask import jsonify
 from flask import request
 
 app = Flask(__name__)
@@ -52,6 +54,47 @@ def lookup_get(profile, xivo_user_uuid, vendor):
     if not request.headers.get('X-Auth-Token', ''):
         return '', 401
     return '', 200
+
+
+@app.route('/0.1/directories/lookup/<profile>/<xivo_user_uuid>', methods=['GET'])
+def lookup_get_default_json(profile, xivo_user_uuid):
+    if not request.headers.get('X-Auth-Token', ''):
+        return '', 401
+    body = {
+        'column_headers': [
+            'Nom',
+            'Numéro',
+            'Mobile',
+            'Boîte vocale',
+            'Favoris',
+            'E-mail',
+        ],
+        'column_types': ['name', 'number', 'number', 'voicemail', 'favorite', 'email'],
+        'results': [
+            {
+                'column_values': [
+                    'Test User1',
+                    '+33(0)123456789',
+                    '5555555555',
+                    None,
+                    False,
+                    None,
+                ],
+            },
+            {
+                'column_values': [
+                    'Test User2',
+                    '1000',
+                    None,
+                    None,
+                    False,
+                    'test2@test.com',
+                ],
+            },
+        ],
+        'term': request.args.get('term', ''),
+    }
+    return jsonify(body), 200
 
 
 if __name__ == "__main__":
