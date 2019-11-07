@@ -77,6 +77,12 @@ class TestAastra(BasePhonedIntegrationTest):
         )
         assert_that(response.status_code, equal_to(400))
 
+    def test_that_lookup_return_error_when_invalid_user_uuid(self):
+        response = self.get_lookup_result(
+            vendor=VENDOR, profile='a', xivo_user_uuid='invalid', term=VALID_TERM
+        )
+        assert_that(response.status_code, equal_to(404))
+
     def test_that_lookup_return_error_when_no_term(self):
         response = self.get_lookup_result(
             vendor=VENDOR, xivo_user_uuid=VALID_XIVO_USER_UUID, profile=DEFAULT_PROFILE,
