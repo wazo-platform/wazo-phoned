@@ -3,6 +3,7 @@
 test-setup: egg-info
 	docker pull p0bailey/docker-flask
 	docker pull wazopbx/wait
+	docker pull wazopbx/wazo-auth-mock
 	docker build --pull -t wazopbx/wazo-phoned ..
 	docker build --no-cache -t wazo-phoned-test -f Dockerfile-phoned-test ..
 

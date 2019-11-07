@@ -19,7 +19,7 @@ CA_CERT = os.path.join(ASSETS_ROOT, 'ssl', 'server.crt')
 DEFAULT_PROFILE = 'default_phone'
 VALID_TERM = 'toto'
 VALID_VENDOR = 'cisco'
-VALID_XIVO_USER_UUID = '00000000-0000-0000-0000-000000000001'
+VALID_XIVO_USER_UUID = 'uuid'
 
 
 class BasePhonedIntegrationTest(AssetLaunchingTestCase):
