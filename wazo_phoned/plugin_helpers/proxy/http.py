@@ -6,20 +6,16 @@ import requests
 
 from flask import request, Response, current_app
 from requests.exceptions import RequestException
-from time import time
 
 from wazo_phoned.auth_remote_addr import AuthResource
 
 from .exceptions import WazoAuthConnectionError, WazoDirdConnectionError
 from .schema import UserUUIDSchema, LookupSchema
+from ..common import output_error
 
 DIRD_API_VERSION = '0.1'
 
 logger = logging.getLogger(__name__)
-
-
-def _error(code, msg):
-    return {'reason': [msg], 'timestamp': [time()], 'status_code': code}, code
 
 
 class ProxyMenu(AuthResource):
@@ -55,7 +51,7 @@ class ProxyMenu(AuthResource):
                 verify=self.dird_verify_certificate,
             )
         except RequestException as e:
-            return _error(e.code, str(e))
+            return output_error(e.code, str(e))
 
 
 class ProxyInput(AuthResource):
@@ -90,7 +86,7 @@ class ProxyInput(AuthResource):
                 verify=self.dird_verify_certificate,
             )
         except RequestException as e:
-            return _error(e.code, str(e))
+            return output_error(e.code, str(e))
 
 
 class ProxyLookup(AuthResource):
@@ -131,7 +127,7 @@ class ProxyLookup(AuthResource):
                 verify=self.dird_verify_certificate,
             )
         except RequestException as e:
-            return _error(e.code, str(e))
+            return output_error(e.code, str(e))
 
 
 def _build_next_url(current):

@@ -5,11 +5,11 @@ from requests.exceptions import RequestException
 
 from wazo_phoned.plugin_helpers.proxy.http import (
     _build_next_url,
-    _error,
     _response_dird,
     DIRD_API_VERSION,
     ProxyLookup,
 )
+from wazo_phoned.plugin_helpers.common import output_error
 
 from .schema import LookupGigasetSchema
 
@@ -43,4 +43,4 @@ class Lookup(ProxyLookup):
                 verify=self.dird_verify_certificate,
             )
         except RequestException as e:
-            return _error(e.code, str(e))
+            return output_error(e.code, str(e))

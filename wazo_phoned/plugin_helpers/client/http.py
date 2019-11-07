@@ -3,7 +3,6 @@
 
 import logging
 import re
-import requests
 
 from collections import namedtuple
 from flask import (
@@ -12,22 +11,18 @@ from flask import (
     Response,
 )
 from operator import attrgetter
-from requests.exceptions import ConnectionError, RequestException, HTTPError
-from time import time
+from requests.exceptions import ConnectionError, HTTPError
 
 from wazo_phoned.auth_remote_addr import AuthResource
 
 from .exceptions import WazoAuthConnectionError, WazoDirdConnectionError, NoSuchUser
 from .schema import UserUUIDSchema, LookupSchema
+from ..common import output_error
 
 
 logger = logging.getLogger(__name__)
 
 _PhoneFormattedResult = namedtuple('_PhoneFormattedResult', ['name', 'number'])
-
-
-def _error(code, msg):
-    return {'reason': [msg], 'timestamp': [time()], 'status_code': code}, code
 
 
 class ClientMenu(AuthResource):
@@ -102,6 +97,11 @@ class ClientLookup(AuthResource):
                 term=term,
                 tenant_uuid=user_tenant,
             )
+        except HTTPError as e:
+            response = getattr(e, 'response', None)
+            status_code = getattr(response, 'status_code', None)
+            reason = getattr(response, 'reason', str(e))
+            return output_error(status_code, str(reason))
         except ConnectionError:
             raise WazoDirdConnectionError()
 

@@ -3,8 +3,13 @@
 
 from flask import Blueprint
 from flask_restful import Api
+from time import time
 
 from wazo_phoned.http_server import VERSION
+
+
+def output_error(code, msg):
+    return {'reason': [msg], 'timestamp': [time()], 'status_code': code}, code
 
 
 def create_blueprint_api(app, name, import_name):
