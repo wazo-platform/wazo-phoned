@@ -89,8 +89,11 @@ class TestAuthError(BasePhonedIntegrationTest):
     asset = 'no_auth_server'
 
     def test_no_auth_server_gives_503(self):
-        response = self.get_input_result(
-            vendor=VENDOR, xivo_user_uuid=VALID_XIVO_USER_UUID, profile=DEFAULT_PROFILE,
+        response = self.get_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            profile=DEFAULT_PROFILE,
+            term='a',
         )
         assert_that(response.status_code, equal_to(503))
 
@@ -100,7 +103,10 @@ class TestDirdError(BasePhonedIntegrationTest):
     asset = 'no_dird_server'
 
     def test_no_dird_server_gives_503(self):
-        response = self.get_input_result(
-            vendor=VENDOR, xivo_user_uuid=VALID_XIVO_USER_UUID, profile=DEFAULT_PROFILE,
+        response = self.get_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            profile=DEFAULT_PROFILE,
+            term='a',
         )
         assert_that(response.status_code, equal_to(503))
