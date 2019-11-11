@@ -60,6 +60,7 @@ def lookup_get(profile, xivo_user_uuid, vendor):
 def lookup_get_default_json(profile, xivo_user_uuid):
     if not request.headers.get('X-Auth-Token', ''):
         return '', 401
+    term = request.args.get('term', '')
     body = {
         'column_headers': [
             'Nom',
@@ -70,7 +71,11 @@ def lookup_get_default_json(profile, xivo_user_uuid):
             'E-mail',
         ],
         'column_types': ['name', 'number', 'number', 'voicemail', 'favorite', 'email'],
-        'results': [
+        'results': [],
+        'term': request.args.get('term', ''),
+    }
+    if term != 'no-result':
+        body['results'] = [
             {
                 'column_values': [
                     'Test User1',
@@ -91,9 +96,8 @@ def lookup_get_default_json(profile, xivo_user_uuid):
                     'test2@test.com',
                 ],
             },
-        ],
-        'term': request.args.get('term', ''),
-    }
+        ]
+
     return jsonify(body), 200
 
 

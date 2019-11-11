@@ -9,7 +9,11 @@ import requests
 from wazo_auth_client import Client as AuthClient
 from xivo.config_helper import parse_config_file
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
-from xivo_test_helpers.auth import AuthClient as MockAuthClient, MockCredentials, MockUserToken
+from xivo_test_helpers.auth import (
+    AuthClient as MockAuthClient,
+    MockCredentials,
+    MockUserToken,
+)
 from xivo_test_helpers.wait_strategy import NoWaitStrategy
 
 logger = logging.getLogger(__name__)
@@ -51,7 +55,9 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def make_auth(cls):
-        return AuthClient('localhost', cls.service_port(9497, 'auth'), verify_certificate=False)
+        return AuthClient(
+            'localhost', cls.service_port(9497, 'auth'), verify_certificate=False
+        )
 
     @classmethod
     def make_mock_auth(cls):
@@ -99,8 +105,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
         auth = cls.make_auth()
         auth.users.new(
-            uuid=USER_1_UUID,
-            tenant_uuid=USERS_TENANT,
+            uuid=USER_1_UUID, tenant_uuid=USERS_TENANT,
         )
 
     @classmethod
@@ -241,8 +246,12 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_ssl_lookup_result(self, profile, vendor, xivo_user_uuid=None, term=None):
+    def get_ssl_lookup_result(
+        self, profile, vendor, xivo_user_uuid=None, term=None, **kwargs
+    ):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
+        if kwargs:
+            params.update(**kwargs)
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
         result = requests.get(
