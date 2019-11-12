@@ -247,7 +247,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def get_ssl_lookup_result(
-        self, profile, vendor, xivo_user_uuid=None, term=None, **kwargs
+        self, profile, vendor, xivo_user_uuid=None, term=None, headers=None, **kwargs
     ):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
         if kwargs:
@@ -257,6 +257,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=params,
+            headers=headers,
             verify=False,
         )
         return result

@@ -243,6 +243,31 @@ class TestAastra(BasePhonedIntegrationTest):
             ),
         )
 
+    def test_lookup_translation_fr(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term='no-result',
+            headers={'Accept-Language': 'fr'},
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <AastraIPPhoneTextMenu style="none" destroyOnExit="yes">
+        <MenuItem>
+          <Prompt>Aucune entrée</Prompt>
+          <URI></URI>
+         </MenuItem>
+        </AastraIPPhoneTextMenu>"""
+                )
+            ),
+        )
+
     def test_that_lookup_return_no_error_when_query(self):
         response = self.get_lookup_result(
             vendor=VENDOR,
