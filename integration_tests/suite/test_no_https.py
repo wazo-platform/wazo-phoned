@@ -8,7 +8,7 @@ from .helpers.base import (
     DEFAULT_PROFILE,
     VALID_TERM,
     VALID_VENDOR,
-    VALID_XIVO_USER_UUID,
+    USER_1_UUID,
 )
 
 
@@ -26,7 +26,7 @@ class TestHTTPSMissingCertificate(BasePhonedIntegrationTest):
     ):
         response = self.get_lookup_result(
             vendor=VALID_VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term=VALID_TERM,
         )
@@ -41,7 +41,7 @@ class TestHTTPSMissingPrivateKey(BasePhonedIntegrationTest):
     ):
         response = self.get_lookup_result(
             vendor=VALID_VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term=VALID_TERM,
         )
