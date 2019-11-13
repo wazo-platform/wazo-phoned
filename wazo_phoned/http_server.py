@@ -52,9 +52,10 @@ class HTTPServer:
 
         @self.babel.localeselector
         def get_locale():
-            translations = [
-                str(translation) for translation in self.babel.list_translations()
-            ]
+            translations = set(
+                [locale.language for locale in self.babel.list_translations()]
+            )
+            translations.add(BABEL_DEFAULT_LOCALE)
             return request.accept_languages.best_match(translations)
 
     def _get_translation_directories(self, enabled_plugins):
