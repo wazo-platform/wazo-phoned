@@ -10,7 +10,7 @@ paths:
       operationId: aastra_input
       tags:
       - aastra
-      - phone directories
+      - directories
       produces:
       - text/xml
       responses:
@@ -33,7 +33,7 @@ paths:
       operationId: aastra_lookup
       tags:
       - aastra
-      - phone directories
+      - directories
       produces:
       - text/xml
       responses:

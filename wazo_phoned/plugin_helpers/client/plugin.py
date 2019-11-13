@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 
 class ClientPlugin(metaclass=ABCMeta):
 
-    menu_url = '/directories/menu/<profile>/{vendor}'
-    input_url = '/directories/input/<profile>/{vendor}'
-    lookup_url = '/directories/lookup/<profile>/{vendor}'
+    menu_url_fmt = '/directories/menu/<profile>/{vendor}'
+    input_url_fmt = '/directories/input/<profile>/{vendor}'
+    lookup_url_fmt = '/directories/lookup/<profile>/{vendor}'
     vendor = None
     import_name = None
 
@@ -36,9 +36,9 @@ class ClientPlugin(metaclass=ABCMeta):
             app, '{}_plugin'.format(self.vendor), self.import_name
         )
 
-        self.menu_url = self.menu_url.format(vendor=self.vendor)
-        self.input_url = self.input_url.format(vendor=self.vendor)
-        self.lookup_url = self.lookup_url.format(vendor=self.vendor)
+        self.menu_url = self.menu_url_fmt.format(vendor=self.vendor)
+        self.input_url = self.input_url_fmt.format(vendor=self.vendor)
+        self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
         self._add_resources(api, class_kwargs)
 
     @abstractmethod

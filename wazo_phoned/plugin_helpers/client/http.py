@@ -26,6 +26,10 @@ _PhoneFormattedResult = namedtuple('_PhoneFormattedResult', ['name', 'number'])
 
 
 class ClientMenu(AuthResource):
+
+    content_type = None
+    template = None
+
     def __init__(self, *args, **kwargs):
         self.vendor = kwargs.pop('vendor')
         self.dird_client = kwargs.pop('dird_client')
@@ -180,6 +184,8 @@ def _build_next_url(current):
 
 class _PhoneResultFormatter:
 
+    _NAME_FIELD = 'name'
+    _NUMBER_FIELD = 'number'
     _INVALID_CHARACTERS_REGEX = re.compile(r'[^\d*#+\(\)]+')
     _SPECIAL_NUMBER_REGEX = re.compile(r'^\+(\d+)\(\d+\)(\d+)$')
     _PARENTHESES_REGEX = re.compile(r'[\(\)]')
@@ -234,8 +240,8 @@ class _PhoneResultFormatter:
         return [
             position
             for position, field in enumerate(self._lookup_results['column_types'])
-            if field == 'number'
+            if field == self._NUMBER_FIELD
         ]
 
     def _find_name_field_position(self):
-        return self._lookup_results['column_types'].index('name')
+        return self._lookup_results['column_types'].index(self._NAME_FIELD)
