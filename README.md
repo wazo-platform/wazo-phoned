@@ -27,6 +27,11 @@ using:
     % pybabel compile --directory=wazo_phoned/translations
 
 
+### Generate .tx/config
+
+    % tx set --auto-local -r wazo.wazo-phoned 'wazo_phoned/translations/<lang>/LC_MESSAGES/messages.po' --source-lang en --type PO --source-file wazo_phoned/messages.pot --execute
+
+
 Docker
 ------
 
