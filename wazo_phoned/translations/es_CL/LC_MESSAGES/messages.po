@@ -4,40 +4,36 @@
 # wazo-phoned project.
 # Wazo Dev Team (dev@wazo.community), 2019.
 # 
-# Translators:
-# Alexandre Fournier <afournier@wazo.io>, 2019
-# 
 msgid ""
 msgstr ""
 "Project-Id-Version: wazo-phoned 1.0\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
 "POT-Creation-Date: 2019-11-04 14:57-0500\n"
 "PO-Revision-Date: 2019-11-13 19:57+0000\n"
-"Last-Translator: Alexandre Fournier <afournier@wazo.io>, 2019\n"
-"Language-Team: French (https://www.transifex.com/wazo/teams/69545/fr/)\n"
+"Language-Team: Spanish (Chile) (https://www.transifex.com/wazo/teams/69545/es_CL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: es_CL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:3
 msgid "Wazo Search"
-msgstr "Recherche Wazo"
+msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:4
 msgid "Name or number:"
-msgstr "Nom ou numéro:"
+msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:5
 msgid "Previous Page"
-msgstr "Page Précédente"
+msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:17
 msgid "No entries"
-msgstr "Aucune entrée"
+msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:24
 msgid "Next Page"
-msgstr "Page Suivante"
+msgstr ""
