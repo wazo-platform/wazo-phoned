@@ -1,5 +1,5 @@
 paths:
-  /directories/input/{profile}/{user_uuid}/aastra:
+  /directories/input/{profile}/aastra:
     get:
       summary: Given informations about how make request lookup for Aastra Phones
       description: |
@@ -23,7 +23,7 @@ paths:
       parameters:
       - $ref: '#/parameters/Profile'
       - $ref: '#/parameters/UserUUID'
-  /directories/lookup/{profile}/{user_uuid}/aastra:
+  /directories/lookup/{profile}/aastra:
     get:
       summary: Search for contacts with Aastra Phones
       description: |

@@ -83,8 +83,8 @@ parameters:
     description: A search term to look for
     required: true
   UserUUID:
-    name: user_uuid
-    in: path
+    name: xivo_user_uuid
+    in: query
     type: string
     description: The user UUID of the user doing that query
     required: true
