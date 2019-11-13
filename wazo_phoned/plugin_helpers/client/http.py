@@ -46,7 +46,7 @@ class ClientMenu(AuthResource):
             xivo_proxy_url=_build_next_url('menu'),
         )
 
-        return Response(response_rendered, mimetype=self.content_type, status=200)
+        return Response(response_rendered, content_type=self.content_type, status=200)
 
 
 class ClientInput(AuthResource):
@@ -70,7 +70,7 @@ class ClientInput(AuthResource):
             xivo_proxy_url=_build_next_url('input'),
         )
 
-        return Response(response_rendered, mimetype=self.content_type, status=200)
+        return Response(response_rendered, content_type=self.content_type, status=200)
 
 
 class ClientLookup(AuthResource):
@@ -134,7 +134,7 @@ class ClientLookup(AuthResource):
             offset_previous=self._previous_offset(offset, limit),
         )
 
-        return Response(response_rendered, mimetype=self.content_type, status=200)
+        return Response(response_rendered, content_type=self.content_type, status=200)
 
     def _next_offset(self, offset, limit, results_count):
         if limit is None:
