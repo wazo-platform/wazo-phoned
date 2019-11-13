@@ -30,11 +30,11 @@ class ClientMenu(AuthResource):
     content_type = None
     template = None
 
-    def __init__(self, *args, **kwargs):
-        self.vendor = kwargs.pop('vendor')
-        self.dird_client = kwargs.pop('dird_client')
-        self.auth_client = kwargs.pop('auth_client')
-        super().__init__(*args, **kwargs)
+    def __init__(self, vendor, auth_client, dird_client):
+        self.vendor = vendor
+        self.auth_client = auth_client
+        self.dird_client = dird_client
+        super().__init__()
 
     def get(self, profile):
         args = UserUUIDSchema().load(request.args)
@@ -54,11 +54,11 @@ class ClientInput(AuthResource):
     content_type = None
     template = None
 
-    def __init__(self, *args, **kwargs):
-        self.vendor = kwargs.pop('vendor')
-        self.dird_client = kwargs.pop('dird_client')
-        self.auth_client = kwargs.pop('auth_client')
-        super().__init__(*args, **kwargs)
+    def __init__(self, vendor, auth_client, dird_client):
+        self.vendor = vendor
+        self.auth_client = auth_client
+        self.dird_client = dird_client
+        super().__init__()
 
     def get(self, profile):
         args = UserUUIDSchema().load(request.args)
@@ -79,11 +79,11 @@ class ClientLookup(AuthResource):
     content_type = None
     template = None
 
-    def __init__(self, *args, **kwargs):
-        self.vendor = kwargs.pop('vendor')
-        self.dird_client = kwargs.pop('dird_client')
-        self.auth_client = kwargs.pop('auth_client')
-        super().__init__(*args, **kwargs)
+    def __init__(self, vendor, auth_client, dird_client):
+        self.vendor = vendor
+        self.auth_client = auth_client
+        self.dird_client = dird_client
+        super().__init__()
 
     def get(self, profile):
         args = LookupSchema().load(request.args)
