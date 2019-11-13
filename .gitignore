@@ -2,6 +2,7 @@
 *.mo
 *.pyc
 .coverage
+.eggs
 .tox
 cover/
 coverage.xml
