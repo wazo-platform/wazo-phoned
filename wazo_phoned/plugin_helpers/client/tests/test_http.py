@@ -1,7 +1,7 @@
 # Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from hamcrest import assert_that, equal_to, has_items
+from hamcrest import assert_that, empty, equal_to, has_items, has_properties
 from unittest import TestCase
 from mock import patch
 
@@ -104,7 +104,11 @@ class TestPhoneResultFormatter(TestCase):
         self.lookup_results = {
             'column_headers': ['h1', 'h2', 'h3', 'h4'],
             'column_types': ['name', 'number', 'number', 'number'],
-            'results': [{'column_values': ['R1', '1234', '56789', '0000']}],
+            'results': [
+                {'column_values': ['R1', '1234', '56789', '0000']},
+                {'column_values': ['R2', None, None, None]},
+                {'column_values': ['R3', None, '1234', None]},
+            ],
         }
         self.formatter = http._PhoneResultFormatter(self.lookup_results)
 
@@ -127,4 +131,28 @@ class TestPhoneResultFormatter(TestCase):
         assert_that(
             result_numbers,
             has_items(('R1', '1234'), ('R1 (h3)', '56789'), ('R1 (h4)', '0000')),
+        )
+
+    def test_no_results_when_no_numbers(self):
+        results = list(
+            self.formatter._extract_result(self.lookup_results['results'][1])
+        )
+        assert_that(results, empty())
+
+    def test_result_when_second_number_only(self):
+        results = list(
+            self.formatter._extract_result(self.lookup_results['results'][2])
+        )
+        assert_that(results, has_items(('R3', '1234')))
+
+    def test_format_results(self):
+        results = self.formatter.format_results()
+        assert_that(
+            results,
+            has_items(
+                has_properties(name='R1', number='1234'),
+                has_properties(name='R1 (h3)', number='56789'),
+                has_properties(name='R1 (h4)', number='0000'),
+                has_properties(name='R3', number='1234'),
+            ),
         )
