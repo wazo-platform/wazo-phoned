@@ -2,6 +2,6 @@
 <AastraIPPhoneInputScreen type="string" editable="yes">
  <Title>{{ gettext('Wazo Search') }}</Title>
  <Prompt>{{ gettext('Name or number:') }}</Prompt>
- <URL>{{ xivo_proxy_url|e }}?xivo_user_uuid={{ xivo_user_uuid|e }}</URL>
+ <URL>{{ base_url|e }}?xivo_user_uuid={{ user_uuid|e }}</URL>
  <Parameter>term</Parameter>
 </AastraIPPhoneInputScreen>
