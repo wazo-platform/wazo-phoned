@@ -58,6 +58,46 @@ class TestHTTP(TestCase):
 
         assert_that(result, equal_to(expected_result))
 
+    def test_that_next_offset_when_no_limit_is_none(self):
+        result = http._next_offset(offset=2, limit=None, results_count=10)
+        assert_that(result, equal_to(None))
+
+    def test_that_next_offset_is_current_offset_when_limit_is_zero(self):
+        result = http._next_offset(offset=2, limit=0, results_count=10)
+        assert_that(result, equal_to(2))
+
+    def test_that_next_offset_is_none_when_offset_bigger_than_results(self):
+        result = http._next_offset(offset=20, limit=1, results_count=10)
+        assert_that(result, equal_to(None))
+
+    def test_that_next_offset_returns_right_number_when_inferior_to_max(self):
+        result = http._next_offset(offset=0, limit=5, results_count=10)
+        assert_that(result, equal_to(5))
+
+    def test_that_next_offset_returns_none_when_offset_plus_limit_superior_to_max(self):
+        result = http._next_offset(offset=15, limit=10, results_count=20)
+        assert_that(result, equal_to(None))
+
+    def test_that_previous_offset_when_no_limit_is_none(self):
+        result = http._previous_offset(offset=2, limit=None)
+        assert_that(result, equal_to(None))
+
+    def test_that_previous_offset_is_none_when_offset_zero(self):
+        result = http._previous_offset(offset=0, limit=10)
+        assert_that(result, equal_to(None))
+
+    def test_that_previous_offset_is_zero_when_limit_larger_than_offset(self):
+        result = http._previous_offset(offset=5, limit=10)
+        assert_that(result, equal_to(0))
+
+    def test_that_previous_offset_is_previous_number_when_limit_is_one(self):
+        result = http._previous_offset(offset=5, limit=1)
+        assert_that(result, equal_to(4))
+
+    def test_that_previous_offset_is_zero_when_offset_and_limit_equals(self):
+        result = http._previous_offset(offset=5, limit=5)
+        assert_that(result, equal_to(0))
+
 
 class TestPhoneResultFormatter(TestCase):
     def setUp(self):

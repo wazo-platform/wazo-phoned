@@ -130,34 +130,11 @@ class ClientLookup(AuthResource):
             limit=limit,
             total=total_results,
             offset=offset,
-            offset_next=self._next_offset(offset, limit, total_results),
-            offset_previous=self._previous_offset(offset, limit),
+            offset_next=_next_offset(offset, limit, total_results),
+            offset_previous=_previous_offset(offset, limit),
         )
 
         return Response(response_rendered, content_type=self.content_type, status=200)
-
-    def _next_offset(self, offset, limit, results_count):
-        if limit is None:
-            return None
-
-        next_offset = offset + limit
-        if next_offset >= results_count:
-            return None
-
-        return next_offset
-
-    def _previous_offset(self, offset, limit):
-        if offset == 0:
-            return None
-
-        if limit is None:
-            return None
-
-        previous_offset = offset - limit
-        if previous_offset < 0:
-            return 0
-
-        return previous_offset
 
     def _get_user_tenant_uuid(self, user_uuid):
         try:
@@ -180,6 +157,31 @@ def _build_next_url(current):
     if current == 'lookup':
         return request.base_url
     return None
+
+
+def _next_offset(offset, limit, results_count):
+    if limit is None:
+        return None
+
+    next_offset = offset + limit
+    if next_offset >= results_count:
+        return None
+
+    return next_offset
+
+
+def _previous_offset(offset, limit):
+    if offset == 0:
+        return None
+
+    if limit is None:
+        return None
+
+    previous_offset = offset - limit
+    if previous_offset < 0:
+        return 0
+
+    return previous_offset
 
 
 class _PhoneResultFormatter:
@@ -228,6 +230,7 @@ class _PhoneResultFormatter:
             yield name_result, number
             first_number = False
 
+    # NOTE(afournier): this should be handled by dird
     def _extract_number_from_pretty_number(self, pretty_number):
         number_with_parentheses = self._INVALID_CHARACTERS_REGEX.sub('', pretty_number)
         # Convert numbers +33(0)123456789 to 0033123456789
