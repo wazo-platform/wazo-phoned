@@ -38,12 +38,10 @@ class ClientMenu(AuthResource):
 
     def get(self, profile):
         args = UserUUIDSchema().load(request.args)
-        xivo_user_uuid = args['xivo_user_uuid']
+        user_uuid = args['xivo_user_uuid']
 
         response_rendered = render_template(
-            self.template,
-            xivo_user_uuid=xivo_user_uuid,
-            xivo_proxy_url=_build_next_url('menu'),
+            self.template, user_uuid=user_uuid, base_url=_build_next_url('menu'),
         )
 
         return Response(response_rendered, content_type=self.content_type, status=200)
@@ -62,12 +60,10 @@ class ClientInput(AuthResource):
 
     def get(self, profile):
         args = UserUUIDSchema().load(request.args)
-        xivo_user_uuid = args['xivo_user_uuid']
+        user_uuid = args['xivo_user_uuid']
 
         response_rendered = render_template(
-            self.template,
-            xivo_user_uuid=xivo_user_uuid,
-            xivo_proxy_url=_build_next_url('input'),
+            self.template, user_uuid=user_uuid, base_url=_build_next_url('input'),
         )
 
         return Response(response_rendered, content_type=self.content_type, status=200)
@@ -90,14 +86,14 @@ class ClientLookup(AuthResource):
         limit = args['limit'] if args['limit'] is not None else self.MAX_ITEM_PER_PAGE
         offset = args['offset']
         term = args['term']
-        xivo_user_uuid = args['xivo_user_uuid']
+        user_uuid = args['xivo_user_uuid']
 
-        user_tenant = self._get_user_tenant_uuid(xivo_user_uuid)
+        user_tenant = self._get_user_tenant_uuid(user_uuid)
 
         try:
             results_lookup = self.dird_client.directories.lookup_user(
                 profile=profile,
-                user_uuid=xivo_user_uuid,
+                user_uuid=user_uuid,
                 term=term,
                 tenant_uuid=user_tenant,
             )
@@ -124,8 +120,8 @@ class ClientLookup(AuthResource):
         response_rendered = render_template(
             self.template,
             results=paginated_results,
-            xivo_proxy_url=request.base_url,
-            xivo_user_uuid=xivo_user_uuid,
+            base_url=request.base_url,
+            user_uuid=user_uuid,
             term=term,
             limit=limit,
             total=total_results,
