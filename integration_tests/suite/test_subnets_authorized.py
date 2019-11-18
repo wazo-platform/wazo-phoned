@@ -39,17 +39,13 @@ class TestSubnetsAuthorized(BasePhonedIntegrationTest):
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_menu(self):
         result = self.get_menu_result(
-            vendor=VALID_VENDOR,
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VALID_VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(result.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_ssl_menu(self):
         result = self.get_ssl_menu_result(
-            vendor=VALID_VENDOR,
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VALID_VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(result.status_code, equal_to(403))
 
