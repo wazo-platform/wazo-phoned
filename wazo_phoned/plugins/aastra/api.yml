@@ -3,8 +3,6 @@ paths:
     get:
       summary: Given informations about how make request lookup for Aastra Phones
       description: |
-        **Required ACL:** `dird.directories.input.{profile}.{user_uuid}.read`
-
         The `input` query will return a XML to give informations about how make request
         lookup for Aastra Phones.
       operationId: aastra_input
