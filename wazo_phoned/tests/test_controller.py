@@ -14,7 +14,9 @@ class TestController(TestCase):
             patch('wazo_phoned.controller.HTTPServer').start().return_value
         )
         self.plugin_manager = patch('wazo_phoned.controller.plugin_helpers').start()
-        self.api = patch('wazo_phoned.controller.api').start()
+        self.token_renewer = (
+            patch('wazo_phoned.controller.TokenRenewer').start().return_value
+        )
 
     def tearDown(self):
         patch.stopall()
@@ -36,7 +38,11 @@ class TestController(TestCase):
         self.plugin_manager.load.assert_called_once_with(
             namespace='wazo_phoned.plugins',
             names=config['enabled_plugins'],
-            dependencies={'config': config, 'api': self.api},
+            dependencies={
+                'config': config,
+                'app': self.http_server.app,
+                'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
+            },
         )
 
     def _create_config(self, **kwargs):

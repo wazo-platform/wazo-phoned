@@ -7,7 +7,7 @@ from xivo import plugin_helpers
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
-from .http_server import api, HTTPServer
+from .http_server import HTTPServer
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class Controller:
     def __init__(self, config):
         self.config = config
-        self.http_server = HTTPServer(self.config['rest_api'])
+        self.http_server = HTTPServer(self.config)
         self.http_server.app.config['authorized_subnets'] = self.config['rest_api'][
             'authorized_subnets'
         ]
@@ -24,7 +24,11 @@ class Controller:
         self.plugin_manager = plugin_helpers.load(
             namespace='wazo_phoned.plugins',
             names=config['enabled_plugins'],
-            dependencies={'config': config, 'api': api},
+            dependencies={
+                'config': config,
+                'app': self.http_server.app,
+                'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
+            },
         )
 
     def run(self):

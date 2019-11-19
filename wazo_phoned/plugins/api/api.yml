@@ -26,7 +26,68 @@ responses:
     description: Invalid request
     schema:
       $ref: '#/definitions/APIError'
-
+  LimitOffsetInvalid:
+    description: The limit or offset should be positive
+    schema:
+      $ref: '#/definitions/Error'
+  ProfileInvalid:
+    description: The profile does not exist
+    schema:
+      $ref: '#/definitions/Error'
+parameters:
+  AcceptLanguage:
+    name: Accept-Language
+    in: header
+    type: string
+    required: false
+    description: The language to translate the query results in
+  Limit:
+    name: limit
+    in: query
+    type: integer
+    description: The limit defines the number of individual objects that are returned
+    required: false
+  Limit8:
+    name: limit
+    in: query
+    type: integer
+    description: The limit defines the number of individual objects that are returned
+    default: 8
+    required: false
+  Limit16:
+    name: limit
+    in: query
+    type: integer
+    description: The limit defines the number of individual objects that are returned
+    default: 16
+    required: false
+  Offset:
+    name: offset
+    in: query
+    type: integer
+    description: The offset defines the offsets the start by the number specified
+    default: 0
+    required: false
+  Profile:
+    name: profile
+    in: path
+    type: string
+    description: The profile defines the list of directories to query and how the
+      results are displayed. The profile is the context name of the user who
+      started the contact lookup, e.g. `default`.
+    required: true
+  Term:
+    name: term
+    in: query
+    type: string
+    description: A search term to look for
+    required: true
+  UserUUID:
+    name: xivo_user_uuid
+    in: query
+    type: string
+    description: The user UUID of the user doing that query
+    required: true
 definitions:
   APIError:
     type: object

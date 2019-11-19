@@ -7,7 +7,7 @@ from .helpers.base import (
     BasePhonedIntegrationTest,
     DEFAULT_PROFILE,
     VALID_TERM,
-    VALID_XIVO_USER_UUID,
+    USER_1_UUID,
 )
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
 
@@ -23,17 +23,13 @@ class TestPolycom(BasePhonedIntegrationTest):
 
     def test_that_menu_return_error_when_query_ssl(self):
         response = self.get_ssl_menu_result(
-            vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
     def test_that_menu_return_error_when_query(self):
         response = self.get_menu_result(
-            vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
@@ -41,17 +37,13 @@ class TestPolycom(BasePhonedIntegrationTest):
 
     def test_that_input_return_no_error_when_query_ssl(self):
         response = self.get_ssl_input_result(
-            vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(200))
 
     def test_that_input_return_no_error_when_query(self):
         response = self.get_input_result(
-            vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(200))
 
@@ -64,7 +56,7 @@ class TestPolycom(BasePhonedIntegrationTest):
     def test_that_lookup_return_no_error_when_query_ssl(self):
         response = self.get_ssl_lookup_result(
             vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term=VALID_TERM,
         )
@@ -73,7 +65,7 @@ class TestPolycom(BasePhonedIntegrationTest):
     def test_that_lookup_return_no_error_when_query(self):
         response = self.get_lookup_result(
             vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term=VALID_TERM,
         )
@@ -87,9 +79,7 @@ class TestPolycom(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_error_when_no_term(self):
         response = self.get_lookup_result(
-            vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(400))
 
@@ -100,9 +90,7 @@ class TestAuthError(BasePhonedIntegrationTest):
 
     def test_no_auth_server_gives_503(self):
         response = self.get_input_result(
-            vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(503))
 
@@ -113,8 +101,6 @@ class TestDirdError(BasePhonedIntegrationTest):
 
     def test_no_dird_server_gives_503(self):
         response = self.get_input_result(
-            vendor=VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(503))

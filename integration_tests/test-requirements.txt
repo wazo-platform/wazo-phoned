@@ -2,4 +2,7 @@ docker-compose
 pyhamcrest
 nose
 openapi-spec-validator
+https://github.com/wazo-platform/wazo-auth-client/archive/master.zip
+https://github.com/wazo-platform/wazo-lib-rest-client/archive/master.zip
 https://github.com/wazo-platform/xivo-test-helpers/archive/master.zip
+https://github.com/wazo-platform/xivo-lib-python/archive/master.zip

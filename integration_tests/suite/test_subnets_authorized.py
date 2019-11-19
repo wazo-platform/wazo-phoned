@@ -8,7 +8,7 @@ from .helpers.base import (
     DEFAULT_PROFILE,
     VALID_TERM,
     VALID_VENDOR,
-    VALID_XIVO_USER_UUID,
+    USER_1_UUID,
 )
 
 
@@ -18,19 +18,19 @@ class TestSubnetsAuthorized(BasePhonedIntegrationTest):
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_lookup(self):
         response = self.get_lookup_result(
             vendor=VALID_VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term=VALID_TERM,
         )
         assert_that(response.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_lookup_with_extra_header(
-        self
+        self,
     ):
         headers = {'X-Forwarded-For': '127.0.0.1'}
         response = self.get_lookup_result(
             vendor=VALID_VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term=VALID_TERM,
             headers=headers,
@@ -39,24 +39,20 @@ class TestSubnetsAuthorized(BasePhonedIntegrationTest):
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_menu(self):
         result = self.get_menu_result(
-            vendor=VALID_VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VALID_VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(result.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_ssl_menu(self):
         result = self.get_ssl_menu_result(
-            vendor=VALID_VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
-            profile=DEFAULT_PROFILE,
+            vendor=VALID_VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(result.status_code, equal_to(403))
 
     def test_that_authorized_subnets_do_not_allowed_other_subnets_on_ssl_lookup(self):
         response = self.get_ssl_lookup_result(
             vendor=VALID_VENDOR,
-            xivo_user_uuid=VALID_XIVO_USER_UUID,
+            xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term=VALID_TERM,
         )

@@ -8,6 +8,7 @@ from .http import Lookup
 class Plugin(ProxyPlugin):
     vendor = 'gigaset'
     lookup_url = '/directories/lookup/<profile>/{vendor}/<xivo_user_uuid>'
+    import_name = __name__
 
     def _add_resources(self, api, class_kwargs):
         api.add_resource(

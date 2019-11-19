@@ -1,9 +1,11 @@
+*.egg-info
+*.mo
 *.pyc
 .coverage
-cover/
+.eggs
 .tox
-*.egg-info
-pylint.txt
-pycodestyle.txt
+cover/
 coverage.xml
 nosetests.xml
+pycodestyle.txt
+pylint.txt
