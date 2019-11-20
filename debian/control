@@ -22,6 +22,7 @@ Depends: ${python3:Depends},
          python3-stevedore,
          rename,
          wazo-auth-client-python3,
+         wazo-dird-client-python3,
          xivo-lib-python-python3
 Provides: xivo-dird-phoned, wazo-dird-phoned
 Replaces: xivo-dird-phoned, wazo-dird-phoned
