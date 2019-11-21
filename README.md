@@ -19,7 +19,7 @@ To create new translation catalog:
 
 To update existing translations catalog:
 
-    % pybabel update --input-file=wazo_dird/messages.pot --output-dir=wazo_dird/translations
+    % pybabel update --input-file=wazo_phoned/translations/messages.pot --output-dir=wazo_phoned/translations
 
 Edit file `wazo_phoned/translations/<locale>/LC_MESSAGES/messages.po` and compile
 using:
