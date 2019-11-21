@@ -16,8 +16,6 @@ paths:
           description: XML to make request lookup
           schema:
             $ref: '#/definitions/AastraIPPhoneInputScreen'
-        '503':
-          $ref: '#/responses/AnotherServiceUnavailable'
       parameters:
       - $ref: '#/parameters/Profile'
       - $ref: '#/parameters/UserUUID'
