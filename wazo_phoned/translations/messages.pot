@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-22 11:47-0500\n"
+"POT-Creation-Date: 2019-11-22 14:28-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Generated-By: Babel 2.6.0\n"
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:3
+#: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:3
 #: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:4
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:4
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:3
@@ -35,6 +36,7 @@ msgid "Previous Page"
 msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:17
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:10
 #: wazo_phoned/plugins/htek/templates/htek_results.jinja:10
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:15
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:10
@@ -47,19 +49,35 @@ msgstr ""
 msgid "Next Page"
 msgstr ""
 
-#: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:13
-msgid "Search"
-msgstr ""
-
+#: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:4
+#: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:7
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:7
 msgid "Name or number"
 msgstr ""
 
+#: wazo_phoned/plugins/cisco/templates/cisco_menu.jinja:4
+msgid "Wazo Directory"
+msgstr ""
+
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:17
+msgid "Dial"
+msgstr ""
+
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:24
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:17
 msgid "PrevPage"
 msgstr ""
 
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:31
+msgid "Exit"
+msgstr ""
+
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:38
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:25
 msgid "NextPage"
+msgstr ""
+
+#: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:13
+msgid "Search"
 msgstr ""
 

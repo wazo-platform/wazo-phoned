@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-22 11:47-0500\n"
+"POT-Creation-Date: 2019-11-22 14:28-0500\n"
 "PO-Revision-Date: 2019-11-13 19:57+0000\n"
 "Last-Translator: Alexandre Fournier <afournier@wazo.io>, 2019\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/wazo/teams/69545/pt_BR/)\n"
@@ -22,6 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:3
+#: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:3
 #: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:4
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:4
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:3
@@ -40,6 +41,7 @@ msgid "Previous Page"
 msgstr "Pag Anterior"
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:17
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:10
 #: wazo_phoned/plugins/htek/templates/htek_results.jinja:10
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:15
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:10
@@ -52,18 +54,34 @@ msgstr "Sem resultado"
 msgid "Next Page"
 msgstr "Próxima pag"
 
-#: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:13
-msgid "Search"
-msgstr "Procurar"
-
+#: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:4
+#: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:7
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:7
 msgid "Name or number"
 msgstr "Nome ou número"
 
+#: wazo_phoned/plugins/cisco/templates/cisco_menu.jinja:4
+msgid "Wazo Directory"
+msgstr "Diretório Wazo"
+
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:17
+msgid "Dial"
+msgstr "Discar"
+
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:24
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:17
 msgid "PrevPage"
 msgstr "PagAnt"
 
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:31
+msgid "Exit"
+msgstr "Sair"
+
+#: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:38
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:25
 msgid "NextPage"
 msgstr "ProxPag"
+
+#: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:13
+msgid "Search"
+msgstr "Procurar"
