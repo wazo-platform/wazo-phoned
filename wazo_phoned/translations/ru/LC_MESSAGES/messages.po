@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-22 14:28-0500\n"
+"POT-Creation-Date: 2019-11-22 14:56-0500\n"
 "PO-Revision-Date: 2019-11-13 19:57+0000\n"
 "Language-Team: Russian (https://www.transifex.com/wazo/teams/69545/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,7 @@ msgstr ""
 #: wazo_phoned/plugins/htek/templates/htek_results.jinja:10
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:15
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:10
+#: wazo_phoned/plugins/thomson/templates/thomson_results.jinja:10
 #: wazo_phoned/plugins/yealink/templates/yealink_results.jinja:10
 msgid "No entries"
 msgstr ""
