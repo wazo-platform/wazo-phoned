@@ -222,9 +222,13 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def get_lookup_gigaset_result(
-        self, profile, xivo_user_uuid=None, term=None, headers=None
+        self, profile, xivo_user_uuid=None, term=None, headers=None, **kwargs
     ):
-        params = {'term': term}
+        params = {}
+        if term:
+            params['set_first'] = term
+        if kwargs:
+            params.update(**kwargs)
         port = self.service_port(9498, 'phoned')
         url = 'http://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
         result = requests.get(
@@ -247,24 +251,25 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def get_ssl_lookup_result(
-        self, profile, vendor, xivo_user_uuid=None, term=None, headers=None, **kwargs
+        self, profile, vendor, headers=None, **kwargs
     ):
-        params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
-        if kwargs:
-            params.update(**kwargs)
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
-            params=params,
+            params=kwargs,
             headers=headers,
             verify=False,
         )
         return result
 
     @classmethod
-    def get_ssl_lookup_gigaset_result(self, profile, xivo_user_uuid=None, term=None):
-        params = {'term': term}
+    def get_ssl_lookup_gigaset_result(self, profile, xivo_user_uuid=None, term=None, **kwargs):
+        params = {}
+        if term:
+            params['set_first'] = term
+        if kwargs:
+            params.update(**kwargs)
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
         result = requests.get(
