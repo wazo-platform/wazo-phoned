@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-22 11:16-0500\n"
+"POT-Creation-Date: 2019-11-22 11:47-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,7 @@ msgid "Previous Page"
 msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:17
+#: wazo_phoned/plugins/htek/templates/htek_results.jinja:10
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:15
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:10
 #: wazo_phoned/plugins/yealink/templates/yealink_results.jinja:10
