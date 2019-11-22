@@ -1,13 +1,13 @@
 # Copyright 2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from wazo_phoned.plugin_helpers.proxy.plugin import ProxyPlugin
+from wazo_phoned.plugin_helpers.client.plugin import ClientPlugin
 from .http import Lookup
 
 
-class Plugin(ProxyPlugin):
+class Plugin(ClientPlugin):
     vendor = 'gigaset'
-    lookup_url = '/directories/lookup/<profile>/{vendor}/<xivo_user_uuid>'
+    lookup_url_fmt = '/directories/lookup/<profile>/{vendor}/<user_uuid>'
     import_name = __name__
 
     def _add_resources(self, api, class_kwargs):

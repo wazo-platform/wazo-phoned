@@ -8,4 +8,4 @@ from xivo.mallow_helpers import Schema
 class LookupGigasetSchema(Schema):
     set_first = fields.String(attribute='term', missing='')
     count = fields.Integer(attribute='limit', missing=None)
-    first = fields.Integer(attribute='first', missing=1)
+    first = fields.Integer(attribute='offset', missing=1)
