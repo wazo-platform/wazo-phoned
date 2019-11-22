@@ -1,11 +1,11 @@
 # Copyright 2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from wazo_phoned.plugin_helpers.proxy.plugin import ProxyPlugin
+from wazo_phoned.plugin_helpers.client.plugin import ClientPlugin
 from .http import Input, Lookup
 
 
-class Plugin(ProxyPlugin):
+class Plugin(ClientPlugin):
     vendor = 'polycom'
     import_name = __name__
 

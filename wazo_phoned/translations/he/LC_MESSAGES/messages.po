@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-21 14:48-0500\n"
+"POT-Creation-Date: 2019-11-22 11:16-0500\n"
 "PO-Revision-Date: 2019-11-13 19:57+0000\n"
 "Language-Team: Hebrew (https://www.transifex.com/wazo/teams/69545/he/)\n"
 "MIME-Version: 1.0\n"
@@ -18,27 +18,37 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:3
+#: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:4
+#: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:4
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:3
 msgid "Wazo Search"
 msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:4
+#: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:9
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:4
 msgid "Name or number:"
 msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:5
+#: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:9
 msgid "Previous Page"
 msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:17
+#: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:15
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:10
 #: wazo_phoned/plugins/yealink/templates/yealink_results.jinja:10
 msgid "No entries"
 msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:24
+#: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:19
 msgid "Next Page"
+msgstr ""
+
+#: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:13
+msgid "Search"
 msgstr ""
 
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:7
