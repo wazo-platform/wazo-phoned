@@ -88,8 +88,10 @@ class ClientLookup(AuthResource):
         term = args['term']
         user_uuid = args['xivo_user_uuid']
 
-        user_tenant = self._get_user_tenant_uuid(user_uuid)
+        return self._lookup_and_render_template(user_uuid, profile, term, limit, offset)
 
+    def _lookup_and_render_template(self, user_uuid, profile, term, limit, offset):
+        user_tenant = self._get_user_tenant_uuid(user_uuid)
         try:
             results_lookup = self.dird_client.directories.lookup_user(
                 profile=profile,

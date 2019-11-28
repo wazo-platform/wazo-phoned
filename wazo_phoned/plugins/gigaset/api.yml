@@ -1,0 +1,103 @@
+paths:
+  /directories/lookup/{profile}/gigaset/{user_uuid}:
+    get:
+      summary: Search for contacts with Gigaset Phones
+      description: |
+        The `lookup` query will return a list of result matching the searched term
+        formated for Gigaset Phones. The results will be retrieved from a lookup query to
+        wazo-dird.
+      operationId: gigaset_lookup
+      tags:
+      - gigaset
+      - directories
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: A list of contacts
+          schema:
+            $ref: '#/definitions/list'
+        '400':
+          $ref: '#/responses/LimitOffsetInvalid'
+        '404':
+          $ref: '#/responses/ProfileInvalid'
+        '503':
+          $ref: '#/responses/AnotherServiceUnavailable'
+      parameters:
+      - $ref: '#/parameters/Profile'
+      - $ref: '#/parameters/PathUserUUID'
+      - $ref: '#/parameters/set_first'
+      - $ref: '#/parameters/count'
+      - $ref: '#/parameters/first'
+      - $ref: '#/parameters/AcceptLanguage'
+parameters:
+  PathUserUUID:
+    name: user_uuid
+    in: path
+    type: string
+    description: The user UUID of the user doing that query
+    required: true
+  set_first:
+    name: set_first
+    in: query
+    type: string
+    description: A search term to look for
+  count:
+    name: count
+    in: query
+    type: integer
+    description: The limit defines the number of individual objects that are returned
+  first:
+    name: first
+    in: query
+    type: integer
+    description: The offset defines the offsets the start by the number specified
+definitions:
+  list:
+    properties:
+      response:
+        type: string
+        xml:
+          attribute: true
+        example:
+          - 'get_list'
+      type:
+        type: string
+        xml:
+          attribute: true
+        example:
+          - 'pr'
+      total:
+        type: integer
+        xml:
+          attribute: true
+        example:
+          - 1
+      first:
+        type: integer
+        xml:
+          attribute: true
+        example:
+          - 1
+      last:
+        type: integer
+        xml:
+          attribute: true
+        example:
+          - 1
+      entry:
+        type: array
+        items:
+          $ref: '#/definitions/entry'
+  entry:
+    properties:
+      id:
+        type: integer
+        xml:
+          attribute: true
+        example:
+          - 1001
+      fn:
+        type: string
+      hm:
+        type: string

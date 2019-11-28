@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
+from textwrap import dedent
 
 from .helpers.base import (
     BasePhonedIntegrationTest,
@@ -33,7 +34,7 @@ class TestHtek(BasePhonedIntegrationTest):
         )
         assert_that(response.status_code, equal_to(404))
 
-    # Input - there is no input for htek
+    # Input - There is no input for htek
 
     def test_that_input_return_error_when_query_ssl(self):
         response = self.get_ssl_input_result(
@@ -57,6 +58,174 @@ class TestHtek(BasePhonedIntegrationTest):
             term=VALID_TERM,
         )
         assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <PhoneDirectory>
+        <DirectoryEntry>
+          <Name>Test User1</Name>
+          <Telephone>0033123456789</Telephone>
+         </DirectoryEntry>
+        <DirectoryEntry>
+          <Name>Test User1 (mobile)</Name>
+          <Telephone>5555555555</Telephone>
+         </DirectoryEntry>
+        <DirectoryEntry>
+          <Name>Test User2</Name>
+          <Telephone>1000</Telephone>
+         </DirectoryEntry>
+        </PhoneDirectory>""".format(
+                        port=self.service_port(9499, 'phoned'),
+                        profile=DEFAULT_PROFILE,
+                        user_uuid=USER_1_UUID,
+                    )
+                )
+            ),
+        )
+
+    def test_that_lookup_return_no_entries_when_no_results(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term='no-result',
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <PhoneDirectory>
+        <DirectoryEntry>
+          <Name>No entries</Name>
+          <Telephone></Telephone>
+         </DirectoryEntry>
+        </PhoneDirectory>"""
+                )
+            ),
+        )
+
+    def test_that_lookup_with_limit_one_shows_first_result(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term=VALID_TERM,
+            limit=1,
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <PhoneDirectory>
+        <DirectoryEntry>
+          <Name>Test User1</Name>
+          <Telephone>0033123456789</Telephone>
+         </DirectoryEntry>
+        </PhoneDirectory>""".format(
+                        port=self.service_port(9499, 'phoned'),
+                        profile=DEFAULT_PROFILE,
+                        user_uuid=USER_1_UUID,
+                        term=VALID_TERM,
+                    )
+                )
+            ),
+        )
+
+    def test_that_lookup_with_limit_one_offset_one_shows_middle_result(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term=VALID_TERM,
+            limit=1,
+            offset=1,
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <PhoneDirectory>
+        <DirectoryEntry>
+          <Name>Test User1 (mobile)</Name>
+          <Telephone>5555555555</Telephone>
+         </DirectoryEntry>
+        </PhoneDirectory>""".format(
+                        port=self.service_port(9499, 'phoned'),
+                        profile=DEFAULT_PROFILE,
+                        user_uuid=USER_1_UUID,
+                        term=VALID_TERM,
+                    )
+                )
+            ),
+        )
+
+    def test_that_lookup_with_limit_one_offset_two_shows_last_result(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term=VALID_TERM,
+            limit=1,
+            offset=2,
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <PhoneDirectory>
+        <DirectoryEntry>
+          <Name>Test User2</Name>
+          <Telephone>1000</Telephone>
+         </DirectoryEntry>
+        </PhoneDirectory>""".format(
+                        port=self.service_port(9499, 'phoned'),
+                        profile=DEFAULT_PROFILE,
+                        user_uuid=USER_1_UUID,
+                        term=VALID_TERM,
+                    )
+                )
+            ),
+        )
+
+    def test_lookup_translation_fr(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term='no-result',
+            headers={'Accept-Language': 'fr'},
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <PhoneDirectory>
+        <DirectoryEntry>
+          <Name>Aucune entrée</Name>
+          <Telephone></Telephone>
+         </DirectoryEntry>
+        </PhoneDirectory>"""
+                )
+            ),
+        )
 
     def test_that_lookup_return_no_error_when_query(self):
         response = self.get_lookup_result(
@@ -72,6 +241,12 @@ class TestHtek(BasePhonedIntegrationTest):
             vendor=VENDOR, profile=DEFAULT_PROFILE, term=VALID_TERM
         )
         assert_that(response.status_code, equal_to(400))
+
+    def test_that_lookup_return_error_when_invalid_user_uuid(self):
+        response = self.get_lookup_result(
+            vendor=VENDOR, profile='a', xivo_user_uuid='invalid', term=VALID_TERM
+        )
+        assert_that(response.status_code, equal_to(404))
 
     def test_that_lookup_return_error_when_no_term(self):
         response = self.get_lookup_result(
@@ -89,7 +264,7 @@ class TestAuthError(BasePhonedIntegrationTest):
             vendor=VENDOR,
             xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
-            term=VALID_TERM,
+            term='a',
         )
         assert_that(response.status_code, equal_to(503))
 
@@ -103,6 +278,6 @@ class TestDirdError(BasePhonedIntegrationTest):
             vendor=VENDOR,
             xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
-            term=VALID_TERM,
+            term='a',
         )
         assert_that(response.status_code, equal_to(503))
