@@ -16,8 +16,6 @@ paths:
           description: XML to extend the directories menu
           schema:
             $ref: '#/definitions/CiscoIPPhoneMenu'
-        '503':
-          $ref: '#/responses/AnotherServiceUnavailable'
       parameters:
       - $ref: '#/parameters/Profile'
       - $ref: '#/parameters/UserUUID'
@@ -40,8 +38,6 @@ paths:
           description: XML to make request lookup
           schema:
             $ref: '#/definitions/CiscoIPPhoneInput'
-        '503':
-          $ref: '#/responses/AnotherServiceUnavailable'
       parameters:
       - $ref: '#/parameters/Profile'
       - $ref: '#/parameters/UserUUID'
