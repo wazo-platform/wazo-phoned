@@ -208,7 +208,7 @@ class TestThomson(BasePhonedIntegrationTest):
             xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
             term='no-result',
-            headers={'Accept-Language': 'fr'},
+            headers={'Accept-Language': 'gibberish,fr-CA,*q=nothing'},
         )
         assert_that(response.status_code, equal_to(200))
         assert_that(
