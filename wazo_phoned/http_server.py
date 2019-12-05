@@ -7,6 +7,7 @@ import logging
 import os
 
 import cherrypy
+from babel.core import negotiate_locale
 from cherrypy.process.wspbus import states
 from cherrypy.process.servers import ServerAdapter
 from cheroot import wsgi
@@ -53,10 +54,15 @@ class HTTPServer:
         @self.babel.localeselector
         def get_locale():
             translations = set(
-                [locale.language for locale in self.babel.list_translations()]
+                [str(locale) for locale in self.babel.list_translations()]
             )
             translations.add(BABEL_DEFAULT_LOCALE)
-            return request.accept_languages.best_match(translations)
+            logger.debug('Available translations: %s', translations)
+            logger.debug('accept_languages: %s', request.accept_languages)
+            preferred = [locale.replace('-', '_') for locale in request.accept_languages.values()]
+            best_match = negotiate_locale(preferred, translations)
+            logger.debug('Best locale match: %s', best_match)
+            return best_match
 
     def _get_translation_directories(self, enabled_plugins):
         main_translation_directory = 'translations'
