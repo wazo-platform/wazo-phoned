@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright 2018-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2018-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import date
@@ -106,6 +106,7 @@ setup(
             'api = wazo_phoned.plugins.api.plugin:Plugin',
             'aastra = wazo_phoned.plugins.aastra.plugin:Plugin',
             'cisco = wazo_phoned.plugins.cisco.plugin:Plugin',
+            'fanvil = wazo_phoned.plugins.fanvil.plugin:Plugin',
             'gigaset = wazo_phoned.plugins.gigaset.plugin:Plugin',
             'htek = wazo_phoned.plugins.htek.plugin:Plugin',
             'polycom = wazo_phoned.plugins.polycom.plugin:Plugin',

@@ -1,0 +1,99 @@
+paths:
+  /directories/input/{profile}/fanvil:
+    get:
+      summary: Given informations about how make request lookup for Fanvil Unified
+        IP Phones
+      description: |
+        The `input` query will return a XML to give informations about how make request
+        lookup for Fanvil Unified IP Phones.
+      operationId: fanvil_input
+      tags:
+      - fanvil
+      - directories
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: XML to make request lookup
+          schema:
+            $ref: '#/definitions/FanvilIPPhoneInput'
+      parameters:
+      - $ref: '#/parameters/Profile'
+      - $ref: '#/parameters/UserUUID'
+      - $ref: '#/parameters/AcceptLanguage'
+  /directories/lookup/{profile}/fanvil:
+    get:
+      summary: Search for contacts with Fanvil Unified IP Phones
+      description: |
+        The `lookup` query will return a list of result matching the searched term
+        formated for Fanvil Unified IP Phones. The results will be retrieved from a lookup query to
+        wazo-dird.
+      operationId: fanvil_lookup
+      tags:
+      - fanvil
+      - directories
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: A list of contacts
+          schema:
+            $ref: '#/definitions/FanvilIPPhoneDirectory'
+        '400':
+          $ref: '#/responses/LimitOffsetInvalid'
+        '404':
+          $ref: '#/responses/ProfileInvalid'
+        '503':
+          $ref: '#/responses/AnotherServiceUnavailable'
+      parameters:
+      - $ref: '#/parameters/Profile'
+      - $ref: '#/parameters/UserUUID'
+      - $ref: '#/parameters/Term'
+      - $ref: '#/parameters/Limit16'
+      - $ref: '#/parameters/Offset'
+      - $ref: '#/parameters/AcceptLanguage'
+definitions:
+  FanvilIPPhoneDirectory:
+    properties:
+      DirectoryEntry:
+        type: array
+        items:
+          $ref: '#/definitions/FanvilDirectoryEntry'
+      SoftKeyItem:
+        type: array
+        items:
+          $ref: '#/definitions/FanvilSoftKeyItem'
+  FanvilDirectoryEntry:
+    properties:
+      Name:
+        type: string
+      Telephone:
+        type: string
+  FanvilSoftKeyItem:
+    properties:
+      Name:
+        type: string
+      URL:
+        type: string
+      position:
+        type: integer
+  FanvilIPPhoneInput:
+    properties:
+      Title:
+        type: string
+      Prompt:
+        type: string
+      URL:
+        type: string
+      InputItem:
+        $ref: '#/definitions/FanvilInputItem'
+  FanvilInputItem:
+    properties:
+      DisplayName:
+        type: string
+      QueryStringParam:
+        type: string
+      DefaultValue:
+        type: string
+      InputFlags:
+        type: string
