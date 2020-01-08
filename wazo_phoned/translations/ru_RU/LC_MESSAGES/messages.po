@@ -1,13 +1,14 @@
-# Translations template for PROJECT.
-# Copyright (C) 2019 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+# Translations template for wazo-phoned.
+# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# This file is distributed under the same license as the
+# wazo-phoned project.
+# Wazo Dev Team (dev@wazo.community), 2019.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-22 14:56-0500\n"
+"Project-Id-Version: wazo-phoned 1.0\n"
+"Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
+"POT-Creation-Date: 2019-11-28 14:40-0500\n"
 "PO-Revision-Date: 2019-11-13 19:57+0000\n"
 "Language-Team: Russian (Russia) (https://www.transifex.com/wazo/teams/69545/ru_RU/)\n"
 "MIME-Version: 1.0\n"
