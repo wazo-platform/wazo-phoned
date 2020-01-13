@@ -1,9 +1,4 @@
-.PHONY: test-setup test
-
 test-setup: egg-info compile-catalog
-	docker pull p0bailey/docker-flask
-	docker pull wazopbx/wait
-	docker pull wazopbx/wazo-auth-mock
 	docker build --pull -t wazopbx/wazo-phoned ..
 	docker build --no-cache -t wazo-phoned-test -f Dockerfile-phoned-test ..
 
@@ -15,3 +10,5 @@ egg-info:
 
 test:
 	nosetests -x
+
+.PHONY: test-setup test
