@@ -50,6 +50,7 @@ enabled_plugins:
   aastra: True
   api: True
   cisco: True
+  fanvil: True
   gigaset: True
   htek: True
   polycom: True
