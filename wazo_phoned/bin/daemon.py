@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -8,7 +8,7 @@ import sys
 from functools import partial
 from xivo.daemonize import pidfile_context
 from xivo.user_rights import change_user
-from xivo.xivo_logging import setup_logging
+from xivo.xivo_logging import setup_logging, silence_loggers
 from wazo_phoned.controller import Controller
 from wazo_phoned.config import load as load_config
 
@@ -57,6 +57,7 @@ def main(argv=None):
             config['debug'],
             config['log_level'],
         )
+        silence_loggers(['amqp'], logging.WARNING)
 
     if config['user']:
         change_user(config['user'])

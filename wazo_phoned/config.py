@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import argparse
@@ -34,6 +34,16 @@ _DEFAULT_CONFIG = {
         },
         'authorized_subnets': ['127.0.0.1/24'],
         'cors': {'enabled': True, 'allow_headers': ['Content-Type']},
+    },
+    'bus': {
+        'username': 'guest',
+        'password': 'guest',
+        'host': 'localhost',
+        'port': 5672,
+        'subscribe_exchange_name': 'wazo-headers',
+        'subscribe_exchange_type': 'headers',
+        'publish_exchange_name': 'xivo',
+        'publish_exchange_type': 'topic',
     },
     'user': 'www-data',
     'enabled_plugins': {

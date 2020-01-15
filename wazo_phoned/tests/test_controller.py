@@ -1,9 +1,10 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from unittest import TestCase
 
-from mock import patch, sentinel as s
+from mock import Mock, patch, sentinel as s
+from xivo import config_helper
 
 from ..controller import Controller
 
@@ -17,6 +18,13 @@ class TestController(TestCase):
         self.token_renewer = (
             patch('wazo_phoned.controller.TokenRenewer').start().return_value
         )
+        self.bus_consumer = (
+            patch('wazo_phoned.controller.CoreBusConsumer').start().return_value
+        )
+        self.bus_publisher = (
+            patch('wazo_phoned.controller.CoreBusPublisher').start().return_value
+        )
+        config_helper.get_xivo_uuid = Mock(return_value='VALID-UUID')
 
     def tearDown(self):
         patch.stopall()
@@ -42,6 +50,8 @@ class TestController(TestCase):
                 'config': config,
                 'app': self.http_server.app,
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
+                'bus_publisher': self.bus_publisher,
+                'bus_consumer': self.bus_consumer,
             },
         )
 
@@ -60,6 +70,19 @@ class TestController(TestCase):
         config.setdefault('dird', {})
         config['dird'].setdefault('host', '')
         config['dird'].setdefault('port', '')
+        config.setdefault(
+            'bus',
+            {
+                'username': 'guest',
+                'password': 'guest',
+                'host': 'localhost',
+                'port': 5672,
+                'subscribe_exchange_name': 'wazo-headers',
+                'subscribe_exchange_type': 'headers',
+                'publish_exchange_name': 'xivo',
+                'publish_exchange_type': 'topic',
+            },
+        )
         config.setdefault('rest_api', {})
         config['rest_api'].setdefault('authorized_subnets', [])
         config.setdefault('enabled_plugins', {})

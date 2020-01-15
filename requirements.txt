@@ -1,6 +1,7 @@
 https://github.com/wazo-platform/wazo-lib-rest-client/archive/master.zip
 https://github.com/wazo-platform/wazo-auth-client/archive/master.zip
 https://github.com/wazo-platform/wazo-dird-client/archive/master.zip
+https://github.com/wazo-platform/xivo-bus/archive/master.zip
 https://github.com/wazo-platform/xivo-lib-python/archive/master.zip
 babel==2.6.0
 cheroot==6.5.4
@@ -10,6 +11,7 @@ flask-cors==3.0.7
 flask-restful==0.3.7
 flask==1.0.2
 jinja2==2.10
+kombu==4.2.1
 marshmallow==3.0.0b14
 netaddr==0.7.19
 pyyaml==3.13  # from xivo-lib-python
