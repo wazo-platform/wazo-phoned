@@ -33,6 +33,16 @@ bus:
   subscribe_exchange_name: wazo-headers
   subscribe_exchange_type: headers
 
+amid:
+  host: localhost
+  port: 9491
+  verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
+
+confd:
+  host: localhost
+  port: 9486
+  verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
+
 # REST API server
 rest_api:
 
@@ -59,6 +69,7 @@ rest_api:
 
 enabled_plugins:
   aastra: True
+  blf: True
   api: True
   cisco: True
   fanvil: True
