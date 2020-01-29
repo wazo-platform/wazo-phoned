@@ -1,5 +1,5 @@
 # Translations template for wazo-phoned.
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # This file is distributed under the same license as the
 # wazo-phoned project.
 # Wazo Dev Team (dev@wazo.community), 2019.
@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo-phoned 1.0\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2019-11-28 14:40-0500\n"
+"POT-Creation-Date: 2019-12-17 16:04-0500\n"
 "PO-Revision-Date: 2019-11-13 19:57+0000\n"
 "Last-Translator: Alexandre Fournier <afournier@wazo.io>, 2019\n"
 "Language-Team: Polish (https://www.transifex.com/wazo/teams/69545/pl/)\n"
@@ -24,6 +24,7 @@ msgstr ""
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:3
 #: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:3
+#: wazo_phoned/plugins/fanvil/templates/fanvil_input.jinja:3
 #: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:4
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:4
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:3
@@ -43,6 +44,7 @@ msgstr "Poprzednia strona"
 
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:17
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:10
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:10
 #: wazo_phoned/plugins/htek/templates/htek_results.jinja:10
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:15
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:10
@@ -58,6 +60,8 @@ msgstr "Następna strona"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:4
 #: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:7
+#: wazo_phoned/plugins/fanvil/templates/fanvil_input.jinja:4
+#: wazo_phoned/plugins/fanvil/templates/fanvil_input.jinja:7
 #: wazo_phoned/plugins/snom/templates/snom_input.jinja:7
 msgid "Name or number"
 msgstr "Nazwa lub numer"
@@ -67,19 +71,23 @@ msgid "Wazo Directory"
 msgstr "Katalog Wazo"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:17
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:17
 msgid "Dial"
 msgstr "Dzwoń"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:24
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:24
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:17
 msgid "PrevPage"
 msgstr "Poprzednia strona"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:31
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:31
 msgid "Exit"
 msgstr "Wyjście"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:38
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:38
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:25
 msgid "NextPage"
 msgstr "Następna strona"
