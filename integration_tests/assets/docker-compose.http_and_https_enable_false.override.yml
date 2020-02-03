@@ -4,9 +4,10 @@ services:
     depends_on:
       - auth
       - dird
+      - rabbitmq
       - phoned
     environment:
-      TARGETS: "dird:9489 auth:9497"
+      TARGETS: "rabbitmq:5672 dird:9489 auth:9497"
 
   phoned:
     volumes:

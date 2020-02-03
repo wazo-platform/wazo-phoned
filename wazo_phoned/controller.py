@@ -6,6 +6,7 @@ import logging
 from threading import Thread
 from xivo import plugin_helpers
 from xivo.config_helper import set_xivo_uuid
+from xivo.status import StatusAggregator, TokenStatus
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
@@ -22,12 +23,17 @@ class Controller:
         set_xivo_uuid(config, logger)
         self.bus_publisher = CoreBusPublisher(config)
         self.bus_consumer = CoreBusConsumer(config)
+        self.status_aggregator = StatusAggregator()
         self.http_server = HTTPServer(self.config)
         self.http_server.app.config['authorized_subnets'] = self.config['rest_api'][
             'authorized_subnets'
         ]
         self.token_renewer = TokenRenewer(self._new_auth_client(config))
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
+
+        self.token_status = TokenStatus()
+        self.token_renewer.subscribe_to_token_change(self.token_status.token_change_callback)
+
         self.plugin_manager = plugin_helpers.load(
             namespace='wazo_phoned.plugins',
             names=config['enabled_plugins'],
@@ -37,11 +43,14 @@ class Controller:
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
                 'bus_publisher': self.bus_publisher,
                 'bus_consumer': self.bus_consumer,
+                'status_aggregator': self.status_aggregator,
             },
         )
 
     def run(self):
         logger.debug('wazo-phoned starting...')
+        self.status_aggregator.add_provider(self.bus_consumer.provide_status)
+        self.status_aggregator.add_provider(self.token_status.provide_status)
         bus_producer_thread = Thread(target=self.bus_publisher.run, name='bus_producer_thread')
         bus_producer_thread.start()
         bus_consumer_thread = Thread(target=self.bus_consumer.run, name='bus_consumer_thread')

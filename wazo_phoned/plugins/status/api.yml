@@ -14,7 +14,12 @@ definitions:
   StatusSummary:
     type: object
     properties:
-      status_token:
+      service_token:
+        type: string
+        enum:
+          - ok
+          - fail
+      bus_consumer:
         type: string
         enum:
           - ok

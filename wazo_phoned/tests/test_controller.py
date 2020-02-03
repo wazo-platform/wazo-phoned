@@ -24,6 +24,9 @@ class TestController(TestCase):
         self.bus_publisher = (
             patch('wazo_phoned.controller.CoreBusPublisher').start().return_value
         )
+        self.status_aggregator = (
+            patch('wazo_phoned.controller.StatusAggregator').start().return_value
+        )
         config_helper.get_xivo_uuid = Mock(return_value='VALID-UUID')
 
     def tearDown(self):
@@ -52,6 +55,7 @@ class TestController(TestCase):
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
                 'bus_publisher': self.bus_publisher,
                 'bus_consumer': self.bus_consumer,
+                'status_aggregator': self.status_aggregator,
             },
         )
 

@@ -4,5 +4,7 @@ services:
     depends_on:
       - dird
       - phoned
+      - rabbitmq
+      - amid
     environment:
-      TARGETS: "phoned:9498 phoned:9499 dird:9489"
+      TARGETS: "rabbitmq:5672 amid:9491 phoned:9498 phoned:9499 dird:9489"

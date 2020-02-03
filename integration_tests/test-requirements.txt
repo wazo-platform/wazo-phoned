@@ -1,4 +1,5 @@
 docker-compose
+kombu
 pyhamcrest
 nose
 openapi-spec-validator

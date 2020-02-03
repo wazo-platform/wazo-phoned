@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -15,6 +15,9 @@ from xivo_test_helpers.auth import (
     MockUserToken,
 )
 from xivo_test_helpers.wait_strategy import NoWaitStrategy
+
+from .amid import AmidClient
+from .bus import BusClient
 
 logger = logging.getLogger(__name__)
 
@@ -58,6 +61,16 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return AuthClient(
             'localhost', cls.service_port(9497, 'auth'), verify_certificate=False
         )
+
+    @classmethod
+    def make_bus(cls):
+        return BusClient.from_connection_fields(
+            host='localhost', port=cls.service_port(5672, 'rabbitmq')
+        )
+
+    @classmethod
+    def make_amid(cls):
+        return AmidClient('localhost', port=cls.service_port(9491, 'amid'))
 
     @classmethod
     def make_mock_auth(cls):
@@ -113,14 +126,14 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         url = u'http://localhost:{port}/0.1/status'
         port = self.service_port(9498, 'phoned')
         result = requests.get(url.format(port=port))
-        return result
+        return result.json()
 
     @classmethod
     def get_status_result_by_https(self):
         url = u'https://localhost:{port}/0.1/status'
         port = self.service_port(9499, 'phoned')
         result = requests.get(url.format(port=port), verify=False)
-        return result
+        return result.json()
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
