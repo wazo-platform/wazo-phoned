@@ -3,8 +3,8 @@ wazo-phoned
 
 [![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=wazo-phoned)](https://jenkins.wazo.community/job/wazo-phoned)
 
-wazo-phoned is a service to authenticate phone to allow lookup on
-wazo-dird with a phone using a simple REST API.
+wazo-phoned is a service to handle phone-related services using a simple REST API. Examples of
+services are directory lookup using wazo-dird and the handling of BLFs.
 
 
 ## Translations
