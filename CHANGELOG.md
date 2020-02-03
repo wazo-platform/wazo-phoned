@@ -1,6 +1,12 @@
 Changelog
 =========
 
+20.03
+-----
+
+* Added a plugin to handle BLF events.
+
+
 19.17
 -----
 
