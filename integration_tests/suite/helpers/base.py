@@ -70,7 +70,9 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def make_amid(cls):
-        return AmidClient('localhost', port=cls.service_port(9491, 'amid'))
+        amid_client = AmidClient('localhost', port=cls.service_port(9491, 'amid'))
+        amid_client.reset()
+        return amid_client
 
     @classmethod
     def make_mock_auth(cls):

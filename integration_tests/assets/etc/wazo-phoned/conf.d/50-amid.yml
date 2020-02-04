@@ -1,0 +1,3 @@
+amid:
+  host: amid
+  verify_certificate: False

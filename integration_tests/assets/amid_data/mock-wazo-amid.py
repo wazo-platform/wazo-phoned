@@ -15,7 +15,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-context = ('/usr/local/share/ssl/amid/server.crt', '/usr/local/share/ssl/amid/server.key')
+context = ('/usr/local/share/ssl/server.crt', '/usr/local/share/ssl/server.key')
 
 action_response = ''
 valid_extens = []

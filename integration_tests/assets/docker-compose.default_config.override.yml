@@ -6,6 +6,7 @@ services:
       - amid
       - auth
       - dird
+      - confd
       - phoned
     environment:
-      TARGETS: "rabbitmq:5672 amid:9491 phoned:9498 phoned:9499 dird:9489 auth:9497"
+      TARGETS: "rabbitmq:5672 amid:9491 confd:9486 phoned:9498 phoned:9499 dird:9489 auth:9497"
