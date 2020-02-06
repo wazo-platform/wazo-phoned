@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -52,9 +52,7 @@ class TestGigaset(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_no_error_when_query_ssl(self):
         response = self.get_ssl_lookup_gigaset_result(
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
-            term=VALID_TERM,
+            xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE, term=VALID_TERM,
         )
         assert_that(response.status_code, equal_to(200))
         assert_that(
@@ -83,8 +81,7 @@ class TestGigaset(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_no_error_when_query_ssl_no_term(self):
         response = self.get_ssl_lookup_gigaset_result(
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
+            xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(200))
         assert_that(
@@ -113,9 +110,7 @@ class TestGigaset(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_no_entries_when_no_results(self):
         response = self.get_ssl_lookup_gigaset_result(
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
-            term='no-result',
+            xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE, term='no-result',
         )
         assert_that(response.status_code, equal_to(200))
         assert_that(
@@ -210,9 +205,7 @@ class TestGigaset(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_no_error_when_query(self):
         response = self.get_lookup_gigaset_result(
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
-            term=VALID_TERM,
+            xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE, term=VALID_TERM,
         )
         assert_that(response.status_code, equal_to(200))
 
@@ -241,9 +234,7 @@ class TestAuthError(BasePhonedIntegrationTest):
 
     def test_no_auth_server_gives_503(self):
         response = self.get_lookup_gigaset_result(
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
-            term='a',
+            xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE, term='a',
         )
         assert_that(response.status_code, equal_to(503))
 
@@ -254,8 +245,6 @@ class TestDirdError(BasePhonedIntegrationTest):
 
     def test_no_dird_server_gives_503(self):
         response = self.get_lookup_gigaset_result(
-            xivo_user_uuid=USER_1_UUID,
-            profile=DEFAULT_PROFILE,
-            term='a',
+            xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE, term='a',
         )
         assert_that(response.status_code, equal_to(503))

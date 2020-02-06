@@ -265,9 +265,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_ssl_lookup_result(
-        self, profile, vendor, headers=None, **kwargs
-    ):
+    def get_ssl_lookup_result(self, profile, vendor, headers=None, **kwargs):
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
         result = requests.get(
@@ -279,7 +277,9 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_ssl_lookup_gigaset_result(self, profile, xivo_user_uuid=None, term=None, **kwargs):
+    def get_ssl_lookup_gigaset_result(
+        self, profile, xivo_user_uuid=None, term=None, **kwargs
+    ):
         params = {}
         if term:
             params['set_first'] = term

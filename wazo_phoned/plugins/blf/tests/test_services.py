@@ -10,7 +10,6 @@ from ..services import BlfService
 
 
 class TestServices(unittest.TestCase):
-
     def setUp(self):
         self.amid = MagicMock()
         self.confd = MagicMock()

@@ -9,7 +9,6 @@ from .services import BlfService
 
 
 class Plugin:
-
     def load(self, dependencies):
         amid_client = AmidClient(**dependencies['config']['amid'])
         confd_client = ConfdClient(**dependencies['config']['confd'])

@@ -32,7 +32,9 @@ class Controller:
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
 
         self.token_status = TokenStatus()
-        self.token_renewer.subscribe_to_token_change(self.token_status.token_change_callback)
+        self.token_renewer.subscribe_to_token_change(
+            self.token_status.token_change_callback
+        )
 
         self.plugin_manager = plugin_helpers.load(
             namespace='wazo_phoned.plugins',
@@ -51,9 +53,13 @@ class Controller:
         logger.debug('wazo-phoned starting...')
         self.status_aggregator.add_provider(self.bus_consumer.provide_status)
         self.status_aggregator.add_provider(self.token_status.provide_status)
-        bus_producer_thread = Thread(target=self.bus_publisher.run, name='bus_producer_thread')
+        bus_producer_thread = Thread(
+            target=self.bus_publisher.run, name='bus_producer_thread'
+        )
         bus_producer_thread.start()
-        bus_consumer_thread = Thread(target=self.bus_consumer.run, name='bus_consumer_thread')
+        bus_consumer_thread = Thread(
+            target=self.bus_consumer.run, name='bus_consumer_thread'
+        )
         bus_consumer_thread.start()
         try:
             with self.token_renewer:

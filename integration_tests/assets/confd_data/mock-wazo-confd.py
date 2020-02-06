@@ -24,14 +24,9 @@ extensions_features_assoc = {
     'fwdrna': '_*22',
 }
 
+
 def _json_extension(exten):
-    return jsonify({
-        'items': [
-            {
-                'exten': exten,
-            },
-        ],
-    })
+    return jsonify({'items': [{'exten': exten}]})
 
 
 @app.route('/{}/extensions/features'.format(API_VERSION), methods=['GET'])
@@ -42,9 +37,8 @@ def extensions_features():
 
 @app.route('/{}/users/<user_uuid>'.format(API_VERSION), methods=['GET'])
 def user_uuid_get(user_uuid):
-    return jsonify({
-        'id': 123,
-    })
+    return jsonify({'id': 123})
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=port, ssl_context=context, debug=True)

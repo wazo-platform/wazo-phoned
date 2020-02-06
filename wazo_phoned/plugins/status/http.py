@@ -5,7 +5,6 @@ from wazo_phoned.auth_remote_addr import AuthResource
 
 
 class Status(AuthResource):
-
     def __init__(self, status_aggregator):
         self.status_aggregator = status_aggregator
 

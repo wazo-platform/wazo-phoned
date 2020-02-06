@@ -5,15 +5,14 @@ import requests
 
 
 class AmidClient:
-
     def __init__(self, host, port):
         self.host = host
         self.port = port
 
     def url(self, *parts):
-        return 'https://{host}:{port}/{path}'.format(host=self.host,
-                                                     port=self.port,
-                                                     path='/'.join(parts))
+        return 'https://{host}:{port}/{path}'.format(
+            host=self.host, port=self.port, path='/'.join(parts)
+        )
 
     def is_up(self):
         url = self.url()

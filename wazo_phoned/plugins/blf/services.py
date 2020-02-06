@@ -18,8 +18,12 @@ class BlfService:
         self.confd = confd_client
 
     def _device(self, user_uuid, name, destination=''):
-        funckey_prefix = self.confd.extensions_features.list(search='phoneprogfunckey')['items'][0]['exten']
-        device_extension = self.confd.extensions_features.list(search=name)['items'][0]['exten']
+        funckey_prefix = self.confd.extensions_features.list(search='phoneprogfunckey')[
+            'items'
+        ][0]['exten']
+        device_extension = self.confd.extensions_features.list(search=name)['items'][0][
+            'exten'
+        ]
         user_id = self.confd.users.get(user_uuid)['id']
         funckey_args = (user_id, device_extension, destination)
         funckey_pattern = xivo_helpers.fkey_extension(funckey_prefix, funckey_args)
@@ -28,7 +32,11 @@ class BlfService:
         return hint
 
     def _send(self, device, status):
-        self.amid.command('devstate change {} {}'.format(device, self.INUSE if status else self.NOT_INUSE))
+        self.amid.command(
+            'devstate change {} {}'.format(
+                device, self.INUSE if status else self.NOT_INUSE
+            )
+        )
 
     def notify_dnd(self, user_uuid, status):
         device = self._device(user_uuid, 'enablednd')

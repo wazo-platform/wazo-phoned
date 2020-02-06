@@ -45,16 +45,8 @@ _DEFAULT_CONFIG = {
         'publish_exchange_name': 'xivo',
         'publish_exchange_type': 'topic',
     },
-    'amid': {
-        'host': 'localhost',
-        'port': 9491,
-        'verify_certificate': _CERT_FILE,
-    },
-    'confd': {
-        'host': 'localhost',
-        'port': 9486,
-        'verify_certificate': _CERT_FILE
-    },
+    'amid': {'host': 'localhost', 'port': 9491, 'verify_certificate': _CERT_FILE},
+    'confd': {'host': 'localhost', 'port': 9486, 'verify_certificate': _CERT_FILE},
     'user': 'www-data',
     'enabled_plugins': {
         'aastra': True,

@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 class CoreBusPublisher:
-
     def __init__(self, global_config):
         self.config = global_config['bus']
         self._uuid = global_config['uuid']
@@ -29,8 +28,13 @@ class CoreBusPublisher:
     def _make_publisher(self):
         bus_url = 'amqp://{username}:{password}@{host}:{port}//'.format(**self.config)
         bus_connection = kombu.Connection(bus_url)
-        bus_exchange = kombu.Exchange(self.config['publish_exchange_name'], type=self.config['publish_exchange_type'])
-        bus_producer = kombu.Producer(bus_connection, exchange=bus_exchange, auto_declare=True)
+        bus_exchange = kombu.Exchange(
+            self.config['publish_exchange_name'],
+            type=self.config['publish_exchange_type'],
+        )
+        bus_producer = kombu.Producer(
+            bus_connection, exchange=bus_exchange, auto_declare=True
+        )
         bus_marshaler = Marshaler(self._uuid)
         return Publisher(bus_producer, bus_marshaler)
 
@@ -43,13 +47,16 @@ class CoreBusPublisher:
 
 
 class CoreBusConsumer(ConsumerMixin):
-
     def __init__(self, global_config):
         self._events_pubsub = Pubsub()
 
-        self._bus_url = 'amqp://{username}:{password}@{host}:{port}//'.format(**global_config['bus'])
-        self._exchange = kombu.Exchange(global_config['bus']['subscribe_exchange_name'],
-                                        type=global_config['bus']['subscribe_exchange_type'])
+        self._bus_url = 'amqp://{username}:{password}@{host}:{port}//'.format(
+            **global_config['bus']
+        )
+        self._exchange = kombu.Exchange(
+            global_config['bus']['subscribe_exchange_name'],
+            type=global_config['bus']['subscribe_exchange_type'],
+        )
         self._queue = kombu.Queue(exclusive=True)
         self._is_running = False
 
@@ -61,9 +68,7 @@ class CoreBusConsumer(ConsumerMixin):
             super().run()
 
     def get_consumers(self, Consumer, channel):
-        return [
-            Consumer(self._queue, callbacks=[self._on_bus_message])
-        ]
+        return [Consumer(self._queue, callbacks=[self._on_bus_message])]
 
     def on_connection_error(self, exc, interval):
         super().on_connection_error(exc, interval)
@@ -77,12 +82,16 @@ class CoreBusConsumer(ConsumerMixin):
         return self._is_running
 
     def provide_status(self, status):
-        status['bus_consumer']['status'] = Status.ok if self.is_running() else Status.fail
+        status['bus_consumer']['status'] = (
+            Status.ok if self.is_running() else Status.fail
+        )
 
     def on_event(self, event_name, callback):
         logger.debug('Added callback on event "%s"', event_name)
         self._queue.bindings.add(
-            kombu.binding(self._exchange, arguments={'x-match': 'all', 'name': event_name})
+            kombu.binding(
+                self._exchange, arguments={'x-match': 'all', 'name': event_name}
+            )
         )
         self._events_pubsub.subscribe(event_name, callback)
 
