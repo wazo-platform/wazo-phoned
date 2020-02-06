@@ -7,43 +7,8 @@ import logging
 from kombu.mixins import ConsumerMixin
 from xivo.pubsub import Pubsub
 from xivo.status import Status
-from xivo_bus import Marshaler
-from xivo_bus import Publisher
-from xivo_bus import PublishingQueue
 
 logger = logging.getLogger(__name__)
-
-
-class CoreBusPublisher:
-    def __init__(self, global_config):
-        self.config = global_config['bus']
-        self._uuid = global_config['uuid']
-        self._publisher = PublishingQueue(self._make_publisher)
-
-    def run(self):
-        logger.info("Running AMQP publisher")
-
-        self._publisher.run()
-
-    def _make_publisher(self):
-        bus_url = 'amqp://{username}:{password}@{host}:{port}//'.format(**self.config)
-        bus_connection = kombu.Connection(bus_url)
-        bus_exchange = kombu.Exchange(
-            self.config['publish_exchange_name'],
-            type=self.config['publish_exchange_type'],
-        )
-        bus_producer = kombu.Producer(
-            bus_connection, exchange=bus_exchange, auto_declare=True
-        )
-        bus_marshaler = Marshaler(self._uuid)
-        return Publisher(bus_producer, bus_marshaler)
-
-    def publish(self, event, headers=None):
-        logger.debug('Publishing event "%s": %s', event.name, event.marshal())
-        self._publisher.publish(event, headers)
-
-    def stop(self):
-        self._publisher.stop()
 
 
 class CoreBusConsumer(ConsumerMixin):

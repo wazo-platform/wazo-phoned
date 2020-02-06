@@ -42,8 +42,6 @@ _DEFAULT_CONFIG = {
         'port': 5672,
         'subscribe_exchange_name': 'wazo-headers',
         'subscribe_exchange_type': 'headers',
-        'publish_exchange_name': 'xivo',
-        'publish_exchange_type': 'topic',
     },
     'amid': {'host': 'localhost', 'port': 9491, 'verify_certificate': _CERT_FILE},
     'confd': {'host': 'localhost', 'port': 9486, 'verify_certificate': _CERT_FILE},

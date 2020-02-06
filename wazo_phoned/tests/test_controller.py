@@ -21,9 +21,6 @@ class TestController(TestCase):
         self.bus_consumer = (
             patch('wazo_phoned.controller.CoreBusConsumer').start().return_value
         )
-        self.bus_publisher = (
-            patch('wazo_phoned.controller.CoreBusPublisher').start().return_value
-        )
         self.status_aggregator = (
             patch('wazo_phoned.controller.StatusAggregator').start().return_value
         )
@@ -53,7 +50,6 @@ class TestController(TestCase):
                 'config': config,
                 'app': self.http_server.app,
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
-                'bus_publisher': self.bus_publisher,
                 'bus_consumer': self.bus_consumer,
                 'status_aggregator': self.status_aggregator,
             },
@@ -83,8 +79,6 @@ class TestController(TestCase):
                 'port': 5672,
                 'subscribe_exchange_name': 'wazo-headers',
                 'subscribe_exchange_type': 'headers',
-                'publish_exchange_name': 'xivo',
-                'publish_exchange_type': 'topic',
             },
         )
         config.setdefault('rest_api', {})

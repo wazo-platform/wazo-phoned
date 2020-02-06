@@ -27,7 +27,6 @@ Depends: ${python3:Depends},
          wazo-amid-client-python3,
          wazo-confd-client-python3,
          wazo-dird-client-python3,
-         xivo-bus-python3,
          xivo-lib-python-python3
 Provides: xivo-dird-phoned, wazo-dird-phoned
 Replaces: xivo-dird-phoned, wazo-dird-phoned
