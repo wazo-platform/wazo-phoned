@@ -1,4 +1,4 @@
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -41,7 +41,9 @@ class ClientMenu(AuthResource):
         user_uuid = args['xivo_user_uuid']
 
         response_rendered = render_template(
-            self.template, user_uuid=user_uuid, base_url=_build_next_url('menu'),
+            self.template,
+            user_uuid=user_uuid,
+            base_url=_build_next_url(request.base_url, 'menu'),
         )
 
         return Response(response_rendered, content_type=self.content_type, status=200)
@@ -63,7 +65,9 @@ class ClientInput(AuthResource):
         user_uuid = args['xivo_user_uuid']
 
         response_rendered = render_template(
-            self.template, user_uuid=user_uuid, base_url=_build_next_url('input'),
+            self.template,
+            user_uuid=user_uuid,
+            base_url=_build_next_url(request.base_url, 'input'),
         )
 
         return Response(response_rendered, content_type=self.content_type, status=200)
@@ -147,13 +151,13 @@ class ClientLookup(AuthResource):
             raise WazoAuthConnectionError()
 
 
-def _build_next_url(current):
+def _build_next_url(base_url, current):
     if current == 'menu':
-        return request.base_url.replace('menu', 'input', 1)
+        return base_url.replace('menu', 'input', 1)
     if current == 'input':
-        return request.base_url.replace('input', 'lookup', 1)
+        return base_url.replace('input', 'lookup', 1)
     if current == 'lookup':
-        return request.base_url
+        return base_url
     return None
 
 
