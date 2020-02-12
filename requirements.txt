@@ -15,4 +15,4 @@ netaddr==0.7.19
 pyyaml==3.13  # from xivo-lib-python
 requests==2.21.0
 stevedore==1.29.0
-werkzeug==0.14.1  # for flask-babel
+werkzeug==0.15.3  # for flask-babel
