@@ -13,6 +13,15 @@ class TestServices(unittest.TestCase):
     def setUp(self):
         self.amid = MagicMock()
         self.confd = MagicMock()
+        self.confd.extensions_features.list.return_value = {
+            'items': [
+                {'feature': 'phoneprogfunckey', 'exten': '_*735.'},
+                {'feature': 'enablednd', 'exten': '*25'},
+                {'feature': 'fwdunc', 'exten': '_*21.'},
+                {'feature': 'fwdrna', 'exten': '_*22.'},
+                {'feature': 'fwdbusy', 'exten': '_*23.'},
+            ],
+        }
         self.service = BlfService(self.amid, self.confd)
         xivo_helpers.fkey_extension = MagicMock()
 
@@ -79,3 +88,15 @@ class TestServices(unittest.TestCase):
         self.amid.command.assert_called_once_with(
             'devstate change Custom:*735123***222*1002 NOT_INUSE'
         )
+
+    def test_extension_feature_is_cached(self):
+        xivo_helpers.fkey_extension.return_value = '*735123***225'
+
+        self.service.notify_dnd('123-test', True)
+        self.service.notify_dnd('123-test', True)
+        self.confd.extensions_features.list.assert_called_once()
+
+        self.service.invalidate_cache()
+        self.confd.reset_mock()
+        self.service.notify_dnd('123-test', True)
+        self.confd.extensions_features.list.assert_called_once()

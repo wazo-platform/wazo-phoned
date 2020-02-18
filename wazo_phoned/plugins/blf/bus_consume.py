@@ -24,6 +24,9 @@ class BusEventHandler:
         bus_consumer.on_event(
             'users_forwards_busy_updated', self._users_forwards_busy_updated
         )
+        bus_consumer.on_event(
+            'extension_feature_edited', self._extension_feature_edited
+        )
 
     def _users_services_dnd_updated(self, event):
         user_uuid = event['user_uuid']
@@ -47,3 +50,6 @@ class BusEventHandler:
         enabled = event['enabled']
         destination = event['destination']
         self._service.notify_forward_busy(user_uuid, destination, enabled)
+
+    def _extension_feature_edited(self, event):
+        self._service.invalidate_cache()

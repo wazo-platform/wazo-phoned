@@ -45,3 +45,13 @@ class BusClient(bus_helper.BusClient):
                 },
             }
         )
+
+    def send_extension_feature_edited(self):
+        self.send_event(
+            {
+                'name': 'extension_feature_edited',
+                'data': {
+                    'id': 1234,
+                },
+            }
+        )

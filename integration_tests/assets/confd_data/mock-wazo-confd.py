@@ -1,5 +1,5 @@
 # -*-coding: utf-8-*-
-# Copyright 2020 The Wazo Authors  (see AUTHORS file)
+# Copyright 2016-2020 The Wazo Authors  (see AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
@@ -16,23 +16,52 @@ API_VERSION = '1.1'
 
 context = ('/usr/local/share/ssl/server.crt', '/usr/local/share/ssl/server.key')
 
-extensions_features_assoc = {
-    'phoneprogfunckey': '_*735',
-    'enablednd': '*25',
-    'fwdunc': '_*21',
-    'fwdbusy': '_*23',
-    'fwdrna': '_*22',
+extensions_features_data = {
+    'items': [
+        {'feature': 'phoneprogfunckey', 'exten': '_*735.'},
+        {'feature': 'enablednd', 'exten': '*25'},
+        {'feature': 'fwdunc', 'exten': '_*21.'},
+        {'feature': 'fwdrna', 'exten': '_*22.'},
+        {'feature': 'fwdbusy', 'exten': '_*23.'},
+    ],
 }
 
+_requests = []
 
-def _json_extension(exten):
-    return jsonify({'items': [{'exten': exten}]})
+
+@app.before_request
+def log_request():
+    global _requests
+
+    if request.path.startswith('/_'):
+        return
+
+    log = {
+        'method': request.method,
+        'path': request.path,
+        'query': request.args.items(multi=True),
+        'body': request.data,
+        'json': request.json,
+        'headers': dict(request.headers),
+    }
+    _requests.append(log)
+
+
+@app.route('/_requests', methods=['GET'])
+def list_requests():
+    return jsonify({'requests': _requests})
+
+
+@app.route('/_reset', methods=['POST'])
+def reset_requests():
+    global _requests
+    _requests = []
+    return '', 204
 
 
 @app.route('/{}/extensions/features'.format(API_VERSION), methods=['GET'])
 def extensions_features():
-    search = request.args.get('search')
-    return _json_extension(extensions_features_assoc.get(search))
+    return jsonify(extensions_features_data)
 
 
 @app.route('/{}/users/<user_uuid>'.format(API_VERSION), methods=['GET'])

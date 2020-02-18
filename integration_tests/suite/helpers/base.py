@@ -18,6 +18,7 @@ from xivo_test_helpers.wait_strategy import NoWaitStrategy
 
 from .amid import AmidClient
 from .bus import BusClient
+from .confd import ConfdClient
 
 logger = logging.getLogger(__name__)
 
@@ -77,6 +78,12 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     @classmethod
     def make_mock_auth(cls):
         return MockAuthClient('localhost', cls.service_port(9497, 'auth'))
+
+    @classmethod
+    def make_mock_confd(cls):
+        confd_client = ConfdClient('localhost', cls.service_port(9486, 'confd'))
+        confd_client.reset()
+        return confd_client
 
     @classmethod
     def configure_wazo_auth(cls):

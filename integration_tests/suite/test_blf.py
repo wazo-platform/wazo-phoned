@@ -1,7 +1,7 @@
 # Copyright 2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from hamcrest import assert_that, has_item, has_entries
+from hamcrest import assert_that, has_item, has_entries, not_
 
 from .helpers.base import BasePhonedIntegrationTest
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
@@ -115,3 +115,42 @@ class TestBlf(BasePhonedIntegrationTest):
             )
 
         until.assert_(assert_amid_request, tries=5)
+
+    def test_that_extensions_features_are_cached(self):
+        bus_client = self.make_bus()
+        confd_client = self.make_mock_confd()
+        bus_client.send_extension_feature_edited()
+        bus_client.send_user_dnd_update('valid-user-uuid', True)
+
+        def assert_extensions_features():
+            assert_that(
+                confd_client.requests()['requests'],
+                has_item(
+                    has_entries(
+                        {
+                            'method': 'GET',
+                            'path': '/1.1/extensions/features',
+                        }
+                    )
+                )
+            )
+        until.assert_(assert_extensions_features, tries=5)
+
+        confd_client.reset()
+        bus_client.send_user_dnd_update('valid-user-uuid', True)
+
+        def assert_no_extensions_features():
+            assert_that(
+                confd_client.requests()['requests'],
+                not_(
+                    has_item(
+                        has_entries(
+                            {
+                                'method': 'GET',
+                                'path': '/1.1/extensions/features',
+                            }
+                        )
+                    )
+                )
+            )
+        until.assert_(assert_no_extensions_features, tries=5)
