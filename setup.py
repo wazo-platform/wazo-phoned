@@ -104,6 +104,7 @@ setup(
         'console_scripts': ['wazo-phoned=wazo_phoned.bin.daemon:main'],
         'wazo_phoned.plugins': [
             'api = wazo_phoned.plugins.api.plugin:Plugin',
+            'blf = wazo_phoned.plugins.blf.plugin:Plugin',
             'aastra = wazo_phoned.plugins.aastra.plugin:Plugin',
             'cisco = wazo_phoned.plugins.cisco.plugin:Plugin',
             'fanvil = wazo_phoned.plugins.fanvil.plugin:Plugin',

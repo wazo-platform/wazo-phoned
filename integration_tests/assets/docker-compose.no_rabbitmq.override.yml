@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  sync:
+    depends_on:
+      - auth
+      - dird
+      - amid
+      - phoned
+    environment:
+      TARGETS: "amid:9491 phoned:9498 phoned:9499 dird:9489 auth:9497"

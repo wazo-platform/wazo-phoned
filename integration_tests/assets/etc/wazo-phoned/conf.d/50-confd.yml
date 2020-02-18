@@ -1,0 +1,3 @@
+confd:
+  host: confd
+  verify_certificate: False

@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import timedelta
@@ -59,7 +59,9 @@ class HTTPServer:
             translations.add(BABEL_DEFAULT_LOCALE)
             logger.debug('Available translations: %s', translations)
             logger.debug('accept_languages: %s', request.accept_languages)
-            preferred = [locale.replace('-', '_') for locale in request.accept_languages.values()]
+            preferred = [
+                locale.replace('-', '_') for locale in request.accept_languages.values()
+            ]
             best_match = negotiate_locale(preferred, translations)
             logger.debug('Best locale match: %s', best_match)
             return best_match

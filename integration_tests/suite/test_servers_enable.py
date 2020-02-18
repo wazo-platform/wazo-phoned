@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import time
@@ -64,7 +64,7 @@ class TestHTTPandHTTPSAreDisabled(BasePhonedIntegrationTest):
     def test_configuration_http_and_https_enable_false_when_phoned_starts_then_phoned_stop(
         self,
     ):
-        for _ in range(2):
+        for _ in range(10):
             status = self.service_status('phoned')
             if not status['State']['Running']:
                 break
