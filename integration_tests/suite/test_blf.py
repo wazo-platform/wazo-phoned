@@ -39,6 +39,31 @@ class TestBlf(BasePhonedIntegrationTest):
 
         until.assert_(assert_amid_request, tries=5)
 
+    def test_that_incallfilter_event_triggers_ami_command(self):
+        amid_client = self.make_amid()
+        bus_client = self.make_bus()
+        bus_client.send_user_incallfilter_update('valid-user-uuid', True)
+
+        def assert_amid_request():
+            assert_that(
+                amid_client.requests()['requests'],
+                has_item(
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/Command',
+                            'json': has_entries(
+                                {
+                                    'command': 'devstate change Custom:*735123***227 INUSE'
+                                }
+                            ),
+                        }
+                    )
+                ),
+            )
+
+        until.assert_(assert_amid_request, tries=5)
+
     def test_that_forward_unconditional_triggers_ami_command(self):
         amid_client = self.make_amid()
         bus_client = self.make_bus()

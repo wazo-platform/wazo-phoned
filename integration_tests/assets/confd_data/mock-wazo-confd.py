@@ -23,6 +23,7 @@ extensions_features_data = {
         {'feature': 'fwdunc', 'exten': '_*21.'},
         {'feature': 'fwdrna', 'exten': '_*22.'},
         {'feature': 'fwdbusy', 'exten': '_*23.'},
+        {'feature': 'incallfilter', 'exten': '*27'},
     ],
 }
 
