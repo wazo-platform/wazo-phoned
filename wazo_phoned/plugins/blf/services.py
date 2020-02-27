@@ -39,6 +39,10 @@ class BlfService:
         device = self._device(user_uuid, 'enablednd')
         self._send(device, status)
 
+    def notify_incallfilter(self, user_uuid, status):
+        device = self._device(user_uuid, 'incallfilter')
+        self._send(device, status)
+
     def notify_forward_unconditional(self, user_uuid, destination, status):
         device = self._device(user_uuid, 'fwdunc', destination)
         self._send(device, status)

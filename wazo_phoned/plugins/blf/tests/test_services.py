@@ -20,6 +20,7 @@ class TestServices(unittest.TestCase):
                 {'feature': 'fwdunc', 'exten': '_*21.'},
                 {'feature': 'fwdrna', 'exten': '_*22.'},
                 {'feature': 'fwdbusy', 'exten': '_*23.'},
+                {'feature': 'incallfilter', 'exten': '*27'},
             ],
         }
         self.service = BlfService(self.amid, self.confd)
@@ -39,6 +40,22 @@ class TestServices(unittest.TestCase):
         self.service.notify_dnd('123-test', False)
         self.amid.command.assert_called_once_with(
             'devstate change Custom:*735123***225 NOT_INUSE'
+        )
+
+    def test_incallfilter_enable(self):
+        xivo_helpers.fkey_extension.return_value = '*735123***227'
+
+        self.service.notify_incallfilter('123-test', True)
+        self.amid.command.assert_called_once_with(
+            'devstate change Custom:*735123***227 INUSE'
+        )
+
+    def test_incallfilter_disable(self):
+        xivo_helpers.fkey_extension.return_value = '*735123***227'
+
+        self.service.notify_incallfilter('123-test', False)
+        self.amid.command.assert_called_once_with(
+            'devstate change Custom:*735123***227 NOT_INUSE'
         )
 
     def test_forward_unconditional_enable(self):

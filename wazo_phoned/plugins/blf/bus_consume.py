@@ -15,6 +15,9 @@ class BusEventHandler:
             'users_services_dnd_updated', self._users_services_dnd_updated
         )
         bus_consumer.on_event(
+            'users_services_incallfilter_updated', self._users_services_incallfilter_updated
+        )
+        bus_consumer.on_event(
             'users_forwards_unconditional_updated',
             self._users_forwards_unconditional_updated,
         )
@@ -32,6 +35,11 @@ class BusEventHandler:
         user_uuid = event['user_uuid']
         enabled = event['enabled']
         self._service.notify_dnd(user_uuid, enabled)
+
+    def _users_services_incallfilter_updated(self, event):
+        user_uuid = event['user_uuid']
+        enabled = event['enabled']
+        self._service.notify_incallfilter(user_uuid, enabled)
 
     def _users_forwards_unconditional_updated(self, event):
         user_uuid = event['user_uuid']

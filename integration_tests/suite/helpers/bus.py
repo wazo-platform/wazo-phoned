@@ -34,6 +34,14 @@ class BusClient(bus_helper.BusClient):
             }
         )
 
+    def send_user_incallfilter_update(self, user_uuid, enabled):
+        self.send_event(
+            {
+                'name': 'users_services_incallfilter_updated',
+                'data': {'user_uuid': user_uuid, 'enabled': enabled},
+            }
+        )
+
     def send_user_forward_update(self, forward_name, user_uuid, destination, enabled):
         self.send_event(
             {
