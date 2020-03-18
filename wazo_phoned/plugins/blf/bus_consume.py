@@ -15,7 +15,8 @@ class BusEventHandler:
             'users_services_dnd_updated', self._users_services_dnd_updated
         )
         bus_consumer.on_event(
-            'users_services_incallfilter_updated', self._users_services_incallfilter_updated
+            'users_services_incallfilter_updated',
+            self._users_services_incallfilter_updated,
         )
         bus_consumer.on_event(
             'users_forwards_unconditional_updated',

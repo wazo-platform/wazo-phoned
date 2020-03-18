@@ -96,7 +96,7 @@ class TestBlf(BasePhonedIntegrationTest):
                                 }
                             ),
                         }
-                    )
+                    ),
                 ),
             )
 
@@ -132,7 +132,7 @@ class TestBlf(BasePhonedIntegrationTest):
                                 }
                             ),
                         }
-                    )
+                    ),
                 ),
             )
 
@@ -168,7 +168,7 @@ class TestBlf(BasePhonedIntegrationTest):
                                 }
                             ),
                         }
-                    )
+                    ),
                 ),
             )
 
@@ -184,14 +184,10 @@ class TestBlf(BasePhonedIntegrationTest):
             assert_that(
                 confd_client.requests()['requests'],
                 has_item(
-                    has_entries(
-                        {
-                            'method': 'GET',
-                            'path': '/1.1/extensions/features',
-                        }
-                    )
-                )
+                    has_entries({'method': 'GET', 'path': '/1.1/extensions/features'})
+                ),
             )
+
         until.assert_(assert_extensions_features, tries=5)
 
         confd_client.reset()
@@ -203,12 +199,10 @@ class TestBlf(BasePhonedIntegrationTest):
                 not_(
                     has_item(
                         has_entries(
-                            {
-                                'method': 'GET',
-                                'path': '/1.1/extensions/features',
-                            }
+                            {'method': 'GET', 'path': '/1.1/extensions/features'}
                         )
                     )
-                )
+                ),
             )
+
         until.assert_(assert_no_extensions_features, tries=5)

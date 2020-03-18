@@ -65,10 +65,12 @@ class TestServices(unittest.TestCase):
         ]
 
         self.service.notify_forward_unconditional('123-test', '1002', True)
-        self.amid.command.assert_has_calls([
-            call('devstate change Custom:*735123***221*1002 INUSE'),
-            call('devstate change Custom:*735123***221 INUSE'),
-        ])
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***221*1002 INUSE'),
+                call('devstate change Custom:*735123***221 INUSE'),
+            ]
+        )
 
     def test_forward_unconditional_disable(self):
         xivo_helpers.fkey_extension.side_effect = [
@@ -77,10 +79,12 @@ class TestServices(unittest.TestCase):
         ]
 
         self.service.notify_forward_unconditional('123-test', '1002', False)
-        self.amid.command.assert_has_calls([
-            call('devstate change Custom:*735123***221*1002 NOT_INUSE'),
-            call('devstate change Custom:*735123***221 NOT_INUSE'),
-        ])
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***221*1002 NOT_INUSE'),
+                call('devstate change Custom:*735123***221 NOT_INUSE'),
+            ]
+        )
 
     def test_forward_busy_enable(self):
         xivo_helpers.fkey_extension.side_effect = [
@@ -89,10 +93,12 @@ class TestServices(unittest.TestCase):
         ]
 
         self.service.notify_forward_busy('123-test', '1002', True)
-        self.amid.command.assert_has_calls([
-            call('devstate change Custom:*735123***223*1002 INUSE'),
-            call('devstate change Custom:*735123***223 INUSE'),
-        ])
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***223*1002 INUSE'),
+                call('devstate change Custom:*735123***223 INUSE'),
+            ]
+        )
 
     def test_forward_busy_disable(self):
         xivo_helpers.fkey_extension.side_effect = [
@@ -101,10 +107,12 @@ class TestServices(unittest.TestCase):
         ]
 
         self.service.notify_forward_busy('123-test', '1002', False)
-        self.amid.command.assert_has_calls([
-            call('devstate change Custom:*735123***223*1002 NOT_INUSE'),
-            call('devstate change Custom:*735123***223 NOT_INUSE'),
-        ])
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***223*1002 NOT_INUSE'),
+                call('devstate change Custom:*735123***223 NOT_INUSE'),
+            ]
+        )
 
     def test_forward_noanswer_enable(self):
         xivo_helpers.fkey_extension.side_effect = [
@@ -113,10 +121,12 @@ class TestServices(unittest.TestCase):
         ]
 
         self.service.notify_forward_noanswer('123-test', '1002', True)
-        self.amid.command.assert_has_calls([
-            call('devstate change Custom:*735123***222*1002 INUSE'),
-            call('devstate change Custom:*735123***222 INUSE'),
-        ])
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***222*1002 INUSE'),
+                call('devstate change Custom:*735123***222 INUSE'),
+            ]
+        )
 
     def test_forward_noanswer_disable(self):
         xivo_helpers.fkey_extension.side_effect = [
@@ -125,10 +135,12 @@ class TestServices(unittest.TestCase):
         ]
 
         self.service.notify_forward_noanswer('123-test', '1002', False)
-        self.amid.command.assert_has_calls([
-            call('devstate change Custom:*735123***222*1002 NOT_INUSE'),
-            call('devstate change Custom:*735123***222 NOT_INUSE'),
-        ])
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***222*1002 NOT_INUSE'),
+                call('devstate change Custom:*735123***222 NOT_INUSE'),
+            ]
+        )
 
     def test_extension_feature_is_cached(self):
         xivo_helpers.fkey_extension.return_value = '*735123***225'
