@@ -35,6 +35,12 @@ class BlfService:
             )
         )
 
+    def _update_forward(self, user_uuid, forward_name, destination, status):
+        device = self._device(user_uuid, forward_name, destination)
+        self._send(device, status)
+        device = self._device(user_uuid, forward_name)
+        self._send(device, status)
+
     def notify_dnd(self, user_uuid, status):
         device = self._device(user_uuid, 'enablednd')
         self._send(device, status)
@@ -44,16 +50,13 @@ class BlfService:
         self._send(device, status)
 
     def notify_forward_unconditional(self, user_uuid, destination, status):
-        device = self._device(user_uuid, 'fwdunc', destination)
-        self._send(device, status)
+        self._update_forward(user_uuid, 'fwdunc', destination, status)
 
     def notify_forward_noanswer(self, user_uuid, destination, status):
-        device = self._device(user_uuid, 'fwdrna', destination)
-        self._send(device, status)
+        self._update_forward(user_uuid, 'fwdrna', destination, status)
 
     def notify_forward_busy(self, user_uuid, destination, status):
-        device = self._device(user_uuid, 'fwdbusy', destination)
-        self._send(device, status)
+        self._update_forward(user_uuid, 'fwdbusy', destination, status)
 
     def invalidate_cache(self):
         logger.debug('Invalidating cache')

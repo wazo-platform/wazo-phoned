@@ -1,7 +1,7 @@
 # Copyright 2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from hamcrest import assert_that, has_item, has_entries, not_
+from hamcrest import assert_that, has_item, has_items, has_entries, not_
 
 from .helpers.base import BasePhonedIntegrationTest
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
@@ -74,7 +74,7 @@ class TestBlf(BasePhonedIntegrationTest):
         def assert_amid_request():
             assert_that(
                 amid_client.requests()['requests'],
-                has_item(
+                has_items(
                     has_entries(
                         {
                             'method': 'POST',
@@ -82,6 +82,17 @@ class TestBlf(BasePhonedIntegrationTest):
                             'json': has_entries(
                                 {
                                     'command': 'devstate change Custom:*735123***221*1001 INUSE'
+                                }
+                            ),
+                        }
+                    ),
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/Command',
+                            'json': has_entries(
+                                {
+                                    'command': 'devstate change Custom:*735123***221 INUSE'
                                 }
                             ),
                         }
@@ -99,7 +110,7 @@ class TestBlf(BasePhonedIntegrationTest):
         def assert_amid_request():
             assert_that(
                 amid_client.requests()['requests'],
-                has_item(
+                has_items(
                     has_entries(
                         {
                             'method': 'POST',
@@ -107,6 +118,17 @@ class TestBlf(BasePhonedIntegrationTest):
                             'json': has_entries(
                                 {
                                     'command': 'devstate change Custom:*735123***223*1001 INUSE'
+                                }
+                            ),
+                        }
+                    ),
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/Command',
+                            'json': has_entries(
+                                {
+                                    'command': 'devstate change Custom:*735123***223 INUSE'
                                 }
                             ),
                         }
@@ -124,7 +146,7 @@ class TestBlf(BasePhonedIntegrationTest):
         def assert_amid_request():
             assert_that(
                 amid_client.requests()['requests'],
-                has_item(
+                has_items(
                     has_entries(
                         {
                             'method': 'POST',
@@ -132,6 +154,17 @@ class TestBlf(BasePhonedIntegrationTest):
                             'json': has_entries(
                                 {
                                     'command': 'devstate change Custom:*735123***222*1001 INUSE'
+                                }
+                            ),
+                        }
+                    ),
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/Command',
+                            'json': has_entries(
+                                {
+                                    'command': 'devstate change Custom:*735123***222 INUSE'
                                 }
                             ),
                         }
