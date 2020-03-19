@@ -18,10 +18,9 @@ class BlfService:
         self.confd = confd_client
         self._extension_features = None
 
-    def _device(self, user_uuid, name, destination=''):
+    def _device(self, user_id, name, destination=''):
         funckey_prefix = self.search_extension_feature('phoneprogfunckey')
         device_extension = self.search_extension_feature(name)
-        user_id = self.confd.users.get(user_uuid)['id']
         funckey_args = (user_id, device_extension, destination)
         funckey_pattern = xivo_helpers.fkey_extension(funckey_prefix, funckey_args)
 
@@ -35,28 +34,28 @@ class BlfService:
             )
         )
 
-    def _update_forward(self, user_uuid, forward_name, destination, status):
-        device = self._device(user_uuid, forward_name, destination)
+    def _update_forward(self, user_id, forward_name, destination, status):
+        device = self._device(user_id, forward_name, destination)
         self._send(device, status)
-        device = self._device(user_uuid, forward_name)
-        self._send(device, status)
-
-    def notify_dnd(self, user_uuid, status):
-        device = self._device(user_uuid, 'enablednd')
+        device = self._device(user_id, forward_name)
         self._send(device, status)
 
-    def notify_incallfilter(self, user_uuid, status):
-        device = self._device(user_uuid, 'incallfilter')
+    def notify_dnd(self, user_id, status):
+        device = self._device(user_id, 'enablednd')
         self._send(device, status)
 
-    def notify_forward_unconditional(self, user_uuid, destination, status):
-        self._update_forward(user_uuid, 'fwdunc', destination, status)
+    def notify_incallfilter(self, user_id, status):
+        device = self._device(user_id, 'incallfilter')
+        self._send(device, status)
 
-    def notify_forward_noanswer(self, user_uuid, destination, status):
-        self._update_forward(user_uuid, 'fwdrna', destination, status)
+    def notify_forward_unconditional(self, user_id, destination, status):
+        self._update_forward(user_id, 'fwdunc', destination, status)
 
-    def notify_forward_busy(self, user_uuid, destination, status):
-        self._update_forward(user_uuid, 'fwdbusy', destination, status)
+    def notify_forward_noanswer(self, user_id, destination, status):
+        self._update_forward(user_id, 'fwdrna', destination, status)
+
+    def notify_forward_busy(self, user_id, destination, status):
+        self._update_forward(user_id, 'fwdbusy', destination, status)
 
     def invalidate_cache(self):
         logger.debug('Invalidating cache')

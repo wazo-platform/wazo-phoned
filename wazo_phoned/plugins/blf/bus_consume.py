@@ -33,32 +33,32 @@ class BusEventHandler:
         )
 
     def _users_services_dnd_updated(self, event):
-        user_uuid = event['user_uuid']
+        user_id = event['user_id']
         enabled = event['enabled']
-        self._service.notify_dnd(user_uuid, enabled)
+        self._service.notify_dnd(user_id, enabled)
 
     def _users_services_incallfilter_updated(self, event):
-        user_uuid = event['user_uuid']
+        user_id = event['user_id']
         enabled = event['enabled']
-        self._service.notify_incallfilter(user_uuid, enabled)
+        self._service.notify_incallfilter(user_id, enabled)
 
     def _users_forwards_unconditional_updated(self, event):
-        user_uuid = event['user_uuid']
+        user_id = event['user_id']
         enabled = event['enabled']
         destination = event['destination']
-        self._service.notify_forward_unconditional(user_uuid, destination, enabled)
+        self._service.notify_forward_unconditional(user_id, destination, enabled)
 
     def _users_forwards_noanswer_updated(self, event):
-        user_uuid = event['user_uuid']
+        user_id = event['user_id']
         enabled = event['enabled']
         destination = event['destination']
-        self._service.notify_forward_noanswer(user_uuid, destination, enabled)
+        self._service.notify_forward_noanswer(user_id, destination, enabled)
 
     def _users_forwards_busy_updated(self, event):
-        user_uuid = event['user_uuid']
+        user_id = event['user_id']
         enabled = event['enabled']
         destination = event['destination']
-        self._service.notify_forward_busy(user_uuid, destination, enabled)
+        self._service.notify_forward_busy(user_id, destination, enabled)
 
     def _extension_feature_edited(self, event):
         self._service.invalidate_cache()

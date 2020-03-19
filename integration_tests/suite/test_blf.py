@@ -17,7 +17,7 @@ class TestBlf(BasePhonedIntegrationTest):
     def test_that_dnd_event_triggers_ami_command(self):
         amid_client = self.make_amid()
         bus_client = self.make_bus()
-        bus_client.send_user_dnd_update('valid-user-uuid', True)
+        bus_client.send_user_dnd_update('123', True)
 
         def assert_amid_request():
             assert_that(
@@ -42,7 +42,7 @@ class TestBlf(BasePhonedIntegrationTest):
     def test_that_incallfilter_event_triggers_ami_command(self):
         amid_client = self.make_amid()
         bus_client = self.make_bus()
-        bus_client.send_user_incallfilter_update('valid-user-uuid', True)
+        bus_client.send_user_incallfilter_update('123', True)
 
         def assert_amid_request():
             assert_that(
@@ -68,7 +68,7 @@ class TestBlf(BasePhonedIntegrationTest):
         amid_client = self.make_amid()
         bus_client = self.make_bus()
         bus_client.send_user_forward_update(
-            'unconditional', 'valid-user-uuid', '1001', True
+            'unconditional', '123', '1001', True
         )
 
         def assert_amid_request():
@@ -105,7 +105,7 @@ class TestBlf(BasePhonedIntegrationTest):
     def test_that_forward_busy_triggers_ami_command(self):
         amid_client = self.make_amid()
         bus_client = self.make_bus()
-        bus_client.send_user_forward_update('busy', 'valid-user-uuid', '1001', True)
+        bus_client.send_user_forward_update('busy', '123', '1001', True)
 
         def assert_amid_request():
             assert_that(
@@ -141,7 +141,7 @@ class TestBlf(BasePhonedIntegrationTest):
     def test_that_forward_no_answer_triggers_ami_command(self):
         amid_client = self.make_amid()
         bus_client = self.make_bus()
-        bus_client.send_user_forward_update('noanswer', 'valid-user-uuid', '1001', True)
+        bus_client.send_user_forward_update('noanswer', '123', '1001', True)
 
         def assert_amid_request():
             assert_that(
@@ -178,7 +178,7 @@ class TestBlf(BasePhonedIntegrationTest):
         bus_client = self.make_bus()
         confd_client = self.make_mock_confd()
         bus_client.send_extension_feature_edited()
-        bus_client.send_user_dnd_update('valid-user-uuid', True)
+        bus_client.send_user_dnd_update('123', True)
 
         def assert_extensions_features():
             assert_that(
@@ -191,7 +191,7 @@ class TestBlf(BasePhonedIntegrationTest):
         until.assert_(assert_extensions_features, tries=5)
 
         confd_client.reset()
-        bus_client.send_user_dnd_update('valid-user-uuid', True)
+        bus_client.send_user_dnd_update('123', True)
 
         def assert_no_extensions_features():
             assert_that(
