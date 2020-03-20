@@ -26,28 +26,28 @@ class BusClient(bus_helper.BusClient):
                 content_type='application/json',
             )
 
-    def send_user_dnd_update(self, user_uuid, enabled):
+    def send_user_dnd_update(self, user_id, enabled):
         self.send_event(
             {
                 'name': 'users_services_dnd_updated',
-                'data': {'user_uuid': user_uuid, 'enabled': enabled},
+                'data': {'user_id': user_id, 'enabled': enabled},
             }
         )
 
-    def send_user_incallfilter_update(self, user_uuid, enabled):
+    def send_user_incallfilter_update(self, user_id, enabled):
         self.send_event(
             {
                 'name': 'users_services_incallfilter_updated',
-                'data': {'user_uuid': user_uuid, 'enabled': enabled},
+                'data': {'user_id': user_id, 'enabled': enabled},
             }
         )
 
-    def send_user_forward_update(self, forward_name, user_uuid, destination, enabled):
+    def send_user_forward_update(self, forward_name, user_id, destination, enabled):
         self.send_event(
             {
                 'name': 'users_forwards_{}_updated'.format(forward_name),
                 'data': {
-                    'user_uuid': user_uuid,
+                    'user_id': user_id,
                     'destination': destination,
                     'enabled': enabled,
                 },
@@ -55,11 +55,4 @@ class BusClient(bus_helper.BusClient):
         )
 
     def send_extension_feature_edited(self):
-        self.send_event(
-            {
-                'name': 'extension_feature_edited',
-                'data': {
-                    'id': 1234,
-                },
-            }
-        )
+        self.send_event({'name': 'extension_feature_edited', 'data': {'id': 1234}})
