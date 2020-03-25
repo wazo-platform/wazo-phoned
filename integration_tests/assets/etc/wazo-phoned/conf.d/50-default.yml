@@ -23,7 +23,6 @@ auth:
 
 amid:
   host: amid
-  verify_certificate: False
 
 bus:
   host: rabbitmq
