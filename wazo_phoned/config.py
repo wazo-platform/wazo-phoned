@@ -43,7 +43,7 @@ _DEFAULT_CONFIG = {
         'subscribe_exchange_name': 'wazo-headers',
         'subscribe_exchange_type': 'headers',
     },
-    'amid': {'host': 'localhost', 'port': 9491, 'verify_certificate': _CERT_FILE},
+    'amid': {'host': 'localhost', 'port': 9491, 'prefix': None, 'https': False},
     'confd': {'host': 'localhost', 'port': 9486, 'verify_certificate': _CERT_FILE},
     'user': 'www-data',
     'enabled_plugins': {
