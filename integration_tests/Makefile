@@ -9,6 +9,6 @@ egg-info:
 	cd .. && python setup.py egg_info
 
 test:
-	nosetests -x
+	pytest -x
 
 .PHONY: test-setup test
