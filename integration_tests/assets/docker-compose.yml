@@ -14,12 +14,7 @@ services:
       - "../..:/usr/src/wazo-phoned"
       - "./ssl:/etc/ssl"
       - "./auth_keys:/tmp/auth_keys"
-      - "./etc/wazo-phoned/conf.d/50-auth.yml:/etc/wazo-phoned/conf.d/50-auth.yml"
-      - "./etc/wazo-phoned/conf.d/50-amid.yml:/etc/wazo-phoned/conf.d/50-amid.yml"
-      - "./etc/wazo-phoned/conf.d/50-dird.yml:/etc/wazo-phoned/conf.d/50-dird.yml"
-      - "./etc/wazo-phoned/conf.d/50-bus.yml:/etc/wazo-phoned/conf.d/50-bus.yml"
-      - "./etc/wazo-phoned/conf.d/50-confd.yml:/etc/wazo-phoned/conf.d/50-confd.yml"
-      - "./etc/wazo-phoned/conf.d/50-rest-api.yml:/etc/wazo-phoned/conf.d/50-rest-api.yml"
+      - "./etc/wazo-phoned/conf.d/50-default.yml:/etc/wazo-phoned/conf.d/50-default.yml"
       # - "${LOCAL_GIT_REPOS}/xivo-lib-python/xivo:/usr/local/lib/python3.7/site-packages/xivo"
     environment:
         XIVO_UUID: 08c56466-8f29-45c7-9856-92bf1ba89b93
@@ -54,7 +49,6 @@ services:
       - 9491
     volumes:
       - ./amid_data:/usr/local/share/wazo-amid
-      - ./ssl:/usr/local/share/ssl
     command: python /usr/local/share/wazo-amid/mock-wazo-amid.py 9491
 
   confd:

@@ -1,0 +1,38 @@
+rest_api:
+  http:
+    enabled: True
+    listen: 0.0.0.0
+    port: 9498
+
+  https:
+    enabled: True
+    listen: 0.0.0.0
+    port: 9499
+
+    certificate: /etc/ssl/server.crt
+    private_key: /etc/ssl/server.key
+
+  authorized_subnets:
+      - '0.0.0.0/0'
+
+auth:
+  host: auth
+  port: 9497
+  key_file: /tmp/auth_keys/wazo-phoned-key.yml
+  verify_certificate: False
+
+amid:
+  host: amid
+
+bus:
+  host: rabbitmq
+
+confd:
+  host: confd
+  verify_certificate: False
+
+dird:
+  host: dird
+  port: 9489
+  verify_certificate: False
+  default_profile: default_phone

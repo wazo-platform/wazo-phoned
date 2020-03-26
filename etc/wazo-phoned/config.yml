@@ -34,7 +34,8 @@ bus:
 amid:
   host: localhost
   port: 9491
-  verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
+  prefix: null
+  https: false
 
 confd:
   host: localhost

@@ -15,8 +15,6 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-context = ('/usr/local/share/ssl/server.crt', '/usr/local/share/ssl/server.key')
-
 action_response = ''
 valid_extens = []
 _requests = []
@@ -75,4 +73,4 @@ def action(action):
 
 if __name__ == "__main__":
     port = int(sys.argv[1])
-    app.run(host='0.0.0.0', port=port, ssl_context=context, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)

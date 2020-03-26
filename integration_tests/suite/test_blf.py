@@ -67,9 +67,7 @@ class TestBlf(BasePhonedIntegrationTest):
     def test_that_forward_unconditional_triggers_ami_command(self):
         amid_client = self.make_amid()
         bus_client = self.make_bus()
-        bus_client.send_user_forward_update(
-            'unconditional', '123', '1001', True
-        )
+        bus_client.send_user_forward_update('unconditional', '123', '1001', True)
 
         def assert_amid_request():
             assert_that(
