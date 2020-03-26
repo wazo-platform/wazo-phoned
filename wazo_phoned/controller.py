@@ -26,7 +26,8 @@ class Controller:
         self.http_server.app.config['authorized_subnets'] = self.config['rest_api'][
             'authorized_subnets'
         ]
-        self.token_renewer = TokenRenewer(self._new_auth_client(config))
+        auth_client = AuthClient(**config['auth'])
+        self.token_renewer = TokenRenewer(auth_client)
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
 
         self.token_status = TokenStatus()
@@ -69,16 +70,6 @@ class Controller:
     def stop(self, reason):
         logger.warning('Stopping wazo-phoned: %s', reason)
         self.http_server.stop()
-
-    def _new_auth_client(self, config):
-        auth_config = config['auth']
-        return AuthClient(
-            auth_config['host'],
-            port=auth_config['port'],
-            username=auth_config['service_id'],
-            password=auth_config['service_key'],
-            verify_certificate=auth_config['verify_certificate'],
-        )
 
     def _on_token_change(self, token_id):
         self.http_server.app.config['token'] = token_id

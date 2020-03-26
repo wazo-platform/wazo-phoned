@@ -17,9 +17,7 @@ rest_api:
 
 auth:
   host: auth
-  port: 9497
   key_file: /tmp/auth_keys/wazo-phoned-key.yml
-  verify_certificate: False
 
 amid:
   host: amid

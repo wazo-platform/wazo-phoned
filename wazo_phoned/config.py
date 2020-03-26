@@ -12,8 +12,9 @@ _DEFAULT_CONFIG = {
     'auth': {
         'host': 'localhost',
         'port': 9497,
+        'prefix': None,
+        'https': False,
         'key_file': '/var/lib/wazo-auth-keys/wazo-phoned-key.yml',
-        'verify_certificate': _CERT_FILE,
     },
     'dird': {'host': 'localhost', 'port': 9489, 'verify_certificate': _CERT_FILE},
     'config_file': '/etc/wazo-phoned/config.yml',
@@ -125,8 +126,8 @@ def _load_key_file(config):
     key_file = parse_config_file(config['auth']['key_file'])
     return {
         'auth': {
-            'service_id': key_file['service_id'],
-            'service_key': key_file['service_key'],
+            'username': key_file['service_id'],
+            'password': key_file['service_key'],
         }
     }
 
