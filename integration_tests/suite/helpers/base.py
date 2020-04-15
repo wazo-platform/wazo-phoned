@@ -60,7 +60,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     @classmethod
     def make_auth(cls):
         return AuthClient(
-            'localhost', cls.service_port(9497, 'auth'), verify_certificate=False
+            'localhost', cls.service_port(9497, 'auth'), prefix=None, https=False
         )
 
     @classmethod
