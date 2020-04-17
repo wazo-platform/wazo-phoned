@@ -14,6 +14,7 @@ from .http import (
     BusyForwardUserService,
     DNDUserService,
     Lookup,
+    UnconditionalForwardUserService,
 )
 from .services import YealinkService
 
@@ -26,6 +27,7 @@ class Plugin:
 
     user_service_dnd_url_fmt = '/{vendor}/user_service/dnd'
     user_service_forward_busy_url_fmt = '/{vendor}/user_service/forward_busy'
+    user_service_forward_unconditional_url_fmt = '/{vendor}/user_service/forward_unconditional'
 
     vendor = 'yealink'
     import_name = __name__
@@ -65,6 +67,7 @@ class Plugin:
 
         self.user_service_dnd_url = self.user_service_dnd_url_fmt.format(vendor=self.vendor)
         self.user_service_forward_busy_url = self.user_service_forward_busy_url_fmt.format(vendor=self.vendor)
+        self.user_service_forward_unconditional_url = self.user_service_forward_unconditional_url_fmt.format(vendor=self.vendor)
         self._add_resources(api, directories_class_kwargs)
         self._add_user_service_resources(api, user_service_class_kwargs)
 
@@ -87,5 +90,11 @@ class Plugin:
             BusyForwardUserService,
             self.user_service_forward_busy_url,
             endpoint='yealink_user_service_forward_busy',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            UnconditionalForwardUserService,
+            self.user_service_forward_unconditional_url,
+            endpoint='yealink_user_service_forward_unconditional',
             resource_class_kwargs=class_kwargs,
         )

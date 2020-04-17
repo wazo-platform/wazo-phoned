@@ -9,6 +9,7 @@ Changelog
 
   * GET `/0.1/yealink/user_service/dnd`
   * GET `/0.1/yealink/user_service/forward_busy`
+  * GET `/0.1/yealink/user_service/forward_unconditional`
 
 20.03
 -----
