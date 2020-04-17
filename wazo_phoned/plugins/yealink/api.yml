@@ -53,6 +53,29 @@ paths:
       parameters:
       - $ref: '#/parameters/WazoUserUUID'
       - $ref: '#/parameters/Enabled'
+  /yealink/user_service/forward_busy:
+    get:
+      summary: Set the forward on busy user service for a particular user.
+      description: |
+        The `forward_busy` service will enable or disable the user forward on
+        busy destination and status through `wazo-confd`.
+      operationId: yealink_user_service_forward_busy
+      tags:
+      - yealink
+      - user_service
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: The status was changed
+        '400':
+          description: Provided data is incorrect or a required field is missing
+        '404':
+          $ref: '#/responses/NoSuchUser'
+      parameters:
+      - $ref: '#/parameters/WazoUserUUID'
+      - $ref: '#/parameters/Destination'
+      - $ref: '#/parameters/Enabled'
 definitions:
   YealinkIPPhoneDirectory:
     properties:

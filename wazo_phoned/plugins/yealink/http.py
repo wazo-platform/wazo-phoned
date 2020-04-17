@@ -33,3 +33,19 @@ class DNDUserService(AuthResource):
         logger.debug('DND hit AFTER')
 
         return '', 200
+
+
+class BusyForwardUserService(AuthResource):
+
+    def __init__(self, service, *args, **kwargs):
+        super().__init__()
+        self._service = service
+
+    def get(self):
+        args = UserForwardSchema().load(request.args)
+        user_uuid = args['user_uuid']
+        destination = args['destination']
+        enabled = args['enabled']
+
+        self._service.update_forward_busy(user_uuid, destination, enabled)
+        return '', 200

@@ -4,10 +4,11 @@ Changelog
 20.06
 -----
 
-* Added the DND status synchronization for Yealink phones
-* Added the following endpoint:
+* Added the DND and forwards status synchronization for Yealink phones
+* Added the following endpoints:
 
   * GET `/0.1/yealink/user_service/dnd`
+  * GET `/0.1/yealink/user_service/forward_busy`
 
 20.03
 -----

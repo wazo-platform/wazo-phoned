@@ -49,6 +49,12 @@ parameters:
     type: string
     required: false
     description: The language to translate the query results in
+  Destination:
+    name: destination
+    in: query
+    type: string
+    description: The extension of the user service destination
+    required: false
   Enabled:
     name: enabled
     in: query

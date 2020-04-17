@@ -324,6 +324,36 @@ class TestUserServiceEvents(BasePhonedIntegrationTest):
 
         until.assert_(assert_amid_request, tries=5)
 
+    def test_that_forward_busy_triggers_ami_command(self):
+        amid_client = self.make_amid()
+        bus_client = self.make_bus()
+        bus_client.send_user_forward_update('busy', '123', '1001', True)
+
+        def assert_amid_request():
+            assert_that(
+                amid_client.requests()['requests'],
+                has_item(
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/PJSIPNotify',
+                            'json': has_entries(
+                                {
+                                    'Endpoint': 'line-123',
+                                    'Variable': [
+                                        'Content-Type=message/sipfrag',
+                                        'Event=ACTION-URI',
+                                        'Content=key=BusyFwdOn=1001',
+                                    ],
+                                }
+                            ),
+                        }
+                    ),
+                ),
+            )
+
+        until.assert_(assert_amid_request, tries=5)
+
 
 class TestUserServiceHTTP(BasePhonedIntegrationTest):
 
@@ -349,3 +379,29 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
                 )
             )
         )
+
+    def test_forward_busy(self):
+        confd_client = self.make_mock_confd()
+        response = self.get_user_service_result('forward_busy', '123', '1001', True)
+        assert_that(response.status_code, equal_to(200))
+
+        assert_that(
+            confd_client.requests()['requests'],
+            has_item(
+                has_entries(
+                    {
+                        'method': 'PUT',
+                        'path': '/1.1/users/123/forwards/busy',
+                        'json': has_entries({
+                            'enabled': True,
+                            'destination': '1001',
+                        }),
+                    }
+                )
+            )
+        )
+
+    def test_forward_busy_no_destination_when_enabling_raises_error(self):
+        confd_client = self.make_mock_confd()
+        response = self.get_user_service_result('forward_busy', '123', None, True)
+        assert_that(response.status_code, equal_to(400))

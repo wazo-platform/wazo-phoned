@@ -11,6 +11,7 @@ from wazo_dird_client import Client as DirdClient
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
 from .bus_consume import BusEventHandler
 from .http import (
+    BusyForwardUserService,
     DNDUserService,
     Lookup,
 )
@@ -24,6 +25,7 @@ class Plugin:
     lookup_url_fmt = '/directories/lookup/<profile>/{vendor}'
 
     user_service_dnd_url_fmt = '/{vendor}/user_service/dnd'
+    user_service_forward_busy_url_fmt = '/{vendor}/user_service/forward_busy'
 
     vendor = 'yealink'
     import_name = __name__
@@ -62,6 +64,7 @@ class Plugin:
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
 
         self.user_service_dnd_url = self.user_service_dnd_url_fmt.format(vendor=self.vendor)
+        self.user_service_forward_busy_url = self.user_service_forward_busy_url_fmt.format(vendor=self.vendor)
         self._add_resources(api, directories_class_kwargs)
         self._add_user_service_resources(api, user_service_class_kwargs)
 
@@ -78,5 +81,11 @@ class Plugin:
             DNDUserService,
             self.user_service_dnd_url,
             endpoint='yealink_user_service_dnd',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            BusyForwardUserService,
+            self.user_service_forward_busy_url,
+            endpoint='yealink_user_service_forward_busy',
             resource_class_kwargs=class_kwargs,
         )

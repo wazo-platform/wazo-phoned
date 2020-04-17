@@ -73,3 +73,75 @@ class TestServices(unittest.TestCase):
     def test_dnd_update_disable(self):
         self.service.update_dnd('123', False)
         self.confd.users('123').update_service.assert_called_once_with('dnd', {'enabled': False})
+
+    def test_forward_busy_notify_enable(self):
+        self.confd.users.get.return_value = {'lines': [{'name': 'line-123'}]}
+        self.service.notify_forward_busy('123', '1002', True)
+        self.amid.action.assert_called_once_with(
+            'PJSIPNotify',
+            {
+                'Endpoint': 'line-123',
+                'Variable': [
+                    'Content-Type=message/sipfrag',
+                    'Event=ACTION-URI',
+                    'Content=key=BusyFwdOn=1002',
+                ]
+            }
+        )
+
+    def test_forward_busy_notify_disable(self):
+        self.confd.users.get.return_value = {'lines': [{'name': 'line-123'}]}
+        self.service.notify_forward_busy('123', '1002', False)
+        self.amid.action.assert_called_once_with(
+            'PJSIPNotify',
+            {
+                'Endpoint': 'line-123',
+                'Variable': [
+                    'Content-Type=message/sipfrag',
+                    'Event=ACTION-URI',
+                    'Content=key=BusyFwdOff',
+                ]
+            }
+        )
+
+    def test_forward_busy_notify_errors(self):
+        http_error = HTTPError()
+        http_error.response = MagicMock()
+        http_error.response.status_code = 404
+        self.confd.users.get.side_effect = http_error
+        assert_that(
+            calling(self.service.notify_forward_busy).with_args('123', '1002', True),
+            raises(NoSuchUser),
+        )
+        http_error.response.status_code = 500
+        assert_that(
+            calling(self.service.notify_forward_busy).with_args('123', '1002', True),
+            raises(HTTPError),
+        )
+
+    def test_forward_busy_enable(self):
+        self.service.update_forward_busy('123', '1002', True)
+        self.confd.users('123').update_forward.assert_called_once_with(
+            'busy', {'destination': '1002', 'enabled': True}
+        )
+
+    def test_forward_busy_disable(self):
+        self.service.update_forward_busy('123', '1002', False)
+        self.confd.users('123').update_forward.assert_called_once_with(
+            'busy', {'destination': '1002', 'enabled': False}
+        )
+
+    def test_forward_noanswer_notify_enable(self):
+        self.confd.users.get.return_value = {'lines': [{'name': 'line-123'}]}
+        self.service.notify_forward_noanswer('123', '1002', True)
+        self.amid.action.assert_called_once_with(
+            'PJSIPNotify',
+            {
+                'Endpoint': 'line-123',
+                'Variable': [
+                    'Content-Type=message/sipfrag',
+                    'Event=ACTION-URI',
+                    'Content=key=NoAnswFwdOn=1002',
+                ]
+            }
+        )
