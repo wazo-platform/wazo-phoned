@@ -1,4 +1,4 @@
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from abc import ABCMeta, abstractmethod
@@ -14,9 +14,14 @@ logger = logging.getLogger(__name__)
 
 class ClientPlugin(metaclass=ABCMeta):
 
+    # NOTE(afournier): these vendor-ending URLs are deprecated and will be phased out gradually
     menu_url_fmt = '/directories/menu/<profile>/{vendor}'
     input_url_fmt = '/directories/input/<profile>/{vendor}'
     lookup_url_fmt = '/directories/lookup/<profile>/{vendor}'
+
+    directories_menu_url_fmt = '{vendor}/directories/menu/<profile>'
+    directories_input_url_fmt = '{vendor}/directories/input/<profile>'
+    directories_lookup_url_fmt = '{vendor}/directories/lookup/<profile>'
     vendor = None
     import_name = None
 
@@ -39,6 +44,10 @@ class ClientPlugin(metaclass=ABCMeta):
         self.menu_url = self.menu_url_fmt.format(vendor=self.vendor)
         self.input_url = self.input_url_fmt.format(vendor=self.vendor)
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
+
+        self.directories_menu_url = self.directories_menu_url_fmt.format(vendor=self.vendor)
+        self.directories_input_url = self.directories_input_url_fmt.format(vendor=self.vendor)
+        self.directories_lookup_url = self.directories_lookup_url_fmt.format(vendor=self.vendor)
         self._add_resources(api, class_kwargs)
 
     @abstractmethod

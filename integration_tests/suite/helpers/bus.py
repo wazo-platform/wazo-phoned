@@ -30,7 +30,7 @@ class BusClient(bus_helper.BusClient):
         self.send_event(
             {
                 'name': 'users_services_dnd_updated',
-                'data': {'user_id': user_id, 'enabled': enabled},
+                'data': {'user_id': user_id, 'user_uuid': user_id, 'enabled': enabled},
             }
         )
 
@@ -38,7 +38,7 @@ class BusClient(bus_helper.BusClient):
         self.send_event(
             {
                 'name': 'users_services_incallfilter_updated',
-                'data': {'user_id': user_id, 'enabled': enabled},
+                'data': {'user_id': user_id, 'user_uuid': user_id, 'enabled': enabled},
             }
         )
 
@@ -48,6 +48,7 @@ class BusClient(bus_helper.BusClient):
                 'name': 'users_forwards_{}_updated'.format(forward_name),
                 'data': {
                     'user_id': user_id,
+                    'user_uuid': user_id,
                     'destination': destination,
                     'enabled': enabled,
                 },

@@ -24,7 +24,10 @@ logger = logging.getLogger(__name__)
 
 class Plugin:
 
+    # NOTE(afournier): this vendor-ending URL will be deprecated
     lookup_url_fmt = '/directories/lookup/<profile>/{vendor}'
+
+    directories_lookup_url_fmt = '/{vendor}/directories/lookup/<profile>'
 
     user_service_dnd_url_fmt = '/{vendor}/user_service/dnd'
     user_service_forward_busy_url_fmt = '/{vendor}/user_service/forward_busy'
@@ -67,6 +70,8 @@ class Plugin:
 
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
 
+        self.directories_lookup_url = self.directories_lookup_url_fmt.format(vendor=self.vendor)
+
         self.user_service_dnd_url = self.user_service_dnd_url_fmt.format(vendor=self.vendor)
         self.user_service_forward_busy_url = self.user_service_forward_busy_url_fmt.format(vendor=self.vendor)
         self.user_service_forward_noanswer_url = self.user_service_forward_noanswer_url_fmt.format(vendor=self.vendor)
@@ -79,6 +84,12 @@ class Plugin:
             Lookup,
             self.lookup_url,
             endpoint='yealink_lookup',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            Lookup,
+            self.directories_lookup_url,
+            endpoint='yealink_directories_lookup',
             resource_class_kwargs=class_kwargs,
         )
 

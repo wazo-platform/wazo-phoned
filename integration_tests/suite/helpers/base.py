@@ -243,6 +243,20 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
+    def get_directories_lookup_result(
+        self, profile, vendor, xivo_user_uuid=None, term=None, headers=None
+    ):
+        params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
+        port = self.service_port(9498, 'phoned')
+        url = 'http://localhost:{port}/0.1/{vendor}/directories/lookup/{profile}'
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=params,
+            headers=headers,
+        )
+        return result
+
+    @classmethod
     def get_lookup_gigaset_result(
         self, profile, xivo_user_uuid=None, term=None, headers=None, **kwargs
     ):
@@ -275,6 +289,18 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     def get_ssl_lookup_result(self, profile, vendor, headers=None, **kwargs):
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=kwargs,
+            headers=headers,
+            verify=False,
+        )
+        return result
+
+    @classmethod
+    def get_ssl_directories_lookup_result(self, profile, vendor, headers=None, **kwargs):
+        port = self.service_port(9499, 'phoned')
+        url = 'https://localhost:{port}/0.1/{vendor}/directories/lookup/{profile}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=kwargs,

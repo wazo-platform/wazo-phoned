@@ -7,6 +7,38 @@ paths:
         formated for Yealink Phones. The result will be retrieved from a lookup query
         to wazo-dird.
       operationId: yealink_lookup
+      deprecated: true
+      tags:
+      - yealink
+      - directories
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: A list of contacts
+          schema:
+            $ref: '#/definitions/YealinkIPPhoneDirectory'
+        '400':
+          $ref: '#/responses/LimitOffsetInvalid'
+        '404':
+          $ref: '#/responses/ProfileInvalid'
+        '503':
+          $ref: '#/responses/AnotherServiceUnavailable'
+      parameters:
+      - $ref: '#/parameters/Profile'
+      - $ref: '#/parameters/UserUUID'
+      - $ref: '#/parameters/Term'
+      - $ref: '#/parameters/Limit'
+      - $ref: '#/parameters/Offset'
+      - $ref: '#/parameters/AcceptLanguage'
+  /yealink/directories/lookup/{profile}:
+    get:
+      summary: Search for contacts with Yealink Phones
+      description: |
+        The `lookup` query will return a list of result matching the searched term
+        formated for Yealink Phones. The result will be retrieved from a lookup query
+        to wazo-dird.
+      operationId: yealink_lookup
       tags:
       - yealink
       - directories
