@@ -54,6 +54,29 @@ class YealinkService:
                 else:
                     self._send_notify(endpoint, 'AlwaysFwdOff')
 
+    def update_forward_noanswer(self, user_uuid, destination, enabled):
+        try:
+            self.confd.users(user_uuid).update_forward('noanswer', {
+                'destination': destination,
+                'enabled': enabled,
+            })
+        except RequestException as e:
+            response = getattr(e, 'response', None)
+            status_code = getattr(response, 'status_code', None)
+            if status_code == 404:
+                raise NoSuchUser(user_uuid)
+            raise
+
+    def notify_forward_noanswer(self, user_uuid, destination, enabled):
+        lines = self._find_lines(user_uuid)
+        for line in lines:
+            endpoint = line.get('name')
+            if endpoint:
+                if enabled:
+                    self._send_notify(endpoint, 'NoAnswFwdOn={}'.format(destination))
+                else:
+                    self._send_notify(endpoint, 'NoAnswFwdOff')
+
     def update_forward_busy(self, user_uuid, destination, enabled):
         try:
             self.confd.users(user_uuid).update_forward('busy', {
