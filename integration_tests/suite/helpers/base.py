@@ -311,3 +311,16 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         )
         result = requests.get(url, params=params, headers=headers, verify=False)
         return result
+
+    @classmethod
+    def get_user_service_result(self, service_name, user_uuid, destination=None, enabled=True):
+        params = {'user_uuid': user_uuid, 'enabled': enabled}
+        if destination:
+            params['destination'] = destination
+
+        port = self.service_port(9499, 'phoned')
+        url = 'https://localhost:{port}/0.1/yealink/user_service/{service_name}'.format(
+            port=port, service_name=service_name
+        )
+        result = requests.get(url, params=params, verify=False)
+        return result

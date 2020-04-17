@@ -30,6 +30,29 @@ paths:
       - $ref: '#/parameters/Limit'
       - $ref: '#/parameters/Offset'
       - $ref: '#/parameters/AcceptLanguage'
+  /yealink/user_service/dnd:
+    get:
+      summary: Set the DND user service status for a particular user.
+      description: |
+        The `dnd` service will enable or disable the user DND status through
+        `wazo-confd`.
+      operationId: yealink_user_service_dnd
+      tags:
+      - yealink
+      - user_service
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: The status was changed
+        '400':
+          description: Provided data is incorrect or a required field is missing
+          $ref: '#/responses/InvalidDataError'
+        '404':
+          $ref: '#/responses/NoSuchUser'
+      parameters:
+      - $ref: '#/parameters/WazoUserUUID'
+      - $ref: '#/parameters/Enabled'
 definitions:
   YealinkIPPhoneDirectory:
     properties:

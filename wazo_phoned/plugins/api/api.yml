@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: wazo-phoned
-  description: "Wazo Directory Daemon"
+  description: "Wazo Phone Daemon"
   version: '1.0'
 schemes:
 - https
@@ -34,6 +34,14 @@ responses:
     description: The profile does not exist
     schema:
       $ref: '#/definitions/Error'
+  InvalidDataError:
+    description: Data provided is invalid or a field is missing
+    schema:
+      $ref: '#/definitions/Error'
+  NoSuchUser:
+    description: The user does not exist
+    schema:
+      $ref: '#/definitions/Error'
 parameters:
   AcceptLanguage:
     name: Accept-Language
@@ -41,6 +49,12 @@ parameters:
     type: string
     required: false
     description: The language to translate the query results in
+  Enabled:
+    name: enabled
+    in: query
+    type: boolean
+    description: The state of the user service
+    required: true
   Limit:
     name: limit
     in: query
@@ -88,6 +102,12 @@ parameters:
     type: string
     description: The user UUID of the user doing that query
     required: true
+  WazoUserUUID:
+    name: user_uuid
+    in: query
+    type: string
+    description: The user UUID of the user doing that query
+    required: true
 definitions:
   APIError:
     type: object
@@ -98,6 +118,7 @@ definitions:
          description: Resource name of the error
          type: string
   Error:
+    type: object
     title: Error
     description: Error message for the client
     properties:

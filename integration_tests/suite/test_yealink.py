@@ -1,8 +1,14 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from hamcrest import assert_that, equal_to
+from hamcrest import (
+    assert_that,
+    equal_to,
+    has_entries,
+    has_item,
+)
 from textwrap import dedent
+from xivo_test_helpers import until
 
 from .helpers.base import (
     BasePhonedIntegrationTest,
@@ -281,3 +287,65 @@ class TestDirdError(BasePhonedIntegrationTest):
             term='a',
         )
         assert_that(response.status_code, equal_to(503))
+
+
+class TestUserServiceEvents(BasePhonedIntegrationTest):
+
+    asset = 'default_config'
+    wait_strategy = PhonedEverythingUpWaitStrategy()
+
+    def test_that_dnd_event_triggers_ami_command(self):
+        amid_client = self.make_amid()
+        bus_client = self.make_bus()
+        bus_client.send_user_dnd_update('123', True)
+
+        def assert_amid_request():
+            assert_that(
+                amid_client.requests()['requests'],
+                has_item(
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/PJSIPNotify',
+                            'json': has_entries(
+                                {
+                                    'Endpoint': 'line-123',
+                                    'Variable': [
+                                        'Content-Type=message/sipfrag',
+                                        'Event=ACTION-URI',
+                                        'Content=key=DNDOn',
+                                    ],
+                                }
+                            ),
+                        }
+                    )
+                ),
+            )
+
+        until.assert_(assert_amid_request, tries=5)
+
+
+class TestUserServiceHTTP(BasePhonedIntegrationTest):
+
+    asset = 'default_config'
+    wait_strategy = PhonedEverythingUpWaitStrategy()
+
+    def test_dnd(self):
+        confd_client = self.make_mock_confd()
+        response = self.get_user_service_result('dnd', '123', None, True)
+        assert_that(response.status_code, equal_to(200))
+
+        assert_that(
+            confd_client.requests()['requests'],
+            has_item(
+                has_entries(
+                    {
+                        'method': 'PUT',
+                        'path': '/1.1/users/123/services/dnd',
+                        'json': has_entries({
+                            'enabled': True,
+                        }),
+                    }
+                )
+            )
+        )
