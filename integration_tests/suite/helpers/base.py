@@ -298,7 +298,9 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_ssl_directories_lookup_result(self, profile, vendor, headers=None, **kwargs):
+    def get_ssl_directories_lookup_result(
+        self, profile, vendor, headers=None, **kwargs
+    ):
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/{vendor}/directories/lookup/{profile}'
         result = requests.get(
@@ -339,7 +341,9 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_user_service_result(self, service_name, user_uuid, destination=None, enabled=True):
+    def get_user_service_result(
+        self, service_name, user_uuid, destination=None, enabled=True
+    ):
         params = {'user_uuid': user_uuid, 'enabled': enabled}
         if destination:
             params['destination'] = destination

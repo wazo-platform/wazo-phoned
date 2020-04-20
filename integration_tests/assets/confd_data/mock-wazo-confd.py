@@ -65,15 +65,21 @@ def extensions_features():
 
 @app.route('/{}/users/<user_uuid>'.format(API_VERSION), methods=['GET'])
 def user_uuid_get(user_uuid):
-    return jsonify({'id': user_uuid, 'uuid': user_uuid, 'lines': [{'name': 'line-123'}]})
+    return jsonify(
+        {'id': user_uuid, 'uuid': user_uuid, 'lines': [{'name': 'line-123'}]}
+    )
 
 
-@app.route('/{}/users/<user_uuid>/services/<service_name>'.format(API_VERSION), methods=['PUT'])
+@app.route(
+    '/{}/users/<user_uuid>/services/<service_name>'.format(API_VERSION), methods=['PUT']
+)
 def user_service_put(user_uuid, service_name):
     return '', 204
 
 
-@app.route('/{}/users/<user_uuid>/forwards/<forward_name>'.format(API_VERSION), methods=['PUT'])
+@app.route(
+    '/{}/users/<user_uuid>/forwards/<forward_name>'.format(API_VERSION), methods=['PUT']
+)
 def user_forward_put(user_uuid, forward_name):
     return '', 204
 

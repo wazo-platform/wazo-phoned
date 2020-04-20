@@ -32,8 +32,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=DNDOn',
-                ]
-            }
+                ],
+            },
         )
 
     def test_dnd_notify_disable(self):
@@ -47,8 +47,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=DNDOff',
-                ]
-            }
+                ],
+            },
         )
 
     def test_dnd_notify_errors(self):
@@ -57,22 +57,24 @@ class TestServices(unittest.TestCase):
         http_error.response.status_code = 404
         self.confd.users.get.side_effect = http_error
         assert_that(
-            calling(self.service.notify_dnd).with_args('123', True),
-            raises(NoSuchUser),
+            calling(self.service.notify_dnd).with_args('123', True), raises(NoSuchUser),
         )
         http_error.response.status_code = 500
         assert_that(
-            calling(self.service.notify_dnd).with_args('123', True),
-            raises(HTTPError),
+            calling(self.service.notify_dnd).with_args('123', True), raises(HTTPError),
         )
 
     def test_dnd_update_enable(self):
         self.service.update_dnd('123', True)
-        self.confd.users('123').update_service.assert_called_once_with('dnd', {'enabled': True})
+        self.confd.users('123').update_service.assert_called_once_with(
+            'dnd', {'enabled': True}
+        )
 
     def test_dnd_update_disable(self):
         self.service.update_dnd('123', False)
-        self.confd.users('123').update_service.assert_called_once_with('dnd', {'enabled': False})
+        self.confd.users('123').update_service.assert_called_once_with(
+            'dnd', {'enabled': False}
+        )
 
     def test_forward_unconditional_notify_enable(self):
         self.confd.users.get.return_value = {'lines': [{'name': 'line-123'}]}
@@ -85,8 +87,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=AlwaysFwdOn=1002',
-                ]
-            }
+                ],
+            },
         )
 
     def test_forward_unconditional_notify_disable(self):
@@ -100,8 +102,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=AlwaysFwdOff',
-                ]
-            }
+                ],
+            },
         )
 
     def test_forward_unconditional_notify_errors(self):
@@ -110,12 +112,16 @@ class TestServices(unittest.TestCase):
         http_error.response.status_code = 404
         self.confd.users.get.side_effect = http_error
         assert_that(
-            calling(self.service.notify_forward_unconditional).with_args('123', '1002', True),
+            calling(self.service.notify_forward_unconditional).with_args(
+                '123', '1002', True
+            ),
             raises(NoSuchUser),
         )
         http_error.response.status_code = 500
         assert_that(
-            calling(self.service.notify_forward_unconditional).with_args('123', '1002', True),
+            calling(self.service.notify_forward_unconditional).with_args(
+                '123', '1002', True
+            ),
             raises(HTTPError),
         )
 
@@ -142,8 +148,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=BusyFwdOn=1002',
-                ]
-            }
+                ],
+            },
         )
 
     def test_forward_busy_notify_disable(self):
@@ -157,8 +163,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=BusyFwdOff',
-                ]
-            }
+                ],
+            },
         )
 
     def test_forward_busy_notify_errors(self):
@@ -199,8 +205,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=NoAnswFwdOn=1002',
-                ]
-            }
+                ],
+            },
         )
 
     def test_forward_noanswer_notify_disable(self):
@@ -214,8 +220,8 @@ class TestServices(unittest.TestCase):
                     'Content-Type=message/sipfrag',
                     'Event=ACTION-URI',
                     'Content=key=NoAnswFwdOff',
-                ]
-            }
+                ],
+            },
         )
 
     def test_forward_noanswer_notify_errors(self):
@@ -224,12 +230,16 @@ class TestServices(unittest.TestCase):
         http_error.response.status_code = 404
         self.confd.users.get.side_effect = http_error
         assert_that(
-            calling(self.service.notify_forward_noanswer).with_args('123', '1002', True),
+            calling(self.service.notify_forward_noanswer).with_args(
+                '123', '1002', True
+            ),
             raises(NoSuchUser),
         )
         http_error.response.status_code = 500
         assert_that(
-            calling(self.service.notify_forward_noanswer).with_args('123', '1002', True),
+            calling(self.service.notify_forward_noanswer).with_args(
+                '123', '1002', True
+            ),
             raises(HTTPError),
         )
 

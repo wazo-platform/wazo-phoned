@@ -45,9 +45,15 @@ class ClientPlugin(metaclass=ABCMeta):
         self.input_url = self.input_url_fmt.format(vendor=self.vendor)
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
 
-        self.directories_menu_url = self.directories_menu_url_fmt.format(vendor=self.vendor)
-        self.directories_input_url = self.directories_input_url_fmt.format(vendor=self.vendor)
-        self.directories_lookup_url = self.directories_lookup_url_fmt.format(vendor=self.vendor)
+        self.directories_menu_url = self.directories_menu_url_fmt.format(
+            vendor=self.vendor
+        )
+        self.directories_input_url = self.directories_input_url_fmt.format(
+            vendor=self.vendor
+        )
+        self.directories_lookup_url = self.directories_lookup_url_fmt.format(
+            vendor=self.vendor
+        )
         self._add_resources(api, class_kwargs)
 
     @abstractmethod

@@ -32,7 +32,9 @@ class Plugin:
     user_service_dnd_url_fmt = '/{vendor}/user_service/dnd'
     user_service_forward_busy_url_fmt = '/{vendor}/user_service/forward_busy'
     user_service_forward_noanswer_url_fmt = '/{vendor}/user_service/forward_noanswer'
-    user_service_forward_unconditional_url_fmt = '/{vendor}/user_service/forward_unconditional'
+    user_service_forward_unconditional_url_fmt = (
+        '/{vendor}/user_service/forward_unconditional'
+    )
 
     vendor = 'yealink'
     import_name = __name__
@@ -70,12 +72,22 @@ class Plugin:
 
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
 
-        self.directories_lookup_url = self.directories_lookup_url_fmt.format(vendor=self.vendor)
+        self.directories_lookup_url = self.directories_lookup_url_fmt.format(
+            vendor=self.vendor
+        )
 
-        self.user_service_dnd_url = self.user_service_dnd_url_fmt.format(vendor=self.vendor)
-        self.user_service_forward_busy_url = self.user_service_forward_busy_url_fmt.format(vendor=self.vendor)
-        self.user_service_forward_noanswer_url = self.user_service_forward_noanswer_url_fmt.format(vendor=self.vendor)
-        self.user_service_forward_unconditional_url = self.user_service_forward_unconditional_url_fmt.format(vendor=self.vendor)
+        self.user_service_dnd_url = self.user_service_dnd_url_fmt.format(
+            vendor=self.vendor
+        )
+        self.user_service_forward_busy_url = self.user_service_forward_busy_url_fmt.format(
+            vendor=self.vendor
+        )
+        self.user_service_forward_noanswer_url = self.user_service_forward_noanswer_url_fmt.format(
+            vendor=self.vendor
+        )
+        self.user_service_forward_unconditional_url = self.user_service_forward_unconditional_url_fmt.format(
+            vendor=self.vendor
+        )
         self._add_resources(api, directories_class_kwargs)
         self._add_user_service_resources(api, user_service_class_kwargs)
 

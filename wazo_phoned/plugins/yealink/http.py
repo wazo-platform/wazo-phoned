@@ -6,7 +6,10 @@ import logging
 
 from wazo_phoned.auth_remote_addr import AuthResource
 from wazo_phoned.plugin_helpers.client.http import ClientLookup
-from wazo_phoned.plugin_helpers.client.schema import UserForwardSchema, UserServiceSchema
+from wazo_phoned.plugin_helpers.client.schema import (
+    UserForwardSchema,
+    UserServiceSchema,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +21,6 @@ class Lookup(ClientLookup):
 
 
 class DNDUserService(AuthResource):
-
     def __init__(self, service, *args, **kwargs):
         super().__init__()
         self._service = service
@@ -36,7 +38,6 @@ class DNDUserService(AuthResource):
 
 
 class UnconditionalForwardUserService(AuthResource):
-
     def __init__(self, service, *args, **kwargs):
         super().__init__()
         self._service = service
@@ -52,7 +53,6 @@ class UnconditionalForwardUserService(AuthResource):
 
 
 class NoAnswerForwardUserService(AuthResource):
-
     def __init__(self, service, *args, **kwargs):
         super().__init__()
         self._service = service
@@ -68,7 +68,6 @@ class NoAnswerForwardUserService(AuthResource):
 
 
 class BusyForwardUserService(AuthResource):
-
     def __init__(self, service, *args, **kwargs):
         super().__init__()
         self._service = service

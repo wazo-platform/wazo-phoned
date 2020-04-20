@@ -6,7 +6,6 @@ from wazo_phoned.plugin_helpers.client.exceptions import NoSuchUser
 
 
 class YealinkService:
-
     def __init__(self, amid_client, confd_client):
         self.amid = amid_client
         self.confd = confd_client
@@ -33,10 +32,9 @@ class YealinkService:
 
     def update_forward_unconditional(self, user_uuid, destination, enabled):
         try:
-            self.confd.users(user_uuid).update_forward('unconditional', {
-                'destination': destination,
-                'enabled': enabled,
-            })
+            self.confd.users(user_uuid).update_forward(
+                'unconditional', {'destination': destination, 'enabled': enabled}
+            )
         except RequestException as e:
             response = getattr(e, 'response', None)
             status_code = getattr(response, 'status_code', None)
@@ -56,10 +54,9 @@ class YealinkService:
 
     def update_forward_noanswer(self, user_uuid, destination, enabled):
         try:
-            self.confd.users(user_uuid).update_forward('noanswer', {
-                'destination': destination,
-                'enabled': enabled,
-            })
+            self.confd.users(user_uuid).update_forward(
+                'noanswer', {'destination': destination, 'enabled': enabled}
+            )
         except RequestException as e:
             response = getattr(e, 'response', None)
             status_code = getattr(response, 'status_code', None)
@@ -79,10 +76,9 @@ class YealinkService:
 
     def update_forward_busy(self, user_uuid, destination, enabled):
         try:
-            self.confd.users(user_uuid).update_forward('busy', {
-                'destination': destination,
-                'enabled': enabled,
-            })
+            self.confd.users(user_uuid).update_forward(
+                'busy', {'destination': destination, 'enabled': enabled}
+            )
         except RequestException as e:
             response = getattr(e, 'response', None)
             status_code = getattr(response, 'status_code', None)
@@ -101,14 +97,17 @@ class YealinkService:
                     self._send_notify(endpoint, 'BusyFwdOff')
 
     def _send_notify(self, line, value):
-        self.amid.action('PJSIPNotify', {
-            'Endpoint': line,
-            'Variable': [
-                'Content-Type=message/sipfrag',
-                'Event=ACTION-URI',
-                'Content=key={}'.format(value)
-            ]
-        })
+        self.amid.action(
+            'PJSIPNotify',
+            {
+                'Endpoint': line,
+                'Variable': [
+                    'Content-Type=message/sipfrag',
+                    'Event=ACTION-URI',
+                    'Content=key={}'.format(value),
+                ],
+            },
+        )
 
     def _find_lines(self, user_uuid):
         try:

@@ -24,7 +24,9 @@ class UserForwardSchema(Schema):
     @validates_schema
     def validate_destination_when_enabled(seld, data, **kwargs):
         if data['enabled'] and not data['destination']:
-            raise ValidationError({'destination': ['Destination must be set when enabling a service']})
+            raise ValidationError(
+                {'destination': ['Destination must be set when enabling a service']}
+            )
 
 
 class UserServiceSchema(Schema):
