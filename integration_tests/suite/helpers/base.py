@@ -341,16 +341,35 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_user_service_result(
-        self, service_name, user_uuid, destination=None, enabled=True
+    def get_user_service_result(self, vendor, service_name, user_uuid, enabled=True):
+        params = {'enabled': enabled}
+        port = self.service_port(9499, 'phoned')
+        enable_status = 'enable' if enabled else 'disable'
+        url = 'https://localhost:{port}/0.1/{vendor}/users/{user_uuid}/services/{service_name}/{enabled}'.format(
+            port=port,
+            vendor=vendor,
+            user_uuid=user_uuid,
+            service_name=service_name,
+            enabled=enable_status,
+        )
+        result = requests.get(url, params=params, verify=False)
+        return result
+
+    @classmethod
+    def get_user_forward_result(
+        self, vendor, forward_name, user_uuid, destination=None, enabled=True
     ):
-        params = {'user_uuid': user_uuid, 'enabled': enabled}
+        params = {'enabled': enabled}
         if destination:
             params['destination'] = destination
-
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/yealink/user_service/{service_name}'.format(
-            port=port, service_name=service_name
+        enable_status = 'enable' if enabled else 'disable'
+        url = 'https://localhost:{port}/0.1/{vendor}/users/{user_uuid}/forwards/{forward_name}/{enabled}'.format(
+            port=port,
+            vendor=vendor,
+            user_uuid=user_uuid,
+            forward_name=forward_name,
+            enabled=enable_status,
         )
         result = requests.get(url, params=params, verify=False)
         return result

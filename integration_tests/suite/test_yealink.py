@@ -634,9 +634,9 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()
 
-    def test_dnd(self):
+    def test_dnd_enable(self):
         confd_client = self.make_mock_confd()
-        response = self.get_user_service_result('dnd', '123', None, True)
+        response = self.get_user_service_result(VENDOR, 'dnd', '123', True)
         assert_that(response.status_code, equal_to(200))
 
         assert_that(
@@ -652,9 +652,37 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
             ),
         )
 
-    def test_forward_busy(self):
+    def test_dnd_disable(self):
         confd_client = self.make_mock_confd()
-        response = self.get_user_service_result('forward_busy', '123', '1001', True)
+        response = self.get_user_service_result(VENDOR, 'dnd', '123', False)
+        assert_that(response.status_code, equal_to(200))
+
+        assert_that(
+            confd_client.requests()['requests'],
+            has_item(
+                has_entries(
+                    {
+                        'method': 'PUT',
+                        'path': '/1.1/users/123/services/dnd',
+                        'json': has_entries({'enabled': False}),
+                    }
+                )
+            ),
+        )
+
+
+class TestUserForwardHTTP(BasePhonedIntegrationTest):
+
+    asset = 'default_config'
+    wait_strategy = PhonedEverythingUpWaitStrategy()
+
+    def test_forward_busy_enable(self):
+        response = self.get_user_forward_result(VENDOR, 'busy', '123', '1002', True)
+        assert_that(response.status_code, equal_to(404))  # There is no enable endpoint
+
+    def test_forward_busy_disable(self):
+        confd_client = self.make_mock_confd()
+        response = self.get_user_forward_result(VENDOR, 'busy', '123', None, False)
         assert_that(response.status_code, equal_to(200))
 
         assert_that(
@@ -664,19 +692,19 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
                     {
                         'method': 'PUT',
                         'path': '/1.1/users/123/forwards/busy',
-                        'json': has_entries({'enabled': True, 'destination': '1001'}),
+                        'json': has_entries({'enabled': False}),
                     }
                 )
             ),
         )
 
-    def test_forward_busy_no_destination_when_enabling_raises_error(self):
-        response = self.get_user_service_result('forward_busy', '123', None, True)
-        assert_that(response.status_code, equal_to(400))
+    def test_forward_noanswer_enable(self):
+        response = self.get_user_forward_result(VENDOR, 'noanswer', '123', '1001', True)
+        assert_that(response.status_code, equal_to(404))
 
-    def test_forward_noanswer(self):
+    def test_forward_noanswer_disable(self):
         confd_client = self.make_mock_confd()
-        response = self.get_user_service_result('forward_noanswer', '123', '1001', True)
+        response = self.get_user_forward_result(VENDOR, 'noanswer', '123', None, False)
         assert_that(response.status_code, equal_to(200))
 
         assert_that(
@@ -686,20 +714,22 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
                     {
                         'method': 'PUT',
                         'path': '/1.1/users/123/forwards/noanswer',
-                        'json': has_entries({'enabled': True, 'destination': '1001'}),
+                        'json': has_entries({'enabled': False}),
                     }
                 )
             ),
         )
 
-    def test_forward_noanswer_no_destination_when_enabling_raises_error(self):
-        response = self.get_user_service_result('forward_noanswer', '123', None, True)
-        assert_that(response.status_code, equal_to(400))
+    def test_forward_unconditional_enable(self):
+        response = self.get_user_forward_result(
+            VENDOR, 'unconditional', '123', '1002', True
+        )
+        assert_that(response.status_code, equal_to(404))
 
-    def test_forward_unconditional(self):
+    def test_forward_unconditional_disable(self):
         confd_client = self.make_mock_confd()
-        response = self.get_user_service_result(
-            'forward_unconditional', '123', '1001', True
+        response = self.get_user_forward_result(
+            VENDOR, 'unconditional', '123', None, False
         )
         assert_that(response.status_code, equal_to(200))
 
@@ -710,14 +740,8 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
                     {
                         'method': 'PUT',
                         'path': '/1.1/users/123/forwards/unconditional',
-                        'json': has_entries({'enabled': True, 'destination': '1001'}),
+                        'json': has_entries({'enabled': False}),
                     }
                 )
             ),
         )
-
-    def test_forward_unconditional_no_destination_when_enabling_raises_error(self):
-        response = self.get_user_service_result(
-            'forward_unconditional', '123', None, True
-        )
-        assert_that(response.status_code, equal_to(400))

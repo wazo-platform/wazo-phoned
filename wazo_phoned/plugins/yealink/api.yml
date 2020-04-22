@@ -62,16 +62,17 @@ paths:
       - $ref: '#/parameters/Limit'
       - $ref: '#/parameters/Offset'
       - $ref: '#/parameters/AcceptLanguage'
-  /yealink/user_service/dnd:
+  /yealink/users/{user_uuid}/services/dnd/enable:
     get:
-      summary: Set the DND user service status for a particular user.
+      summary: Enable the DND service for a particular user.
       description: |
-        The `dnd` service will enable or disable the user DND status through
+        This `dnd` service endpoint will enable the user DND service through
         `wazo-confd`.
-      operationId: yealink_user_service_dnd
+      operationId: yealink_user_service_dnd_enable
       tags:
       - yealink
-      - user_service
+      - users
+      - services
       produces:
       - text/xml
       responses:
@@ -84,17 +85,40 @@ paths:
           $ref: '#/responses/NoSuchUser'
       parameters:
       - $ref: '#/parameters/WazoUserUUID'
-      - $ref: '#/parameters/Enabled'
-  /yealink/user_service/forward_busy:
+  /yealink/users/{user_uuid}/services/dnd/disable:
     get:
-      summary: Set the forward on busy user service for a particular user.
+      summary: Disable the DND service for a particular user.
       description: |
-        The `forward_busy` service will enable or disable the user forward on
-        busy destination and status through `wazo-confd`.
-      operationId: yealink_user_service_forward_busy
+        This `dnd` service endpoint will disable the user DND service through
+        `wazo-confd`.
+      operationId: yealink_user_service_dnd_disable
       tags:
       - yealink
-      - user_service
+      - users
+      - services
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: The status was changed
+        '400':
+          description: Provided data is incorrect or a required field is missing
+          $ref: '#/responses/InvalidDataError'
+        '404':
+          $ref: '#/responses/NoSuchUser'
+      parameters:
+      - $ref: '#/parameters/WazoUserUUID'
+  /yealink/users/{user_uuid}/forwards/busy/disable:
+    get:
+      summary: Disable the busy forward for a particular user.
+      description: |
+        The `busy` forward endpoint will disable the user forward on busy
+        through `wazo-confd`.
+      operationId: yealink_user_forward_busy_disable
+      tags:
+      - yealink
+      - users
+      - forwards
       produces:
       - text/xml
       responses:
@@ -106,15 +130,13 @@ paths:
           $ref: '#/responses/NoSuchUser'
       parameters:
       - $ref: '#/parameters/WazoUserUUID'
-      - $ref: '#/parameters/Destination'
-      - $ref: '#/parameters/Enabled'
-  /yealink/user_service/forward_noanswer:
+  /yealink/users/{user_uuid}/forwards/noanswer/disable:
     get:
-      summary: Set the forward on no answer user service for a particular user.
+      summary: Disable the no answer forward for a particular user.
       description: |
-        The `forward_noanswer` service will enable or disable the user forward on
-        no answer destination and status through `wazo-confd`.
-      operationId: yealink_user_service_forward_noanswer
+        This `noanswer` forward endpoint will disable the user forward on no
+        answer through `wazo-confd`.
+      operationId: yealink_user_forward_noanswer_disable
       tags:
       - yealink
       - user_service
@@ -129,18 +151,17 @@ paths:
           $ref: '#/responses/NoSuchUser'
       parameters:
       - $ref: '#/parameters/WazoUserUUID'
-      - $ref: '#/parameters/Destination'
-      - $ref: '#/parameters/Enabled'
-  /yealink/user_service/forward_unconditional:
+  /yealink/users/{user_uuid}/forwards/unconditional/disable:
     get:
       summary: Set the unconditional forward user service for a particular user.
       description: |
-        The `forward_noanswer` service will enable or disable the user
-        unconditional forward destination and status through `wazo-confd`.
-      operationId: yealink_user_service_forward_unconditional
+        This `noanswer` forward endopint will disable the user unconditional
+        forward through `wazo-confd`.
+      operationId: yealink_user_forward_unconditional_disable
       tags:
       - yealink
-      - user_service
+      - users
+      - forwards
       produces:
       - text/xml
       responses:
@@ -152,8 +173,6 @@ paths:
           $ref: '#/responses/NoSuchUser'
       parameters:
       - $ref: '#/parameters/WazoUserUUID'
-      - $ref: '#/parameters/Destination'
-      - $ref: '#/parameters/Enabled'
 definitions:
   YealinkIPPhoneDirectory:
     properties:

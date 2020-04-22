@@ -11,11 +11,12 @@ from wazo_dird_client import Client as DirdClient
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
 from .bus_consume import BusEventHandler
 from .http import (
-    BusyForwardUserService,
-    DNDUserService,
+    BusyUserForward,
+    DNDUserServiceEnable,
+    DNDUserServiceDisable,
     Lookup,
-    NoAnswerForwardUserService,
-    UnconditionalForwardUserService,
+    NoAnswerUserForward,
+    UnconditionalUserForward,
 )
 from .services import YealinkService
 
@@ -29,11 +30,18 @@ class Plugin:
 
     directories_lookup_url_fmt = '/{vendor}/directories/lookup/<profile>'
 
-    user_service_dnd_url_fmt = '/{vendor}/user_service/dnd'
-    user_service_forward_busy_url_fmt = '/{vendor}/user_service/forward_busy'
-    user_service_forward_noanswer_url_fmt = '/{vendor}/user_service/forward_noanswer'
-    user_service_forward_unconditional_url_fmt = (
-        '/{vendor}/user_service/forward_unconditional'
+    user_service_dnd_enable_url_fmt = '/{vendor}/users/<user_uuid>/services/dnd/enable'
+    user_service_dnd_disable_url_fmt = (
+        '/{vendor}/users/<user_uuid>/services/dnd/disable'
+    )
+    user_forward_busy_disable_url_fmt = (
+        '/{vendor}/users/<user_uuid>/forwards/busy/disable'
+    )
+    user_forward_noanswer_disable_url_fmt = (
+        '/{vendor}/users/<user_uuid>/forwards/noanswer/disable'
+    )
+    user_forward_unconditional_disable_url_fmt = (
+        '/{vendor}/users/<user_uuid>/forwards/unconditional/disable'
     )
 
     vendor = 'yealink'
@@ -76,16 +84,19 @@ class Plugin:
             vendor=self.vendor
         )
 
-        self.user_service_dnd_url = self.user_service_dnd_url_fmt.format(
+        self.user_service_dnd_enable_url = self.user_service_dnd_enable_url_fmt.format(
             vendor=self.vendor
         )
-        self.user_service_forward_busy_url = self.user_service_forward_busy_url_fmt.format(
+        self.user_service_dnd_disable_url = self.user_service_dnd_disable_url_fmt.format(
             vendor=self.vendor
         )
-        self.user_service_forward_noanswer_url = self.user_service_forward_noanswer_url_fmt.format(
+        self.user_forward_busy_disable_url = self.user_forward_busy_disable_url_fmt.format(
             vendor=self.vendor
         )
-        self.user_service_forward_unconditional_url = self.user_service_forward_unconditional_url_fmt.format(
+        self.user_forward_noanswer_disable_url = self.user_forward_noanswer_disable_url_fmt.format(
+            vendor=self.vendor
+        )
+        self.user_forward_unconditional_disable_url = self.user_forward_unconditional_disable_url_fmt.format(
             vendor=self.vendor
         )
         self._add_resources(api, directories_class_kwargs)
@@ -107,26 +118,32 @@ class Plugin:
 
     def _add_user_service_resources(self, api, class_kwargs):
         api.add_resource(
-            DNDUserService,
-            self.user_service_dnd_url,
-            endpoint='yealink_user_service_dnd',
+            DNDUserServiceEnable,
+            self.user_service_dnd_enable_url,
+            endpoint='yealink_user_service_dnd_enable',
             resource_class_kwargs=class_kwargs,
         )
         api.add_resource(
-            BusyForwardUserService,
-            self.user_service_forward_busy_url,
-            endpoint='yealink_user_service_forward_busy',
+            DNDUserServiceDisable,
+            self.user_service_dnd_disable_url,
+            endpoint='yealink_user_service_dnd_disable',
             resource_class_kwargs=class_kwargs,
         )
         api.add_resource(
-            NoAnswerForwardUserService,
-            self.user_service_forward_noanswer_url,
-            endpoint='yealink_user_service_forward_noanswer',
+            BusyUserForward,
+            self.user_forward_busy_disable_url,
+            endpoint='yealink_user_forward_busy_disable',
             resource_class_kwargs=class_kwargs,
         )
         api.add_resource(
-            UnconditionalForwardUserService,
-            self.user_service_forward_unconditional_url,
-            endpoint='yealink_user_service_forward_unconditional',
+            NoAnswerUserForward,
+            self.user_forward_noanswer_disable_url,
+            endpoint='yealink_user_forward_noanswer_disable',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            UnconditionalUserForward,
+            self.user_forward_unconditional_disable_url,
+            endpoint='yealink_user_forward_unconditional_disable',
             resource_class_kwargs=class_kwargs,
         )

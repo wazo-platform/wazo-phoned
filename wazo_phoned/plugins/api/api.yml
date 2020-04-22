@@ -55,12 +55,6 @@ parameters:
     type: string
     description: The extension of the user service destination
     required: false
-  Enabled:
-    name: enabled
-    in: query
-    type: boolean
-    description: The state of the user service
-    required: true
   Limit:
     name: limit
     in: query
@@ -110,7 +104,7 @@ parameters:
     required: true
   WazoUserUUID:
     name: user_uuid
-    in: query
+    in: path
     type: string
     description: The user UUID of the user doing that query
     required: true
