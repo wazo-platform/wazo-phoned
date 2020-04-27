@@ -9,9 +9,6 @@ Changelog
 
   * GET `/0.1/yealink/users/<uuid>/services/dnd/enable`
   * GET `/0.1/yealink/users/<uuid>/services/dnd/disable`
-  * GET `/0.1/yealink/users/<uuid>/forwards/busy/disable`
-  * GET `/0.1/yealink/users/<uuid>/forwards/unconditional/disable`
-  * GET `/0.1/yealink/users/<uuid>/forwards/noanswer/disable`
   * GET `/0.1/yealink/directories/lookup/<profile>`
 
 20.03

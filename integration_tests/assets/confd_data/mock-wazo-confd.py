@@ -77,12 +77,5 @@ def user_service_put(user_uuid, service_name):
     return '', 204
 
 
-@app.route(
-    '/{}/users/<user_uuid>/forwards/<forward_name>'.format(API_VERSION), methods=['PUT']
-)
-def user_forward_put(user_uuid, forward_name):
-    return '', 204
-
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=port, debug=True)

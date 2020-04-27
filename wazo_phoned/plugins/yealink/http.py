@@ -35,33 +35,3 @@ class DNDUserServiceDisable(AuthResource):
         self._service.update_dnd(user_uuid, False)
 
         return '', 200
-
-
-class UnconditionalUserForward(AuthResource):
-    def __init__(self, service, *args, **kwargs):
-        super().__init__()
-        self._service = service
-
-    def get(self, user_uuid):
-        self._service.update_forward_unconditional(user_uuid, None, False)
-        return '', 200
-
-
-class NoAnswerUserForward(AuthResource):
-    def __init__(self, service, *args, **kwargs):
-        super().__init__()
-        self._service = service
-
-    def get(self, user_uuid):
-        self._service.update_forward_noanswer(user_uuid, None, False)
-        return '', 200
-
-
-class BusyUserForward(AuthResource):
-    def __init__(self, service, *args, **kwargs):
-        super().__init__()
-        self._service = service
-
-    def get(self, user_uuid):
-        self._service.update_forward_busy(user_uuid, None, False)
-        return '', 200

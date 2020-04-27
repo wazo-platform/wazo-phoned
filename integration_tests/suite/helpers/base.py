@@ -354,22 +354,3 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         )
         result = requests.get(url, params=params, verify=False)
         return result
-
-    @classmethod
-    def get_user_forward_result(
-        self, vendor, forward_name, user_uuid, destination=None, enabled=True
-    ):
-        params = {'enabled': enabled}
-        if destination:
-            params['destination'] = destination
-        port = self.service_port(9499, 'phoned')
-        enable_status = 'enable' if enabled else 'disable'
-        url = 'https://localhost:{port}/0.1/{vendor}/users/{user_uuid}/forwards/{forward_name}/{enabled}'.format(
-            port=port,
-            vendor=vendor,
-            user_uuid=user_uuid,
-            forward_name=forward_name,
-            enabled=enable_status,
-        )
-        result = requests.get(url, params=params, verify=False)
-        return result
