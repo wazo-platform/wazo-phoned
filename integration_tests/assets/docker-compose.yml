@@ -55,5 +55,4 @@ services:
       - 9486
     volumes:
       - ./confd_data:/usr/local/share/wazo-confd
-      - ./ssl:/usr/local/share/ssl
     command: python /usr/local/share/wazo-confd/mock-wazo-confd.py 9486

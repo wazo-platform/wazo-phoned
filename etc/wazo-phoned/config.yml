@@ -41,7 +41,8 @@ amid:
 confd:
   host: localhost
   port: 9486
-  verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
+  prefix: null
+  https: false
 
 # REST API server
 rest_api:

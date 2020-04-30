@@ -14,8 +14,6 @@ port = int(sys.argv[1])
 
 API_VERSION = '1.1'
 
-context = ('/usr/local/share/ssl/server.crt', '/usr/local/share/ssl/server.key')
-
 extensions_features_data = {
     'items': [
         {'feature': 'phoneprogfunckey', 'exten': '_*735.'},
@@ -71,4 +69,4 @@ def user_uuid_get(user_uuid):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=port, ssl_context=context, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)
