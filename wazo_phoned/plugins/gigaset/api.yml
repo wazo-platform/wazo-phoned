@@ -25,18 +25,12 @@ paths:
           $ref: '#/responses/AnotherServiceUnavailable'
       parameters:
       - $ref: '#/parameters/Profile'
-      - $ref: '#/parameters/PathUserUUID'
+      - $ref: '#/parameters/UserUUID'
       - $ref: '#/parameters/set_first'
       - $ref: '#/parameters/count'
       - $ref: '#/parameters/first'
       - $ref: '#/parameters/AcceptLanguage'
 parameters:
-  PathUserUUID:
-    name: user_uuid
-    in: path
-    type: string
-    description: The user UUID of the user doing that query
-    required: true
   set_first:
     name: set_first
     in: query

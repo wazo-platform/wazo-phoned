@@ -243,6 +243,20 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
+    def get_directories_lookup_result(
+        self, profile, vendor, xivo_user_uuid=None, term=None, headers=None
+    ):
+        params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
+        port = self.service_port(9498, 'phoned')
+        url = 'http://localhost:{port}/0.1/{vendor}/directories/lookup/{profile}'
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=params,
+            headers=headers,
+        )
+        return result
+
+    @classmethod
     def get_lookup_gigaset_result(
         self, profile, xivo_user_uuid=None, term=None, headers=None, **kwargs
     ):
@@ -284,6 +298,20 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
+    def get_ssl_directories_lookup_result(
+        self, profile, vendor, headers=None, **kwargs
+    ):
+        port = self.service_port(9499, 'phoned')
+        url = 'https://localhost:{port}/0.1/{vendor}/directories/lookup/{profile}'
+        result = requests.get(
+            url.format(port=port, profile=profile, vendor=vendor),
+            params=kwargs,
+            headers=headers,
+            verify=False,
+        )
+        return result
+
+    @classmethod
     def get_ssl_lookup_gigaset_result(
         self, profile, xivo_user_uuid=None, term=None, **kwargs
     ):
@@ -310,4 +338,19 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
             port=port
         )
         result = requests.get(url, params=params, headers=headers, verify=False)
+        return result
+
+    @classmethod
+    def get_user_service_result(self, vendor, service_name, user_uuid, enabled=True):
+        params = {'enabled': enabled}
+        port = self.service_port(9499, 'phoned')
+        enable_status = 'enable' if enabled else 'disable'
+        url = 'https://localhost:{port}/0.1/{vendor}/users/{user_uuid}/services/{service_name}/{enabled}'.format(
+            port=port,
+            vendor=vendor,
+            user_uuid=user_uuid,
+            service_name=service_name,
+            enabled=enable_status,
+        )
+        result = requests.get(url, params=params, verify=False)
         return result

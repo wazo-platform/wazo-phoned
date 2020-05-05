@@ -25,6 +25,11 @@ extensions_features_data = {
     ],
 }
 
+user_lines = {
+    '123': [{'endpoint_sip': {'name': 'line-123'}}],
+    '123-sccp': [{'endpoit_sccp': {'name': 'line-123-sccp'}}],
+}
+
 _requests = []
 
 
@@ -65,7 +70,16 @@ def extensions_features():
 
 @app.route('/{}/users/<user_uuid>'.format(API_VERSION), methods=['GET'])
 def user_uuid_get(user_uuid):
-    return jsonify({'id': 123})
+    return jsonify(
+        {'id': user_uuid, 'uuid': user_uuid, 'lines': user_lines.get(user_uuid)}
+    )
+
+
+@app.route(
+    '/{}/users/<user_uuid>/services/<service_name>'.format(API_VERSION), methods=['PUT']
+)
+def user_service_put(user_uuid, service_name):
+    return '', 204
 
 
 if __name__ == "__main__":
