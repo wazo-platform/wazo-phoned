@@ -71,7 +71,6 @@ paths:
       operationId: yealink_user_service_dnd_enable
       tags:
       - yealink
-      - users
       - services
       produces:
       - text/xml
@@ -94,7 +93,6 @@ paths:
       operationId: yealink_user_service_dnd_disable
       tags:
       - yealink
-      - users
       - services
       produces:
       - text/xml
