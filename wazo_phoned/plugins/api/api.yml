@@ -96,13 +96,13 @@ parameters:
     type: string
     description: A search term to look for
     required: true
-  UserUUID:
+  XivoUserUUID:
     name: xivo_user_uuid
     in: query
     type: string
     description: The user UUID of the user doing that query
     required: true
-  WazoUserUUID:
+  UserUUID:
     name: user_uuid
     in: path
     type: string
