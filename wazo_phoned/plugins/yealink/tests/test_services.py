@@ -22,7 +22,9 @@ class TestServices(unittest.TestCase):
         self.service = YealinkService(self.amid, self.confd)
 
     def test_dnd_notify_enable(self):
-        self.confd.users.get.return_value = {'lines': [{'name': 'line-123'}]}
+        self.confd.users.get.return_value = {
+            'lines': [{'endpoint_sip': {'name': 'line-123'}}]
+        }
         self.service.notify_dnd('123', True)
         self.amid.action.assert_called_once_with(
             'PJSIPNotify',
@@ -37,7 +39,9 @@ class TestServices(unittest.TestCase):
         )
 
     def test_dnd_notify_disable(self):
-        self.confd.users.get.return_value = {'lines': [{'name': 'line-123'}]}
+        self.confd.users.get.return_value = {
+            'lines': [{'endpoint_sip': {'name': 'line-123'}}]
+        }
         self.service.notify_dnd('123', False)
         self.amid.action.assert_called_once_with(
             'PJSIPNotify',
@@ -50,6 +54,11 @@ class TestServices(unittest.TestCase):
                 ],
             },
         )
+
+    def test_dnd_notify_no_sip_endpoint(self):
+        self.confd.users.get.return_value = {'lines': [{'endpoint_sip': None}]}
+        self.service.notify_dnd('123', False)
+        self.amid.action.assert_not_called()
 
     def test_dnd_notify_errors(self):
         http_error = HTTPError()

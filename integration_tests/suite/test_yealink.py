@@ -3,6 +3,7 @@
 
 from hamcrest import (
     assert_that,
+    empty,
     equal_to,
     has_entries,
     has_item,
@@ -535,6 +536,16 @@ class TestUserServiceEvents(BasePhonedIntegrationTest):
                     )
                 ),
             )
+
+        until.assert_(assert_amid_request, tries=5)
+
+    def test_that_dnd_event_sccp_line_does_not_trigger_ami_command(self):
+        amid_client = self.make_amid()
+        bus_client = self.make_bus()
+        bus_client.send_user_dnd_update('123-sccp', True)
+
+        def assert_amid_request():
+            assert_that(amid_client.requests()['requests'], empty())
 
         until.assert_(assert_amid_request, tries=5)
 

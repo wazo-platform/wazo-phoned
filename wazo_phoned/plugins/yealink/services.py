@@ -23,12 +23,13 @@ class YealinkService:
     def notify_dnd(self, user_uuid, enabled):
         lines = self._find_lines(user_uuid)
         for line in lines:
-            endpoint = line.get('name')
+            endpoint = line.get('endpoint_sip')
             if endpoint:
+                endpoint_name = endpoint.get('name')
                 if enabled:
-                    self._send_notify(endpoint, 'DNDOn')
+                    self._send_notify(endpoint_name, 'DNDOn')
                 else:
-                    self._send_notify(endpoint, 'DNDOff')
+                    self._send_notify(endpoint_name, 'DNDOff')
 
     def _send_notify(self, line, value):
         self.amid.action(
