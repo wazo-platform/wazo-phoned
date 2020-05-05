@@ -27,7 +27,6 @@ bus:
 
 confd:
   host: confd
-  verify_certificate: False
 
 dird:
   host: dird
