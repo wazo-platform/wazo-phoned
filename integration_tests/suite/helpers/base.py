@@ -167,26 +167,6 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_menu_autodetect_result(self, user_agent=None):
-        headers = {'User-Agent': user_agent}
-        port = self.service_port(9498, 'phoned')
-        url = 'http://localhost:{port}/0.1/directories/menu/autodetect'.format(
-            port=port
-        )
-        result = requests.get(url, headers=headers)
-        return result
-
-    @classmethod
-    def get_ssl_menu_autodetect_result(self, user_agent=None):
-        headers = {'User-Agent': user_agent}
-        port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/directories/menu/autodetect'.format(
-            port=port
-        )
-        result = requests.get(url, headers=headers, verify=False)
-        return result
-
-    @classmethod
     def get_input_result(self, profile, vendor, xivo_user_uuid=None):
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9498, 'phoned')
@@ -206,26 +186,6 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
             params=params,
             verify=False,
         )
-        return result
-
-    @classmethod
-    def get_input_autodetect_result(self, user_agent=None):
-        headers = {'User-Agent': user_agent}
-        port = self.service_port(9498, 'phoned')
-        url = 'http://localhost:{port}/0.1/directories/input/autodetect'.format(
-            port=port
-        )
-        result = requests.get(url, headers=headers)
-        return result
-
-    @classmethod
-    def get_ssl_input_autodetect_result(self, user_agent=None):
-        headers = {'User-Agent': user_agent}
-        port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/directories/input/autodetect'.format(
-            port=port
-        )
-        result = requests.get(url, headers=headers, verify=False)
         return result
 
     @classmethod
@@ -275,17 +235,6 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result
 
     @classmethod
-    def get_lookup_autodetect_result(self, term=None, user_agent=None):
-        params = {'term': term}
-        headers = {'User-Agent': user_agent}
-        port = self.service_port(9498, 'phoned')
-        url = 'http://localhost:{port}/0.1/directories/lookup/autodetect'.format(
-            port=port
-        )
-        result = requests.get(url, params=params, headers=headers)
-        return result
-
-    @classmethod
     def get_ssl_lookup_result(self, profile, vendor, headers=None, **kwargs):
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
@@ -327,17 +276,6 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
             params=params,
             verify=False,
         )
-        return result
-
-    @classmethod
-    def get_ssl_lookup_autodetect_result(self, term=None, user_agent=None):
-        params = {'term': term}
-        headers = {'User-Agent': user_agent}
-        port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/directories/lookup/autodetect'.format(
-            port=port
-        )
-        result = requests.get(url, params=params, headers=headers, verify=False)
         return result
 
     @classmethod
