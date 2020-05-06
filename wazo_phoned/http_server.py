@@ -16,7 +16,9 @@ from flask import request
 from flask_babel import Babel
 from flask_cors import CORS
 from pkg_resources import iter_entry_points, resource_filename, resource_isdir
+from werkzeug.contrib.fixers import ProxyFix
 from xivo import http_helpers
+from xivo.http_helpers import ReverseProxied
 
 VERSION = 0.1
 BABEL_DEFAULT_LOCALE = 'en'
@@ -83,7 +85,9 @@ class HTTPServer:
         http_config = self.config['http']
         https_config = self.config['https']
 
-        wsgi_app = wsgi.WSGIPathInfoDispatcher({'/': self.app})
+        wsgi_app = ReverseProxied(
+            ProxyFix(wsgi.WSGIPathInfoDispatcher({'/': self.app}))
+        )
         cherrypy.server.unsubscribe()
         cherrypy.config.update({'environment': 'production'})
 

@@ -3,6 +3,7 @@
 set -e
 
 LOG_FILENAME='/var/log/wazo-phoned.log'
+DAEMONNAME='wazo-phoned'
 
 case "$1" in
     configure)
@@ -27,6 +28,13 @@ case "$1" in
             rmdir --ignore-fail-on-non-empty -p /etc/wazo-dird-phoned/conf.d
         fi
         # End of move files from wazo-dird-phoned
+
+        if dpkg --compare-versions "${previous_version}" lt '20.07'; then
+            ln -sf /etc/nginx/locations/https-available/$DAEMONNAME \
+                   /etc/nginx/locations/https-enabled/$DAEMONNAME
+            ln -sf /etc/nginx/locations/http-available/$DAEMONNAME \
+                   /etc/nginx/locations/http-enabled/$DAEMONNAME
+        fi
 
         if [ ! -e "$LOG_FILENAME" ]; then
             touch "$LOG_FILENAME"
