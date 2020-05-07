@@ -20,4 +20,4 @@ ADD ./contribs/docker/certs /usr/share/xivo-certs
 
 EXPOSE 9498 9499
 
-CMD ["wazo-phoned", "-fd"]
+CMD ["wazo-phoned", "-d"]

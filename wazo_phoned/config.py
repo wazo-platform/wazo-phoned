@@ -22,7 +22,6 @@ _DEFAULT_CONFIG = {
     'debug': False,
     'log_level': 'info',
     'log_filename': '/var/log/wazo-phoned.log',
-    'foreground': False,
     'pid_filename': '/run/wazo-phoned/wazo-phoned.pid',
     'rest_api': {
         'http': {'listen': '0.0.0.0', 'port': 9498, 'enable': True},
@@ -90,12 +89,6 @@ def _parse_cli_args(argv):
         help="Log debug messages. Overrides log_level. Default: %(default)s",
     )
     parser.add_argument(
-        '-f',
-        '--foreground',
-        action='store_true',
-        help="Foreground, don't daemonize. Default: %(default)s",
-    )
-    parser.add_argument(
         '-l',
         '--log-level',
         action='store',
@@ -112,8 +105,6 @@ def _parse_cli_args(argv):
         result['config_file'] = parsed_args.config_file
     if parsed_args.debug:
         result['debug'] = parsed_args.debug
-    if parsed_args.foreground:
-        result['foreground'] = parsed_args.foreground
     if parsed_args.log_level:
         result['log_level'] = parsed_args.log_level
     if parsed_args.user:

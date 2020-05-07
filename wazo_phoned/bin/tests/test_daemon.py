@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -37,7 +37,6 @@ class TestXivoDird(TestCase):
             'debug': s.debug,
             'log_filename': s.log_filename,
             'log_level': s.log_level,
-            'foreground': s.foreground,
             'user': s.user,
             'pid_filename': s.pid_filename,
         }
@@ -45,7 +44,7 @@ class TestXivoDird(TestCase):
         daemon.main(s.argv)
 
         setup_logging.assert_called_once_with(
-            s.log_filename, s.foreground, s.debug, s.log_level
+            s.log_filename, True, s.debug, s.log_level
         )
 
     def test_main_when_config_user_then_change_user(
@@ -55,7 +54,6 @@ class TestXivoDird(TestCase):
             'debug': s.debug,
             'log_filename': s.log_filename,
             'log_level': s.log_level,
-            'foreground': s.foreground,
             'user': s.user,
             'pid_filename': s.pid_filename,
         }
@@ -71,7 +69,6 @@ class TestXivoDird(TestCase):
             'debug': s.debug,
             'log_filename': s.log_filename,
             'log_level': s.log_level,
-            'foreground': s.foreground,
             'user': None,
             'pid_filename': s.pid_filename,
         }
@@ -88,7 +85,6 @@ class TestXivoDird(TestCase):
             'debug': s.debug,
             'log_filename': s.log_filename,
             'log_level': s.log_level,
-            'foreground': s.foreground,
             'user': None,
             'pid_filename': s.pid_filename,
         }
