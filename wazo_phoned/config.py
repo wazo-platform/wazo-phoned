@@ -7,20 +7,12 @@ from xivo.chain_map import ChainMap
 from xivo.config_helper import read_config_file_hierarchy, parse_config_file
 from xivo.xivo_logging import get_log_level_by_name
 
-_CERT_FILE = '/usr/share/xivo-certs/server.crt'
 _DEFAULT_CONFIG = {
-    'auth': {
-        'host': 'localhost',
-        'port': 9497,
-        'prefix': None,
-        'https': False,
-        'key_file': '/var/lib/wazo-auth-keys/wazo-phoned-key.yml',
-    },
-    'dird': {'host': 'localhost', 'port': 9489, 'verify_certificate': _CERT_FILE},
     'config_file': '/etc/wazo-phoned/config.yml',
     'extra_config_files': '/etc/wazo-phoned/conf.d/',
     'debug': False,
     'log_level': 'info',
+    'user': 'www-data',
     'log_filename': '/var/log/wazo-phoned.log',
     'pid_filename': '/run/wazo-phoned/wazo-phoned.pid',
     'rest_api': {
@@ -29,7 +21,7 @@ _DEFAULT_CONFIG = {
             'listen': '0.0.0.0',
             'port': 9499,
             'enable': True,
-            'certificate': _CERT_FILE,
+            'certificate': '/usr/share/xivo-certs/server.crt',
             'private_key': '/usr/share/xivo-certs/server.key',
         },
         'authorized_subnets': ['127.0.0.1/24'],
@@ -43,9 +35,16 @@ _DEFAULT_CONFIG = {
         'subscribe_exchange_name': 'wazo-headers',
         'subscribe_exchange_type': 'headers',
     },
+    'auth': {
+        'host': 'localhost',
+        'port': 9497,
+        'prefix': None,
+        'https': False,
+        'key_file': '/var/lib/wazo-auth-keys/wazo-phoned-key.yml',
+    },
+    'dird': {'host': 'localhost', 'port': 9489, 'prefix': None, 'https': False},
     'amid': {'host': 'localhost', 'port': 9491, 'prefix': None, 'https': False},
     'confd': {'host': 'localhost', 'port': 9486, 'prefix': None, 'https': False},
-    'user': 'www-data',
     'enabled_plugins': {
         'aastra': True,
         'blf': True,

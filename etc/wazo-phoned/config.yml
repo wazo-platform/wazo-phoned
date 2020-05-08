@@ -20,7 +20,8 @@ auth:
 dird:
   host: localhost
   port: 9489
-  verify_certificate: /usr/share/xivo-certs/server.crt  # True, False or CA Bundle
+  prefix: null
+  https: false
 
 # Event bus (AMQP) connection information
 bus:

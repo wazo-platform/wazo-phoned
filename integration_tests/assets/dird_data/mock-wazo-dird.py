@@ -9,8 +9,6 @@ app = Flask(__name__)
 
 port = int(sys.argv[1])
 
-context = ('/etc/ssl/server.crt', '/etc/ssl/server.key')
-
 LOOKUP_VENDORS = {
     'aastra',
     'cisco',
@@ -102,4 +100,4 @@ def lookup_get_default_json(profile, xivo_user_uuid):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=port, ssl_context=context, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)

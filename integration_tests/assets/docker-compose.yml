@@ -25,7 +25,6 @@ services:
       - "9489"
     volumes:
       - "./dird_data:/tmp"
-      - "./ssl:/etc/ssl"
     command: "python /tmp/mock-wazo-dird.py 9489"
 
   auth:

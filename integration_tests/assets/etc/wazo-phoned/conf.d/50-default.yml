@@ -30,6 +30,4 @@ confd:
 
 dird:
   host: dird
-  port: 9489
-  verify_certificate: False
   default_profile: default_phone
