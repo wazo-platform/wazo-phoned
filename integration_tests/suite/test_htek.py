@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -77,11 +77,7 @@ class TestHtek(BasePhonedIntegrationTest):
           <Name>Test User2</Name>
           <Telephone>1000</Telephone>
          </DirectoryEntry>
-        </PhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+        </PhoneDirectory>"""
                 )
             ),
         )
@@ -130,12 +126,7 @@ class TestHtek(BasePhonedIntegrationTest):
           <Name>Test User1</Name>
           <Telephone>0033123456789</Telephone>
          </DirectoryEntry>
-        </PhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </PhoneDirectory>"""
                 )
             ),
         )
@@ -161,12 +152,7 @@ class TestHtek(BasePhonedIntegrationTest):
           <Name>Test User1 (mobile)</Name>
           <Telephone>5555555555</Telephone>
          </DirectoryEntry>
-        </PhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </PhoneDirectory>"""
                 )
             ),
         )
@@ -192,12 +178,7 @@ class TestHtek(BasePhonedIntegrationTest):
           <Name>Test User2</Name>
           <Telephone>1000</Telephone>
          </DirectoryEntry>
-        </PhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </PhoneDirectory>"""
                 )
             ),
         )
