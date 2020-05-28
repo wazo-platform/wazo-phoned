@@ -86,11 +86,7 @@ class TestYealink(BasePhonedIntegrationTest):
           <Name>Test User2</Name>
           <Telephone>1000</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )
@@ -139,12 +135,7 @@ class TestYealink(BasePhonedIntegrationTest):
           <Name>Test User1</Name>
           <Telephone>0033123456789</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )
@@ -170,12 +161,7 @@ class TestYealink(BasePhonedIntegrationTest):
           <Name>Test User1 (mobile)</Name>
           <Telephone>5555555555</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )
@@ -201,12 +187,7 @@ class TestYealink(BasePhonedIntegrationTest):
           <Name>Test User2</Name>
           <Telephone>1000</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )
@@ -298,11 +279,7 @@ class TestYealinkDirectories(BasePhonedIntegrationTest):
           <Name>Test User2</Name>
           <Telephone>1000</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )
@@ -351,12 +328,7 @@ class TestYealinkDirectories(BasePhonedIntegrationTest):
           <Name>Test User1</Name>
           <Telephone>0033123456789</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )
@@ -382,12 +354,7 @@ class TestYealinkDirectories(BasePhonedIntegrationTest):
           <Name>Test User1 (mobile)</Name>
           <Telephone>5555555555</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )
@@ -413,12 +380,7 @@ class TestYealinkDirectories(BasePhonedIntegrationTest):
           <Name>Test User2</Name>
           <Telephone>1000</Telephone>
          </DirectoryEntry>
-        </YealinkIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </YealinkIPPhoneDirectory>"""
                 )
             ),
         )

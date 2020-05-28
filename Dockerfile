@@ -1,23 +1,28 @@
-FROM python:3.7-buster
+FROM python:3.7-slim-buster AS compile-image
+LABEL maintainer="Wazo Maintainers <dev@wazo.community>"
 
-RUN mkdir -p /etc/wazo-phoned/conf.d
+RUN python -m venv /opt/venv
+# Activate virtual env
+ENV PATH="/opt/venv/bin:$PATH"
 
-RUN mkdir -p /run/wazo-phoned
-RUN chmod a+w /run/wazo-phoned
-
-RUN touch /var/log/wazo-phoned.log
-RUN chown www-data: /var/log/wazo-phoned.log
-
-ADD . /usr/src/wazo-phoned
-ADD ./contribs/docker/certs /usr/share/xivo-certs
+COPY . /usr/src/wazo-phoned
 WORKDIR /usr/src/wazo-phoned
 RUN pip install -r requirements.txt
-RUN cp -r etc/* /etc
-
 RUN python setup.py install
 
-ADD ./contribs/docker/certs /usr/share/xivo-certs
+FROM python:3.7-slim-buster AS build-image
+COPY --from=compile-image /opt/venv /opt/venv
+
+COPY ./etc/wazo-phoned /etc/wazo-phoned
+COPY ./contribs/docker/certs /usr/share/xivo-certs
+RUN true \
+    && adduser --quiet --system --group --home /var/lib/wazo-phoned wazo-phoned \
+    && mkdir -p /etc/wazo-phoned/conf.d \
+    && install -d -o www-data -g www-data /run/wazo-phoned/ \
+    && install -o www-data -g www-data /dev/null /var/log/wazo-phoned.log
 
 EXPOSE 9498 9499
 
+# Activate virtual env
+ENV PATH="/opt/venv/bin:$PATH"
 CMD ["wazo-phoned", "-d"]
