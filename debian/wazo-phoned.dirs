@@ -1,1 +1,3 @@
 etc/wazo-phoned/conf.d
+etc/nginx/locations/http-enabled
+etc/nginx/locations/https-enabled
