@@ -13,6 +13,8 @@ from .bus_consume import BusEventHandler
 from .http import (
     DNDUserServiceEnable,
     DNDUserServiceDisable,
+    AuthenticationUserService,
+    AuthenticateUserService,
     Lookup,
 )
 from .services import YealinkService
@@ -31,6 +33,9 @@ class Plugin:
     user_service_dnd_disable_url_fmt = (
         '/{vendor}/users/<user_uuid>/services/dnd/disable'
     )
+
+    user_service_authentication_url_fmt = '/{vendor}/services/authentication'
+    user_service_authenticate_url_fmt = '/{vendor}/services/authenticate'
 
     vendor = 'yealink'
     import_name = __name__
@@ -78,6 +83,14 @@ class Plugin:
         self.user_service_dnd_disable_url = self.user_service_dnd_disable_url_fmt.format(
             vendor=self.vendor
         )
+
+        self.user_service_authentication_url = self.user_service_authentication_url_fmt.format(
+            vendor=self.vendor
+        )
+        self.user_service_authenticate_url = self.user_service_authenticate_url_fmt.format(
+            vendor=self.vendor
+        )
+
         self._add_resources(api, directories_class_kwargs)
         self._add_user_service_resources(api, user_service_class_kwargs)
 
@@ -106,5 +119,17 @@ class Plugin:
             DNDUserServiceDisable,
             self.user_service_dnd_disable_url,
             endpoint='yealink_user_service_dnd_disable',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            AuthenticationUserService,
+            self.user_service_authentication_url,
+            endpoint='yealink_user_service_authentication',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            AuthenticateUserService,
+            self.user_service_authenticate_url,
+            endpoint='yealink_user_service_authenticate',
             resource_class_kwargs=class_kwargs,
         )

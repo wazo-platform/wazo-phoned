@@ -4,6 +4,11 @@
 from requests.exceptions import RequestException
 from wazo_phoned.plugin_helpers.client.exceptions import NoSuchUser
 
+from flask import (
+    render_template,
+    Response,
+)
+
 
 class YealinkService:
     def __init__(self, amid_client, confd_client):
@@ -30,6 +35,32 @@ class YealinkService:
                     self._send_notify(endpoint_name, 'DNDOn')
                 else:
                     self._send_notify(endpoint_name, 'DNDOff')
+
+    def view_authentication(self):
+        response_rendered = render_template(
+            'yealink_authentication.jinja'
+        )
+
+        return Response(response_rendered, content_type='text/xml; charset=utf-8', status=200)
+
+    def authenticate(self, provcode):
+        if not provcode:
+            return '', 404
+
+        response = self.confd.lines.list(provisioning_code=provcode, recurse=True)
+        if response['total'] < 1:
+            return '', 404
+
+        endpoint_sip_id = response['items'][0]['endpoint_sip']['id']
+        caller_id_name = response['items'][0]['caller_id_name']
+        line = self.confd.endpoints_sip.get(endpoint_sip_id)
+        line['caller_id_name'] = caller_id_name
+        response_rendered = render_template(
+            'yealink_account.jinja',
+            line = line
+        )
+
+        return Response(response_rendered, content_type='text/xml; charset=utf-8', status=200)
 
     def _send_notify(self, line, value):
         self.amid.action(
