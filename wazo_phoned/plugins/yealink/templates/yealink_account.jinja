@@ -6,6 +6,6 @@
   <Item>account.1.user_name = {{ line.username }}</Item>
   <Item>account.1.auth_name = {{ line.username }}</Item>
   <Item>account.1.password = {{ line.secret }}</Item>
-  <Item>account.1.sip_server.1.address = 142.112.40.221</Item>
-  <Item>account.1.sip_server.1.port = 5060</Item>
+  <Item>account.1.sip_server.1.address = {{ registrar.main_host }}</Item>
+  <Item>account.1.sip_server.1.port = {{ registrar.main_port }}</Item>
 </YealinkIPPhoneConfiguration>

@@ -7,6 +7,7 @@ from wazo_phoned.plugin_helpers.client.exceptions import NoSuchUser
 from flask import (
     render_template,
     Response,
+    request
 )
 
 
@@ -38,7 +39,8 @@ class YealinkService:
 
     def view_authentication(self):
         response_rendered = render_template(
-            'yealink_authentication.jinja'
+            'yealink_authentication.jinja',
+            hostname = request.host_url.replace("http", "https")
         )
 
         return Response(response_rendered, content_type='text/xml; charset=utf-8', status=200)
@@ -51,13 +53,15 @@ class YealinkService:
         if response['total'] < 1:
             return '', 404
 
+        registrar = self.confd.registrars.get(response['items'][0]['registrar'])
         endpoint_sip_id = response['items'][0]['endpoint_sip']['id']
         caller_id_name = response['items'][0]['caller_id_name']
         line = self.confd.endpoints_sip.get(endpoint_sip_id)
         line['caller_id_name'] = caller_id_name
         response_rendered = render_template(
             'yealink_account.jinja',
-            line = line
+            line = line,
+            registrar = registrar
         )
 
         return Response(response_rendered, content_type='text/xml; charset=utf-8', status=200)
