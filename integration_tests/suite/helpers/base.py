@@ -292,3 +292,25 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         )
         result = requests.get(url, params=params, verify=False)
         return result
+
+    @classmethod
+    def get_endpoint_hold_start_result(self, endpoint_name, token_uuid):
+        headers = {'X-Auth-Token': token_uuid}
+        port = self.service_port(9499, 'phoned')
+        url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/hold/start'.format(
+            port=port,
+            endpoint_name=endpoint_name,
+        )
+        result = requests.get(url, headers=headers, verify=False)
+        return result
+
+    @classmethod
+    def get_endpoint_hold_stop_result(self, endpoint_name, token_uuid):
+        headers = {'X-Auth-Token': token_uuid}
+        port = self.service_port(9499, 'phoned')
+        url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/hold/stop'.format(
+            port=port,
+            endpoint_name=endpoint_name,
+        )
+        result = requests.get(url, headers=headers, verify=False)
+        return result

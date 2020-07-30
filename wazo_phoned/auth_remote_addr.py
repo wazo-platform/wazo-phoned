@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -13,6 +13,9 @@ from netaddr import IPNetwork, IPAddress
 
 from xivo import mallow_helpers
 from xivo import rest_api_helpers
+from xivo.auth_verifier import AuthVerifier
+
+auth_verifier = AuthVerifier()
 
 logger = logging.getLogger(__name__)
 
@@ -47,3 +50,7 @@ class ErrorCatchingResource(Resource):
 
 class AuthResource(ErrorCatchingResource):
     method_decorators = [verify_remote_addr] + ErrorCatchingResource.method_decorators
+
+
+class TokenAuthResource(AuthResource):
+    method_decorators = [auth_verifier.verify_token] + AuthResource.method_decorators

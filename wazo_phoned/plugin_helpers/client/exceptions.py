@@ -1,4 +1,4 @@
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from xivo.rest_api_helpers import APIException
@@ -22,3 +22,17 @@ class NoSuchUser(APIException):
         msg = 'No such user: "{}"'.format(user_uuid)
         details = {'uuid': user_uuid}
         super().__init__(404, msg, 'unknown-user', details)
+
+
+class NoSuchDevice(APIException):
+    def __init__(self, device_id):
+        msg = 'No such device: "{}"'.format(device_id)
+        details = {'device_id': device_id}
+        super().__init__(404, msg, 'unknown-device', details)
+
+
+class NowhereToRouteEndpoint(APIException):
+    def __init__(self, endpoint_name):
+        msg = 'Nowhere to route endpoint: "{}"'.format(endpoint_name)
+        details = {'endpoint_name': endpoint_name}
+        super().__init__(400, msg, 'nowhere-to-route-endpoint', details)

@@ -49,6 +49,7 @@ _DEFAULT_CONFIG = {
         'blf': True,
         'api': True,
         'cisco': True,
+        'endpoint': True,
         'fanvil': True,
         'gigaset': True,
         'htek': True,
