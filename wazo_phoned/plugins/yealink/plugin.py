@@ -1,8 +1,6 @@
 # Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import logging
-
 from wazo_amid_client import Client as AmidClient
 from wazo_auth_client import Client as AuthClient
 from wazo_confd_client import Client as ConfdClient
@@ -16,8 +14,6 @@ from .http import (
     Lookup,
 )
 from .services import YealinkService
-
-logger = logging.getLogger(__name__)
 
 
 class Plugin:
