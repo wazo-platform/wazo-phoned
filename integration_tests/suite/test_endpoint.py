@@ -26,7 +26,7 @@ class TestEndpointHTTP(BasePhonedIntegrationTest):
     def test_that_endpoint_hold_start_sends_ami_command(self):
         amid_client = self.make_amid()
         response = self.get_endpoint_hold_start_result('yealink', VALID_TOKEN)
-        assert_that(response.status_code, equal_to(200))
+        assert_that(response.status_code, equal_to(204))
 
         def assert_amid_request():
             assert_that(
@@ -56,7 +56,7 @@ class TestEndpointHTTP(BasePhonedIntegrationTest):
     def test_that_endpoint_hold_stop_sends_ami_command(self):
         amid_client = self.make_amid()
         response = self.get_endpoint_hold_stop_result('yealink', VALID_TOKEN)
-        assert_that(response.status_code, equal_to(200))
+        assert_that(response.status_code, equal_to(204))
 
         def assert_amid_request():
             assert_that(

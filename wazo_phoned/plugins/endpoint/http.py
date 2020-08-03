@@ -11,9 +11,9 @@ class EndpointHoldStartResource(TokenAuthResource):
         self._service = service
 
     @required_acl('phoned.endpoints.{endpoint_name}.hold.start')
-    def get(self, endpoint_name):
+    def put(self, endpoint_name):
         self._service.hold(endpoint_name)
-        return '', 200
+        return '', 204
 
 
 class EndpointHoldStopResource(TokenAuthResource):
@@ -22,6 +22,6 @@ class EndpointHoldStopResource(TokenAuthResource):
         self._service = service
 
     @required_acl('phoned.endpoints.{endpoint_name}.hold.stop')
-    def get(self, endpoint_name):
+    def put(self, endpoint_name):
         self._service.unhold(endpoint_name)
-        return '', 200
+        return '', 204

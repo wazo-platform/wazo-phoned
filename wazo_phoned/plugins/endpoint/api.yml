@@ -1,6 +1,6 @@
 paths:
   /endpoints/{endpoint_name}/hold/start:
-    get:
+    put:
       summary: Start hold for a particular endpoint.
       description: |
         **Required ACL:** `phoned.endpoints.{endpoint_name}.hold.start`
@@ -13,7 +13,7 @@ paths:
       produces:
       - text/json
       responses:
-        '200':
+        '204':
           description: Hold was started
         '400':
           $ref: '#/responses/NowhereToRouteEndpoint'
@@ -22,7 +22,7 @@ paths:
       parameters:
       - $ref: '#/parameters/EndpointName'
   /endpoints/{endpoint_name}/hold/stop:
-    get:
+    put:
       summary: Stop hold for a particular endpoint.
       description: |
         **Required ACL:** `phoned.endpoints.{endpoint_name}.hold.stop`
@@ -35,7 +35,7 @@ paths:
       produces:
       - text/json
       responses:
-        '200':
+        '204':
           description: Hold was stopped
         '400':
           $ref: '#/responses/NowhereToRouteEndpoint'

@@ -301,7 +301,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
             port=port,
             endpoint_name=endpoint_name,
         )
-        result = requests.get(url, headers=headers, verify=False)
+        result = requests.put(url, headers=headers, verify=False)
         return result
 
     @classmethod
@@ -312,5 +312,5 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
             port=port,
             endpoint_name=endpoint_name,
         )
-        result = requests.get(url, headers=headers, verify=False)
+        result = requests.put(url, headers=headers, verify=False)
         return result
