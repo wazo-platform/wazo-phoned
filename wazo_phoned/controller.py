@@ -10,7 +10,7 @@ from xivo.status import StatusAggregator, TokenStatus
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
-from .auth_remote_addr import auth_verifier
+from .auth import auth_verifier
 from .bus import CoreBusConsumer
 from .http_server import HTTPServer
 

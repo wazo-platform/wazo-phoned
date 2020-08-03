@@ -1,7 +1,7 @@
 # Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from wazo_phoned.auth_remote_addr import AuthResource
+from wazo_phoned.auth import AuthResource
 from wazo_phoned.plugin_helpers.client.http import ClientLookup
 
 
