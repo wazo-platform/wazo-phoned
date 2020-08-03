@@ -90,14 +90,10 @@ def lines_get():
         body = {
             'items': [
                 {
-                'id': 0,
-                'name': search,
-                'endpoint_sip': {
                     'id': 0,
                     'name': search,
-                    'username': search,
-                },
-                'device_id': 'device-{}'.format(search),
+                    'endpoint_sip': {'id': 0, 'name': search, 'username': search},
+                    'device_id': 'device-{}'.format(search),
                 }
             ],
             'total': 1,
@@ -109,6 +105,7 @@ def lines_get():
         }
 
     return jsonify(body)
+
 
 @app.route('/{}/devices/<device_name>'.format(API_VERSION), methods=['GET'])
 def device_get(device_name):

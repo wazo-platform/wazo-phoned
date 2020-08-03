@@ -21,7 +21,6 @@ class TestEndpointHTTP(BasePhonedIntegrationTest):
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()
 
-
     def test_that_endpoint_hold_start_sends_ami_command(self):
         amid_client = self.make_amid()
         response = self.get_endpoint_hold_start_result('yealink', VALID_TOKEN)
