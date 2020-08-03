@@ -52,5 +52,7 @@ class AuthResource(ErrorCatchingResource):
     method_decorators = [verify_remote_addr] + ErrorCatchingResource.method_decorators
 
 
-class TokenAuthResource(AuthResource):
-    method_decorators = [auth_verifier.verify_token] + AuthResource.method_decorators
+class TokenAuthResource(ErrorCatchingResource):
+    method_decorators = [
+        auth_verifier.verify_token
+    ] + ErrorCatchingResource.method_decorators
