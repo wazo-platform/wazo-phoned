@@ -100,7 +100,12 @@ def lines_get():
                 'device_id': 'device-{}'.format(search),
                 }
             ],
-            'total': 0
+            'total': 1,
+        }
+    else:
+        body = {
+            'items': [],
+            'total': 0,
         }
 
     return jsonify(body)

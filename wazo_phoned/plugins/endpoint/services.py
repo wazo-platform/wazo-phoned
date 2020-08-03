@@ -4,7 +4,11 @@
 import logging
 
 from requests.exceptions import RequestException
-from wazo_phoned.plugin_helpers.client.exceptions import NoSuchDevice, NowhereToRouteEndpoint
+from wazo_phoned.plugin_helpers.client.exceptions import (
+    NoSuchDevice,
+    NowhereToRouteEndpoint,
+    NoSuchEndpoint,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +56,7 @@ class EndpointService:
                     raise NoSuchDevice(device_id)
                 raise
             return device['vendor']
-        return
+        raise NoSuchEndpoint(endpoint_name)
 
     def _match_vendor_against_plugin(self, vendor):
         for plugin in self.phone_plugins:

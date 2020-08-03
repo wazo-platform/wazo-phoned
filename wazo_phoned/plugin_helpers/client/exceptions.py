@@ -36,3 +36,10 @@ class NowhereToRouteEndpoint(APIException):
         msg = 'Nowhere to route endpoint: "{}"'.format(endpoint_name)
         details = {'endpoint_name': endpoint_name}
         super().__init__(400, msg, 'nowhere-to-route-endpoint', details)
+
+
+class NoSuchEndpoint(APIException):
+    def __init__(self, endpoint_name):
+        msg = 'No such endpoint: "{}"'.format(endpoint_name)
+        details = {'endpoint_name': endpoint_name}
+        super().__init__(404, msg, 'unknown-endpoint', details)
