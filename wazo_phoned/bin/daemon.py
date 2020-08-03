@@ -6,14 +6,12 @@ import signal
 import sys
 
 from functools import partial
-from xivo.daemonize import pidfile_context
 from xivo.user_rights import change_user
 from xivo.xivo_logging import setup_logging, silence_loggers
 from wazo_phoned.controller import Controller
 from wazo_phoned.config import load as load_config
 
 logger = logging.getLogger(__name__)
-FOREGROUND = True  # Always in foreground systemd takes care of daemonizing
 
 
 class _PreConfigLogger:
@@ -53,7 +51,9 @@ def main(argv=None):
         config = load_config(logger, argv)
 
         setup_logging(
-            config['log_filename'], FOREGROUND, config['debug'], config['log_level'],
+            config['log_filename'],
+            debug=config['debug'],
+            log_level=config['log_level'],
         )
         silence_loggers(['amqp'], logging.WARNING)
 
@@ -62,9 +62,7 @@ def main(argv=None):
 
     controller = Controller(config)
     signal.signal(signal.SIGTERM, partial(sigterm, controller))
-
-    with pidfile_context(config['pid_filename'], FOREGROUND):
-        controller.run()
+    controller.run()
 
 
 def sigterm(controller, signum, frame):
