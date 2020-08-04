@@ -13,6 +13,14 @@ produces:
 x-xivo-port: [9499]
 x-xivo-name: phoned
 
+securityDefinitions:
+  wazo_auth_token:
+    type: apiKey
+    name: X-Auth-Token
+    in: header
+security:
+- wazo_auth_token: []
+
 responses:
   AnotherServiceUnavailable:
     description: Another service is unavailable (e.g. wazo-auth, wazo-dird, ...)
@@ -40,6 +48,14 @@ responses:
       $ref: '#/definitions/Error'
   NoSuchUser:
     description: The user does not exist
+    schema:
+      $ref: '#/definitions/Error'
+  NoSuchEndpoint:
+    description: The endpoint does not exist
+    schema:
+      $ref: '#/definitions/Error'
+  NowhereToRouteEndpoint:
+    description: Nowhere to route the requested endpoint
     schema:
       $ref: '#/definitions/Error'
 parameters:
@@ -107,6 +123,12 @@ parameters:
     in: path
     type: string
     description: The user UUID of the user doing that query
+    required: true
+  EndpointName:
+    name: endpoint_name
+    in: path
+    type: string
+    description: The endpoint name
     required: true
 definitions:
   APIError:

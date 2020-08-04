@@ -10,6 +10,7 @@ from xivo.status import StatusAggregator, TokenStatus
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
+from .auth import auth_verifier
 from .bus import CoreBusConsumer
 from .http_server import HTTPServer
 
@@ -27,6 +28,7 @@ class Controller:
             'authorized_subnets'
         ]
         auth_client = AuthClient(**config['auth'])
+        auth_verifier.set_client(auth_client)
         self.token_renewer = TokenRenewer(auth_client)
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
 
@@ -35,6 +37,7 @@ class Controller:
             self.token_status.token_change_callback
         )
 
+        self.phone_plugins = []
         self.plugin_manager = plugin_helpers.load(
             namespace='wazo_phoned.plugins',
             names=config['enabled_plugins'],
@@ -44,6 +47,7 @@ class Controller:
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
                 'bus_consumer': self.bus_consumer,
                 'status_aggregator': self.status_aggregator,
+                'phone_plugins': self.phone_plugins,
             },
         )
 

@@ -13,7 +13,7 @@ from flask import (
 from operator import attrgetter
 from requests.exceptions import ConnectionError, HTTPError
 
-from wazo_phoned.auth_remote_addr import AuthResource
+from wazo_phoned.auth import AuthResource
 
 from .exceptions import WazoAuthConnectionError, WazoDirdConnectionError, NoSuchUser
 from .schema import UserUUIDSchema, LookupSchema

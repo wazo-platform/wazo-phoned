@@ -9,7 +9,7 @@ from xivo.chain_map import ChainMap
 from xivo.http_helpers import reverse_proxy_fix_api_spec
 from xivo.rest_api_helpers import load_all_api_specs
 
-from wazo_phoned.auth_remote_addr import AuthResource
+from wazo_phoned.auth import AuthResource
 
 logger = logging.getLogger(__name__)
 

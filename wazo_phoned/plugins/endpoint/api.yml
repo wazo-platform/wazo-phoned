@@ -1,0 +1,45 @@
+paths:
+  /endpoints/{endpoint_name}/hold/start:
+    put:
+      summary: Start hold for a particular endpoint.
+      description: |
+        **Required ACL:** `phoned.endpoints.{endpoint_name}.hold.start`
+        The endpoint plugin will search for a matching plugin and use its
+        service to send the correct SIP INFO to the endpoint.
+      operationId: endpoint_hold_start
+      tags:
+      - endpoint
+      - hold
+      produces:
+      - text/json
+      responses:
+        '204':
+          description: Hold was started
+        '400':
+          $ref: '#/responses/NowhereToRouteEndpoint'
+        '404':
+          $ref: '#/responses/NoSuchEndpoint'
+      parameters:
+      - $ref: '#/parameters/EndpointName'
+  /endpoints/{endpoint_name}/hold/stop:
+    put:
+      summary: Stop hold for a particular endpoint.
+      description: |
+        **Required ACL:** `phoned.endpoints.{endpoint_name}.hold.stop`
+        The endpoint plugin will search for a matching plugin and use its
+        service to send the correct SIP INFO to the endpoint.
+      operationId: endpoint_hold_start
+      tags:
+      - endpoint
+      - hold
+      produces:
+      - text/json
+      responses:
+        '204':
+          description: Hold was stopped
+        '400':
+          $ref: '#/responses/NowhereToRouteEndpoint'
+        '404':
+          $ref: '#/responses/NoSuchEndpoint'
+      parameters:
+      - $ref: '#/parameters/EndpointName'

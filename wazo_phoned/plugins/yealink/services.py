@@ -1,8 +1,12 @@
 # Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
+
 from requests.exceptions import RequestException
 from wazo_phoned.plugin_helpers.client.exceptions import NoSuchUser
+
+logger = logging.getLogger(__name__)
 
 
 class YealinkService:
@@ -30,6 +34,14 @@ class YealinkService:
                     self._send_notify(endpoint_name, 'DNDOn')
                 else:
                     self._send_notify(endpoint_name, 'DNDOff')
+
+    def hold_call(self, endpoint_name):
+        logger.debug('Holding endpoint %s', endpoint_name)
+        self._send_notify(endpoint_name, 'F_HOLD')
+
+    def unhold_call(self, endpoint_name):
+        logger.debug('Unholding endpoint %s', endpoint_name)
+        self._send_notify(endpoint_name, 'F_HOLD')
 
     def _send_notify(self, line, value):
         self.amid.action(

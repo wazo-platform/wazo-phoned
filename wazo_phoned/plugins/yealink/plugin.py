@@ -1,8 +1,6 @@
 # Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import logging
-
 from wazo_amid_client import Client as AmidClient
 from wazo_auth_client import Client as AuthClient
 from wazo_confd_client import Client as ConfdClient
@@ -17,8 +15,6 @@ from .http import (
 )
 from .services import YealinkService
 
-logger = logging.getLogger(__name__)
-
 
 class Plugin:
 
@@ -31,9 +27,9 @@ class Plugin:
     user_service_dnd_disable_url_fmt = (
         '/{vendor}/users/<user_uuid>/services/dnd/disable'
     )
-
     vendor = 'yealink'
     import_name = __name__
+    service = None
 
     def load(self, dependencies):
         app = dependencies['app']
@@ -48,6 +44,9 @@ class Plugin:
         token_changed_subscribe(dird_client.set_token)
 
         service = YealinkService(amid_client, confd_client)
+        self.service = service
+
+        dependencies['phone_plugins'].append(self)
 
         bus_consumer = dependencies['bus_consumer']
         bus_event_handler = BusEventHandler(service)
@@ -108,3 +107,6 @@ class Plugin:
             endpoint='yealink_user_service_dnd_disable',
             resource_class_kwargs=class_kwargs,
         )
+
+    def match_vendor(self, vendor):
+        return vendor.strip().lower() == self.vendor

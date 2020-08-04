@@ -82,5 +82,46 @@ def user_service_put(user_uuid, service_name):
     return '', 204
 
 
+@app.route('/{}/lines'.format(API_VERSION), methods=['GET'])
+def lines_get():
+    search = request.args.get('search', None)
+    body = None
+    if search != 'no-result':
+        body = {
+            'items': [
+                {
+                    'id': 0,
+                    'name': search,
+                    'endpoint_sip': {'id': 0, 'name': search, 'username': search},
+                    'device_id': 'device-{}'.format(search),
+                }
+            ],
+            'total': 1,
+        }
+    else:
+        body = {
+            'items': [],
+            'total': 0,
+        }
+
+    return jsonify(body)
+
+
+@app.route('/{}/devices/<device_name>'.format(API_VERSION), methods=['GET'])
+def device_get(device_name):
+    if device_name == 'device-yealink':
+        body = {
+            'vendor': 'yealink',
+        }
+        return jsonify(body)
+    elif device_name == 'device-unknown-vendor':
+        body = {
+            'vendor': 'unknown',
+        }
+        return jsonify(body)
+    else:
+        return '', 404
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=port, debug=True)
