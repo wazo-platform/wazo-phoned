@@ -59,8 +59,11 @@ class EndpointService:
         raise NoSuchEndpoint(endpoint_name)
 
     def _match_vendor_against_plugin(self, vendor):
+        logger.debug('Matching vendor "%s", against phone plugins', vendor)
         for plugin in self.phone_plugins:
-            logger.debug('Matching %s against phone plugin %s', vendor, plugin)
             if hasattr(plugin, 'match_vendor'):
                 if plugin.match_vendor(vendor):
+                    logger.debug(
+                        'Matched vendor "%s" to phone plugin "%s"', vendor, plugin
+                    )
                     return plugin
