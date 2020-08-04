@@ -37,11 +37,11 @@ class YealinkService:
 
     def hold_call(self, endpoint_name):
         logger.debug('Holding endpoint %s', endpoint_name)
-        self._send_notify(endpoint_name, 'HOLD')
+        self._send_notify(endpoint_name, 'F_HOLD')
 
     def unhold_call(self, endpoint_name):
         logger.debug('Unholding endpoint %s', endpoint_name)
-        self._send_notify(endpoint_name, 'HOLD')
+        self._send_notify(endpoint_name, 'F_HOLD')
 
     def _send_notify(self, line, value):
         self.amid.action(
