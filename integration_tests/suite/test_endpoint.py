@@ -40,7 +40,7 @@ class TestEndpointHTTP(BasePhonedIntegrationTest):
                                     'Variable': [
                                         'Content-Type=message/sipfrag',
                                         'Event=ACTION-URI',
-                                        'Content=key=HOLD',
+                                        'Content=key=F_HOLD',
                                     ],
                                 }
                             ),
@@ -70,7 +70,7 @@ class TestEndpointHTTP(BasePhonedIntegrationTest):
                                     'Variable': [
                                         'Content-Type=message/sipfrag',
                                         'Event=ACTION-URI',
-                                        'Content=key=HOLD',  # Yes, for Yealink it's the same key
+                                        'Content=key=F_HOLD',  # Yes, for Yealink it's the same key
                                     ],
                                 }
                             ),
