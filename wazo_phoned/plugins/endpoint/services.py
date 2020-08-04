@@ -64,4 +64,3 @@ class EndpointService:
             if hasattr(plugin, 'match_vendor'):
                 if plugin.match_vendor(vendor):
                     return plugin
-        return
