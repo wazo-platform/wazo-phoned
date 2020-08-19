@@ -5,7 +5,11 @@ from wazo_confd_client import Client as ConfdClient
 
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
 
-from .http import EndpointHoldStartResource, EndpointHoldStopResource
+from .http import (
+    EndpointHoldStartResource,
+    EndpointHoldStopResource,
+    EndpointAnswerResource,
+)
 from .services import EndpointService
 
 
@@ -31,5 +35,11 @@ class Plugin:
             EndpointHoldStopResource,
             '/endpoints/<endpoint_name>/hold/stop',
             endpoint='endpoint_hold_stop',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            EndpointAnswerResource,
+            '/endpoints/<endpoint_name>/answer',
+            endpoint='endpoint_answer',
             resource_class_kwargs=class_kwargs,
         )

@@ -38,6 +38,16 @@ class EndpointService:
             logger.debug('No plugin found for endpoint %s', endpoint_name)
             raise NowhereToRouteEndpoint(endpoint_name)
 
+    def answer(self, endpoint_name):
+        plugin = self.route_to_plugin(endpoint_name)
+        if plugin:
+            if hasattr(plugin, 'service'):
+                if hasattr(plugin.service, 'answer_call'):
+                    plugin.service.answer_call(endpoint_name)
+        else:
+            logger.debug('No plugin found for endpoint %s', endpoint_name)
+            raise NowhereToRouteEndpoint(endpoint_name)
+
     def route_to_plugin(self, endpoint_name):
         vendor = self._find_endpoint_vendor(endpoint_name)
         if vendor:
