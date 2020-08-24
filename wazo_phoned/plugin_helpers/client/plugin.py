@@ -32,6 +32,7 @@ class ClientPlugin(metaclass=ABCMeta):
         token_changed_subscribe = dependencies['token_changed_subscribe']
         token_changed_subscribe(dird_client.set_token)
         token_changed_subscribe(auth_client.set_token)
+        dependencies['phone_plugins'].append(self)
         class_kwargs = {
             'vendor': self.vendor,
             'dird_client': dird_client,
