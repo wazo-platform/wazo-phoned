@@ -312,3 +312,13 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         )
         result = requests.put(url, headers=headers, verify=False)
         return result
+
+    @classmethod
+    def get_endpoint_answer_result(self, endpoint_name, token_uuid):
+        headers = {'X-Auth-Token': token_uuid}
+        port = self.service_port(9499, 'phoned')
+        url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/answer'.format(
+            port=port, endpoint_name=endpoint_name,
+        )
+        result = requests.put(url, headers=headers, verify=False)
+        return result
