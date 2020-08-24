@@ -99,6 +99,11 @@ class TestEndpointHoldHTTP(BasePhonedIntegrationTest):
         response = self.get_endpoint_hold_start_result('yealink', 'invalid-token')
         assert_that(response.status_code, equal_to(401))
 
+    def test_that_hold_start_endpoint_no_service_raises_400(self):
+        # NOTE(afournier): make sure that the tested plugin does not support hold
+        response = self.get_endpoint_hold_start_result('cisco', VALID_TOKEN)
+        assert_that(response.status_code, equal_to(400))
+
     def test_that_endpoint_hold_stop_with_invalid_device_returns_404(self):
         response = self.get_endpoint_hold_stop_result('unknown', VALID_TOKEN)
         assert_that(response.status_code, equal_to(404))
@@ -117,6 +122,10 @@ class TestEndpointHoldHTTP(BasePhonedIntegrationTest):
         response = self.get_endpoint_hold_stop_result('yealink', 'invalid-token')
         assert_that(response.status_code, equal_to(401))
 
+    def test_that_hold_stop_endpoint_no_service_raises_400(self):
+        # NOTE(afournier): make sure that the tested plugin does not support hold
+        response = self.get_endpoint_hold_stop_result('cisco', VALID_TOKEN)
+        assert_that(response.status_code, equal_to(400))
 
 class TestEndpointAnswerHTTP(BasePhonedIntegrationTest):
 
@@ -170,3 +179,8 @@ class TestEndpointAnswerHTTP(BasePhonedIntegrationTest):
     def test_that_answer_endpoint_requires_valid_token(self):
         response = self.get_endpoint_answer_result('yealink', 'invalid-token')
         assert_that(response.status_code, equal_to(401))
+
+    def test_that_answer_endpoint_no_service_raises_400(self):
+        # NOTE(afournier): make sure that the tested plugin does not support hold
+        response = self.get_endpoint_answer_result('cisco', VALID_TOKEN)
+        assert_that(response.status_code, equal_to(400))

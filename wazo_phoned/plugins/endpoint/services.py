@@ -20,33 +20,39 @@ class EndpointService:
 
     def hold(self, endpoint_name):
         plugin = self.route_to_plugin(endpoint_name)
-        if plugin:
-            if hasattr(plugin, 'service'):
-                if hasattr(plugin.service, 'hold_call'):
-                    plugin.service.hold_call(endpoint_name)
-        else:
-            logger.debug('No plugin found for endpoint %s', endpoint_name)
+        if not plugin:
+            logger.debug('No plugin found for endpoint "%s"', endpoint_name)
             raise NowhereToRouteEndpoint(endpoint_name)
+
+        if not self._has_service(plugin, 'hold_call'):
+            logger.debug('No "hold_call" service found for endpoint "%s"', endpoint_name)
+            raise NowhereToRouteEndpoint(endpoint_name)
+
+        plugin.service.hold_call(endpoint_name)
 
     def unhold(self, endpoint_name):
         plugin = self.route_to_plugin(endpoint_name)
-        if plugin:
-            if hasattr(plugin, 'service'):
-                if hasattr(plugin.service, 'unhold_call'):
-                    plugin.service.unhold_call(endpoint_name)
-        else:
-            logger.debug('No plugin found for endpoint %s', endpoint_name)
+        if not plugin:
+            logger.debug('No plugin found for endpoint "%s"', endpoint_name)
             raise NowhereToRouteEndpoint(endpoint_name)
+
+        if not self._has_service(plugin, 'unhold_call'):
+            logger.debug('No "unhold_call" service found for endpoint "%s"', endpoint_name)
+            raise NowhereToRouteEndpoint(endpoint_name)
+
+        plugin.service.unhold_call(endpoint_name)
 
     def answer(self, endpoint_name):
         plugin = self.route_to_plugin(endpoint_name)
-        if plugin:
-            if hasattr(plugin, 'service'):
-                if hasattr(plugin.service, 'answer_call'):
-                    plugin.service.answer_call(endpoint_name)
-        else:
-            logger.debug('No plugin found for endpoint %s', endpoint_name)
+        if not plugin:
+            logger.debug('No plugin found for endpoint "%s"', endpoint_name)
             raise NowhereToRouteEndpoint(endpoint_name)
+
+        if not self._has_service(plugin, 'answer_call'):
+            logger.debug('No "answer_call" service found for endpoint "%s"', endpoint_name)
+            raise NowhereToRouteEndpoint(endpoint_name)
+
+        plugin.service.answer_call(endpoint_name)
 
     def route_to_plugin(self, endpoint_name):
         vendor = self._find_endpoint_vendor(endpoint_name)
@@ -77,3 +83,10 @@ class EndpointService:
                         'Matched vendor "%s" to phone plugin "%s"', vendor, plugin
                     )
                     return plugin
+
+    def _has_service(self, plugin, service_name):
+        if not hasattr(plugin, 'service'):
+            return False
+        if not hasattr(plugin.service, service_name):
+            return False
+        return True

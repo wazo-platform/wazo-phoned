@@ -30,6 +30,18 @@ user_lines = {
     '123-sccp': [{'endpoit_sccp': {'name': 'line-123-sccp'}}],
 }
 
+devices = {
+    'device-yealink': {
+        'vendor': 'yealink',
+    },
+    'device-cisco': {
+        'vendor': 'cisco',
+    },
+    'device-unknown-vendor': {
+        'vendor': 'unknown-vendor',
+    },
+}
+
 _requests = []
 
 
@@ -109,16 +121,8 @@ def lines_get():
 
 @app.route('/{}/devices/<device_name>'.format(API_VERSION), methods=['GET'])
 def device_get(device_name):
-    if device_name == 'device-yealink':
-        body = {
-            'vendor': 'yealink',
-        }
-        return jsonify(body)
-    elif device_name == 'device-unknown-vendor':
-        body = {
-            'vendor': 'unknown',
-        }
-        return jsonify(body)
+    if device_name in devices:
+        return jsonify(devices[device_name])
     else:
         return '', 404
 
