@@ -22,7 +22,9 @@ class EndpointService:
         plugin = self.route_to_plugin(endpoint_name)
 
         if not self._has_service(plugin, 'hold_call'):
-            logger.debug('No "hold_call" service found for endpoint "%s"', endpoint_name)
+            logger.debug(
+                'No "hold_call" service found for endpoint "%s"', endpoint_name
+            )
             raise NowhereToRouteEndpoint(endpoint_name)
 
         plugin.service.hold_call(endpoint_name)
@@ -31,7 +33,9 @@ class EndpointService:
         plugin = self.route_to_plugin(endpoint_name)
 
         if not self._has_service(plugin, 'unhold_call'):
-            logger.debug('No "unhold_call" service found for endpoint "%s"', endpoint_name)
+            logger.debug(
+                'No "unhold_call" service found for endpoint "%s"', endpoint_name
+            )
             raise NowhereToRouteEndpoint(endpoint_name)
 
         plugin.service.unhold_call(endpoint_name)
@@ -40,7 +44,9 @@ class EndpointService:
         plugin = self.route_to_plugin(endpoint_name)
 
         if not self._has_service(plugin, 'answer_call'):
-            logger.debug('No "answer_call" service found for endpoint "%s"', endpoint_name)
+            logger.debug(
+                'No "answer_call" service found for endpoint "%s"', endpoint_name
+            )
             raise NowhereToRouteEndpoint(endpoint_name)
 
         plugin.service.answer_call(endpoint_name)

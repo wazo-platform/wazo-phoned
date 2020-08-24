@@ -31,18 +31,10 @@ user_lines = {
 }
 
 devices = {
-    'device-yealink': {
-        'vendor': 'yealink',
-    },
-    'device-cisco': {
-        'vendor': 'cisco',
-    },
-    'device-unknown-vendor': {
-        'vendor': 'unknown-vendor',
-    },
-    'device-empty-vendor': {
-        'vendor': '',
-    },
+    'device-yealink': {'vendor': 'yealink'},
+    'device-cisco': {'vendor': 'cisco'},
+    'device-unknown-vendor': {'vendor': 'unknown-vendor'},
+    'device-empty-vendor': {'vendor': ''},
 }
 
 _requests = []

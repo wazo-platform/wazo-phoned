@@ -135,6 +135,7 @@ class TestEndpointHoldHTTP(BasePhonedIntegrationTest):
         response = self.get_endpoint_hold_stop_result('empty-vendor', VALID_TOKEN)
         assert_that(response.status_code, equal_to(400))
 
+
 class TestEndpointAnswerHTTP(BasePhonedIntegrationTest):
 
     asset = 'default_config'
