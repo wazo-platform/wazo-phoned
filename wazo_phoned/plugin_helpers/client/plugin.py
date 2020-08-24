@@ -59,3 +59,6 @@ class ClientPlugin(metaclass=ABCMeta):
     @abstractmethod
     def _add_resources(self, api, class_kwargs):
         pass
+
+    def match_vendor(self, vendor):
+        return vendor.strip().lower() == self.vendor
