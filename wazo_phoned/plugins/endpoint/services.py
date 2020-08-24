@@ -20,9 +20,6 @@ class EndpointService:
 
     def hold(self, endpoint_name):
         plugin = self.route_to_plugin(endpoint_name)
-        if not plugin:
-            logger.debug('No plugin found for endpoint "%s"', endpoint_name)
-            raise NowhereToRouteEndpoint(endpoint_name)
 
         if not self._has_service(plugin, 'hold_call'):
             logger.debug('No "hold_call" service found for endpoint "%s"', endpoint_name)
@@ -32,9 +29,6 @@ class EndpointService:
 
     def unhold(self, endpoint_name):
         plugin = self.route_to_plugin(endpoint_name)
-        if not plugin:
-            logger.debug('No plugin found for endpoint "%s"', endpoint_name)
-            raise NowhereToRouteEndpoint(endpoint_name)
 
         if not self._has_service(plugin, 'unhold_call'):
             logger.debug('No "unhold_call" service found for endpoint "%s"', endpoint_name)
@@ -44,9 +38,6 @@ class EndpointService:
 
     def answer(self, endpoint_name):
         plugin = self.route_to_plugin(endpoint_name)
-        if not plugin:
-            logger.debug('No plugin found for endpoint "%s"', endpoint_name)
-            raise NowhereToRouteEndpoint(endpoint_name)
 
         if not self._has_service(plugin, 'answer_call'):
             logger.debug('No "answer_call" service found for endpoint "%s"', endpoint_name)
@@ -56,8 +47,11 @@ class EndpointService:
 
     def route_to_plugin(self, endpoint_name):
         vendor = self._find_endpoint_vendor(endpoint_name)
-        if vendor:
-            return self._match_vendor_against_plugin(vendor)
+        plugin = self._match_vendor_against_plugin(vendor)
+        if not plugin:
+            logger.debug('No plugin found for endpoint "%s"', endpoint_name)
+            raise NowhereToRouteEndpoint(endpoint_name)
+        return plugin
 
     def _find_endpoint_vendor(self, endpoint_name):
         results = self.confd.lines.list(search=endpoint_name, recurse=True)['items']

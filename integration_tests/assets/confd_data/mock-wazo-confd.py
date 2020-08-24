@@ -40,6 +40,9 @@ devices = {
     'device-unknown-vendor': {
         'vendor': 'unknown-vendor',
     },
+    'device-empty-vendor': {
+        'vendor': '',
+    },
 }
 
 _requests = []
