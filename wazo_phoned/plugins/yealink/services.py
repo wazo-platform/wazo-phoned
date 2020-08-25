@@ -43,6 +43,10 @@ class YealinkService:
         logger.debug('Unholding endpoint %s', endpoint_name)
         self._send_notify(endpoint_name, 'F_HOLD')
 
+    def answer_call(self, endpoint_name):
+        logger.debug('Answering call on endpoint %s', endpoint_name)
+        self._send_notify(endpoint_name, 'ANSWER')
+
     def _send_notify(self, line, value):
         self.amid.action(
             'PJSIPNotify',

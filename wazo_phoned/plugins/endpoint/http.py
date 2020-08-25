@@ -25,3 +25,14 @@ class EndpointHoldStopResource(TokenAuthResource):
     def put(self, endpoint_name):
         self._service.unhold(endpoint_name)
         return '', 204
+
+
+class EndpointAnswerResource(TokenAuthResource):
+    def __init__(self, service, *args, **kwargs):
+        super().__init__()
+        self._service = service
+
+    @required_acl('phoned.endpoints.{endpoint_name}.answer')
+    def put(self, endpoint_name):
+        self._service.answer(endpoint_name)
+        return '', 204

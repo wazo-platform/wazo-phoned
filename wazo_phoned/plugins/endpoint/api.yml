@@ -43,3 +43,25 @@ paths:
           $ref: '#/responses/NoSuchEndpoint'
       parameters:
       - $ref: '#/parameters/EndpointName'
+  /endpoints/{endpoint_name}/answer:
+    put:
+      summary: Answer call on a particular endpoint.
+      description: |
+        **Required ACL:** `phoned.endpoints.{endpoint_name}.answer`
+        The endpoint plugin will search for a matching plugin and use its
+        service to send the correct SIP INFO to the endpoint.
+      operationId: endpoint_answer
+      tags:
+      - endpoint
+      - answer
+      produces:
+      - text/json
+      responses:
+        '204':
+          description: Answered command was sent
+        '400':
+          $ref: '#/responses/NowhereToRouteEndpoint'
+        '404':
+          $ref: '#/responses/NoSuchEndpoint'
+      parameters:
+      - $ref: '#/parameters/EndpointName'
