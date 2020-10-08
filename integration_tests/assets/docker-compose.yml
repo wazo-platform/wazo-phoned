@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   sync:
-    image: wazopbx/wait
+    image: wazoplatform/wait
     environment:
       TIMEOUT: ${INTEGRATION_TEST_TIMEOUT}
 
@@ -28,7 +28,7 @@ services:
     command: "python /tmp/mock-wazo-dird.py 9489"
 
   auth:
-    image: "wazopbx/wazo-auth-mock"
+    image: "wazoplatform/wazo-auth-mock"
     ports:
       - "9497"
 

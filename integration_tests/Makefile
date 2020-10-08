@@ -1,5 +1,5 @@
 test-setup: egg-info compile-catalog
-	docker build --pull -t wazopbx/wazo-phoned ..
+	docker build --pull -t wazoplatform/wazo-phoned ..
 	docker build --no-cache -t wazo-phoned-test -f Dockerfile-phoned-test ..
 
 compile-catalog:

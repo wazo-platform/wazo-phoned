@@ -35,11 +35,11 @@ using:
 Docker
 ------
 
-The wazopbx/wazo-phoned image can be built using the following command:
+The wazoplatform/wazo-phoned image can be built using the following command:
 
-    % docker build -t wazopbx/wazo-phoned
+    % docker build -t wazoplatform/wazo-phoned
 
-The `wazopbx/wazo-phoned` image contains a configuration file to listen to
+The `wazoplatform/wazo-phoned` image contains a configuration file to listen to
 HTTP requests on "0.0.0.0". To change this behavior, create or edit the file
 `/etc/wazo-phoned/conf.d/listen.yml`
 
