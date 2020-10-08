@@ -66,11 +66,13 @@ class TestServices(unittest.TestCase):
         http_error.response.status_code = 404
         self.confd.users.get.side_effect = http_error
         assert_that(
-            calling(self.service.notify_dnd).with_args('123', True), raises(NoSuchUser),
+            calling(self.service.notify_dnd).with_args('123', True),
+            raises(NoSuchUser),
         )
         http_error.response.status_code = 500
         assert_that(
-            calling(self.service.notify_dnd).with_args('123', True), raises(HTTPError),
+            calling(self.service.notify_dnd).with_args('123', True),
+            raises(HTTPError),
         )
 
     def test_dnd_update_enable(self):

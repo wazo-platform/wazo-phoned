@@ -74,8 +74,8 @@ class Plugin:
         self.user_service_dnd_enable_url = self.user_service_dnd_enable_url_fmt.format(
             vendor=self.vendor
         )
-        self.user_service_dnd_disable_url = self.user_service_dnd_disable_url_fmt.format(
-            vendor=self.vendor
+        self.user_service_dnd_disable_url = (
+            self.user_service_dnd_disable_url_fmt.format(vendor=self.vendor)
         )
         self._add_resources(api, directories_class_kwargs)
         self._add_user_service_resources(api, user_service_class_kwargs)
