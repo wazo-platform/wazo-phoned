@@ -127,7 +127,8 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
         auth = cls.make_auth()
         auth.users.new(
-            uuid=USER_1_UUID, tenant_uuid=USERS_TENANT,
+            uuid=USER_1_UUID,
+            tenant_uuid=USERS_TENANT,
         )
 
     @classmethod
@@ -297,8 +298,11 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     def get_endpoint_hold_start_result(self, endpoint_name, token_uuid):
         headers = {'X-Auth-Token': token_uuid}
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/hold/start'.format(
-            port=port, endpoint_name=endpoint_name,
+        url = (
+            'https://localhost:{port}/0.1/endpoints/{endpoint_name}/hold/start'.format(
+                port=port,
+                endpoint_name=endpoint_name,
+            )
         )
         result = requests.put(url, headers=headers, verify=False)
         return result
@@ -308,7 +312,8 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         headers = {'X-Auth-Token': token_uuid}
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/hold/stop'.format(
-            port=port, endpoint_name=endpoint_name,
+            port=port,
+            endpoint_name=endpoint_name,
         )
         result = requests.put(url, headers=headers, verify=False)
         return result
@@ -318,7 +323,8 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         headers = {'X-Auth-Token': token_uuid}
         port = self.service_port(9499, 'phoned')
         url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/answer'.format(
-            port=port, endpoint_name=endpoint_name,
+            port=port,
+            endpoint_name=endpoint_name,
         )
         result = requests.put(url, headers=headers, verify=False)
         return result

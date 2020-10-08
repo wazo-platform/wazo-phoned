@@ -33,13 +33,17 @@ class TestYealink(BasePhonedIntegrationTest):
 
     def test_that_menu_return_error_when_query_ssl(self):
         response = self.get_ssl_menu_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
     def test_that_menu_return_error_when_query(self):
         response = self.get_menu_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
@@ -47,13 +51,17 @@ class TestYealink(BasePhonedIntegrationTest):
 
     def test_that_input_return_error_when_query_ssl(self):
         response = self.get_ssl_input_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
     def test_that_input_return_error_when_query(self):
         response = self.get_input_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
@@ -240,7 +248,9 @@ class TestYealink(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_error_when_no_term(self):
         response = self.get_lookup_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(400))
 
@@ -433,7 +443,9 @@ class TestYealinkDirectories(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_error_when_no_term(self):
         response = self.get_directories_lookup_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(400))
 
