@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import (
@@ -531,6 +531,9 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
 
     def test_dnd_enable(self):
         confd_client = self.make_mock_confd()
+        confd_client.set_user_service('123', 'dnd', False)
+        bus_client = self.make_bus()
+        bus_client.send_user_dnd_update('123', False)
         response = self.get_user_service_result(VENDOR, 'dnd', '123', True)
         assert_that(response.status_code, equal_to(200))
 
@@ -549,6 +552,9 @@ class TestUserServiceHTTP(BasePhonedIntegrationTest):
 
     def test_dnd_disable(self):
         confd_client = self.make_mock_confd()
+        confd_client.set_user_service('123', 'dnd', True)
+        bus_client = self.make_bus()
+        bus_client.send_user_dnd_update('123', True)
         response = self.get_user_service_result(VENDOR, 'dnd', '123', False)
         assert_that(response.status_code, equal_to(200))
 

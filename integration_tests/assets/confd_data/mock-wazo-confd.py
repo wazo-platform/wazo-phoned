@@ -1,5 +1,5 @@
 # -*-coding: utf-8-*-
-# Copyright 2016-2020 The Wazo Authors  (see AUTHORS file)
+# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
@@ -25,9 +25,15 @@ extensions_features_data = {
     ],
 }
 
-user_lines = {
-    '123': [{'endpoint_sip': {'name': 'line-123'}}],
-    '123-sccp': [{'endpoit_sccp': {'name': 'line-123-sccp'}}],
+users = {
+    '123': {
+        'lines': [{'endpoint_sip': {'name': 'line-123'}}],
+        'services': {'dnd': {'enabled': False}},
+    },
+    '123-sccp': {
+        'lines': [{'endpoit_sccp': {'name': 'line-123-sccp'}}],
+        'services': {'dnd': {'enabled': False}},
+    },
 }
 
 devices = {
@@ -70,6 +76,13 @@ def reset_requests():
     return '', 204
 
 
+@app.route('/_services/<user_uuid>', methods=['PUT'])
+def set_user_service(user_uuid):
+    data = request.json
+    users[user_uuid]['services'].update(data)
+    return '', 204
+
+
 @app.route('/{}/extensions/features'.format(API_VERSION), methods=['GET'])
 def extensions_features():
     return jsonify(extensions_features_data)
@@ -78,7 +91,12 @@ def extensions_features():
 @app.route('/{}/users/<user_uuid>'.format(API_VERSION), methods=['GET'])
 def user_uuid_get(user_uuid):
     return jsonify(
-        {'id': user_uuid, 'uuid': user_uuid, 'lines': user_lines.get(user_uuid)}
+        {
+            'id': user_uuid,
+            'uuid': user_uuid,
+            'lines': users.get(user_uuid)['lines'],
+            'services': users.get(user_uuid)['services'],
+        }
     )
 
 
