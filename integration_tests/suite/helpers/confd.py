@@ -1,4 +1,4 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import requests
@@ -29,3 +29,8 @@ class ConfdClient:
     def reset(self):
         url = self.url('_reset')
         requests.post(url)
+
+    def set_user_service(self, user_uuid, service, status):
+        url = self.url('_services', user_uuid)
+        data = {service: {'enabled': status}}
+        requests.put(url, json=data)
