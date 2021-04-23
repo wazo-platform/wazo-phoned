@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -60,28 +60,28 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     @classmethod
     def make_auth(cls):
         return AuthClient(
-            'localhost', cls.service_port(9497, 'auth'), prefix=None, https=False
+            '127.0.0.1', cls.service_port(9497, 'auth'), prefix=None, https=False
         )
 
     @classmethod
     def make_bus(cls):
         return BusClient.from_connection_fields(
-            host='localhost', port=cls.service_port(5672, 'rabbitmq')
+            host='127.0.0.1', port=cls.service_port(5672, 'rabbitmq')
         )
 
     @classmethod
     def make_amid(cls):
-        amid_client = AmidClient('localhost', port=cls.service_port(9491, 'amid'))
+        amid_client = AmidClient('127.0.0.1', port=cls.service_port(9491, 'amid'))
         amid_client.reset()
         return amid_client
 
     @classmethod
     def make_mock_auth(cls):
-        return MockAuthClient('localhost', cls.service_port(9497, 'auth'))
+        return MockAuthClient('127.0.0.1', cls.service_port(9497, 'auth'))
 
     @classmethod
     def make_mock_confd(cls):
-        confd_client = ConfdClient('localhost', cls.service_port(9486, 'confd'))
+        confd_client = ConfdClient('127.0.0.1', cls.service_port(9486, 'confd'))
         confd_client.reset()
         return confd_client
 
@@ -133,21 +133,21 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def get_status_result(self):
-        url = u'http://localhost:{port}/0.1/status'
+        url = u'http://127.0.0.1:{port}/0.1/status'
         port = self.service_port(9498, 'phoned')
         result = requests.get(url.format(port=port))
         return result.json()
 
     @classmethod
     def get_status_result_by_https(self):
-        url = u'https://localhost:{port}/0.1/status'
+        url = u'https://127.0.0.1:{port}/0.1/status'
         port = self.service_port(9499, 'phoned')
         result = requests.get(url.format(port=port), verify=False)
         return result.json()
 
     @classmethod
     def get_menu_result(self, profile, vendor, xivo_user_uuid=None):
-        url = 'http://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
+        url = 'http://127.0.0.1:{port}/0.1/directories/menu/{profile}/{vendor}'
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9498, 'phoned')
         result = requests.get(
@@ -159,7 +159,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     def get_ssl_menu_result(self, profile, vendor, xivo_user_uuid=None):
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/directories/menu/{profile}/{vendor}'
+        url = 'https://127.0.0.1:{port}/0.1/directories/menu/{profile}/{vendor}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=params,
@@ -171,7 +171,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     def get_input_result(self, profile, vendor, xivo_user_uuid=None):
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9498, 'phoned')
-        url = 'http://localhost:{port}/0.1/directories/input/{profile}/{vendor}'
+        url = 'http://127.0.0.1:{port}/0.1/directories/input/{profile}/{vendor}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor), params=params
         )
@@ -181,7 +181,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     def get_ssl_input_result(self, profile, vendor, xivo_user_uuid=None):
         params = {'xivo_user_uuid': xivo_user_uuid}
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/directories/input/{profile}/{vendor}'
+        url = 'https://127.0.0.1:{port}/0.1/directories/input/{profile}/{vendor}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=params,
@@ -195,7 +195,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     ):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
         port = self.service_port(9498, 'phoned')
-        url = 'http://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
+        url = 'http://127.0.0.1:{port}/0.1/directories/lookup/{profile}/{vendor}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=params,
@@ -209,7 +209,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     ):
         params = {'xivo_user_uuid': xivo_user_uuid, 'term': term}
         port = self.service_port(9498, 'phoned')
-        url = 'http://localhost:{port}/0.1/{vendor}/directories/lookup/{profile}'
+        url = 'http://127.0.0.1:{port}/0.1/{vendor}/directories/lookup/{profile}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=params,
@@ -227,7 +227,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         if kwargs:
             params.update(**kwargs)
         port = self.service_port(9498, 'phoned')
-        url = 'http://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
+        url = 'http://127.0.0.1:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
         result = requests.get(
             url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid),
             params=params,
@@ -238,7 +238,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     @classmethod
     def get_ssl_lookup_result(self, profile, vendor, headers=None, **kwargs):
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/{vendor}'
+        url = 'https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/{vendor}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=kwargs,
@@ -252,7 +252,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         self, profile, vendor, headers=None, **kwargs
     ):
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/{vendor}/directories/lookup/{profile}'
+        url = 'https://127.0.0.1:{port}/0.1/{vendor}/directories/lookup/{profile}'
         result = requests.get(
             url.format(port=port, profile=profile, vendor=vendor),
             params=kwargs,
@@ -271,7 +271,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         if kwargs:
             params.update(**kwargs)
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
+        url = 'https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/gigaset/{xivo_user_uuid}'
         result = requests.get(
             url.format(port=port, profile=profile, xivo_user_uuid=xivo_user_uuid),
             params=params,
@@ -284,7 +284,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         params = {'enabled': enabled}
         port = self.service_port(9499, 'phoned')
         enable_status = 'enable' if enabled else 'disable'
-        url = 'https://localhost:{port}/0.1/{vendor}/users/{user_uuid}/services/{service_name}/{enabled}'.format(
+        url = 'https://127.0.0.1:{port}/0.1/{vendor}/users/{user_uuid}/services/{service_name}/{enabled}'.format(
             port=port,
             vendor=vendor,
             user_uuid=user_uuid,
@@ -299,7 +299,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         headers = {'X-Auth-Token': token_uuid}
         port = self.service_port(9499, 'phoned')
         url = (
-            'https://localhost:{port}/0.1/endpoints/{endpoint_name}/hold/start'.format(
+            'https://127.0.0.1:{port}/0.1/endpoints/{endpoint_name}/hold/start'.format(
                 port=port,
                 endpoint_name=endpoint_name,
             )
@@ -311,7 +311,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     def get_endpoint_hold_stop_result(self, endpoint_name, token_uuid):
         headers = {'X-Auth-Token': token_uuid}
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/hold/stop'.format(
+        url = 'https://127.0.0.1:{port}/0.1/endpoints/{endpoint_name}/hold/stop'.format(
             port=port,
             endpoint_name=endpoint_name,
         )
@@ -322,7 +322,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
     def get_endpoint_answer_result(self, endpoint_name, token_uuid):
         headers = {'X-Auth-Token': token_uuid}
         port = self.service_port(9499, 'phoned')
-        url = 'https://localhost:{port}/0.1/endpoints/{endpoint_name}/answer'.format(
+        url = 'https://127.0.0.1:{port}/0.1/endpoints/{endpoint_name}/answer'.format(
             port=port,
             endpoint_name=endpoint_name,
         )

@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -56,7 +56,7 @@ class TestFanvil(BasePhonedIntegrationTest):
                     <FanvilIPPhoneInputScreen>
                      <Title>Wazo Search</Title>
                      <Prompt>Name or number</Prompt>
-                     <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}</URL>
+                     <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}</URL>
                      <InputItem>
                       <DisplayName>Name or number</DisplayName>
                       <QueryStringParam>term</QueryStringParam>
@@ -176,7 +176,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>NextPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
                     <Position>4</Position>
                     </SoftKeyItem>
                     </FanvilIPPhoneDirectory>""".format(
@@ -220,7 +220,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>PrevPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=0</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=0</URL>
                     <Position>2</Position>
                     </SoftKeyItem>
                     <SoftKeyItem>
@@ -231,7 +231,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>NextPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=2</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=2</URL>
                     <Position>4</Position>
                     </SoftKeyItem>
                     </FanvilIPPhoneDirectory>""".format(
@@ -273,7 +273,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>PrevPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
                     <Position>2</Position>
                     </SoftKeyItem>
                     <SoftKeyItem>

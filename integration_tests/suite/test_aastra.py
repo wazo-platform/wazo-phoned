@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -56,7 +56,7 @@ class TestAastra(BasePhonedIntegrationTest):
         <AastraIPPhoneInputScreen type="string" editable="yes">
          <Title>Wazo Search</Title>
          <Prompt>Name or number:</Prompt>
-         <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}</URL>
+         <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}</URL>
          <Parameter>term</Parameter>
         </AastraIPPhoneInputScreen>""".format(
                         port=self.service_port(9499, 'phoned'),
@@ -159,7 +159,7 @@ class TestAastra(BasePhonedIntegrationTest):
          </MenuItem>
         <MenuItem>
          <Prompt>Next Page</Prompt>
-         <URI>https://localhost:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
         </MenuItem>
         </AastraIPPhoneTextMenu>""".format(
                         port=self.service_port(9499, 'phoned'),
@@ -192,7 +192,7 @@ class TestAastra(BasePhonedIntegrationTest):
         <AastraIPPhoneTextMenu style="none" destroyOnExit="yes">
         <MenuItem>
          <Prompt>Previous Page</Prompt>
-         <URI>https://localhost:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0</URI>
+         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0</URI>
         </MenuItem>
         <MenuItem>
           <Prompt>Test User1 (mobile)</Prompt>
@@ -200,7 +200,7 @@ class TestAastra(BasePhonedIntegrationTest):
          </MenuItem>
         <MenuItem>
          <Prompt>Next Page</Prompt>
-         <URI>https://localhost:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2</URI>
+         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2</URI>
         </MenuItem>
         </AastraIPPhoneTextMenu>""".format(
                         port=self.service_port(9499, 'phoned'),
@@ -231,7 +231,7 @@ class TestAastra(BasePhonedIntegrationTest):
         <AastraIPPhoneTextMenu style="none" destroyOnExit="yes">
         <MenuItem>
          <Prompt>Previous Page</Prompt>
-         <URI>https://localhost:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
         </MenuItem>
         <MenuItem>
           <Prompt>Test User2</Prompt>

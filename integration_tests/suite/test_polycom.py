@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -58,7 +58,7 @@ class TestPolycom(BasePhonedIntegrationTest):
                         <title>Wazo Search</title>
                       </head>
                       <body>
-                        <form action="https://localhost:{port}/0.1/directories/lookup/{profile}/polycom" method="get" accept-charset="utf-8">
+                        <form action="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom" method="get" accept-charset="utf-8">
                           <span>
                             <label for="it-term">Name or number:</label>
                           </span>
@@ -170,7 +170,7 @@ class TestPolycom(BasePhonedIntegrationTest):
                       <body>
                         <ol>
                     <li><a href="tel://0033123456789">Test User1</a><br /></li>
-                    <li>[<a href="https://localhost:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1" title="Next">Next Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1" title="Next">Next Page</a>]<br /></li>
                     </ol>
                       </body>
                     </html>""".format(
@@ -207,9 +207,9 @@ class TestPolycom(BasePhonedIntegrationTest):
                       </head>
                       <body>
                         <ol>
-                    <li>[<a href="https://localhost:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0" title="Previous">Previous Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0" title="Previous">Previous Page</a>]<br /></li>
                     <li><a href="tel://5555555555">Test User1 (mobile)</a><br /></li>
-                    <li>[<a href="https://localhost:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2" title="Next">Next Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2" title="Next">Next Page</a>]<br /></li>
                     </ol>
                       </body>
                     </html>""".format(
@@ -244,7 +244,7 @@ class TestPolycom(BasePhonedIntegrationTest):
                       </head>
                       <body>
                         <ol>
-                    <li>[<a href="https://localhost:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1" title="Previous">Previous Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1" title="Previous">Previous Page</a>]<br /></li>
                     <li><a href="tel://1000">Test User2</a><br /></li>
                     </ol>
                       </body>
