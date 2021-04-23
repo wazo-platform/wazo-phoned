@@ -1,4 +1,4 @@
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -25,7 +25,7 @@ class TestDocumentation(BasePhonedIntegrationTest):
 
     def test_documentation_errors(self):
         port = self.service_port(9499, 'phoned')
-        api_url = 'https://localhost:{port}/{version}/api/api.yml'.format(
+        api_url = 'https://127.0.0.1:{port}/{version}/api/api.yml'.format(
             port=port, version=VERSION
         )
         api = requests.get(api_url, verify=False)
