@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -73,15 +73,18 @@ class TestGigaset(BasePhonedIntegrationTest):
                     <?xml version="1.0" encoding="UTF-8"?>
                     <list response="get_list" type="pr" total="3" first="1" last="3">
                     <entry id="0033123456789">
-                    <fn>Test User1</fn>
+                    <ln>User1</ln>
+                    <fn>Test</fn>
                     <hm>0033123456789</hm>
                     </entry>
                     <entry id="5555555555">
-                    <fn>Test User1 (mobile)</fn>
+                    <ln>User1 (mobile)</ln>
+                    <fn>Test</fn>
                     <hm>5555555555</hm>
                     </entry>
                     <entry id="1000">
-                    <fn>Test User2</fn>
+                    <ln>User2</ln>
+                    <fn>Test</fn>
                     <hm>1000</hm>
                     </entry>
                     </list>"""
@@ -103,15 +106,18 @@ class TestGigaset(BasePhonedIntegrationTest):
                     <?xml version="1.0" encoding="UTF-8"?>
                     <list response="get_list" type="pr" total="3" first="1" last="3">
                     <entry id="0033123456789">
-                    <fn>Test User1</fn>
+                    <ln>User1</ln>
+                    <fn>Test</fn>
                     <hm>0033123456789</hm>
                     </entry>
                     <entry id="5555555555">
-                    <fn>Test User1 (mobile)</fn>
+                    <ln>User1 (mobile)</ln>
+                    <fn>Test</fn>
                     <hm>5555555555</hm>
                     </entry>
                     <entry id="1000">
-                    <fn>Test User2</fn>
+                    <ln>User2</ln>
+                    <fn>Test</fn>
                     <hm>1000</hm>
                     </entry>
                     </list>"""
@@ -154,7 +160,8 @@ class TestGigaset(BasePhonedIntegrationTest):
                     <?xml version="1.0" encoding="UTF-8"?>
                     <list response="get_list" type="pr" total="3" first="1" last="1">
                     <entry id="0033123456789">
-                    <fn>Test User1</fn>
+                    <ln>User1</ln>
+                    <fn>Test</fn>
                     <hm>0033123456789</hm>
                     </entry>
                     </list>"""
@@ -179,7 +186,8 @@ class TestGigaset(BasePhonedIntegrationTest):
                     <?xml version="1.0" encoding="UTF-8"?>
                     <list response="get_list" type="pr" total="3" first="2" last="2">
                     <entry id="5555555555">
-                    <fn>Test User1 (mobile)</fn>
+                    <ln>User1 (mobile)</ln>
+                    <fn>Test</fn>
                     <hm>5555555555</hm>
                     </entry>
                     </list>"""
@@ -204,7 +212,8 @@ class TestGigaset(BasePhonedIntegrationTest):
                     <?xml version="1.0" encoding="UTF-8"?>
                     <list response="get_list" type="pr" total="3" first="3" last="3">
                     <entry id="1000">
-                    <fn>Test User2</fn>
+                    <ln>User2</ln>
+                    <fn>Test</fn>
                     <hm>1000</hm>
                     </entry>
                     </list>"""
