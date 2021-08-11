@@ -1,4 +1,4 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import unittest
@@ -29,17 +29,23 @@ class TestServices(unittest.TestCase):
     def test_dnd_enable(self):
         xivo_helpers.fkey_extension.return_value = '*735123***225'
 
-        self.service.notify_dnd('123', True)
-        self.amid.command.assert_called_once_with(
-            'devstate change Custom:*735123***225 INUSE'
+        self.service.notify_dnd('123', 'abcd', True)
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***225 INUSE'),
+                call('queue pause member Local/abcd@usersharedlines'),
+            ]
         )
 
     def test_dnd_disable(self):
         xivo_helpers.fkey_extension.return_value = '*735123***225'
 
-        self.service.notify_dnd('123', False)
-        self.amid.command.assert_called_once_with(
-            'devstate change Custom:*735123***225 NOT_INUSE'
+        self.service.notify_dnd('123', 'abcd', False)
+        self.amid.command.assert_has_calls(
+            [
+                call('devstate change Custom:*735123***225 NOT_INUSE'),
+                call('queue unpause member Local/abcd@usersharedlines'),
+            ]
         )
 
     def test_incallfilter_enable(self):
@@ -145,11 +151,11 @@ class TestServices(unittest.TestCase):
     def test_extension_feature_is_cached(self):
         xivo_helpers.fkey_extension.return_value = '*735123***225'
 
-        self.service.notify_dnd('123', True)
-        self.service.notify_dnd('123', True)
+        self.service.notify_dnd('123', 'abcd', True)
+        self.service.notify_dnd('123', 'abcd', True)
         self.confd.extensions_features.list.assert_called_once()
 
         self.service.invalidate_cache()
         self.confd.reset_mock()
-        self.service.notify_dnd('123', True)
+        self.service.notify_dnd('123', 'abcd', True)
         self.confd.extensions_features.list.assert_called_once()

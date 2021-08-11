@@ -1,4 +1,4 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -34,8 +34,9 @@ class BusEventHandler:
 
     def _users_services_dnd_updated(self, event):
         user_id = event['user_id']
+        user_uuid = event['user_uuid']
         enabled = event['enabled']
-        self._service.notify_dnd(user_id, enabled)
+        self._service.notify_dnd(user_id, user_uuid, enabled)
 
     def _users_services_incallfilter_updated(self, event):
         user_id = event['user_id']

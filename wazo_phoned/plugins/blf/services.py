@@ -1,4 +1,4 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
@@ -40,9 +40,14 @@ class BlfService:
         device = self._device(user_id, forward_name)
         self._send(device, status)
 
-    def notify_dnd(self, user_id, status):
+    def notify_dnd(self, user_id, user_uuid, status):
         device = self._device(user_id, 'enablednd')
         self._send(device, status)
+        self._pause_unpause_queues(user_uuid, status)
+
+    def _pause_unpause_queues(self, user_uuid, status):
+        command = 'pause' if status else 'unpause'
+        self.amid.command(f'queue {command} member Local/{user_uuid}@usersharedlines')
 
     def notify_incallfilter(self, user_id, status):
         device = self._device(user_id, 'incallfilter')

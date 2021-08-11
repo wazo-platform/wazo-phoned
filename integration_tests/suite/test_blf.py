@@ -1,4 +1,4 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, has_item, has_items, has_entries, not_
@@ -22,18 +22,29 @@ class TestBlf(BasePhonedIntegrationTest):
         def assert_amid_request():
             assert_that(
                 amid_client.requests()['requests'],
-                has_item(
+                has_items(
                     has_entries(
                         {
                             'method': 'POST',
                             'path': '/1.0/action/Command',
                             'json': has_entries(
                                 {
-                                    'command': 'devstate change Custom:*735123***225 INUSE'
+                                    'command': 'devstate change Custom:*735123***225 INUSE',
                                 }
                             ),
                         }
-                    )
+                    ),
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/Command',
+                            'json': has_entries(
+                                {
+                                    'command': 'queue pause member Local/123@usersharedlines',
+                                }
+                            ),
+                        }
+                    ),
                 ),
             )
 
