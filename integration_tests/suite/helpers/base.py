@@ -29,6 +29,7 @@ CA_CERT = os.path.join(ASSETS_ROOT, 'ssl', 'server.crt')
 
 DEFAULT_PROFILE = 'default_phone'
 VALID_TERM = 'toto'
+VALID_TERM_NO_LASTNAME = 'result-with-no-lastname'
 VALID_VENDOR = 'cisco'
 
 VALID_TOKEN = 'valid-token'
