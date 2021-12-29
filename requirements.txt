@@ -4,7 +4,7 @@ https://github.com/wazo-platform/wazo-auth-client/archive/master.zip
 https://github.com/wazo-platform/wazo-confd-client/archive/master.zip
 https://github.com/wazo-platform/wazo-dird-client/archive/master.zip
 https://github.com/wazo-platform/xivo-lib-python/archive/master.zip
-babel==2.6.0
+babel==2.9.1
 cheroot==6.5.4
 cherrypy==8.9.1
 flask-babel==0.11.2
