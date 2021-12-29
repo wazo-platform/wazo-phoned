@@ -9,7 +9,7 @@ from hamcrest import (
     has_item,
 )
 from textwrap import dedent
-from xivo_test_helpers import until
+from wazo_test_helpers import until
 
 from .helpers.base import (
     BasePhonedIntegrationTest,

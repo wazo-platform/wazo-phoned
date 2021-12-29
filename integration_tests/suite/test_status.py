@@ -1,4 +1,4 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import (
@@ -7,7 +7,7 @@ from hamcrest import (
     has_entries,
     has_entry,
 )
-from xivo_test_helpers import until
+from wazo_test_helpers import until
 
 from .helpers.base import BasePhonedIntegrationTest
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy, PhonedAPIWaitStrategy

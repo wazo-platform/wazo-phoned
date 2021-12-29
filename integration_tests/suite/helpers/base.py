@@ -8,13 +8,13 @@ import requests
 
 from wazo_auth_client import Client as AuthClient
 from xivo.config_helper import parse_config_file
-from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
-from xivo_test_helpers.auth import (
+from wazo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
+from wazo_test_helpers.auth import (
     AuthClient as MockAuthClient,
     MockCredentials,
     MockUserToken,
 )
-from xivo_test_helpers.wait_strategy import NoWaitStrategy
+from wazo_test_helpers.wait_strategy import NoWaitStrategy
 
 from .amid import AmidClient
 from .bus import BusClient

@@ -6,7 +6,7 @@ import json
 from kombu import Connection
 from kombu import Exchange
 from kombu import Producer
-from xivo_test_helpers import bus as bus_helper
+from wazo_test_helpers import bus as bus_helper
 
 
 BUS_EXCHANGE_HEADERS = Exchange('wazo-headers', type='headers')
