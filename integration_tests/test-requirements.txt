@@ -1,4 +1,3 @@
-docker-compose
 kombu
 openapi-spec-validator
 pyhamcrest
