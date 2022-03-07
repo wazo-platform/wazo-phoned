@@ -6,7 +6,7 @@ paths:
         The `lookup` query will return a list of result matching the searched term
         formated for Yealink Phones. The result will be retrieved from a lookup query
         to wazo-dird.
-      operationId: yealink_lookup
+      operationId: lookup_yealink
       deprecated: true
       tags:
       - yealink

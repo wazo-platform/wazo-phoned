@@ -107,6 +107,7 @@ setup(
             'blf = wazo_phoned.plugins.blf.plugin:Plugin',
             'aastra = wazo_phoned.plugins.aastra.plugin:Plugin',
             'cisco = wazo_phoned.plugins.cisco.plugin:Plugin',
+            'endpoint = wazo_phoned.plugins.endpoint.plugin:Plugin',
             'fanvil = wazo_phoned.plugins.fanvil.plugin:Plugin',
             'gigaset = wazo_phoned.plugins.gigaset.plugin:Plugin',
             'htek = wazo_phoned.plugins.htek.plugin:Plugin',

@@ -18,7 +18,6 @@ COPY ./contribs/docker/certs /usr/share/xivo-certs
 RUN true \
     && adduser --quiet --system --group --home /var/lib/wazo-phoned wazo-phoned \
     && mkdir -p /etc/wazo-phoned/conf.d \
-    && install -d -o www-data -g www-data /run/wazo-phoned/ \
     && install -o www-data -g www-data /dev/null /var/log/wazo-phoned.log
 
 EXPOSE 9498 9499

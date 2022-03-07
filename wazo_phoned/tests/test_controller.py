@@ -52,6 +52,7 @@ class TestController(TestCase):
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
                 'bus_consumer': self.bus_consumer,
                 'status_aggregator': self.status_aggregator,
+                'phone_plugins': controller.phone_plugins,
             },
         )
 

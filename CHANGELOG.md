@@ -1,6 +1,14 @@
 Changelog
 =========
 
+20.11
+-----
+
+* Added the following token-authenticated endpoints:
+
+  * PUT `/0.1/endpoints/<endpoint_name>/hold/start`
+  * PUT `/0.1/endpoints/<endpoint_name>/hold/stop`
+
 20.06
 -----
 

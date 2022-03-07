@@ -11,9 +11,11 @@ flask-babel==0.11.2
 flask-cors==3.0.7
 flask-restful==0.3.7
 flask==1.0.2
+itsdangerous==0.24  # from flask
 jinja2==2.10
-kombu==4.2.1
-marshmallow==3.0.0b14
+kombu==4.6.11
+markupsafe==1.1.0  # from flask
+marshmallow==3.10.0
 netaddr==0.7.19
 pyyaml==3.13  # from xivo-lib-python
 requests==2.21.0

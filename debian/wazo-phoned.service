@@ -2,12 +2,13 @@
 Description=wazo-phoned server
 ConditionPathExists=!/var/lib/wazo/disabled
 After=network.target wazo-confgend.service
-Before=monit.service
+StartLimitBurst=15
+StartLimitIntervalSec=150
 
 [Service]
-ExecStartPre=/usr/bin/install -d -o www-data -g www-data /run/wazo-phoned
 ExecStart=/usr/bin/wazo-phoned --user www-data
-PIDFile=/run/wazo-phoned/wazo-phoned.pid
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

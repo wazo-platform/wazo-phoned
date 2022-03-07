@@ -95,6 +95,19 @@ def lookup_get_default_json(profile, xivo_user_uuid):
                 ],
             },
         ]
+        if term == 'result-with-no-lastname':
+            body['results'].append(
+                {
+                    'column_values': [
+                        'User3',
+                        '1001',
+                        None,
+                        None,
+                        False,
+                        'user3@test.com',
+                    ],
+                }
+            )
 
     return jsonify(body), 200
 

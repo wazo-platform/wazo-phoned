@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -24,13 +24,17 @@ class TestFanvil(BasePhonedIntegrationTest):
 
     def test_that_menu_return_error_when_query_ssl(self):
         response = self.get_ssl_menu_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
     def test_that_menu_return_error_when_query(self):
         response = self.get_menu_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(404))
 
@@ -38,7 +42,9 @@ class TestFanvil(BasePhonedIntegrationTest):
 
     def test_that_input_return_no_error_when_query_ssl(self):
         response = self.get_ssl_input_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(200))
         assert_that(
@@ -50,7 +56,7 @@ class TestFanvil(BasePhonedIntegrationTest):
                     <FanvilIPPhoneInputScreen>
                      <Title>Wazo Search</Title>
                      <Prompt>Name or number</Prompt>
-                     <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}</URL>
+                     <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}</URL>
                      <InputItem>
                       <DisplayName>Name or number</DisplayName>
                       <QueryStringParam>term</QueryStringParam>
@@ -68,7 +74,9 @@ class TestFanvil(BasePhonedIntegrationTest):
 
     def test_that_input_return_no_error_when_query(self):
         response = self.get_input_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(200))
 
@@ -168,7 +176,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>NextPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
                     <Position>4</Position>
                     </SoftKeyItem>
                     </FanvilIPPhoneDirectory>""".format(
@@ -212,7 +220,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>PrevPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=0</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=0</URL>
                     <Position>2</Position>
                     </SoftKeyItem>
                     <SoftKeyItem>
@@ -223,7 +231,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>NextPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=2</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=2</URL>
                     <Position>4</Position>
                     </SoftKeyItem>
                     </FanvilIPPhoneDirectory>""".format(
@@ -265,7 +273,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>PrevPage</Name>
-                    <URL>https://localhost:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
+                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
                     <Position>2</Position>
                     </SoftKeyItem>
                     <SoftKeyItem>
@@ -332,7 +340,9 @@ class TestFanvil(BasePhonedIntegrationTest):
 
     def test_that_lookup_return_error_when_no_term(self):
         response = self.get_lookup_result(
-            vendor=VENDOR, xivo_user_uuid=USER_1_UUID, profile=DEFAULT_PROFILE,
+            vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
         )
         assert_that(response.status_code, equal_to(400))
 

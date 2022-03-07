@@ -1,15 +1,10 @@
 # Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import logging
-
-from wazo_phoned.auth_remote_addr import AuthResource
-from wazo_phoned.plugin_helpers.client.http import ClientLookup
-
 from flask import request
 
-
-logger = logging.getLogger(__name__)
+from wazo_phoned.auth import AuthResource
+from wazo_phoned.plugin_helpers.client.http import ClientLookup
 
 
 class Lookup(ClientLookup):

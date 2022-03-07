@@ -14,7 +14,6 @@ _DEFAULT_CONFIG = {
     'log_level': 'info',
     'user': 'www-data',
     'log_filename': '/var/log/wazo-phoned.log',
-    'pid_filename': '/run/wazo-phoned/wazo-phoned.pid',
     'rest_api': {
         'http': {'listen': '0.0.0.0', 'port': 9498, 'enable': True},
         'https': {
@@ -50,6 +49,8 @@ _DEFAULT_CONFIG = {
         'blf': True,
         'api': True,
         'cisco': True,
+        'endpoint': True,
+        'fanvil': True,
         'gigaset': True,
         'htek': True,
         'polycom': True,

@@ -3,7 +3,14 @@
 <list response="get_list" type="pr" total="{{ total }}" first="{{ offset + 1 }}" last="{{ last }}">
 {%- for result in results %}
 <entry id="{{ result.number|e }}">
-<fn>{{ result.name|e }}</fn>
+{% set name_tuple = result.name.split(maxsplit=1) -%}
+{% if name_tuple|length < 2 -%}
+<ln></ln>
+<fn>{{ name_tuple[0]|e }}</fn>
+{% else -%}
+<ln>{{ name_tuple[1]|e }}</ln>
+<fn>{{ name_tuple[0]|e }}</fn>
+{% endif -%}
 <hm>{{ result.number|e }}</hm>
 </entry>
 {%- endfor %}
