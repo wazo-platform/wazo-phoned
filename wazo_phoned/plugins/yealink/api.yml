@@ -79,7 +79,8 @@ paths:
           description: The status was changed
         '400':
           description: Provided data is incorrect or a required field is missing
-          $ref: '#/responses/InvalidDataError'
+          schema:
+            $ref: '#/responses/InvalidDataError'
         '404':
           $ref: '#/responses/NoSuchUser'
       parameters:
@@ -101,7 +102,8 @@ paths:
           description: The status was changed
         '400':
           description: Provided data is incorrect or a required field is missing
-          $ref: '#/responses/InvalidDataError'
+          schema:
+            $ref: '#/responses/InvalidDataError'
         '404':
           $ref: '#/responses/NoSuchUser'
       parameters:
