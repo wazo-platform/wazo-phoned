@@ -5,7 +5,7 @@ import logging
 import requests
 import yaml
 
-from openapi_spec_validator import validate_v2_spec
+from openapi_spec_validator import validate_spec, openapi_v2_spec_validator
 
 from .helpers.base import BasePhonedIntegrationTest
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
@@ -29,4 +29,4 @@ class TestDocumentation(BasePhonedIntegrationTest):
             port=port, version=VERSION
         )
         api = requests.get(api_url, verify=False)
-        validate_v2_spec(yaml.safe_load(api.text))
+        validate_spec(yaml.safe_load(api.text), validator=openapi_v2_spec_validator)
