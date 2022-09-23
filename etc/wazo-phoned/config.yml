@@ -1,14 +1,17 @@
 # This file should not be modified as it may get changed by the maintainer.
-# Add extra configuration files in the extra_config_files directory to override
-# the content from this file
+# Add extra configuration files to the extra_config_files directory to override
+# the settings in this file
 
-# Extra configuration directory where the config files overriding this file
-# should be.
+# Directory in which to place config overrides
 extra_config_files: /etc/wazo-phoned/conf.d/
 
-log_filename: /var/log/wazo-phoned.log
-debug: False
+# Change the log level to debug level.
+debug: false
 
+# Log file.
+log_filename: /var/log/wazo-phoned.log
+
+# wazo-auth (authentication daemon) connection settings.
 auth:
   host: localhost
   port: 9497
@@ -16,13 +19,14 @@ auth:
   https: false
   key_file: /var/lib/wazo-auth-keys/wazo-phoned-key.yml
 
+# wazo-dird connection settings
 dird:
   host: localhost
   port: 9489
   prefix: null
   https: false
 
-# Event bus (AMQP) connection information
+# Event bus (AMQP) connection settings
 bus:
   username: guest
   password: guest
@@ -31,12 +35,14 @@ bus:
   subscribe_exchange_name: wazo-headers
   subscribe_exchange_type: headers
 
+# wazo-amid connection settings
 amid:
   host: localhost
   port: 9491
   prefix: null
   https: false
 
+# wazo-confd connection settings
 confd:
   host: localhost
   port: 9486
@@ -65,6 +71,7 @@ rest_api:
 
   # CORS configuration. See Flask-CORS documentation for other values.
   cors:
+    # Enabled by default
     enabled: True
     # Allow JSON preflight requests
     allow_headers: [Content-Type, X-Auth-Token, Wazo-Tenant]
