@@ -1,4 +1,4 @@
-# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2022 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -57,12 +57,11 @@ class TestFanvil(BasePhonedIntegrationTest):
                      <Title>Wazo Search</Title>
                      <Prompt>Name or number</Prompt>
                      <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}</URL>
-                     <InputItem>
-                      <DisplayName>Name or number</DisplayName>
-                      <QueryStringParam>term</QueryStringParam>
-                      <DefaultValue />
-                      <InputFlags>A</InputFlags>
-                     </InputItem>
+                     <InputField>
+                      <Prompt>Name or number</Prompt>
+                      <Parameter>term</Parameter>
+                      <Default></Default>
+                     </InputField>
                     </FanvilIPPhoneInputScreen>""".format(
                         port=self.service_port(9499, 'phoned'),
                         profile=DEFAULT_PROFILE,
@@ -101,18 +100,18 @@ class TestFanvil(BasePhonedIntegrationTest):
                     """\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
-                    <DirectoryEntry>
-                      <Name>Test User1</Name>
-                      <Telephone>0033123456789</Telephone>
-                     </DirectoryEntry>
-                    <DirectoryEntry>
-                      <Name>Test User1 (mobile)</Name>
-                      <Telephone>5555555555</Telephone>
-                     </DirectoryEntry>
-                    <DirectoryEntry>
-                      <Name>Test User2</Name>
-                      <Telephone>1000</Telephone>
-                     </DirectoryEntry>
+                    <MenuItem>
+                      <Prompt>Test User1</Prompt>
+                      <URI>0033123456789</URI>
+                     </MenuItem>
+                    <MenuItem>
+                      <Prompt>Test User1 (mobile)</Prompt>
+                      <URI>5555555555</URI>
+                     </MenuItem>
+                    <MenuItem>
+                      <Prompt>Test User2</Prompt>
+                      <URI>1000</URI>
+                     </MenuItem>
                     </FanvilIPPhoneDirectory>"""
                 )
             ),
@@ -133,10 +132,10 @@ class TestFanvil(BasePhonedIntegrationTest):
                     """\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
-                    <DirectoryEntry>
-                      <Name>No entries</Name>
-                      <Telephone></Telephone>
-                     </DirectoryEntry>
+                    <MenuItem>
+                      <Prompt>No entries</Prompt>
+                      <URI></URI>
+                     </MenuItem>
                     </FanvilIPPhoneDirectory>"""
                 )
             ),
@@ -158,27 +157,24 @@ class TestFanvil(BasePhonedIntegrationTest):
                     """\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
-                    <DirectoryEntry>
-                      <Name>Test User1</Name>
-                      <Telephone>0033123456789</Telephone>
-                     </DirectoryEntry>
-                    <SoftKeyItem>
+                    <MenuItem>
+                      <Prompt>Test User1</Prompt>
+                      <URI>0033123456789</URI>
+                     </MenuItem>
+                    <SoftKey>
                     <Name>Dial</Name>
-                    <URL>SoftKey:Dial</URL>
-                    <Position>1</Position>
-                    </SoftKeyItem>
+                    <URI>SoftKey:Dial</URI>
+                    </SoftKey>
 
-                    <SoftKeyItem>
+                    <SoftKey>
                     <Name>Exit</Name>
-                    <URL>SoftKey:Exit</URL>
-                    <Position>3</Position>
-                    </SoftKeyItem>
+                    <URI>SoftKey:Exit</URI>
+                    </SoftKey>
 
-                    <SoftKeyItem>
+                    <SoftKey>
                     <Name>NextPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
-                    <Position>4</Position>
-                    </SoftKeyItem>
+                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+                    </SoftKey>
                     </FanvilIPPhoneDirectory>""".format(
                         port=self.service_port(9499, 'phoned'),
                         profile=DEFAULT_PROFILE,
@@ -208,32 +204,28 @@ class TestFanvil(BasePhonedIntegrationTest):
                     """\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
-                    <DirectoryEntry>
-                      <Name>Test User1 (mobile)</Name>
-                      <Telephone>5555555555</Telephone>
-                     </DirectoryEntry>
-                    <SoftKeyItem>
+                    <MenuItem>
+                      <Prompt>Test User1 (mobile)</Prompt>
+                      <URI>5555555555</URI>
+                     </MenuItem>
+                    <SoftKey>
                     <Name>Dial</Name>
-                    <URL>SoftKey:Dial</URL>
-                    <Position>1</Position>
-                    </SoftKeyItem>
+                    <URI>SoftKey:Dial</URI>
+                    </SoftKey>
 
-                    <SoftKeyItem>
+                    <SoftKey>
                     <Name>PrevPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=0</URL>
-                    <Position>2</Position>
-                    </SoftKeyItem>
-                    <SoftKeyItem>
+                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0</URI>
+                    </SoftKey>
+                    <SoftKey>
                     <Name>Exit</Name>
-                    <URL>SoftKey:Exit</URL>
-                    <Position>3</Position>
-                    </SoftKeyItem>
+                    <URI>SoftKey:Exit</URI>
+                    </SoftKey>
 
-                    <SoftKeyItem>
+                    <SoftKey>
                     <Name>NextPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=2</URL>
-                    <Position>4</Position>
-                    </SoftKeyItem>
+                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2</URI>
+                    </SoftKey>
                     </FanvilIPPhoneDirectory>""".format(
                         port=self.service_port(9499, 'phoned'),
                         profile=DEFAULT_PROFILE,
@@ -261,26 +253,23 @@ class TestFanvil(BasePhonedIntegrationTest):
                     """\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
-                    <DirectoryEntry>
-                      <Name>Test User2</Name>
-                      <Telephone>1000</Telephone>
-                     </DirectoryEntry>
-                    <SoftKeyItem>
+                    <MenuItem>
+                      <Prompt>Test User2</Prompt>
+                      <URI>1000</URI>
+                     </MenuItem>
+                    <SoftKey>
                     <Name>Dial</Name>
-                    <URL>SoftKey:Dial</URL>
-                    <Position>1</Position>
-                    </SoftKeyItem>
+                    <URI>SoftKey:Dial</URI>
+                    </SoftKey>
 
-                    <SoftKeyItem>
+                    <SoftKey>
                     <Name>PrevPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&term={term}&limit=1&offset=1</URL>
-                    <Position>2</Position>
-                    </SoftKeyItem>
-                    <SoftKeyItem>
+                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+                    </SoftKey>
+                    <SoftKey>
                     <Name>Exit</Name>
-                    <URL>SoftKey:Exit</URL>
-                    <Position>3</Position>
-                    </SoftKeyItem>
+                    <URI>SoftKey:Exit</URI>
+                    </SoftKey>
 
                     </FanvilIPPhoneDirectory>""".format(
                         port=self.service_port(9499, 'phoned'),
@@ -308,10 +297,10 @@ class TestFanvil(BasePhonedIntegrationTest):
                     """\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
-                    <DirectoryEntry>
-                      <Name>Aucune entrée</Name>
-                      <Telephone></Telephone>
-                     </DirectoryEntry>
+                    <MenuItem>
+                      <Prompt>Aucune entrée</Prompt>
+                      <URI></URI>
+                     </MenuItem>
                     </FanvilIPPhoneDirectory>"""
                 )
             ),
