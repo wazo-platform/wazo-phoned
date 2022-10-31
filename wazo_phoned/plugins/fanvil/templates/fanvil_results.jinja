@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <FanvilIPPhoneDirectory>
 {% for result in results -%}
- <DirectoryEntry>
-  <Name>{{ result.name|e }}</Name>
-  <Telephone>{{ result.number|e }}</Telephone>
- </DirectoryEntry>
+ <MenuItem>
+  <Prompt>{{ result.name|e }}</Prompt>
+  <URI>{{ result.number|e }}</URI>
+ </MenuItem>
 {% else -%}
- <DirectoryEntry>
-  <Name>{{ gettext('No entries') }}</Name>
-  <Telephone></Telephone>
- </DirectoryEntry>
+ <MenuItem>
+  <Prompt>{{ gettext('No entries') }}</Prompt>
+  <URI></URI>
+ </MenuItem>
 {% endfor -%}
 
 {% if offset_next is not none or offset_previous is not none -%}
-<SoftKeyItem>
+<SoftKey>
 <Name>{{ gettext('Dial') }}</Name>
-<URL>SoftKey:Dial</URL>
-<Position>1</Position>
-</SoftKeyItem>
+<URI>SoftKey:Dial</URI>
+</SoftKey>
 
 {% if offset_previous is not none -%}
-<SoftKeyItem>
+<SoftKey>
 <Name>{{ gettext('PrevPage') }}</Name>
-<URL>{{ base_url|e }}?xivo_user_uuid={{ user_uuid|e }}&term={{ term|e }}&limit={{ limit|e }}&offset={{ offset_previous|e }}</URL>
-<Position>2</Position>
-</SoftKeyItem>
+<URI>{{ base_url|e }}?xivo_user_uuid={{ user_uuid|e }}&amp;term={{ term|e }}&amp;limit={{ limit|e }}&amp;offset={{ offset_previous|e }}</URI>
+</SoftKey>
 {% endif -%}
 
-<SoftKeyItem>
+<SoftKey>
 <Name>{{ gettext('Exit') }}</Name>
-<URL>SoftKey:Exit</URL>
-<Position>3</Position>
-</SoftKeyItem>
+<URI>SoftKey:Exit</URI>
+</SoftKey>
 
 {% if offset_next is not none -%}
-<SoftKeyItem>
+<SoftKey>
 <Name>{{ gettext('NextPage') }}</Name>
-<URL>{{ base_url|e }}?xivo_user_uuid={{ user_uuid|e }}&term={{ term|e }}&limit={{ limit|e }}&offset={{ offset_next|e }}</URL>
-<Position>4</Position>
-</SoftKeyItem>
+<URI>{{ base_url|e }}?xivo_user_uuid={{ user_uuid|e }}&amp;term={{ term|e }}&amp;limit={{ limit|e }}&amp;offset={{ offset_next|e }}</URI>
+</SoftKey>
 {% endif -%}
 {% endif -%}
 </FanvilIPPhoneDirectory>
