@@ -15,6 +15,7 @@ from flask import Flask
 from flask import request
 from flask_babel import Babel
 from flask_cors import CORS
+from flask_restful import Api
 from pkg_resources import iter_entry_points, resource_filename, resource_isdir
 from xivo import http_helpers
 
@@ -24,30 +25,31 @@ TRANSLATION_DIRECTORY = 'translations'
 
 logger = logging.getLogger(__name__)
 cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
+app = Flask('wazo_phoned')
+api = Api(app, prefix='/{}'.format(VERSION))
 
 
 class HTTPServer:
     def __init__(self, config):
         self.config = config['rest_api']
-        self.app = Flask('wazo_phoned')
         self._configure_babel(config['enabled_plugins'])
-        http_helpers.add_logger(self.app, logger)
-        self.app.before_request(http_helpers.log_before_request)
-        self.app.after_request(http_helpers.log_request)
-        self.app.secret_key = os.urandom(24)
-        self.app.permanent_session_lifetime = timedelta(minutes=5)
+        http_helpers.add_logger(app, logger)
+        app.before_request(http_helpers.log_before_request)
+        app.after_request(http_helpers.log_request)
+        app.secret_key = os.urandom(24)
+        app.permanent_session_lifetime = timedelta(minutes=5)
         self.load_cors()
 
     def load_cors(self):
         cors_config = dict(self.config.get('cors', {}))
         enabled = cors_config.pop('enabled', False)
         if enabled:
-            CORS(self.app, **cors_config)
+            CORS(app, **cors_config)
 
     def _configure_babel(self, enabled_plugins):
-        self.babel = Babel(self.app)
-        self.app.config['BABEL_DEFAULT_LOCALE'] = BABEL_DEFAULT_LOCALE
-        self.app.config['BABEL_TRANSLATION_DIRECTORIES'] = ';'.join(
+        self.babel = Babel(app)
+        app.config['BABEL_DEFAULT_LOCALE'] = BABEL_DEFAULT_LOCALE
+        app.config['BABEL_TRANSLATION_DIRECTORIES'] = ';'.join(
             self._get_translation_directories(enabled_plugins)
         )
 
@@ -83,7 +85,7 @@ class HTTPServer:
         http_config = self.config['http']
         https_config = self.config['https']
 
-        wsgi_app = wsgi.WSGIPathInfoDispatcher({'/': self.app})
+        wsgi_app = wsgi.WSGIPathInfoDispatcher({'/': app})
         cherrypy.server.unsubscribe()
         cherrypy.config.update({'environment': 'production'})
 
@@ -126,7 +128,7 @@ class HTTPServer:
             logger.critical('No HTTP/HTTPS server enabled')
             exit()
 
-        list_routes(self.app)
+        list_routes(app)
 
         try:
             cherrypy.engine.start()
