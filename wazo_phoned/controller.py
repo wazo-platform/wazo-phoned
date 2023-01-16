@@ -10,9 +10,9 @@ from xivo.status import StatusAggregator, TokenStatus
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
-from .auth import auth_verifier
+from .auth import auth_verifier, init_master_tenant
 from .bus import CoreBusConsumer
-from .http_server import app, HTTPServer
+from .http_server import api, app, HTTPServer
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +41,7 @@ class Controller:
             names=config['enabled_plugins'],
             dependencies={
                 'config': config,
+                'api': api,
                 'app': app,
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
                 'bus_consumer': self.bus_consumer,
@@ -48,6 +49,11 @@ class Controller:
                 'phone_plugins': self.phone_plugins,
             },
         )
+
+        if not config['auth'].get('master_tenant_uuid'):
+            self.token_renewer.subscribe_to_next_token_details_change(
+                init_master_tenant
+            )
 
     def run(self):
         logger.debug('wazo-phoned starting...')

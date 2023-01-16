@@ -38,6 +38,7 @@ class HTTPServer:
         app.after_request(http_helpers.log_request)
         app.secret_key = os.urandom(24)
         app.permanent_session_lifetime = timedelta(minutes=5)
+        app.config['auth'] = config['auth']
         self.load_cors()
 
     def load_cors(self):

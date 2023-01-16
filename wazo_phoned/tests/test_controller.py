@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch, sentinel as s
 from xivo import config_helper
 
 from ..controller import Controller
-from ..http_server import app
+from ..http_server import api, app
 
 
 class TestController(TestCase):
@@ -49,6 +49,7 @@ class TestController(TestCase):
             names=config['enabled_plugins'],
             dependencies={
                 'config': config,
+                'api': api,
                 'app': app,
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
                 'bus_consumer': self.bus_consumer,
