@@ -18,9 +18,6 @@ VERSION = '0.1'
 
 
 class TestConfig(BasePhonedIntegrationTest):
-    @classmethod
-    def tearDownClass(cls):
-        pass
 
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()

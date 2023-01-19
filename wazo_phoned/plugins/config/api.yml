@@ -27,7 +27,7 @@ paths:
         '200':
           description: The updated configuration of the service
         '400':
-          description: The given confiuration is invalid
+          description: The given configuration is invalid
 parameters:
   ConfigPatch:
     name: ConfigPatch
