@@ -11,9 +11,12 @@ from flask_restful import Resource
 from flask_restful import abort
 from netaddr import IPNetwork, IPAddress
 
+from wazo_phoned.exceptions import MasterTenantNotInitialized
+from wazo_phoned.http_server import app
+from werkzeug.local import LocalProxy as Proxy
 from xivo import mallow_helpers
 from xivo import rest_api_helpers
-from xivo.auth_verifier import AuthVerifier
+from xivo.auth_verifier import AuthVerifier, required_tenant
 
 auth_verifier = AuthVerifier()
 
@@ -54,5 +57,29 @@ class AuthResource(ErrorCatchingResource):
 
 class TokenAuthResource(ErrorCatchingResource):
     method_decorators = [
-        auth_verifier.verify_token
+        auth_verifier.verify_tenant,
+        auth_verifier.verify_token,
     ] + ErrorCatchingResource.method_decorators
+
+
+def required_master_tenant():
+    return required_tenant(master_tenant_uuid)
+
+
+def init_master_tenant(token):
+    tenant_uuid = token['metadata']['tenant_uuid']
+    app.config['auth']['master_tenant_uuid'] = tenant_uuid
+    logger.debug('Initiated master tenant UUID: %s', tenant_uuid)
+
+
+def get_master_tenant_uuid():
+    if not app:
+        raise Exception('Flask application not configured')
+
+    tenant_uuid = app.config['auth'].get('master_tenant_uuid')
+    if not tenant_uuid:
+        raise MasterTenantNotInitialized()
+    return tenant_uuid
+
+
+master_tenant_uuid = Proxy(get_master_tenant_uuid)

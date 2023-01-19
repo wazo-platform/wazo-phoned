@@ -10,9 +10,9 @@ from xivo.status import StatusAggregator, TokenStatus
 from xivo.token_renewer import TokenRenewer
 from wazo_auth_client import Client as AuthClient
 
-from .auth import auth_verifier
+from .auth import auth_verifier, init_master_tenant
 from .bus import CoreBusConsumer
-from .http_server import HTTPServer
+from .http_server import api, app, HTTPServer
 
 logger = logging.getLogger(__name__)
 
@@ -24,9 +24,7 @@ class Controller:
         self.bus_consumer = CoreBusConsumer(config)
         self.status_aggregator = StatusAggregator()
         self.http_server = HTTPServer(self.config)
-        self.http_server.app.config['authorized_subnets'] = self.config['rest_api'][
-            'authorized_subnets'
-        ]
+        app.config['authorized_subnets'] = self.config['rest_api']['authorized_subnets']
         auth_client = AuthClient(**config['auth'])
         auth_verifier.set_client(auth_client)
         self.token_renewer = TokenRenewer(auth_client)
@@ -43,13 +41,19 @@ class Controller:
             names=config['enabled_plugins'],
             dependencies={
                 'config': config,
-                'app': self.http_server.app,
+                'api': api,
+                'app': app,
                 'token_changed_subscribe': self.token_renewer.subscribe_to_token_change,
                 'bus_consumer': self.bus_consumer,
                 'status_aggregator': self.status_aggregator,
                 'phone_plugins': self.phone_plugins,
             },
         )
+
+        if not config['auth'].get('master_tenant_uuid'):
+            self.token_renewer.subscribe_to_next_token_details_change(
+                init_master_tenant
+            )
 
     def run(self):
         logger.debug('wazo-phoned starting...')
@@ -76,4 +80,4 @@ class Controller:
         self.http_server.stop()
 
     def _on_token_change(self, token_id):
-        self.http_server.app.config['token'] = token_id
+        app.config['token'] = token_id

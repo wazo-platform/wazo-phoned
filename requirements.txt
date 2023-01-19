@@ -14,6 +14,7 @@ flask==1.0.2
 importlib_metadata==1.6.0  # from kombu
 itsdangerous==0.24  # from flask
 jinja2==2.10
+jsonpatch==1.21
 kombu==4.6.11
 markupsafe==1.1.0  # from flask
 marshmallow==3.10.0
