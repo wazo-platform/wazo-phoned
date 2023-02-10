@@ -15,12 +15,12 @@ services:
       - "./ssl:/etc/ssl"
       - "./auth_keys:/tmp/auth_keys"
       - "./etc/wazo-phoned/conf.d/50-default.yml:/etc/wazo-phoned/conf.d/50-default.yml"
-      # - "${LOCAL_GIT_REPOS}/xivo-lib-python/xivo:/opt/venv/lib/python3.7/site-packages/xivo"
+      # - "${LOCAL_GIT_REPOS}/xivo-lib-python/xivo:/opt/venv/lib/python3.9/site-packages/xivo"
     environment:
         XIVO_UUID: 08c56466-8f29-45c7-9856-92bf1ba89b93
 
   dird:
-    image: p0bailey/docker-flask
+    image: wazoplatform/flask
     expose:
       - "9489"
     volumes:
@@ -41,7 +41,7 @@ services:
         target: /var/lib/rabbitmq
 
   amid:
-    image: p0bailey/docker-flask
+    image: wazoplatform/flask
     ports:
       - 9491
     volumes:
@@ -49,7 +49,7 @@ services:
     command: python /usr/local/share/wazo-amid/mock-wazo-amid.py 9491
 
   confd:
-    image: p0bailey/docker-flask
+    image: wazoplatform/flask
     ports:
       - 9486
     volumes:
