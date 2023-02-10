@@ -18,7 +18,6 @@ VERSION = '0.1'
 
 
 class TestConfig(BasePhonedIntegrationTest):
-
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()
 

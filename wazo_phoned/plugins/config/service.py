@@ -6,7 +6,6 @@ import threading
 
 
 class ConfigService:
-
     # Changing root logger log-level requires application-wide lock.
     # This lock will be shared across all instances.
     _lock = threading.Lock()

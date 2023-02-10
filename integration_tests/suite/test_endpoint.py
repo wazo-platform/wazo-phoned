@@ -1,4 +1,4 @@
-# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import (
@@ -17,7 +17,6 @@ from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
 
 
 class TestEndpointHoldHTTP(BasePhonedIntegrationTest):
-
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()
 
@@ -137,7 +136,6 @@ class TestEndpointHoldHTTP(BasePhonedIntegrationTest):
 
 
 class TestEndpointAnswerHTTP(BasePhonedIntegrationTest):
-
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()
 

@@ -1,4 +1,4 @@
-# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -26,7 +26,6 @@ _PhoneFormattedResult = namedtuple('_PhoneFormattedResult', ['name', 'number'])
 
 
 class ClientMenu(AuthResource):
-
     content_type = None
     template = None
 
@@ -50,7 +49,6 @@ class ClientMenu(AuthResource):
 
 
 class ClientInput(AuthResource):
-
     content_type = None
     template = None
 
@@ -74,7 +72,6 @@ class ClientInput(AuthResource):
 
 
 class ClientLookup(AuthResource):
-
     MAX_ITEM_PER_PAGE = None
     content_type = None
     template = None
@@ -187,7 +184,6 @@ def _previous_offset(offset, limit):
 
 
 class _PhoneResultFormatter:
-
     _NAME_FIELD = 'name'
     _NUMBER_FIELD = 'number'
     _INVALID_CHARACTERS_REGEX = re.compile(r'[^\d*#+\(\)]+')

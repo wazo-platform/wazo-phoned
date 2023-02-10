@@ -1,4 +1,4 @@
-# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, has_item, has_items, has_entries, not_
@@ -10,7 +10,6 @@ from wazo_test_helpers import until
 
 
 class TestBlf(BasePhonedIntegrationTest):
-
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()
 

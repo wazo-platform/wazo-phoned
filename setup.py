@@ -20,7 +20,6 @@ class build_py(_build_py):
 
 
 class BabelWrapper:
-
     DEFAULT_HEADER = """\
 # Translations template for {PROJECT}.
 # Copyright {YEAR} The Wazo Authors  (see the AUTHORS file)

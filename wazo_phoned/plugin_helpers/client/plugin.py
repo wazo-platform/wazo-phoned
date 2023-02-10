@@ -1,4 +1,4 @@
-# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from abc import ABCMeta, abstractmethod
@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 
 class ClientPlugin(metaclass=ABCMeta):
-
     # NOTE(afournier): these vendor-ending URLs are deprecated and will be phased out gradually
     menu_url_fmt = '/directories/menu/<profile>/{vendor}'
     input_url_fmt = '/directories/input/<profile>/{vendor}'
