@@ -1,4 +1,4 @@
-# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -46,7 +46,6 @@ USER_1_TOKEN = '0d74df1c-e59c-4c7a-9f4f-db8ea1f6cd94'
 
 
 class BasePhonedIntegrationTest(AssetLaunchingTestCase):
-
     assets_root = ASSETS_ROOT
     service = 'phoned'
     wait_strategy = NoWaitStrategy()

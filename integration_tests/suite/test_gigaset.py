@@ -1,4 +1,4 @@
-# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -17,7 +17,6 @@ VENDOR = 'gigaset'
 
 
 class TestGigaset(BasePhonedIntegrationTest):
-
     asset = 'default_config'
     wait_strategy = PhonedEverythingUpWaitStrategy()
 
@@ -294,7 +293,6 @@ class TestGigaset(BasePhonedIntegrationTest):
 
 
 class TestAuthError(BasePhonedIntegrationTest):
-
     asset = 'no_auth_server'
 
     def test_no_auth_server_gives_503(self):
@@ -307,7 +305,6 @@ class TestAuthError(BasePhonedIntegrationTest):
 
 
 class TestDirdError(BasePhonedIntegrationTest):
-
     asset = 'no_dird_server'
 
     def test_no_dird_server_gives_503(self):

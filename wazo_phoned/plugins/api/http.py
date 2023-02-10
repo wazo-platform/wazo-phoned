@@ -1,4 +1,4 @@
-# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 class OpenAPIResource(AuthResource):
-
     api_filename = "api.yml"
 
     def get(self):
