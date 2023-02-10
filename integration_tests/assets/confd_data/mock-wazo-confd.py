@@ -1,5 +1,5 @@
 # -*-coding: utf-8-*-
-# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
@@ -56,9 +56,9 @@ def log_request():
     log = {
         'method': request.method,
         'path': request.path,
-        'query': request.args.items(multi=True),
-        'body': request.data,
-        'json': request.json,
+        'query': dict(request.args.items(multi=True)),
+        'body': request.data.decode('utf-8'),
+        'json': request.json if request.is_json else None,
         'headers': dict(request.headers),
     }
     _requests.append(log)
@@ -83,12 +83,12 @@ def set_user_service(user_uuid):
     return '', 204
 
 
-@app.route('/{}/extensions/features'.format(API_VERSION), methods=['GET'])
+@app.route(f'/{API_VERSION}/extensions/features', methods=['GET'])
 def extensions_features():
     return jsonify(extensions_features_data)
 
 
-@app.route('/{}/users/<user_uuid>'.format(API_VERSION), methods=['GET'])
+@app.route(f'/{API_VERSION}/users/<user_uuid>', methods=['GET'])
 def user_uuid_get(user_uuid):
     return jsonify(
         {
@@ -100,14 +100,12 @@ def user_uuid_get(user_uuid):
     )
 
 
-@app.route(
-    '/{}/users/<user_uuid>/services/<service_name>'.format(API_VERSION), methods=['PUT']
-)
+@app.route(f'/{API_VERSION}/users/<user_uuid>/services/<service_name>', methods=['PUT'])
 def user_service_put(user_uuid, service_name):
     return '', 204
 
 
-@app.route('/{}/lines'.format(API_VERSION), methods=['GET'])
+@app.route(f'/{API_VERSION}/lines', methods=['GET'])
 def lines_get():
     search = request.args.get('search', None)
     body = None
@@ -132,7 +130,7 @@ def lines_get():
     return jsonify(body)
 
 
-@app.route('/{}/devices/<device_name>'.format(API_VERSION), methods=['GET'])
+@app.route(f'/{API_VERSION}/devices/<device_name>', methods=['GET'])
 def device_get(device_name):
     if device_name in devices:
         return jsonify(devices[device_name])
