@@ -6,7 +6,7 @@ https://github.com/wazo-platform/wazo-dird-client/archive/master.zip
 https://github.com/wazo-platform/xivo-lib-python/archive/master.zip
 babel==2.6.0
 cheroot==6.5.4
-cherrypy==8.9.1
+cherrypy==17.4.0
 flask-babel==0.11.2
 flask-cors==3.0.7
 flask-restful==0.3.7
