@@ -1,6 +1,6 @@
 test-setup: egg-info compile-catalog
 	docker build --pull -t wazoplatform/wazo-phoned ..
-	docker build --no-cache -t wazo-phoned-test -f Dockerfile-phoned-test ..
+	docker build --no-cache -t wazo-phoned-test -f docker/Dockerfile-phoned-test ..
 
 compile-catalog:
 	cd .. && python setup.py compile_catalog
