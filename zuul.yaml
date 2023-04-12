@@ -1,6 +1,6 @@
 - project:
     templates:
-      - wazo-tox-linters
-      - wazo-tox-py37
-      - wazo-tox-integration
-      - debian-packaging-template
+      - wazo-tox-linters-310
+      - wazo-tox-py39
+      - wazo-tox-integration-py39
+      - debian-packaging-bullseye

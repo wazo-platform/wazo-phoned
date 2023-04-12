@@ -4,22 +4,23 @@ https://github.com/wazo-platform/wazo-auth-client/archive/master.zip
 https://github.com/wazo-platform/wazo-confd-client/archive/master.zip
 https://github.com/wazo-platform/wazo-dird-client/archive/master.zip
 https://github.com/wazo-platform/xivo-lib-python/archive/master.zip
-babel==2.6.0
-cheroot==6.5.4
+babel==2.8.0
+cheroot==8.5.2
 cherrypy==17.4.0
-flask-babel==0.11.2
-flask-cors==3.0.7
-flask-restful==0.3.7
-flask==1.0.2
-importlib_metadata==1.6.0  # from kombu
-itsdangerous==0.24  # from flask
-jinja2==2.10
-jsonpatch==1.21
-kombu==4.6.11
-markupsafe==1.1.0  # from flask
+# Bullseye actually useds a patched version of flask-babel 0.12.2,
+# But this is the closest functional version we can install from pip.
+flask-babel==1.0.0
+flask-cors==3.0.9
+flask-restful==0.3.8
+flask==1.1.2
+itsdangerous==1.1.0  # from flask
+jinja2==2.11.3  # from flask
+jsonpatch==1.25
+kombu==5.0.2
+markupsafe==1.1.1 # from jinja
 marshmallow==3.10.0
 netaddr==0.7.19
-pyyaml==3.13  # from xivo-lib-python
-requests==2.21.0
-stevedore==1.29.0
-werkzeug==0.14.1  # for flask-babel
+pyyaml==5.3.1  # from xivo-lib-python
+requests==2.25.1
+stevedore==3.2.2
+werkzeug==1.0.1  # for flask-babel
