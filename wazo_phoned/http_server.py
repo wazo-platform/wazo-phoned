@@ -1,4 +1,4 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import timedelta
@@ -26,7 +26,7 @@ TRANSLATION_DIRECTORY = 'translations'
 logger = logging.getLogger(__name__)
 cherrypy.engine.signal_handler.set_handler('SIGTERM', cherrypy.engine.exit)
 app = Flask('wazo_phoned')
-api = Api(app, prefix='/{}'.format(VERSION))
+api = Api(app, prefix=f'/{VERSION}')
 
 
 class HTTPServer:
@@ -56,9 +56,7 @@ class HTTPServer:
 
         @self.babel.localeselector
         def get_locale():
-            translations = set(
-                [str(locale) for locale in self.babel.list_translations()]
-            )
+            translations = {str(locale) for locale in self.babel.list_translations()}
             translations.add(BABEL_DEFAULT_LOCALE)
             logger.debug('Available translations: %s', translations)
             logger.debug('accept_languages: %s', request.accept_languages)
@@ -107,7 +105,7 @@ class HTTPServer:
                     bind_addr_https[0],
                     bind_addr_https[1],
                 )
-            except IOError as e:
+            except OSError as e:
                 logger.warning("HTTPS server won't start: %s", e)
         else:
             logger.debug('HTTPS server is disabled')
@@ -150,7 +148,7 @@ def list_routes(app):
     output = []
     for rule in app.url_map.iter_rules():
         methods = ','.join(rule.methods)
-        line = "{:50s} {:20s} {}".format(rule.endpoint, methods, rule)
+        line = f"{rule.endpoint:50s} {methods:20s} {rule}"
         output.append(line)
 
     for line in sorted(output):

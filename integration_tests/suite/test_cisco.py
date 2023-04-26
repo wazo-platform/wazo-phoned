@@ -32,18 +32,14 @@ class TestCisco(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <CiscoIPPhoneMenu>
                      <MenuItem>
                       <Name>Wazo Directory</Name>
-                      <URL>https://127.0.0.1:{port}/0.1/directories/input/{profile}/cisco?xivo_user_uuid={user_uuid}</URL>
+                      <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/input/{DEFAULT_PROFILE}/cisco?xivo_user_uuid={USER_1_UUID}</URL>
                      </MenuItem>
-                    </CiscoIPPhoneMenu>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+                    </CiscoIPPhoneMenu>"""
                 )
             ),
         )
@@ -69,23 +65,19 @@ class TestCisco(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <CiscoIPPhoneInput>
                      <Title>Wazo Search</Title>
                      <Prompt>Name or number</Prompt>
-                     <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/cisco?xivo_user_uuid={user_uuid}</URL>
+                     <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/cisco?xivo_user_uuid={USER_1_UUID}</URL>
                      <InputItem>
                       <DisplayName>Name or number</DisplayName>
                       <QueryStringParam>term</QueryStringParam>
                       <DefaultValue />
                       <InputFlags>A</InputFlags>
                      </InputItem>
-                    </CiscoIPPhoneInput>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+                    </CiscoIPPhoneInput>"""
                 )
             ),
         )
@@ -173,7 +165,7 @@ class TestCisco(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <CiscoIPPhoneDirectory>
                     <DirectoryEntry>
@@ -194,15 +186,10 @@ class TestCisco(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>NextPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/cisco?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URL>
+                    <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/cisco?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URL>
                     <Position>4</Position>
                     </SoftKeyItem>
-                    </CiscoIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </CiscoIPPhoneDirectory>"""
                 )
             ),
         )
@@ -223,7 +210,7 @@ class TestCisco(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <CiscoIPPhoneDirectory>
                     <DirectoryEntry>
@@ -238,7 +225,7 @@ class TestCisco(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>PrevPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/cisco?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0</URL>
+                    <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/cisco?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=0</URL>
                     <Position>2</Position>
                     </SoftKeyItem>
                     <SoftKeyItem>
@@ -249,15 +236,10 @@ class TestCisco(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>NextPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/cisco?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2</URL>
+                    <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/cisco?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=2</URL>
                     <Position>4</Position>
                     </SoftKeyItem>
-                    </CiscoIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </CiscoIPPhoneDirectory>"""
                 )
             ),
         )
@@ -276,7 +258,7 @@ class TestCisco(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <CiscoIPPhoneDirectory>
                     <DirectoryEntry>
@@ -291,7 +273,7 @@ class TestCisco(BasePhonedIntegrationTest):
 
                     <SoftKeyItem>
                     <Name>PrevPage</Name>
-                    <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/cisco?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URL>
+                    <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/cisco?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URL>
                     <Position>2</Position>
                     </SoftKeyItem>
                     <SoftKeyItem>
@@ -300,12 +282,7 @@ class TestCisco(BasePhonedIntegrationTest):
                     <Position>3</Position>
                     </SoftKeyItem>
 
-                    </CiscoIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </CiscoIPPhoneDirectory>"""
                 )
             ),
         )

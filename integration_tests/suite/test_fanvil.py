@@ -50,22 +50,18 @@ class TestFanvil(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneInputScreen>
                      <Title>Wazo Search</Title>
                      <Prompt>Name or number</Prompt>
-                     <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}</URL>
+                     <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/fanvil?xivo_user_uuid={USER_1_UUID}</URL>
                      <InputField>
                       <Prompt>Name or number</Prompt>
                       <Parameter>term</Parameter>
                       <Default></Default>
                      </InputField>
-                    </FanvilIPPhoneInputScreen>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+                    </FanvilIPPhoneInputScreen>"""
                 )
             ),
         )
@@ -153,7 +149,7 @@ class TestFanvil(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
                     <MenuItem>
@@ -172,14 +168,9 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKey>
                     <Name>NextPage</Name>
-                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+                    <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/fanvil?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URI>
                     </SoftKey>
-                    </FanvilIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </FanvilIPPhoneDirectory>"""
                 )
             ),
         )
@@ -200,7 +191,7 @@ class TestFanvil(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
                     <MenuItem>
@@ -214,7 +205,7 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKey>
                     <Name>PrevPage</Name>
-                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0</URI>
+                    <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/fanvil?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=0</URI>
                     </SoftKey>
                     <SoftKey>
                     <Name>Exit</Name>
@@ -223,14 +214,9 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKey>
                     <Name>NextPage</Name>
-                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2</URI>
+                    <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/fanvil?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=2</URI>
                     </SoftKey>
-                    </FanvilIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </FanvilIPPhoneDirectory>"""
                 )
             ),
         )
@@ -249,7 +235,7 @@ class TestFanvil(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <?xml version="1.0" encoding="UTF-8" ?>
                     <FanvilIPPhoneDirectory>
                     <MenuItem>
@@ -263,19 +249,14 @@ class TestFanvil(BasePhonedIntegrationTest):
 
                     <SoftKey>
                     <Name>PrevPage</Name>
-                    <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/fanvil?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+                    <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/fanvil?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URI>
                     </SoftKey>
                     <SoftKey>
                     <Name>Exit</Name>
                     <URI>SoftKey:Exit</URI>
                     </SoftKey>
 
-                    </FanvilIPPhoneDirectory>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </FanvilIPPhoneDirectory>"""
                 )
             ),
         )

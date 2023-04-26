@@ -23,9 +23,7 @@ class TestConfig(BasePhonedIntegrationTest):
 
     def test_config(self):
         port = self.service_port(9499, 'phoned')
-        api_url = 'https://127.0.0.1:{port}/{version}/config'.format(
-            port=port, version=VERSION
-        )
+        api_url = f'https://127.0.0.1:{port}/{VERSION}/config'
         headers = {
             'X-Auth-Token': 'valid-token-multitenant',
         }
@@ -55,9 +53,7 @@ class TestConfig(BasePhonedIntegrationTest):
         )
 
         port = self.service_port(9499, 'phoned')
-        api_url = 'https://127.0.0.1:{port}/{version}/config'.format(
-            port=port, version=VERSION
-        )
+        api_url = f'https://127.0.0.1:{port}/{VERSION}/config'
         headers = {
             'Content-Type': 'application/json',
             'X-Auth-Token': 'valid-token-multitenant',
@@ -81,9 +77,7 @@ class TestConfig(BasePhonedIntegrationTest):
         user_tenant_token = USER_1_TOKEN
 
         port = self.service_port(9499, 'phoned')
-        api_url = 'https://127.0.0.1:{port}/{version}/config'.format(
-            port=port, version=VERSION
-        )
+        api_url = f'https://127.0.0.1:{port}/{VERSION}/config'
         headers = {
             'Content-Type': 'application/json',
             'X-Auth-Token': 'valid-token-multitenant',

@@ -60,8 +60,8 @@ class BabelWrapper:
                 project=PROJECT,
                 copyright_holder='The Wazo Authors  (see the AUTHORS file)',
                 msgid_bugs_address=EMAIL,
-                last_translator='{author} <{email}>'.format(author=AUTHOR, email=EMAIL),
-                language_team='en <{email}>'.format(email=EMAIL),
+                last_translator=f'{AUTHOR} <{EMAIL}>',
+                language_team=f'en <{EMAIL}>',
                 **kwargs,
             ):
                 super().__init__(
