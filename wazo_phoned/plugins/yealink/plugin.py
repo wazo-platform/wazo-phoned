@@ -60,9 +60,7 @@ class Plugin:
             'service': service,
         }
 
-        api = create_blueprint_api(
-            app, '{}_plugin'.format(self.vendor), self.import_name
-        )
+        api = create_blueprint_api(app, f'{self.vendor}_plugin', self.import_name)
 
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
 

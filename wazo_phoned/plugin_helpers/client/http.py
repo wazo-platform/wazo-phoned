@@ -219,9 +219,7 @@ class _PhoneResultFormatter:
             if first_number:
                 name_result = name
             else:
-                name_result = '{} ({})'.format(
-                    name, self._lookup_results['column_headers'][candidate].lower()
-                )
+                name_result = f'{name} ({self._lookup_results["column_headers"][candidate].lower()})'
             number = result['column_values'][candidate]
             if not number:
                 continue

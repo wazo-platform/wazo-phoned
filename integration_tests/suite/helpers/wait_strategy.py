@@ -1,4 +1,4 @@
-# Copyright 2018-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2018-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, only_contains
@@ -13,7 +13,7 @@ class PhonedEverythingUpWaitStrategy(WaitStrategy):
             try:
                 status = integration_test.get_status_result_by_https()
             except RequestException as e:
-                raise AssertionError('wazo-phoned is not up yet: {}'.format(e))
+                raise AssertionError(f'wazo-phoned is not up yet: {e}')
             component_statuses = [
                 component['status']
                 for component in status.values()
@@ -30,6 +30,6 @@ class PhonedAPIWaitStrategy(WaitStrategy):
             try:
                 integration_test.get_status_result_by_https()
             except ConnectionError as e:
-                raise AssertionError('wazo-phoned is not up yet: {}'.format(e))
+                raise AssertionError(f'wazo-phoned is not up yet: {e}')
 
         until.assert_(api_is_up, timeout=10)

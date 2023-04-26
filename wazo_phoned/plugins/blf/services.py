@@ -28,9 +28,7 @@ class BlfService:
 
     def _send(self, device, status):
         self.amid.command(
-            'devstate change {} {}'.format(
-                device, self.INUSE if status else self.NOT_INUSE
-            )
+            f'devstate change {device} {self.INUSE if status else self.NOT_INUSE}'
         )
 
     def _update_forward(self, user_id, forward_name, destination, status):

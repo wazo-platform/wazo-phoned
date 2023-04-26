@@ -50,18 +50,14 @@ class TestAastra(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
         <?xml version="1.0" encoding="UTF-8" ?>
         <AastraIPPhoneInputScreen type="string" editable="yes">
          <Title>Wazo Search</Title>
          <Prompt>Name or number:</Prompt>
-         <URL>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}</URL>
+         <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/aastra?xivo_user_uuid={USER_1_UUID}</URL>
          <Parameter>term</Parameter>
-        </AastraIPPhoneInputScreen>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+        </AastraIPPhoneInputScreen>"""
                 )
             ),
         )
@@ -149,7 +145,7 @@ class TestAastra(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
         <?xml version="1.0" encoding="UTF-8" ?>
         <AastraIPPhoneTextMenu style="none" destroyOnExit="yes">
         <MenuItem>
@@ -158,14 +154,9 @@ class TestAastra(BasePhonedIntegrationTest):
          </MenuItem>
         <MenuItem>
          <Prompt>Next Page</Prompt>
-         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+         <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/aastra?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URI>
         </MenuItem>
-        </AastraIPPhoneTextMenu>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </AastraIPPhoneTextMenu>"""
                 )
             ),
         )
@@ -186,12 +177,12 @@ class TestAastra(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
         <?xml version="1.0" encoding="UTF-8" ?>
         <AastraIPPhoneTextMenu style="none" destroyOnExit="yes">
         <MenuItem>
          <Prompt>Previous Page</Prompt>
-         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0</URI>
+         <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/aastra?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=0</URI>
         </MenuItem>
         <MenuItem>
           <Prompt>Test User1 (mobile)</Prompt>
@@ -199,14 +190,9 @@ class TestAastra(BasePhonedIntegrationTest):
          </MenuItem>
         <MenuItem>
          <Prompt>Next Page</Prompt>
-         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2</URI>
+         <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/aastra?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=2</URI>
         </MenuItem>
-        </AastraIPPhoneTextMenu>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </AastraIPPhoneTextMenu>"""
                 )
             ),
         )
@@ -225,23 +211,18 @@ class TestAastra(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
         <?xml version="1.0" encoding="UTF-8" ?>
         <AastraIPPhoneTextMenu style="none" destroyOnExit="yes">
         <MenuItem>
          <Prompt>Previous Page</Prompt>
-         <URI>https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/aastra?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1</URI>
+         <URI>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/aastra?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URI>
         </MenuItem>
         <MenuItem>
           <Prompt>Test User2</Prompt>
           <URI>Dial:1000</URI>
          </MenuItem>
-        </AastraIPPhoneTextMenu>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+        </AastraIPPhoneTextMenu>"""
                 )
             ),
         )

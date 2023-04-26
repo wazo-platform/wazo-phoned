@@ -1,4 +1,4 @@
-# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import json
@@ -44,7 +44,7 @@ class BusClient(bus_helper.BusClient):
     def send_user_forward_update(self, forward_name, user_id, destination, enabled):
         self.send_event(
             {
-                'name': 'users_forwards_{}_updated'.format(forward_name),
+                'name': f'users_forwards_{forward_name}_updated',
                 'data': {
                     'user_id': user_id,
                     'user_uuid': user_id,

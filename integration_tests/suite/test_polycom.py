@@ -50,27 +50,23 @@ class TestPolycom(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
                     <html>
                       <head>
                         <title>Wazo Search</title>
                       </head>
                       <body>
-                        <form action="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom" method="get" accept-charset="utf-8">
+                        <form action="https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/polycom" method="get" accept-charset="utf-8">
                           <span>
                             <label for="it-term">Name or number:</label>
                           </span>
                           <input type="text" name="term" id="it-term" size="15" value="" />
-                          <input type="hidden" name="xivo_user_uuid" value="{user_uuid}" />
+                          <input type="hidden" name="xivo_user_uuid" value="{USER_1_UUID}" />
                           <input type="submit" name="submit" value="Search" />
                         </form>
                       </body>
-                    </html>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                    )
+                    </html>"""
                 )
             ),
         )
@@ -160,7 +156,7 @@ class TestPolycom(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
                     <html>
                       <head>
@@ -169,15 +165,10 @@ class TestPolycom(BasePhonedIntegrationTest):
                       <body>
                         <ol>
                     <li><a href="tel://0033123456789">Test User1</a><br /></li>
-                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1" title="Next">Next Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/polycom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1" title="Next">Next Page</a>]<br /></li>
                     </ol>
                       </body>
-                    </html>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </html>"""
                 )
             ),
         )
@@ -198,7 +189,7 @@ class TestPolycom(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
                     <html>
                       <head>
@@ -206,17 +197,12 @@ class TestPolycom(BasePhonedIntegrationTest):
                       </head>
                       <body>
                         <ol>
-                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=0" title="Previous">Previous Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/polycom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=0" title="Previous">Previous Page</a>]<br /></li>
                     <li><a href="tel://5555555555">Test User1 (mobile)</a><br /></li>
-                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=2" title="Next">Next Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/polycom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=2" title="Next">Next Page</a>]<br /></li>
                     </ol>
                       </body>
-                    </html>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </html>"""
                 )
             ),
         )
@@ -235,7 +221,7 @@ class TestPolycom(BasePhonedIntegrationTest):
             response.text,
             equal_to(
                 dedent(
-                    """\
+                    f"""\
                     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
                     <html>
                       <head>
@@ -243,16 +229,11 @@ class TestPolycom(BasePhonedIntegrationTest):
                       </head>
                       <body>
                         <ol>
-                    <li>[<a href="https://127.0.0.1:{port}/0.1/directories/lookup/{profile}/polycom?xivo_user_uuid={user_uuid}&amp;term={term}&amp;limit=1&amp;offset=1" title="Previous">Previous Page</a>]<br /></li>
+                    <li>[<a href="https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/polycom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1" title="Previous">Previous Page</a>]<br /></li>
                     <li><a href="tel://1000">Test User2</a><br /></li>
                     </ol>
                       </body>
-                    </html>""".format(
-                        port=self.service_port(9499, 'phoned'),
-                        profile=DEFAULT_PROFILE,
-                        user_uuid=USER_1_UUID,
-                        term=VALID_TERM,
-                    )
+                    </html>"""
                 )
             ),
         )

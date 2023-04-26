@@ -1,4 +1,3 @@
-# -*-coding: utf-8-*-
 # Copyright 2016-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -116,7 +115,7 @@ def lines_get():
                     'id': 0,
                     'name': search,
                     'endpoint_sip': {'id': 0, 'name': search, 'username': search},
-                    'device_id': 'device-{}'.format(search),
+                    'device_id': f'device-{search}',
                 }
             ],
             'total': 1,

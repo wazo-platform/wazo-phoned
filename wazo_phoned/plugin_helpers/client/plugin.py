@@ -37,9 +37,7 @@ class ClientPlugin(metaclass=ABCMeta):
             'dird_client': dird_client,
             'auth_client': auth_client,
         }
-        api = create_blueprint_api(
-            app, '{}_plugin'.format(self.vendor), self.import_name
-        )
+        api = create_blueprint_api(app, f'{self.vendor}_plugin', self.import_name)
 
         self.menu_url = self.menu_url_fmt.format(vendor=self.vendor)
         self.input_url = self.input_url_fmt.format(vendor=self.vendor)
