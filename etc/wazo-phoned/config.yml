@@ -76,6 +76,13 @@ rest_api:
     # Allow JSON preflight requests
     allow_headers: [Content-Type, X-Auth-Token, Wazo-Tenant]
 
+  # Maximum of concurrent threads processing requests
+  # This setting applies to each listening port: by default, 10 threads are used
+  # for HTTP and 10 more threads are used for HTTPS.
+  # See the performance documentation for more details
+  # https://wazo-platform.org/uc-doc/system/performance/
+  max_threads: 10
+
 enabled_plugins:
   aastra: True
   blf: True
