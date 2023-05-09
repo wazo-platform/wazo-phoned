@@ -25,6 +25,7 @@ _DEFAULT_CONFIG = {
         },
         'authorized_subnets': ['127.0.0.1/24'],
         'cors': {'enabled': True, 'allow_headers': ['Content-Type']},
+        'max_threads': 10,
     },
     'bus': {
         'username': 'guest',

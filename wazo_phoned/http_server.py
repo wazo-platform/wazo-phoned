@@ -92,7 +92,9 @@ class HTTPServer:
             try:
                 bind_addr_https = (https_config['listen'], https_config['port'])
                 server_https = wsgi.WSGIServer(
-                    bind_addr=bind_addr_https, wsgi_app=wsgi_app
+                    bind_addr=bind_addr_https,
+                    wsgi_app=wsgi_app,
+                    numthreads=self.config['max_threads'],
                 )
                 server_https.ssl_adapter = http_helpers.ssl_adapter(
                     https_config['certificate'], https_config['private_key']
@@ -112,7 +114,11 @@ class HTTPServer:
 
         if http_config['enabled']:
             bind_addr_http = (http_config['listen'], http_config['port'])
-            server_http = wsgi.WSGIServer(bind_addr=bind_addr_http, wsgi_app=wsgi_app)
+            server_http = wsgi.WSGIServer(
+                bind_addr=bind_addr_http,
+                wsgi_app=wsgi_app,
+                numthreads=self.config['max_threads'],
+            )
             ServerAdapter(cherrypy.engine, server_http).subscribe()
             logger.debug(
                 'WSGIServer starting... uid: %s, listen: %s:%s',
