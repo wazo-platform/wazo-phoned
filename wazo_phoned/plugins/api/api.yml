@@ -3,6 +3,14 @@ info:
   title: wazo-phoned
   description: "Wazo Phone Daemon"
   version: '1.0'
+  contact:
+    name: Wazo Dev Team
+    url: https://wazo-platform.org/
+    email: dev@wazo.community
+  x-logo:
+    url: "https://wazo-platform.org/images/logo-black.svg"
+    backgroundColor: "#FAFAFA"
+    altText: "Wazo Logo"
 schemes:
 - https
 basePath: /0.1
