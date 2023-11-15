@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<YealinkIPPhoneConfiguration Beep="yes" >
+  <Item>account.1.enable = 1</Item>
+  <Item>account.1.label = {{ line.caller_id_name }}</Item>
+  <Item>account.1.display_name =  {{ line.caller_id_name }}</Item>
+  <Item>account.1.user_name = {{ line.username }}</Item>
+  <Item>account.1.auth_name = {{ line.username }}</Item>
+  <Item>account.1.password = {{ line.secret }}</Item>
+  <Item>account.1.sip_server.1.address = {{ registrar.main_host }}</Item>
+  <Item>account.1.sip_server.1.port = {{ registrar.main_port }}</Item>
+</YealinkIPPhoneConfiguration>

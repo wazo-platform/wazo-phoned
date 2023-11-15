@@ -7,6 +7,12 @@ import time
 from requests.exceptions import RequestException
 from wazo_phoned.plugin_helpers.client.exceptions import NoSuchUser
 
+from flask import (
+    render_template,
+    Response,
+    request
+)
+
 logger = logging.getLogger(__name__)
 
 USER_EVENT_TIMEOUT = 10
@@ -52,6 +58,35 @@ class YealinkService:
     def answer_call(self, endpoint_name):
         logger.debug('Answering call on endpoint %s', endpoint_name)
         self._send_notify(endpoint_name, 'ANSWER')
+
+    def view_authentication(self):
+        response_rendered = render_template(
+            'yealink_authentication.jinja',
+            hostname = request.host_url.replace("http", "https")
+        )
+
+        return Response(response_rendered, content_type='text/xml; charset=utf-8', status=200)
+
+    def authenticate(self, provcode):
+        if not provcode:
+            return '', 404
+
+        response = self.confd.lines.list(provisioning_code=provcode, recurse=True)
+        if response['total'] < 1:
+            return '', 404
+
+        registrar = self.confd.registrars.get(response['items'][0]['registrar'])
+        endpoint_sip_id = response['items'][0]['endpoint_sip']['id']
+        caller_id_name = response['items'][0]['caller_id_name']
+        line = self.confd.endpoints_sip.get(endpoint_sip_id)
+        line['caller_id_name'] = caller_id_name
+        response_rendered = render_template(
+            'yealink_account.jinja',
+            line = line,
+            registrar = registrar
+        )
+
+        return Response(response_rendered, content_type='text/xml; charset=utf-8', status=200)
 
     def _send_notify(self, line, value):
         self.amid.action(
