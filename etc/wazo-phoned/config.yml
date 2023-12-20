@@ -62,8 +62,8 @@ rest_api:
     listen: 0.0.0.0
     port: 9499
 
-    certificate: /usr/share/xivo-certs/server.crt
-    private_key: /usr/share/xivo-certs/server.key
+    certificate: /usr/share/wazo-certs/server.crt
+    private_key: /usr/share/wazo-certs/server.key
 
   # Authorizing subnets
   # authorized_subnets:
