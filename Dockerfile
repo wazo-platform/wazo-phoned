@@ -14,7 +14,7 @@ FROM python:3.9-slim-bullseye AS build-image
 COPY --from=compile-image /opt/venv /opt/venv
 
 COPY ./etc/wazo-phoned /etc/wazo-phoned
-COPY ./contribs/docker/certs /usr/share/xivo-certs
+COPY ./contribs/docker/certs /usr/share/wazo-certs
 RUN true \
     && adduser --quiet --system --group --home /var/lib/wazo-phoned wazo-phoned \
     && mkdir -p /etc/wazo-phoned/conf.d \
