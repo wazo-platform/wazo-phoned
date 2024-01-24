@@ -1,9 +1,9 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import kombu
 import logging
 
+import kombu
 from kombu.mixins import ConsumerMixin
 from xivo.pubsub import Pubsub
 from xivo.status import Status

@@ -1,15 +1,16 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
 import signal
 import sys
-
 from functools import partial
+
 from xivo.user_rights import change_user
 from xivo.xivo_logging import setup_logging, silence_loggers
-from wazo_phoned.controller import Controller
+
 from wazo_phoned.config import load as load_config
+from wazo_phoned.controller import Controller
 
 logger = logging.getLogger(__name__)
 

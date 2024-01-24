@@ -1,10 +1,11 @@
-# Copyright 2019-2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
 import time
 
 from requests.exceptions import RequestException
+
 from wazo_phoned.plugin_helpers.client.exceptions import NoSuchUser
 
 logger = logging.getLogger(__name__)

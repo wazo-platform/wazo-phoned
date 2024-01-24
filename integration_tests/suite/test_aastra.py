@@ -1,14 +1,15 @@
-# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from hamcrest import assert_that, equal_to
 from textwrap import dedent
 
+from hamcrest import assert_that, equal_to
+
 from .helpers.base import (
-    BasePhonedIntegrationTest,
     DEFAULT_PROFILE,
-    VALID_TERM,
     USER_1_UUID,
+    VALID_TERM,
+    BasePhonedIntegrationTest,
 )
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
 

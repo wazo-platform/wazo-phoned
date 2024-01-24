@@ -1,18 +1,18 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
-
 from threading import Thread
+
+from wazo_auth_client import Client as AuthClient
 from xivo import plugin_helpers
 from xivo.config_helper import set_xivo_uuid
 from xivo.status import StatusAggregator, TokenStatus
 from xivo.token_renewer import TokenRenewer
-from wazo_auth_client import Client as AuthClient
 
 from .auth import auth_verifier, init_master_tenant
 from .bus import CoreBusConsumer
-from .http_server import api, app, HTTPServer
+from .http_server import HTTPServer, api, app
 
 logger = logging.getLogger(__name__)
 

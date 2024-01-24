@@ -1,24 +1,19 @@
-# Copyright 2019-2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
 import re
-
 from collections import namedtuple
-from flask import (
-    render_template,
-    request,
-    Response,
-)
 from operator import attrgetter
+
+from flask import Response, render_template, request
 from requests.exceptions import ConnectionError, HTTPError
 
 from wazo_phoned.auth import AuthResource
 
-from .exceptions import WazoAuthConnectionError, WazoDirdConnectionError, NoSuchUser
-from .schema import UserUUIDSchema, LookupSchema
 from ..common import output_error
-
+from .exceptions import NoSuchUser, WazoAuthConnectionError, WazoDirdConnectionError
+from .schema import LookupSchema, UserUUIDSchema
 
 logger = logging.getLogger(__name__)
 

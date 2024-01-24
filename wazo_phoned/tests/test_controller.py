@@ -1,9 +1,10 @@
-# Copyright 2015-2022 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from unittest import TestCase
+from unittest.mock import Mock, patch
+from unittest.mock import sentinel as s
 
-from unittest.mock import Mock, patch, sentinel as s
 from xivo import config_helper
 
 from ..controller import Controller

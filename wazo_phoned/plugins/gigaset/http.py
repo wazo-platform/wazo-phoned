@@ -1,7 +1,8 @@
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from flask import request
+
 from wazo_phoned.plugin_helpers.client.http import ClientLookup
 
 from .schema import LookupGigasetSchema

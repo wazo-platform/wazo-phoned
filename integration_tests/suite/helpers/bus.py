@@ -1,13 +1,10 @@
-# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import json
 
-from kombu import Connection
-from kombu import Exchange
-from kombu import Producer
+from kombu import Connection, Exchange, Producer
 from wazo_test_helpers import bus as bus_helper
-
 
 BUS_EXCHANGE_HEADERS = Exchange('wazo-headers', type='headers')
 BUS_QUEUE_NAME = 'integration'

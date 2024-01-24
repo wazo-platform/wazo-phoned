@@ -1,4 +1,4 @@
-# Copyright 2019-2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_amid_client import Client as AmidClient
@@ -7,12 +7,9 @@ from wazo_confd_client import Client as ConfdClient
 from wazo_dird_client import Client as DirdClient
 
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
+
 from .bus_consume import BusEventHandler
-from .http import (
-    DNDUserServiceEnable,
-    DNDUserServiceDisable,
-    Lookup,
-)
+from .http import DNDUserServiceDisable, DNDUserServiceEnable, Lookup
 from .services import YealinkService
 
 

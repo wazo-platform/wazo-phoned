@@ -1,22 +1,18 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
-
 from functools import wraps
 
-from flask import current_app
-from flask import request
-from flask_restful import Resource
-from flask_restful import abort
-from netaddr import IPNetwork, IPAddress
+from flask import current_app, request
+from flask_restful import Resource, abort
+from netaddr import IPAddress, IPNetwork
+from werkzeug.local import LocalProxy as Proxy
+from xivo import mallow_helpers, rest_api_helpers
+from xivo.auth_verifier import AuthVerifier, required_tenant
 
 from wazo_phoned.exceptions import MasterTenantNotInitialized
 from wazo_phoned.http_server import app
-from werkzeug.local import LocalProxy as Proxy
-from xivo import mallow_helpers
-from xivo import rest_api_helpers
-from xivo.auth_verifier import AuthVerifier, required_tenant
 
 auth_verifier = AuthVerifier()
 

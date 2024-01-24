@@ -1,8 +1,9 @@
-# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from .http import Status
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
+
+from .http import Status
 
 
 class Plugin:
