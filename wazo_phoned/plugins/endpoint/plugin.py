@@ -1,4 +1,4 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_confd_client import Client as ConfdClient
@@ -6,9 +6,9 @@ from wazo_confd_client import Client as ConfdClient
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
 
 from .http import (
+    EndpointAnswerResource,
     EndpointHoldStartResource,
     EndpointHoldStopResource,
-    EndpointAnswerResource,
 )
 from .services import EndpointService
 

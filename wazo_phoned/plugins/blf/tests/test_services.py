@@ -1,9 +1,9 @@
-# Copyright 2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import unittest
+from unittest.mock import MagicMock, call
 
-from unittest.mock import call, MagicMock
 from xivo import xivo_helpers
 
 from ..services import BlfService

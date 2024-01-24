@@ -1,20 +1,16 @@
-# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
 import os
 
 import requests
-
 from wazo_auth_client import Client as AuthClient
-from xivo.config_helper import parse_config_file
 from wazo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
-from wazo_test_helpers.auth import (
-    AuthClient as MockAuthClient,
-    MockCredentials,
-    MockUserToken,
-)
+from wazo_test_helpers.auth import AuthClient as MockAuthClient
+from wazo_test_helpers.auth import MockCredentials, MockUserToken
 from wazo_test_helpers.wait_strategy import NoWaitStrategy
+from xivo.config_helper import parse_config_file
 
 from .amid import AmidClient
 from .bus import BusClient

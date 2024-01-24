@@ -1,12 +1,11 @@
-# Copyright 2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2023-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from flask import request
-from wazo_phoned.auth import TokenAuthResource
-from xivo.auth_verifier import required_acl
 from jsonpatch import JsonPatch
+from xivo.auth_verifier import required_acl
 
-from wazo_phoned.auth import required_master_tenant
+from wazo_phoned.auth import TokenAuthResource, required_master_tenant
 
 from .schemas import config_patch_schema
 

@@ -1,18 +1,16 @@
-# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
-
-from datetime import timedelta
 
 import logging
 import os
+from datetime import timedelta
 
 import cherrypy
 from babel.core import negotiate_locale
-from cherrypy.process.wspbus import states
-from cherrypy.process.servers import ServerAdapter
 from cheroot import wsgi
-from flask import Flask
-from flask import request
+from cherrypy.process.servers import ServerAdapter
+from cherrypy.process.wspbus import states
+from flask import Flask, request
 from flask_babel import Babel
 from flask_cors import CORS
 from flask_restful import Api

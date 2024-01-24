@@ -1,17 +1,14 @@
-# Copyright 2020-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2020-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import unittest
-
-from hamcrest import (
-    assert_that,
-    calling,
-    raises,
-)
-from requests.exceptions import HTTPError
 from unittest.mock import MagicMock
 
+from hamcrest import assert_that, calling, raises
+from requests.exceptions import HTTPError
+
 from wazo_phoned.plugin_helpers.client.exceptions import NoSuchUser
+
 from ..services import YealinkService
 
 

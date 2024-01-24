@@ -1,17 +1,12 @@
-# Copyright 2023 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2023-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import json
+
 import requests
+from hamcrest import assert_that, equal_to, has_entry, has_key
 
-from hamcrest import (
-    assert_that,
-    equal_to,
-    has_key,
-    has_entry,
-)
-
-from .helpers.base import BasePhonedIntegrationTest, USER_1_TOKEN
+from .helpers.base import USER_1_TOKEN, BasePhonedIntegrationTest
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
 
 VERSION = '0.1'
