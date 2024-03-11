@@ -1,6 +1,15 @@
 Changelog
 =========
 
+24.05
+-----
+
+* Added the DND and forwards status synchronization for Fanvil phones
+* Added the following endpoints:
+
+  * GET `/0.1/fanvil/users/<uuid>/services/dnd/enable`
+  * GET `/0.1/fanvil/users/<uuid>/services/dnd/disable`
+
 20.11
 -----
 
