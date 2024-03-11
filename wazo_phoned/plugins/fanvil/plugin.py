@@ -6,12 +6,13 @@ from wazo_auth_client import Client as AuthClient
 from wazo_confd_client import Client as ConfdClient
 from wazo_dird_client import Client as DirdClient
 
-from wazo_phoned.plugin_helpers.common import create_blueprint_api
 from wazo_phoned.plugin_helpers.client.plugin import ClientPlugin
+from wazo_phoned.plugin_helpers.common import create_blueprint_api
 
 from .bus_consume import BusEventHandler
-from .http import Input, Lookup, DNDUserServiceDisable, DNDUserServiceEnable
+from .http import DNDUserServiceDisable, DNDUserServiceEnable, Input, Lookup
 from .services import FanvilService
+
 
 class Plugin(ClientPlugin):
     vendor = 'fanvil'
