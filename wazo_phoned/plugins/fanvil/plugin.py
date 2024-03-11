@@ -9,13 +9,9 @@ from wazo_confd_client import Client as ConfdClient
 from wazo_dird_client import Client as DirdClient
 
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
+
 from .bus_consume import BusEventHandler
-from .http import (
-    DNDUserServiceEnable,
-    DNDUserServiceDisable,
-    Input,
-    Lookup,
-)
+from .http import DNDUserServiceDisable, DNDUserServiceEnable, Input, Lookup
 from .services import FanvilService
 
 logger = logging.getLogger(__name__)
