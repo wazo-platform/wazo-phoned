@@ -27,8 +27,16 @@ users = {
         'lines': [{'endpoint_sip': {'name': 'line-123'}}],
         'services': {'dnd': {'enabled': False}},
     },
+    '234': {
+        'lines': [{'endpoint_sip': {'name': 'line-234'}}],
+        'services': {'dnd': {'enabled': False}},
+    },
     '123-sccp': {
         'lines': [{'endpoit_sccp': {'name': 'line-123-sccp'}}],
+        'services': {'dnd': {'enabled': False}},
+    },
+    '234-sccp': {
+        'lines': [{'endpoit_sccp': {'name': 'line-234-sccp'}}],
         'services': {'dnd': {'enabled': False}},
     },
 }
