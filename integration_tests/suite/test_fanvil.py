@@ -3,7 +3,8 @@
 
 from textwrap import dedent
 
-from hamcrest import assert_that, equal_to
+from hamcrest import assert_that, empty, equal_to, has_entries, has_item
+from wazo_test_helpers import until
 
 from .helpers.base import (
     DEFAULT_PROFILE,
@@ -341,3 +342,99 @@ class TestDirdError(BasePhonedIntegrationTest):
             term='a',
         )
         assert_that(response.status_code, equal_to(503))
+
+
+class TestUserServiceEvents(BasePhonedIntegrationTest):
+    asset = 'default_config'
+    wait_strategy = PhonedEverythingUpWaitStrategy()
+
+    def test_that_dnd_event_triggers_ami_command(self):
+        amid_client = self.make_amid()
+        bus_client = self.make_bus()
+        endpoint_name = '234'
+        bus_client.send_user_dnd_update(endpoint_name, True)
+
+        def assert_amid_request():
+            assert_that(
+                amid_client.requests()['requests'],
+                has_item(
+                    has_entries(
+                        {
+                            'method': 'POST',
+                            'path': '/1.0/action/PJSIPNotify',
+                            'json': has_entries(
+                                {
+                                    'Endpoint': f'line-{endpoint_name}',
+                                    'Variable': [
+                                        'Content-Type=message/sipfrag',
+                                        'Event=ACTION-URI',
+                                        'Content=key=DNDOn',
+                                    ],
+                                }
+                            ),
+                        }
+                    )
+                ),
+            )
+
+        until.assert_(assert_amid_request, tries=5)
+
+    def test_that_dnd_event_sccp_line_does_not_trigger_ami_command(self):
+        user_uuid = '234'
+        amid_client = self.make_amid()
+        bus_client = self.make_bus()
+        bus_client.send_user_dnd_update(f'{user_uuid}-sccp', True)
+
+        def assert_amid_request():
+            assert_that(amid_client.requests()['requests'], empty())
+
+        until.assert_(assert_amid_request, tries=5)
+
+
+class TestUserServiceHTTP(BasePhonedIntegrationTest):
+    asset = 'default_config'
+    wait_strategy = PhonedEverythingUpWaitStrategy()
+
+    def test_dnd_enable(self):
+        user_uuid = '234'
+        confd_client = self.make_mock_confd()
+        confd_client.set_user_service(user_uuid, 'dnd', False)
+        bus_client = self.make_bus()
+        bus_client.send_user_dnd_update(user_uuid, False)
+        response = self.get_user_service_result(VENDOR, 'dnd', user_uuid, True)
+        assert_that(response.status_code, equal_to(200))
+
+        assert_that(
+            confd_client.requests()['requests'],
+            has_item(
+                has_entries(
+                    {
+                        'method': 'PUT',
+                        'path': f'/1.1/users/{user_uuid}/services/dnd',
+                        'json': has_entries({'enabled': True}),
+                    }
+                )
+            ),
+        )
+
+    def test_dnd_disable(self):
+        user_uuid = '234'
+        confd_client = self.make_mock_confd()
+        confd_client.set_user_service(user_uuid, 'dnd', True)
+        bus_client = self.make_bus()
+        bus_client.send_user_dnd_update(user_uuid, True)
+        response = self.get_user_service_result(VENDOR, 'dnd', user_uuid, False)
+        assert_that(response.status_code, equal_to(200))
+
+        assert_that(
+            confd_client.requests()['requests'],
+            has_item(
+                has_entries(
+                    {
+                        'method': 'PUT',
+                        'path': f'/1.1/users/{user_uuid}/services/dnd',
+                        'json': has_entries({'enabled': False}),
+                    }
+                )
+            ),
+        )

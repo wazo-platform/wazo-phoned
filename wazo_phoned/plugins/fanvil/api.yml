@@ -52,6 +52,53 @@ paths:
       - $ref: '#/parameters/Limit16'
       - $ref: '#/parameters/Offset'
       - $ref: '#/parameters/AcceptLanguage'
+  /fanvil/users/{user_uuid}/services/dnd/enable:
+    get:
+      summary: Enable the DND service for a particular user.
+      description: |
+        This `dnd` service endpoint will enable the user DND service through
+        `wazo-confd`.
+      operationId: fanvil_user_service_dnd_enable
+      tags:
+      - fanvil
+      - services
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: The status was changed
+        '400':
+          description: Provided data is incorrect or a required field is missing
+          schema:
+            $ref: '#/responses/InvalidDataError'
+        '404':
+          $ref: '#/responses/NoSuchUser'
+      parameters:
+      - $ref: '#/parameters/UserUUID'
+  /fanvil/users/{user_uuid}/services/dnd/disable:
+    get:
+      summary: Disable the DND service for a particular user.
+      description: |
+        This `dnd` service endpoint will disable the user DND service through
+        `wazo-confd`.
+      operationId: fanvil_user_service_dnd_disable
+      tags:
+      - fanvil
+      - services
+      produces:
+      - text/xml
+      responses:
+        '200':
+          description: The status was changed
+        '400':
+          description: Provided data is incorrect or a required field is missing
+          schema:
+            $ref: '#/responses/InvalidDataError'
+        '404':
+          $ref: '#/responses/NoSuchUser'
+      parameters:
+      - $ref: '#/parameters/UserUUID'
+
 definitions:
   FanvilIPPhoneDirectory:
     properties:
