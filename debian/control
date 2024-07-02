@@ -23,10 +23,11 @@ Depends: ${python3:Depends},
          python3-requests,
          python3-stevedore,
          python3-werkzeug,
-         wazo-auth-client-python3,
          wazo-amid-client-python3,
+         wazo-auth-client-python3,
          wazo-confd-client-python3,
          wazo-dird-client-python3,
+         wazo-uuid,
          xivo-lib-python-python3
 Description: Wazo PBX's directory server
  Wazo is a system based on a powerful IPBX, to bring an easy to
