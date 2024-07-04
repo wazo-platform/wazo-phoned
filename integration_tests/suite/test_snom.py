@@ -96,20 +96,17 @@ class TestSnom(BasePhonedIntegrationTest):
                 dedent(
                     """\
         <?xml version="1.0" encoding="UTF-8" ?>
-        <SnomIPPhoneDirectory>
-        <DirectoryEntry>
-          <Name>Test User1</Name>
-          <Telephone>0033123456789</Telephone>
-         </DirectoryEntry>
-        <DirectoryEntry>
-          <Name>Test User1 (mobile)</Name>
-          <Telephone>5555555555</Telephone>
-         </DirectoryEntry>
-        <DirectoryEntry>
-          <Name>Test User2</Name>
-          <Telephone>1000</Telephone>
-         </DirectoryEntry>
-        </SnomIPPhoneDirectory>"""
+        <SnomIPPhoneMenu>
+        <MenuItem name="Test User1">
+          <Url>snom://mb_nop#numberdial=0033123456789</Url>
+         </MenuItem>
+        <MenuItem name="Test User1 (mobile)">
+          <Url>snom://mb_nop#numberdial=5555555555</Url>
+         </MenuItem>
+        <MenuItem name="Test User2">
+          <Url>snom://mb_nop#numberdial=1000</Url>
+         </MenuItem>
+        </SnomIPPhoneMenu>"""
                 )
             ),
         )
@@ -128,12 +125,10 @@ class TestSnom(BasePhonedIntegrationTest):
                 dedent(
                     """\
         <?xml version="1.0" encoding="UTF-8" ?>
-        <SnomIPPhoneDirectory>
-        <DirectoryEntry>
-          <Name>No entries</Name>
-          <Telephone></Telephone>
-         </DirectoryEntry>
-        </SnomIPPhoneDirectory>"""
+        <SnomIPPhoneMenu>
+        <MenuItem name="No entries">
+         </MenuItem>
+        </SnomIPPhoneMenu>"""
                 )
             ),
         )
@@ -153,17 +148,16 @@ class TestSnom(BasePhonedIntegrationTest):
                 dedent(
                     f"""\
         <?xml version="1.0" encoding="UTF-8" ?>
-        <SnomIPPhoneDirectory>
-        <DirectoryEntry>
-          <Name>Test User1</Name>
-          <Telephone>0033123456789</Telephone>
-         </DirectoryEntry>
+        <SnomIPPhoneMenu>
+        <MenuItem name="Test User1">
+          <Url>snom://mb_nop#numberdial=0033123456789</Url>
+         </MenuItem>
         <SoftKeyItem>
         <Label>NextPage</Label>
         <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/snom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URL>
         <Name>F4</Name>
         </SoftKeyItem>
-        </SnomIPPhoneDirectory>"""
+        </SnomIPPhoneMenu>"""
                 )
             ),
         )
@@ -186,11 +180,10 @@ class TestSnom(BasePhonedIntegrationTest):
                 dedent(
                     f"""\
         <?xml version="1.0" encoding="UTF-8" ?>
-        <SnomIPPhoneDirectory>
-        <DirectoryEntry>
-          <Name>Test User1 (mobile)</Name>
-          <Telephone>5555555555</Telephone>
-         </DirectoryEntry>
+        <SnomIPPhoneMenu>
+        <MenuItem name="Test User1 (mobile)">
+          <Url>snom://mb_nop#numberdial=5555555555</Url>
+         </MenuItem>
         <SoftKeyItem>
         <Label>PrevPage</Label>
         <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/snom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=0</URL>
@@ -201,7 +194,7 @@ class TestSnom(BasePhonedIntegrationTest):
         <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/snom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=2</URL>
         <Name>F4</Name>
         </SoftKeyItem>
-        </SnomIPPhoneDirectory>"""
+        </SnomIPPhoneMenu>"""
                 )
             ),
         )
@@ -222,17 +215,16 @@ class TestSnom(BasePhonedIntegrationTest):
                 dedent(
                     f"""\
         <?xml version="1.0" encoding="UTF-8" ?>
-        <SnomIPPhoneDirectory>
-        <DirectoryEntry>
-          <Name>Test User2</Name>
-          <Telephone>1000</Telephone>
-         </DirectoryEntry>
+        <SnomIPPhoneMenu>
+        <MenuItem name="Test User2">
+          <Url>snom://mb_nop#numberdial=1000</Url>
+         </MenuItem>
         <SoftKeyItem>
         <Label>PrevPage</Label>
         <URL>https://127.0.0.1:{self.service_port(9499, 'phoned')}/0.1/directories/lookup/{DEFAULT_PROFILE}/snom?xivo_user_uuid={USER_1_UUID}&amp;term={VALID_TERM}&amp;limit=1&amp;offset=1</URL>
         <Name>F2</Name>
         </SoftKeyItem>
-        </SnomIPPhoneDirectory>"""
+        </SnomIPPhoneMenu>"""
                 )
             ),
         )
@@ -252,12 +244,10 @@ class TestSnom(BasePhonedIntegrationTest):
                 dedent(
                     """\
         <?xml version="1.0" encoding="UTF-8" ?>
-        <SnomIPPhoneDirectory>
-        <DirectoryEntry>
-          <Name>Aucune entrée</Name>
-          <Telephone></Telephone>
-         </DirectoryEntry>
-        </SnomIPPhoneDirectory>"""
+        <SnomIPPhoneMenu>
+        <MenuItem name="Aucune entrée">
+         </MenuItem>
+        </SnomIPPhoneMenu>"""
                 )
             ),
         )
