@@ -9,12 +9,13 @@ from flask_restful import Resource, abort
 from netaddr import IPAddress, IPNetwork
 from werkzeug.local import LocalProxy as Proxy
 from xivo import mallow_helpers, rest_api_helpers
-from xivo.auth_verifier import AuthVerifier, required_tenant
+from xivo.auth_verifier import required_tenant
+from xivo.flask.auth_verifier import AuthVerifierFlask
 
 from wazo_phoned.exceptions import MasterTenantNotInitialized
 from wazo_phoned.http_server import app
 
-auth_verifier = AuthVerifier()
+auth_verifier = AuthVerifierFlask()
 
 logger = logging.getLogger(__name__)
 
