@@ -69,7 +69,7 @@ class Plugin:
         self.menu_url = self.menu_url_fmt.format(vendor=self.vendor)
         self.input_url = self.input_url_fmt.format(vendor=self.vendor)
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
-        self.lookup_url_fmt_v2 = '/directories/lookup/<profile>/{vendor}/v2'
+        self.lookup_url_v2 = self.lookup_url_fmt_v2.format(vendor=self.vendor)
 
         self.directories_lookup_url = self.directories_lookup_url_fmt.format(
             vendor=self.vendor
