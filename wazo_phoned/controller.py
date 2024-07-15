@@ -10,7 +10,7 @@ from xivo.config_helper import set_xivo_uuid
 from xivo.status import StatusAggregator, TokenStatus
 from xivo.token_renewer import TokenRenewer
 
-from .auth import auth_verifier, init_master_tenant
+from .auth import init_master_tenant
 from .bus import CoreBusConsumer
 from .http_server import HTTPServer, api, app
 
@@ -26,7 +26,6 @@ class Controller:
         self.http_server = HTTPServer(self.config)
         app.config['authorized_subnets'] = self.config['rest_api']['authorized_subnets']
         auth_client = AuthClient(**config['auth'])
-        auth_verifier.set_client(auth_client)
         self.token_renewer = TokenRenewer(auth_client)
         self.token_renewer.subscribe_to_token_change(self._on_token_change)
 

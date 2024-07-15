@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<SnomIPPhoneDirectory>
+<SnomIPPhoneMenu>
 {% for result in results -%}
- <DirectoryEntry>
-  <Name>{{ result.name|e }}</Name>
-  <Telephone>{{ result.number|e }}</Telephone>
- </DirectoryEntry>
+ <MenuItem name="{{ result.name|e }}">
+  <Url>snom://mb_nop#numberdial={{ result.number|e }}</Url>
+ </MenuItem>
 {% else -%}
- <DirectoryEntry>
-  <Name>{{ gettext('No entries') }}</Name>
-  <Telephone></Telephone>
- </DirectoryEntry>
+ <MenuItem name="{{ gettext('No entries') }}">
+ </MenuItem>
 {% endfor -%}
 
 {% if offset_previous is not none -%}
@@ -27,4 +24,4 @@
 <Name>F4</Name>
 </SoftKeyItem>
 {% endif -%}
-</SnomIPPhoneDirectory>
+</SnomIPPhoneMenu>

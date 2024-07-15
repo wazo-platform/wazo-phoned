@@ -1,9 +1,6 @@
 # Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import random
-import string
-
 from textwrap import dedent
 
 from hamcrest import assert_that, empty, equal_to, has_entries, has_item
