@@ -59,7 +59,7 @@ paths:
         The `lookup` query will return a list of result matching the searched term
         formated for Fanvil Unified IP Phones. The results will be retrieved from a lookup query to
         wazo-dird.
-      operationId: fanvil_lookup
+      operationId: fanvil_lookup_v2
       tags:
       - fanvil
       - directories

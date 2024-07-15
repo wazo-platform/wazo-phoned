@@ -100,7 +100,7 @@ class Plugin:
         api.add_resource(
             LookupV2,
             self.lookup_url_v2,
-            endpoint='fanvil_lookup',
+            endpoint='fanvil_lookup_v2',
             resource_class_kwargs=class_kwargs,
         )
 
