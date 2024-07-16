@@ -131,6 +131,26 @@ paths:
       - $ref: '#/parameters/UserUUID'
 
 definitions:
+  PhoneBook:
+    properties:
+      DirectoryEntry:
+        type: array
+        items:
+          $ref: '#/definitions/FanvilDirectoryEntryV2'
+  FanvilDirectoryEntryV2:
+    properties:
+      Name:
+        type: string
+      Telephone:
+        type: string
+      Mobile:
+        type: string
+      Other:
+        type: string
+      Ring:
+        type: string
+      Group:
+        type: string
   FanvilIPPhoneDirectory:
     properties:
       DirectoryEntry:
