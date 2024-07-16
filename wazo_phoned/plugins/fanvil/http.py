@@ -17,7 +17,7 @@ class Lookup(ClientLookup):
 
 
 class LookupV2(ClientLookup):
-    MAX_ITEM_PER_PAGE = 50
+    MAX_ITEM_PER_PAGE = None
     content_type = 'text/xml; charset=utf-8'
     template = 'fanvil_results_v2.jinja'
 
