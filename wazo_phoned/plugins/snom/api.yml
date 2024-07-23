@@ -37,7 +37,7 @@ paths:
         '200':
           description: A list of contacts
           schema:
-            $ref: '#/definitions/SnomIPPhoneDirectory'
+            $ref: '#/definitions/SnomIPPhoneMenu'
         '400':
           $ref: '#/responses/LimitOffsetInvalid'
         '404':
@@ -72,21 +72,23 @@ definitions:
         type: string
       InputFlags:
         type: string
-  SnomIPPhoneDirectory:
+  SnomIPPhoneMenu:
     properties:
-      DirectoryEntry:
+      MenuItem:
         type: array
         items:
-          $ref: '#/definitions/SnomDirectoryEntry'
+          $ref: '#/definitions/SnomMenuItem'
       SoftKeyItem:
         type: array
         items:
           $ref: '#/definitions/SnomSoftKeyItem'
-  SnomDirectoryEntry:
+  SnomMenuItem:
     properties:
-      Name:
+      name:
         type: string
-      Telephone:
+        xml:
+          attribute: true
+      Url:
         type: string
   SnomSoftKeyItem:
     properties:
