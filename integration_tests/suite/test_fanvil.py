@@ -15,6 +15,7 @@ from .helpers.base import (
 from .helpers.wait_strategy import PhonedEverythingUpWaitStrategy
 
 VENDOR = 'fanvil'
+VENDOR_V2 = 'fanvil-v2'
 
 
 class TestFanvil(BasePhonedIntegrationTest):
@@ -312,6 +313,138 @@ class TestFanvil(BasePhonedIntegrationTest):
     def test_that_lookup_return_error_when_no_term(self):
         response = self.get_lookup_result(
             vendor=VENDOR,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+        )
+        assert_that(response.status_code, equal_to(400))
+
+    # Lookup for v2
+
+    def test_that_v2_lookup_return_no_error_when_query_ssl(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR_V2,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term=VALID_TERM,
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+                    <?xml version="1.0" encoding="UTF-8" ?>
+                    <PhoneBook>
+                    <DirectoryEntry>
+                        <Name>Test User1</Name>
+                        <Telephone>0033123456789</Telephone>
+                        <Mobile></Mobile>
+                        <Other></Other>
+                        <Ring>Default</Ring>
+                        <Group></Group>
+                    </DirectoryEntry>
+                    <DirectoryEntry>
+                        <Name>Test User1 (mobile)</Name>
+                        <Telephone>5555555555</Telephone>
+                        <Mobile></Mobile>
+                        <Other></Other>
+                        <Ring>Default</Ring>
+                        <Group></Group>
+                    </DirectoryEntry>
+                    <DirectoryEntry>
+                        <Name>Test User2</Name>
+                        <Telephone>1000</Telephone>
+                        <Mobile></Mobile>
+                        <Other></Other>
+                        <Ring>Default</Ring>
+                        <Group></Group>
+                    </DirectoryEntry>
+                    </PhoneBook>"""
+                )
+            ),
+        )
+
+    def test_that_v2_lookup_return_no_entries_when_no_results(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR_V2,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term='no-result',
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+                    <?xml version="1.0" encoding="UTF-8" ?>
+                    <PhoneBook>
+                    <DirectoryEntry>
+                        <Name>No entries</Name>
+                        <Telephone></Telephone>
+                        <Mobile></Mobile>
+                        <Other></Other>
+                        <Ring>Default</Ring>
+                        <Group></Group>
+                    </DirectoryEntry>
+                    </PhoneBook>"""
+                )
+            ),
+        )
+
+    def test_v2_lookup_translation_fr(self):
+        response = self.get_ssl_lookup_result(
+            vendor=VENDOR_V2,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term='no-result',
+            headers={'Accept-Language': 'gibberish,fr-CA,*q=nothing'},
+        )
+        assert_that(response.status_code, equal_to(200))
+        assert_that(
+            response.text,
+            equal_to(
+                dedent(
+                    """\
+                    <?xml version="1.0" encoding="UTF-8" ?>
+                    <PhoneBook>
+                    <DirectoryEntry>
+                        <Name>Aucune entrée</Name>
+                        <Telephone></Telephone>
+                        <Mobile></Mobile>
+                        <Other></Other>
+                        <Ring>Default</Ring>
+                        <Group></Group>
+                    </DirectoryEntry>
+                    </PhoneBook>"""
+                )
+            ),
+        )
+
+    def test_that_v2_lookup_return_no_error_when_query(self):
+        response = self.get_lookup_result(
+            vendor=VENDOR_V2,
+            xivo_user_uuid=USER_1_UUID,
+            profile=DEFAULT_PROFILE,
+            term=VALID_TERM,
+        )
+        assert_that(response.status_code, equal_to(200))
+
+    def test_that_v2_lookup_return_error_when_no_xivo_user_uuid(self):
+        response = self.get_lookup_result(
+            vendor=VENDOR_V2, profile=DEFAULT_PROFILE, term=VALID_TERM
+        )
+        assert_that(response.status_code, equal_to(400))
+
+    def test_that_v2_lookup_return_error_when_invalid_user_uuid(self):
+        response = self.get_lookup_result(
+            vendor=VENDOR_V2, profile='a', xivo_user_uuid='invalid', term=VALID_TERM
+        )
+        assert_that(response.status_code, equal_to(404))
+
+    def test_that_v2_lookup_return_error_when_no_term(self):
+        response = self.get_lookup_result(
+            vendor=VENDOR_V2,
             xivo_user_uuid=USER_1_UUID,
             profile=DEFAULT_PROFILE,
         )
