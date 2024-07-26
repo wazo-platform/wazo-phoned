@@ -16,6 +16,12 @@ class Lookup(ClientLookup):
     template = 'fanvil_results.jinja'
 
 
+class LookupV2(ClientLookup):
+    MAX_ITEM_PER_PAGE = None
+    content_type = 'text/xml; charset=utf-8'
+    template = 'fanvil_results_v2.jinja'
+
+
 class DNDUserServiceEnable(AuthResource):
     def __init__(self, service, *args, **kwargs):
         super().__init__()

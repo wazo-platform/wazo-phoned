@@ -11,7 +11,7 @@ from wazo_dird_client import Client as DirdClient
 from wazo_phoned.plugin_helpers.common import create_blueprint_api
 
 from .bus_consume import BusEventHandler
-from .http import DNDUserServiceDisable, DNDUserServiceEnable, Input, Lookup
+from .http import DNDUserServiceDisable, DNDUserServiceEnable, Input, Lookup, LookupV2
 from .services import FanvilService
 
 logger = logging.getLogger(__name__)
@@ -22,6 +22,7 @@ class Plugin:
     menu_url_fmt = '/directories/menu/<profile>/{vendor}'
     input_url_fmt = '/directories/input/<profile>/{vendor}'
     lookup_url_fmt = '/directories/lookup/<profile>/{vendor}'
+    lookup_url_fmt_v2 = '/directories/lookup/<profile>/{vendor}-v2'
 
     directories_lookup_url_fmt = '/{vendor}/directories/lookup/<profile>'
 
@@ -68,6 +69,7 @@ class Plugin:
         self.menu_url = self.menu_url_fmt.format(vendor=self.vendor)
         self.input_url = self.input_url_fmt.format(vendor=self.vendor)
         self.lookup_url = self.lookup_url_fmt.format(vendor=self.vendor)
+        self.lookup_url_v2 = self.lookup_url_fmt_v2.format(vendor=self.vendor)
 
         self.directories_lookup_url = self.directories_lookup_url_fmt.format(
             vendor=self.vendor
@@ -93,6 +95,12 @@ class Plugin:
             Lookup,
             self.lookup_url,
             endpoint='fanvil_lookup',
+            resource_class_kwargs=class_kwargs,
+        )
+        api.add_resource(
+            LookupV2,
+            self.lookup_url_v2,
+            endpoint='fanvil_lookup_v2',
             resource_class_kwargs=class_kwargs,
         )
 
