@@ -22,7 +22,7 @@ class Plugin:
     menu_url_fmt = '/directories/menu/<profile>/{vendor}'
     input_url_fmt = '/directories/input/<profile>/{vendor}'
     lookup_url_fmt = '/directories/lookup/<profile>/{vendor}'
-    lookup_url_fmt_v2 = '/directories/lookup/<profile>/{vendor}/v2'
+    lookup_url_fmt_v2 = '/directories/lookup/<profile>/{vendor}-v2'
 
     directories_lookup_url_fmt = '/{vendor}/directories/lookup/<profile>'
 

@@ -52,7 +52,7 @@ paths:
       - $ref: '#/parameters/Limit16'
       - $ref: '#/parameters/Offset'
       - $ref: '#/parameters/AcceptLanguage'
-  /directories/lookup/{profile}/fanvil/v2:
+  /directories/lookup/{profile}/fanvil-v2:
     get:
       summary: Search for contacts with Fanvil Unified IP Phones for V2
       description: |
