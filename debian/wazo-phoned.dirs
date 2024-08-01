@@ -1,1 +1,2 @@
 etc/wazo-phoned/conf.d
+etc/rsyslog.d

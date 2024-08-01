@@ -9,6 +9,7 @@ StartLimitIntervalSec=150
 ExecStart=/usr/bin/wazo-phoned --user www-data
 Restart=on-failure
 RestartSec=5
+SyslogIdentifier=wazo-phoned
 
 [Install]
 WantedBy=multi-user.target
