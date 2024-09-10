@@ -1,0 +1,1 @@
+mv_conffile /etc/wazo-phoned/conf.d/050-xivo-config.yml /etc/wazo-phoned/conf.d/50-authorized-subnets.yml 24.13
