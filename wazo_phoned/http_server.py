@@ -7,7 +7,6 @@ from datetime import timedelta
 
 import cherrypy
 from babel.core import negotiate_locale
-from cheroot import wsgi
 from cherrypy.process.servers import ServerAdapter
 from cherrypy.process.wspbus import states
 from flask import Flask, request
@@ -15,7 +14,7 @@ from flask_babel import Babel
 from flask_cors import CORS
 from flask_restful import Api
 from pkg_resources import iter_entry_points, resource_filename, resource_isdir
-from xivo import http_helpers
+from xivo import http_helpers, wsgi
 
 VERSION = 0.1
 BABEL_DEFAULT_LOCALE = 'en'
