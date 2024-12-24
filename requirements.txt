@@ -5,8 +5,8 @@ https://github.com/wazo-platform/wazo-confd-client/archive/master.zip
 https://github.com/wazo-platform/wazo-dird-client/archive/master.zip
 https://github.com/wazo-platform/xivo-lib-python/archive/master.zip
 babel==2.8.0
-cheroot==8.5.2
-cherrypy==17.4.0
+cheroot==9.0.0
+cherrypy==18.8.0
 # Bullseye actually useds a patched version of flask-babel 0.12.2,
 # But this is the closest functional version we can install from pip.
 flask-babel==1.0.0
