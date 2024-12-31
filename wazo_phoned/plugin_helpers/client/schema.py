@@ -1,4 +1,4 @@
-# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from xivo.mallow import fields
@@ -11,5 +11,5 @@ class UserUUIDSchema(Schema):
 
 class LookupSchema(UserUUIDSchema):
     term = fields.String(required=True)
-    limit = fields.Integer(missing=None)
-    offset = fields.Integer(missing=0)
+    limit = fields.Integer(load_default=None)
+    offset = fields.Integer(load_default=0)
