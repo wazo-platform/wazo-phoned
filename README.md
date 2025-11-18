@@ -32,8 +32,7 @@ using:
     % tx set --auto-local -r wazo.wazo-phoned 'wazo_phoned/translations/<lang>/LC_MESSAGES/messages.po' --source-lang en --type PO --source-file wazo_phoned/messages.pot --execute
 
 
-Docker
-------
+## Docker
 
 The wazoplatform/wazo-phoned image can be built using the following command:
 
@@ -44,8 +43,7 @@ HTTP requests on "0.0.0.0". To change this behavior, create or edit the file
 `/etc/wazo-phoned/conf.d/listen.yml`
 
 
-Running unit tests
-------------------
+## Running unit tests
 
 ```
 apt-get install libpq-dev python-dev libffi-dev libyaml-dev
@@ -54,8 +52,7 @@ tox --recreate -e py311
 ```
 
 
-Running integration tests
--------------------------
+## Running integration tests
 
 You need Docker installed.
 
