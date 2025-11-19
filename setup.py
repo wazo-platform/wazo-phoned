@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# Copyright 2018-2024 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2018-2025 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import date
-from distutils.cmd import Command as _Command
 
+from setuptools import Command as _Command
 from setuptools import find_packages, setup
 from setuptools.command.build_py import build_py as _build_py
 
