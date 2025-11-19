@@ -13,6 +13,12 @@ To extract new translations:
 
     % pybabel extract --mapping-file=wazo_phoned/babel.cfg --output-file=wazo_phoned/translations/messages.pot wazo_phoned
 
+This will update the file `wazo_phoned/translations/messages.pot`.
+
+Manually remove the `#, fuzzy` marker from the header and
+rewrite/remove any placeholders in keeping with the previous versions;
+otherwise the compilation of `.po` files may be affected.
+
 To create new translation catalog:
 
     % pybabel init -l <locale> --input-file=wazo_phoned/translations/messages.pot --output-dir=wazo_phoned/translations
@@ -32,8 +38,7 @@ using:
     % tx set --auto-local -r wazo.wazo-phoned 'wazo_phoned/translations/<lang>/LC_MESSAGES/messages.po' --source-lang en --type PO --source-file wazo_phoned/messages.pot --execute
 
 
-Docker
-------
+## Docker
 
 The wazoplatform/wazo-phoned image can be built using the following command:
 
@@ -44,8 +49,7 @@ HTTP requests on "0.0.0.0". To change this behavior, create or edit the file
 `/etc/wazo-phoned/conf.d/listen.yml`
 
 
-Running unit tests
-------------------
+## Running unit tests
 
 ```
 apt-get install libpq-dev python-dev libffi-dev libyaml-dev
@@ -54,8 +58,7 @@ tox --recreate -e py311
 ```
 
 
-Running integration tests
--------------------------
+## Running integration tests
 
 You need Docker installed.
 
