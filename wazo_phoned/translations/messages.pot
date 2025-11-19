@@ -1,4 +1,8 @@
 # Translations template for wazo-phoned.
+#
+# THIS HEADER SHOULD NOT INCLUDE A '#, fuzzy' MARKER
+# AVOID LEAVING PLACEHOLDERS AFTER UPDATING THIS TEMPLATE
+#
 # Copyright (C) 2019-2025 The Wazo Authors  (see the AUTHORS file)
 # This file is distributed under the same license as the wazo-phoned
 # project.

@@ -13,6 +13,12 @@ To extract new translations:
 
     % pybabel extract --mapping-file=wazo_phoned/babel.cfg --output-file=wazo_phoned/translations/messages.pot wazo_phoned
 
+This will update the file `wazo_phoned/translations/messages.pot`.
+
+Manually remove the `#, fuzzy` marker from the header and
+rewrite/remove any placeholders in keeping with the previous versions;
+otherwise the compilation of `.po` files may be affected.
+
 To create new translation catalog:
 
     % pybabel init -l <locale> --input-file=wazo_phoned/translations/messages.pot --output-dir=wazo_phoned/translations
