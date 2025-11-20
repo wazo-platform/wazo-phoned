@@ -1,7 +1,11 @@
 # Translations template for wazo-phoned.
-# Copyright 2019-2020 The Wazo Authors  (see the AUTHORS file)
-# This file is distributed under the same license as the
-# wazo-phoned project.
+# 
+# THIS HEADER SHOULD NOT INCLUDE A '#, fuzzy' MARKER
+# AVOID LEAVING PLACEHOLDERS AFTER UPDATING THIS TEMPLATE
+# 
+# Copyright (C) 2019-2025 The Wazo Authors  (see the AUTHORS file)
+# This file is distributed under the same license as the wazo-phoned
+# project.
 # Wazo Dev Team (dev@wazo.community), 2019.
 # 
 # Translators:
@@ -10,15 +14,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wazo-phoned 1.0\n"
-"Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2019-12-17 16:04-0500\n"
+"Report-Msgid-Bugs-To: dev@wazo.community\n"
+"POT-Creation-Date: 2025-11-18 17:48-0500\n"
 "PO-Revision-Date: 2019-11-13 19:57+0000\n"
 "Last-Translator: Mario Farina, 2023\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/wazo/teams/69545/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.10.3\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
@@ -27,13 +31,11 @@ msgstr ""
 #: wazo_phoned/plugins/fanvil/templates/fanvil_input.jinja:3
 #: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:4
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:4
-#: wazo_phoned/plugins/snom/templates/snom_input.jinja:3
 msgid "Wazo Search"
 msgstr "Ricerca di Wazo"
 
 #: wazo_phoned/plugins/aastra/templates/aastra_input.jinja:4
 #: wazo_phoned/plugins/polycom/templates/polycom_input.jinja:9
-#: wazo_phoned/plugins/snom/templates/snom_input.jinja:4
 msgid "Name or number:"
 msgstr "Nome o numero"
 
@@ -45,6 +47,7 @@ msgstr "Pagina Precedente"
 #: wazo_phoned/plugins/aastra/templates/aastra_results.jinja:17
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:10
 #: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:10
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results_v2.jinja:14
 #: wazo_phoned/plugins/htek/templates/htek_results.jinja:10
 #: wazo_phoned/plugins/polycom/templates/polycom_results.jinja:15
 #: wazo_phoned/plugins/snom/templates/snom_results.jinja:10
@@ -62,11 +65,12 @@ msgstr "Pagina Successiva"
 #: wazo_phoned/plugins/cisco/templates/cisco_input.jinja:7
 #: wazo_phoned/plugins/fanvil/templates/fanvil_input.jinja:4
 #: wazo_phoned/plugins/fanvil/templates/fanvil_input.jinja:7
-#: wazo_phoned/plugins/snom/templates/snom_input.jinja:7
+#: wazo_phoned/plugins/snom/templates/snom_input.jinja:5
 msgid "Name or number"
 msgstr "Nome o Numero"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_menu.jinja:4
+#: wazo_phoned/plugins/snom/templates/snom_results.jinja:3
 msgid "Wazo Directory"
 msgstr "Wazo Directory"
 
@@ -76,19 +80,19 @@ msgid "Dial"
 msgstr "Chiama"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:24
-#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:24
-#: wazo_phoned/plugins/snom/templates/snom_results.jinja:17
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:23
+#: wazo_phoned/plugins/snom/templates/snom_results.jinja:16
 msgid "PrevPage"
 msgstr "Precedente"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:31
-#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:31
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:29
 msgid "Exit"
 msgstr "Uscita"
 
 #: wazo_phoned/plugins/cisco/templates/cisco_results.jinja:38
-#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:38
-#: wazo_phoned/plugins/snom/templates/snom_results.jinja:25
+#: wazo_phoned/plugins/fanvil/templates/fanvil_results.jinja:35
+#: wazo_phoned/plugins/snom/templates/snom_results.jinja:24
 msgid "NextPage"
 msgstr "Successiva"
 
