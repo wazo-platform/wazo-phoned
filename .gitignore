@@ -4,6 +4,5 @@
 .coverage
 .eggs
 .tox
-cover/
 coverage.xml
 unit-tests.xml
