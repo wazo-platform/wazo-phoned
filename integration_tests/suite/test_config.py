@@ -1,4 +1,4 @@
-# Copyright 2023-2024 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2023-2026 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import json
@@ -86,3 +86,22 @@ class TestConfig(BasePhonedIntegrationTest):
         }
         result = requests.get(api_url, headers=headers, verify=False)
         assert_that(result.status_code, equal_to(401))
+
+    def test_that_patch_with_empty_body_returns_400(self):
+        port = self.service_port(9499, 'phoned')
+        api_url = f'https://127.0.0.1:{port}/{VERSION}/config'
+        headers = {
+            'X-Auth-Token': 'valid-token-multitenant',
+        }
+
+        result = requests.patch(api_url, data="", headers=headers, verify=False)
+        assert result.status_code == 400, (
+            f"expected error 400 for url: {api_url}, "
+            f"but received code {result.status_code} instead"
+        )
+
+        result = requests.patch(api_url, data=None, headers=headers, verify=False)
+        assert result.status_code == 400, (
+            f"expected error 400 for url: {api_url}, "
+            f"but received code {result.status_code} instead"
+        )
