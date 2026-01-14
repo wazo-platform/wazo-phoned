@@ -1,4 +1,4 @@
-# Copyright 2023-2024 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2023-2026 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import json
@@ -86,3 +86,6 @@ class TestConfig(BasePhonedIntegrationTest):
         }
         result = requests.get(api_url, headers=headers, verify=False)
         assert_that(result.status_code, equal_to(401))
+
+    def test_that_empty_body_patch_config_returns_400(self):
+        self.assert_empty_body_returns_400([('patch', 'config')])

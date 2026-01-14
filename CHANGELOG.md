@@ -1,6 +1,13 @@
 Changelog
 =========
 
+26.02
+-----
+
+* `PATCH` request bodies to endpoints accepting JSON payload are systematically parsed as JSON, with or without a proper `Content-Type` header;
+* `PATCH` requests to endpoints accepting JSON payload and which are missing a body now return a `400` status response;
+  previously those invalid requests could be treated as valid when Content-Type was missing and bodies were not parsed;
+
 24.05
 -----
 
