@@ -1,9 +1,11 @@
-# Copyright 2015-2024 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2026 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
 import os
 from datetime import timedelta
+from importlib.metadata import entry_points
+from importlib.resources import files
 
 import cherrypy
 from babel.core import negotiate_locale
@@ -13,7 +15,6 @@ from flask import Flask, request
 from flask_babel import Babel
 from flask_cors import CORS
 from flask_restful import Api
-from pkg_resources import iter_entry_points, resource_filename, resource_isdir
 from xivo import http_helpers, wsgi
 
 VERSION = 0.1
@@ -67,14 +68,17 @@ class HTTPServer:
     def _get_translation_directories(self, enabled_plugins):
         main_translation_directory = 'translations'
         result = [main_translation_directory]
-        entry_points = (
+        eps = (
             e
-            for e in iter_entry_points(group='wazo_phoned.plugins')
+            for e in entry_points(group='wazo_phoned.plugins')
             if e.name in enabled_plugins
         )
-        for ep in entry_points:
-            if resource_isdir(ep.module_name, TRANSLATION_DIRECTORY):
-                result.append(resource_filename(ep.module_name, TRANSLATION_DIRECTORY))
+        for ep in eps:
+            # e.g. 'wazo_phoned.plugins.snom.plugin:Plugin' -> 'wazo_phoned.plugins.snom'
+            package_name = ep.value.split(':')[0].rsplit('.', 1)[0]
+            translation_path = files(package_name) / TRANSLATION_DIRECTORY
+            if translation_path.is_dir():
+                result.append(str(translation_path))
         return result
 
     def run(self):
