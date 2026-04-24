@@ -32,7 +32,7 @@ services:
       - "9497"
 
   rabbitmq:
-    image: rabbitmq
+    image: rabbitmq:3
     ports:
       - 5672
     volumes:
