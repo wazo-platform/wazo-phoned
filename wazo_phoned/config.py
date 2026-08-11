@@ -38,8 +38,7 @@ _DEFAULT_CONFIG = {
     },
     'auth': {
         'host': 'localhost',
-        'port': 9497,
-        'prefix': None,
+        'port': 80,
         'https': False,
         'key_file': '/var/lib/wazo-auth-keys/wazo-phoned-key.yml',
     },
