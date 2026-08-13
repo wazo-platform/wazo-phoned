@@ -52,12 +52,12 @@ confd:
 rest_api:
 
   http:
-    enabled: True
+    enabled: true
     listen: 0.0.0.0
     port: 9498
 
   https:
-    enabled: True
+    enabled: true
     listen: 0.0.0.0
     port: 9499
 
@@ -71,7 +71,7 @@ rest_api:
   # CORS configuration. See Flask-CORS documentation for other values.
   cors:
     # Enabled by default
-    enabled: True
+    enabled: true
     # Allow JSON preflight requests
     allow_headers: [Content-Type, X-Auth-Token, Wazo-Tenant]
 
@@ -88,15 +88,15 @@ rest_api:
   max_threads: 100
 
 enabled_plugins:
-  aastra: True
-  blf: True
-  api: True
-  cisco: True
-  fanvil: True
-  gigaset: True
-  htek: True
-  polycom: True
-  snom: True
-  status: True
-  thomson: True
-  yealink: True
+  aastra: true
+  blf: true
+  api: true
+  cisco: true
+  fanvil: true
+  gigaset: true
+  htek: true
+  polycom: true
+  snom: true
+  status: true
+  thomson: true
+  yealink: true

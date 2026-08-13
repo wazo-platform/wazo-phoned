@@ -3,6 +3,7 @@
 
 import logging
 import os
+import threading
 from datetime import timedelta
 from importlib.metadata import entry_points
 from importlib.resources import files
@@ -38,6 +39,7 @@ class HTTPServer:
         app.permanent_session_lifetime = timedelta(minutes=5)
         app.config['auth'] = config['auth']
         self.load_cors()
+        self._stopped = threading.Event()
 
     def load_cors(self):
         cors_config = dict(self.config.get('cors', {}))
@@ -138,6 +140,10 @@ class HTTPServer:
 
         list_routes(app)
 
+        if self._stopped.is_set():
+            logger.warning('stop requested during startup: not starting the server')
+            return
+
         try:
             cherrypy.engine.start()
             cherrypy.engine.wait(states.EXITING)
@@ -146,6 +152,7 @@ class HTTPServer:
             cherrypy.engine.exit()
 
     def stop(self):
+        self._stopped.set()
         cherrypy.engine.exit()
 
     def join(self):
