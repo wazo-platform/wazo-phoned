@@ -15,11 +15,11 @@ _DEFAULT_CONFIG = {
     'user': 'www-data',
     'log_filename': '/var/log/wazo-phoned.log',
     'rest_api': {
-        'http': {'listen': '0.0.0.0', 'port': 9498, 'enable': True},
+        'http': {'listen': '0.0.0.0', 'port': 9498, 'enabled': True},
         'https': {
             'listen': '0.0.0.0',
             'port': 9499,
-            'enable': True,
+            'enabled': True,
             'certificate': '/usr/share/wazo-certs/server.crt',
             'private_key': '/usr/share/wazo-certs/server.key',
         },
