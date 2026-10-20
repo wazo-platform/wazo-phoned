@@ -55,6 +55,7 @@ _DEFAULT_CONFIG = {
         'fanvil': True,
         'gigaset': True,
         'htek': True,
+        'metrics': False,
         'polycom': True,
         'snom': True,
         'status': True,
