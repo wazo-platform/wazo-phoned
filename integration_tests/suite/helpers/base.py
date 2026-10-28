@@ -8,9 +8,8 @@ import requests
 from wazo_auth_client import Client as AuthClient
 from wazo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
 from wazo_test_helpers.auth import AuthClient as MockAuthClient
-from wazo_test_helpers.auth import MockCredentials, MockUserToken
+from wazo_test_helpers.auth import MockUserToken
 from wazo_test_helpers.wait_strategy import NoWaitStrategy
-from xivo.config_helper import parse_config_file
 
 from .amid import AmidClient
 from .bus import BusClient
@@ -32,8 +31,6 @@ VALID_TOKEN = 'valid-token'
 
 WAZO_UUID = 'de8f8614-9f42-4fb6-be5a-f9a8d4f8674b'
 
-MASTER_TOKEN = '8843a6b5-75e9-4472-8c8c-4a5c605bd47c'
-MASTER_USER_UUID = '5f243438-a429-46a8-a992-baed872081e0'
 MASTER_TENANT = '16d4c16b-eb84-4a09-a3a9-c8cfdf67c8f1'
 
 USERS_TENANT = '938bb555-812d-48c7-9dcb-81f30bd99679'
@@ -83,22 +80,7 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
 
     @classmethod
     def configure_wazo_auth(cls):
-        key_file = parse_config_file(
-            os.path.join(cls.assets_root, 'auth_keys', 'wazo-phoned-key.yml')
-        )
         mock_auth = cls.make_mock_auth()
-        mock_auth.set_valid_credentials(
-            MockCredentials(key_file['service_id'], key_file['service_key']),
-            MASTER_TOKEN,
-        )
-        mock_auth.set_token(
-            MockUserToken(
-                MASTER_TOKEN,
-                MASTER_USER_UUID,
-                WAZO_UUID,
-                {'tenant_uuid': MASTER_TENANT, 'uuid': MASTER_USER_UUID},
-            )
-        )
         mock_auth.set_token(
             MockUserToken(
                 USER_1_TOKEN,

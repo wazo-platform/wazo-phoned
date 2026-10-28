@@ -1,0 +1,12 @@
+tokens:
+  - token: 8843a6b5-75e9-4472-8c8c-4a5c605bd47c
+    auth_id: 5f243438-a429-46a8-a992-baed872081e0
+    xivo_uuid: de8f8614-9f42-4fb6-be5a-f9a8d4f8674b
+    metadata:
+      uuid: 5f243438-a429-46a8-a992-baed872081e0
+      tenant_uuid: 16d4c16b-eb84-4a09-a3a9-c8cfdf67c8f1
+
+valid_credentials:
+  - username: wazo-phoned
+    password: service-key
+    token: 8843a6b5-75e9-4472-8c8c-4a5c605bd47c
