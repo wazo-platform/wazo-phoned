@@ -5,8 +5,8 @@ Changelog
 -----
 
 * New endpoint `GET /0.1/metrics`: Prometheus metrics, without authentication,
-  only for clients in `rest_api.authorized_subnets`. It is served by the
-  `metrics` plugin, disabled by default; enable it with
+  only for local clients and those in `rest_api.authorized_subnets`. It is
+  served by the `metrics` plugin, disabled by default; enable it with
   `enabled_plugins: {metrics: true}`.
 
 26.08
