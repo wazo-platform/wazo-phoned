@@ -98,6 +98,7 @@ enabled_plugins:
   fanvil: true
   gigaset: true
   htek: true
+  metrics: false
   polycom: true
   snom: true
   status: true

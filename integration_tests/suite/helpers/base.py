@@ -135,6 +135,12 @@ class BasePhonedIntegrationTest(AssetLaunchingTestCase):
         return result.json()
 
     @classmethod
+    def get_metrics_result(self):
+        url = 'http://127.0.0.1:{port}/0.1/metrics'
+        port = self.service_port(9498, 'phoned')
+        return requests.get(url.format(port=port))
+
+    @classmethod
     def get_status_result_by_https(self):
         url = 'https://127.0.0.1:{port}/0.1/status'
         port = self.service_port(9499, 'phoned')
