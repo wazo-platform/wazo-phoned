@@ -30,6 +30,9 @@ bus:
 confd:
   host: confd
 
+enabled_plugins:
+  metrics: true
+
 dird:
   host: dird
   default_profile: default_phone

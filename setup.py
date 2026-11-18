@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright 2018-2025 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2018-2026 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from setuptools import find_packages, setup
@@ -43,6 +43,7 @@ setup(
             'fanvil = wazo_phoned.plugins.fanvil.plugin:Plugin',
             'gigaset = wazo_phoned.plugins.gigaset.plugin:Plugin',
             'htek = wazo_phoned.plugins.htek.plugin:Plugin',
+            'metrics = wazo_phoned.plugins.metrics.plugin:Plugin',
             'polycom = wazo_phoned.plugins.polycom.plugin:Plugin',
             'snom = wazo_phoned.plugins.snom.plugin:Plugin',
             'status = wazo_phoned.plugins.status.plugin:Plugin',
