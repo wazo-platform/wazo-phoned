@@ -1,7 +1,7 @@
 Changelog
 =========
 
-26.11
+26.12
 -----
 
 * New endpoint `GET /0.1/metrics`: Prometheus metrics, without authentication,
